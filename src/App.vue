@@ -1,0 +1,69 @@
+<template>
+  <div id="app">
+    <router-view />
+  </div>
+</template>
+
+<script>
+import './api/index.js' // 导入api
+
+export default {
+  name: 'App'
+}
+</script>
+<style lang="scss">
+body {
+  background-color: #f7f8fa;
+}
+.van-icon-arrow-left:before{
+	color: #fff;
+}
+.van-nav-bar{
+	background: transparent;
+	
+}
+.van-nav-bar__text{
+	color: #fff;
+}
+.form-item {
+  .label {
+    margin: 10px 16px 5px;
+    color: #990030;
+    font-size: 14px;
+  }
+}
+.page-box {
+  height: 89vh;
+  padding: 10px;
+  .container {
+    padding-bottom: 60px;
+  }
+}
+.flex{
+		display: flex;
+	}
+	.flex1{
+		display: flex;
+		align-items: center;
+	}
+	.flex2{
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	.flex3{
+		display: flex;
+		align-items: center;
+	}
+	.flex4{
+		display: flex;
+		flex-direction: column;
+	}
+	.status_bar{
+		height: var(--status-bar-height);
+		width: 100%;
+	}
+	.stats_bottom{
+		padding-bottom: 50rpx;
+	}
+</style>
