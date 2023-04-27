@@ -79,6 +79,45 @@
 			
 			<div class="stats_bottom"></div>
 		</div>
+		<van-popup v-model="bookShowPicker" position="bottom">
+			<van-radio-group v-model="checked">
+  <van-radio name="1">单选框 1</van-radio>
+  <van-radio name="2">单选框 2</van-radio>
+</van-radio-group>
+            <div class="coinList" style="">
+				<div class="searchCpon">
+					<!-- <uni-icons type="search" size="20" color="#C7C7C7"></uni-icons> -->
+					<input type="text" placeholder="搜索" placeholder-style="color:#C7C7C7">
+				</div>
+				<div style="padding: 25px 30px;">
+					<van-radio-group v-model="checked"  >
+					<div class="listcoinall flex2" v-for="(item,index) in listall" :key="index">
+										 <div class="flex" style="align-items: center;">
+											 <div class="cpongom">
+												 <img src="../../assets/img/head.png" alt="" srcset="">
+											 </div>
+											 <div class="tista">
+												 <span>{{item.en_name}}</span>
+												  <span style="color: #B8B8B8;font-size: 12px;">{{item.ch_name}}</span>
+											 </div>
+										 </div>
+										<div>  
+											{{ index }}{{ checked }}
+												<van-checkbox :name="index"  @click="changeCointype(index)"></van-checkbox>
+											
+
+											<!-- <checkbox :value="index" :checked="item.checked" color="#0FBD6C" style="transform:scale(0.7)" @change="changeCointype(e)"/> -->
+										 </div>
+										 
+					</div>
+
+					</van-radio-group>
+			</div>
+
+
+				 
+			</div>
+        </van-popup>
 		<!-- <uni-popup ref="popup" type="bottom">
 			<div class="coinList" style="">
 				<div class="searchCpon">
@@ -115,6 +154,8 @@
 		data() {
 			return {
 				tabIndex: 0,
+				bookShowPicker: false,
+				checked:"",
 				tabList: [{
 					name: "购买"
 				}, {
@@ -154,13 +195,15 @@
 		},
 		methods: {
 			changeCointype(e){
+				this.checked=e.toString()
 			},
 			testTabClick(index) {
 				this.tabIndex = index
 				this.getList()
 			},
 			changeCoin(){
-				 this.$refs.popup.open('bottom')
+				this.bookShowPicker = true;
+				//  this.$refs.popup.open('bottom')
 			},
 			getList() {
 				_this=this
@@ -172,6 +215,17 @@
 				this.$api.homeList(this.filters).then((res)=>{
 					if(res.code==0){
 						_this.list=res.data.list
+					}
+					
+				})
+				this.$api.coinList(this.filters).then((res)=>{
+					if(res.code==0){
+						_this.listall=res.data.coins
+							this.listall.forEach(item=>{
+								item.checked=false
+							})
+							this.listall[0].checked=true
+							this.chooseCoinname=this.listall[0].en_name
 					}
 					
 				})
@@ -224,7 +278,7 @@
 .adadwq{
 }
 	.listcoinall{
-		margin-bottom: 37px;
+		margin-bottom: 28px;
 		.cpongom{
 			width: 28px;
 			height: 28px;
@@ -238,16 +292,16 @@
 		.tista{
 			display: flex;
 			flex-direction: column;
-			font-size: 30px;
-			padding-left: 20px;
+			font-size: 15px;
+			padding-left: 10px;
 		}
 	}
 	.coinList{
 		width: 100%;
-		height: 950px;
+		height: 445px;
 		background-color: #fff;
-		border-radius: 20px 20px 0 0;
-		padding-top: 60px;
+		border-radius: 10px 10px 0 0;
+		padding-top: 30px;
 		.searchCpon{
 			width: 320px;
 			height: 40px;
@@ -255,13 +309,14 @@
 			border-radius: 1.25rem;
 			background: #F5F5F5;
 			margin: 0 auto;
-			padding: 20px 30px;
+			padding: 10px 15px;
 			box-sizing: border-box;
 			display: flex;
 			input{
-				padding-left: 10px;
+				padding-left: 5px;
 				font-size: 14px;
-			
+				border: none;
+				background: transparent;
 			}
 		}
 	}
@@ -285,7 +340,7 @@
 	}
 	.buybtn {
 		margin-top: 20px;
-		font-size: 12px;
+		font-size: 6px;
 		color: rgba(120, 137, 166, 1);
 
 		.buy {

@@ -5,6 +5,8 @@ import { http } from './http.js'
 Vue.prototype.$api = {
   // 首页
   homeList: params => { return http.post(`/api/user/advertising/list`,  params ) },
+  // 币列表
+  coinList: params => { return http.post(`/api/user/coins`,  params ) },
   // 商品详情
   GoodsInfo: params => { return http.post(`/api/user/advertising/info`,   params) },
 // 提交
@@ -25,4 +27,8 @@ Vue.prototype.$api = {
    submitSell: params => { return http.post(`/api/user/merchant/advertising/create`,  params ) },
     // 获取信息
     merchantInfo: params => { return http.post(`/api/user/merchant/info`,  params ) },
+    // 获取信息
+    sumbmitMerchan : params => { return http.post(`/api/user/merchant/apply`,  params ) },
+    // 获取信息
+    sumbmitReplyMerchan : params => { return http.post(`/api/user/merchant/reapply`,  params ) },
 }

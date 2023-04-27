@@ -114,7 +114,7 @@
                 this.$router.push({ name:'Home'})
             },
 			sumfontnum(e) {
-				this.numtxt = e.detail.value.length
+				this.numtxt = this.formData.msg.length
 			},
 			getInfo(){
                 this.$api.merchantInfo().then((res)=>{
@@ -158,13 +158,14 @@
 					_this.$toast('请输入商留言')
 					return
 				}
-                this.$api.homeList( this.formData).then((res)=>{
+                this.$api.sumbmitReplyMerchan( this.formData).then((res)=>{
 					if (res.code == 0) {
-							_this.$toast("新增成功")
+							_this.$toast("重新申请成功")
 							setTimeout(() => {
-								uni.navigateBack({
-									delta: 1
-								})
+                                this.getInfo()
+								// uni.navigateBack({
+								// 	delta: 1
+								// })
 							})
 						}else{
 							_this.$toast(res.error)
@@ -206,25 +207,41 @@
 					_this.$toast('请输入商留言')
 					return
 				}
-				_this.$post('/api/user/merchant/apply', {
-					data: this.formData,
-					success: (res) => {
-						if (res.code == 0) {
-							_this.$toast("新增成功")
+                this.$api.sumbmitMerchan( this.formData).then((res)=>{
+					if (res.code == 0) {
+							_this.$toast("申请成功")
 							setTimeout(() => {
-								uni.navigateBack({
-									delta: 1
-								})
+                                this.getInfo()
+                                // this.$router.go(-1)
+								// uni.navigateBack({
+								// 	delta: 1
+								// })
 							})
 						}else{
-							console.log(res)
 							_this.$toast(res.error)
 						}
-					},
-					error: (err) => {
-						_this.$toast(err.error)
-					},
-				}, )
+					
+				})
+
+				// _this.$post('/api/user/merchant/apply', {
+				// 	data: this.formData,
+				// 	success: (res) => {
+				// 		if (res.code == 0) {
+				// 			_this.$toast("新增成功")
+				// 			setTimeout(() => {
+				// 				uni.navigateBack({
+				// 					delta: 1
+				// 				})
+				// 			})
+				// 		}else{
+				// 			console.log(res)
+				// 			_this.$toast(res.error)
+				// 		}
+				// 	},
+				// 	error: (err) => {
+				// 		_this.$toast(err.error)
+				// 	},
+				// }, )
 			}
 		}
 	}
