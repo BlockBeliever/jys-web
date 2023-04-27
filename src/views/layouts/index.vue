@@ -30,7 +30,7 @@ export default {
           to: {
             name: 'List'
           },
-          icon: 'user-o'
+          icon: 'newspaper-o'
         },
         {
           title: '我的', // 菜单标题

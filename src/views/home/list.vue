@@ -7,7 +7,7 @@
       <van-nav-bar fixed left-text="交易所" :safe-area-inset-top="true"  :border="false" />
     </div>
     <div class="">
-      <div style="width: 100%; text-align: center; padding-top: 90px; padding-bottom: 20px">
+      <div style="width: 100%; text-align: center; padding-top: 90px; padding-bottom: 10px">
         <span style="font-size: 18px">订单</span>
       </div>
       <div class="listcard" v-for="(item, index) in list" :key="index" @click="moveGoodsDetail(item.id)">

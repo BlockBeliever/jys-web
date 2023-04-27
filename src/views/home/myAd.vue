@@ -3,7 +3,7 @@
 		<div class="navbartitle">
 			<!-- <div class="status_bar"></div> -->
 			<!-- <uni-nav-bar leftIcon="back" @clickLeft="back" left-span="交易所" :border="false" statusBar="true" backgroundColor="transparent" color="#fff" :leftWidth="90"></uni-nav-bar> -->
-            <van-nav-bar fixed left-text="返回" :safe-area-inset-top="true"  :border="false" left-arrow
+            <van-nav-bar  left-text="返回" :safe-area-inset-top="true"  :border="false" left-arrow
   @click-left="onClickLeft"/>
 		</div>
 		<div style="text-align: center;padding: 13px 0;font-weight: 600;padding-top: 30px;">
