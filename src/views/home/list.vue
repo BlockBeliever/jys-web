@@ -1,132 +1,216 @@
-<!-- home -->
 <template>
-  <div class="page-box list-box">
-    <van-tabs v-model="active">
-      <van-tab title="标签 1">
-        <van-divider :style="{ color: '#990030', borderColor: '#666', padding: '0 16px' }">全局过滤器</van-divider>
-        <p class="mt30 mb30 fz18"><span class="fz13">手机号中间四位隐藏：</span>{{'13717135460' | hidePhone}}</p>
-        <p class="mt30 mb30 fz18"><span class="fz13">金额千分位分隔：</span>{{ 6857653210 | thousands}}</p>
-
-        <van-divider :style="{ color: '#990030', borderColor: '#666', padding: '0 16px' }">防抖节流函数</van-divider>
-        <van-row class="ta-c" type="flex" justify="center">
-          <van-col span="12">
-            <van-button type="info" size="small" @click="debounceFn('wxy')">函数防抖</van-button>
-          </van-col>
-          <van-col span="12">
-            <van-button type="info" size="small" @click="throttleFn">函数节流</van-button>
-          </van-col>
-        </van-row>
-
-        <van-divider :style="{ color: '#990030', borderColor: '#666', padding: '0 16px' }">页面跳转/ajax请求/session操作</van-divider>
-        <!-- layout 布局 -->
-        <van-row class="mt20" gutter="20">
-          <van-col span="8">
-            <van-button type="info" size="small" @click="goAbout">去关于我页面</van-button>
-          </van-col>
-          <van-col span="8">
-            <van-button type="info" size="small" @click="loginBtn">登录请求</van-button>
-          </van-col>
-          <van-col span="8">
-            <van-button type="info" size="small" @click="sessionBtn">session操作</van-button>
-          </van-col>
-        </van-row>
-      </van-tab>
-      <van-tab title="标签 2">
-        <van-cell icon="success" v-for="item in list" :key="item" :title="item" />
-      </van-tab>
-      <van-tab title="标签 3">内容 3</van-tab>
-      <van-tab title="标签 4">
-        444
-      </van-tab>
-      <van-tab title="标签 5">内容 5</van-tab>
-      <van-tab title="标签 6">内容 6</van-tab>
-      <van-tab title="标签 7">内容 7</van-tab>
-      <van-tab title="标签 8">内容 8</van-tab>
-    </van-tabs>
+  <div>
+    <div class="navbartitle">
+      <!-- <van-nav-bar left-text="订单" safe-area-inset-top :border="false" /> -->
+      <!-- <div class="status_bar"></div> -->
+      <!-- <vant-nav-bar left-text="订单" :border="false" statusBar="true" backgroundColor="transparent" color="#fff" @clickLeft="back"></vant-nav-bar> -->
+      <van-nav-bar fixed left-text="交易所" :safe-area-inset-top="true"  :border="false" />
+    </div>
+    <div class="">
+      <div style="width: 100%; text-align: center; padding-top: 22.5px; padding-bottom: 20px">
+        <span style="font-size: 18px">订单</span>
+      </div>
+      <div class="listcard" v-for="(item, index) in list" :key="index" @click="moveGoodsDetail(item.id)">
+        <div class="flex2">
+          <div style="font-size: 16px">
+            <span style="color: rgba(242, 39, 68, 1)" v-if="item.type == 'sell'">出售</span>
+            <span style="color: rgba(46, 107, 219, 1)" v-if="item.type == 'buy'">购买</span>
+            <span style="color: rgba(51, 51, 51, 1)">{{ item.coin_en_name.toUpperCase() }}</span>
+          </div>
+          <div>
+            <span style="font-size: 12px; color: rgba(242, 39, 68, 1)" v-if="item.status == 'enable'">进行中</span>
+            <span style="font-size: 12px; color: rgba(46, 107, 219, 1)" v-if="item.status == 'disenable'"
+              >交易完成</span
+            >
+          </div>
+        </div>
+        <div class="owbprice flex2">
+          <div>
+            <span>单价 {{ item.price }}{{ item.price_type }}</span>
+          </div>
+          <div class="asdawq"> >
+            <!-- <uni-icons type="forward" color="#fff" size="13"></uni-icons> -->
+          </div>
+        </div>
+        <div class="flex2 nametime">
+          <div class="flex1">
+            <div class="headimgbox">
+              <img src="../../../static/img/head.png" alt="" srcset="" />
+            </div>
+            <span style="margin-left: 8.5px">{{ item.merchant_name }}</span>
+          </div>
+          <div>
+            <span>{{ item.create_time | fomarTime }}</span>
+          </div>
+        </div>
+        <div class="boxboads flex2">
+          <div class="flex">
+            <div class="iconusnam"><img src="../../../static/img/cardsa.png" alt="" srcset="" /></div>
+            <span style="padding-left: 2.5px">{{item.number}}{{ item.coin_en_name.toUpperCase() }}</span>
+          </div>
+          <div>
+            <span style="font-size: 11px">实付 </span>
+            <span style="padding-left: 2.5px; font-weight: 600">{{item.number * item.price}}{{ item.price_type }} </span>
+          </div>
+        </div>
+      </div>
+      <div class="listnone" v-if="list.length == 0">
+        <div class="imgiconbox">
+          <img src="../../assets/img/indexnonw.png" alt="" srcset="" />
+        </div>
+        <div style="padding-top: 24px"><span>这里空空如也~</span></div>
+        <div style="padding-top: 5px"><span>你是风儿我是沙，出售一单就有啦！</span></div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-// 导入session
-import session from '@/utils/session'
-
-import { Debounce, Throttle } from '@/utils/index' // 引入工具函数
-
+let _this
+// import { orderList } from '../../api/index'
 export default {
   data() {
     return {
-      active: 0,
-      list: [
-        'Vue-cli4',
-        '配置多环境变量',
-        'VantUI 组件按需加载',
-        'Sass 全局样式',
-        'Webpack 4',
-        'Vuex 状态管理',
-        'Axios 封装及接口管理',
-        'Vue-router',
-        'Webpack 4 vue.config.js 基础配置',
-        '配置 proxy 跨域',
-        '配置 alias 别名',
-        '配置 打包分析',
-        '配置 externals 引入 cdn 资源',
-        '去掉 console.log',
-        'splitChunks 单独打包第三方模块',
-        '添加 IE 兼容',
-        'Eslint+Pettier 统一开发规范'
-      ]
+      filters: {
+        page: 1,
+        limit: 10
+      },
+      list: []
     }
   },
   mounted() {
-
+    this.getList()
+  },
+  filters: {
+    fomarTime(value) {
+      let date = new Date(parseInt(value) * 1000)
+      let y = date.getFullYear()
+      let m = date.getMonth() + 1
+      m = m < 10 ? '0' + m : m
+      let d = date.getDate()
+      d = d < 10 ? '0' + d : d
+      let h = date.getHours()
+      h = h < 10 ? '0' + h : h
+      let minute = date.getMinutes()
+      let second = date.getSeconds()
+      minute = minute < 10 ? '0' + minute : minute
+      second = second < 10 ? '0' + second : second
+      return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second
+    }
   },
   methods: {
-    goAbout () {
-      this.$router.push('/about')
-    },
-    // 登录
-    loginBtn () {
-      let data = {
-        userName: 'admin',
-        password: 123456
-      }
-      this.$api.loginxxx(data).then(res => {
-        let { status, data } = res.data
-        if (status === 0) {
-          this.$toast('接口请求成功~ 登录了')
-          this.$router.push('/home')
-        }
+    moveGoodsDetail(id) {
+      this.$router.push({
+        path: '/orderDetail',
+        query: { id }
       })
     },
-    sessionBtn () {
-      session.set('test', 'helloworld')
-      this.$toast('session 存储成功')
-    },
-    // 按钮防抖
-    debounceFn: Debounce(function(val) {
-      // this.queryUsers() 执行函数
-      this.$toast.success('函数防抖...')
-      console.log(val)
-    }, 1000),
-    // 按钮节流
-    throttleFn: Throttle(function(val) {
-      // this.queryUsers() 执行函数
-      this.$toast.success('函数节流...')
-      console.log(val)
-    }, 2000)
+    getList() {
+      _this = this
+      this.$api.orderList(this.filters).then(res => {
+        _this.list = res.data.order
+        console.log(res)
+      })
+    }
   }
 }
 </script>
-<style lang="scss" scope>
-.list-box {
 
-  padding: 0;
-  background: #fff;
+<style lang="scss" scoped>
+// page {
+//   background: linear-gradient(180deg, rgba(247, 250, 255, 1) 0%, rgba(247, 250, 255, 1) 100%);
+// }
+
+.navbartitle {
+  color: rgba(16, 16, 16, 1);
+  width: 100%;
+  height: 60px;
+  opacity: 1;
+  background: linear-gradient(180deg, rgba(46, 107, 219, 1) 0%, rgba(85, 136, 220, 1) 100%);
+  position: relative;
+}
+
+.listcard {
+  padding: 22px 25px 17px;
   box-sizing: border-box;
-  .van-tabs {
-    .van-tabs__content {
-      padding: 10px;
+  width: 355px;
+  height: 180px;
+  border-radius: 10px;
+  background-color: #fff;
+  margin: 0 auto;
+  position: relative;
+  background: url('../../../static/img/bglistcard.png');
+  background-size: 100% 100%;
+}
+
+.owbprice {
+  padding: 11.5px 0;
+  font-size: 12px;
+  color: rgba(120, 137, 166, 1);
+}
+
+.asdawq {
+  color: #fff;
+  padding-left: 2px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  opacity: 1;
+  border-radius: 50%;
+  background: linear-gradient(90deg, rgba(46, 107, 219, 1) 0%, rgba(84, 135, 220, 1) 100%);
+  box-shadow: 0px 4px 8px 0px rgba(171, 199, 255, 1);
+}
+
+.headimgbox {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.nametime {
+  font-size: 12px;
+  color: rgba(120, 137, 166, 1);
+}
+
+.boxboads {
+  margin-top: 32.5px;
+  font-size: 12px;
+}
+
+.listnone {
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+  color: rgba(120, 137, 166, 1);
+  align-items: center;
+  .imgiconbox {
+    margin: 0 auto;
+    margin-top: 88px;
+
+    width: 132px;
+    height: 143px;
+    img {
+      width: 100%;
+      height: 100%;
     }
+  }
+}
+
+.iconusnam {
+  width: 16px;
+  height: 17px;
+
+  img {
+    width: 100%;
+    height: 100%;
   }
 }
 </style>

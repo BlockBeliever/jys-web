@@ -227,7 +227,7 @@
 		opacity: 1;
 		border-radius: 20px;
         border: none;
-		background: linear-gradient(90deg, rgba(240, 36, 70, 1) 0%, rgba(253, 84, 38, 1) 100%);
+		background: linear-gradient(90deg, rgba(51, 121, 247, 1) 0%, rgba(104, 156, 255, 1) 100%);
         margin: 0 auto;
 		margin-top: 46px;
 		margin-bottom: 25px;

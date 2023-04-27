@@ -31,4 +31,12 @@ Vue.prototype.$api = {
     sumbmitMerchan : params => { return http.post(`/api/user/merchant/apply`,  params ) },
     // 获取信息
     sumbmitReplyMerchan : params => { return http.post(`/api/user/merchant/reapply`,  params ) },
+    // 订单列表
+  orderList: params => { return http.post(`/api/user/advertising/order/list`, { params }) },
+
+  // 订单详情
+  orderDetail: id => { return http.post(`/api/user/advertising/order/detail`, { id }) },
+
+  // 完成订单
+  orderEnd: id => { return http.post(`/api/user/advertising/order/end`, { id }) }
 }

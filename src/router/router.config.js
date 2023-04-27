@@ -77,6 +77,12 @@ export const constantRouterMap = [
         name: 'List',
         component: () => import('@/views/pages/pages1'),
         meta: { title: '列表', keepAlive: false }
+      },
+      {
+        path: '/orderDetail',
+        name: 'OrderDetail',
+        component: () => import('@/views/home/orderDetail'),
+        meta: { title: '详情', keepAlive: false }
       }
     ]
   }
