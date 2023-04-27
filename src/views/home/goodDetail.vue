@@ -10,7 +10,7 @@
 					<div class="rate">
 						<div class="allin flex1">
 							<div class="imgallin"><img src="../../assets/img/usdticon.png" alt=""></div>
-							<span>USTD</span>
+							<span>{{ coin_name }}</span>
 						</div>
 						<div class="ucoasd">
 							<span>{{info.price}}</span>
@@ -36,7 +36,7 @@
 							placeholder-style="color: rgba(207, 207, 207, 1);">
 						<!-- <span class="pricetext">0.00</span> -->
 						<div class="sada">
-							<span>CNY</span>
+							<span>{{ usdt_name }}</span>
 							<span style="padding: 0 9px;">|</span>
 							<span style="color: rgba(73, 135, 249, 1);">最大</span>
 						</div>
@@ -48,7 +48,7 @@
 					</div>
 					<div class="kede flex1">
 						<span>可得 </span>
-						<span style="color: rgba(207, 207, 207, 1);padding-left: 13px;font-size: 25px;">{{usdtnum}}USTD
+						<span style="color: rgba(207, 207, 207, 1);padding-left: 13px;font-size: 25px;">{{usdtnum}}{{ coin_name }}
 						</span>
 					</div>
 				</div>
@@ -87,7 +87,7 @@
 			<span>如果您同意与凤凰进行C2C交易，即标识您接受</span>
 			<span style="color: rgba(58, 116, 219, 1);border-bottom:1px solid  rgba(58, 116, 219, 1)">凤凰C2C交易法律免责声明。</span>
 		</div>
-            <div class="buybtn" @click="orderPay">买入USDT</div>
+            <div class="buybtn" @click="orderPay">买入{{ coin_name }}</div>
 		
 		<div style="padding-bottom: 94px;"></div>
 	</div>
@@ -107,19 +107,23 @@
 				typein:null,
 				id:0,
 				info:{},
-				merchant:{}
+				merchant:{},
+				coin_name:'',
+				usdt_name:''
 			}
 		},
 		mounted() {
 			_this=this
             this.id= parseInt(this.$route.query.id)
-            
+			this.coin_name=this.$route.query.coin_name
+			this.usdt_name=this.$route.query.usdt_name
 			this.loadDetail()
 		},
 		computed:{
 			usdtnum(){
 				if(this.tabIndex==0){
 					let xprice=this.typein/this.info.price
+					console.log(this.typein,this.info.high_price,666)
 					if(this.typein>this.info.high_price){
 						_this.$toast("不能超过最大限额")
 					}

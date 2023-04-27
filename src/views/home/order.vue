@@ -82,6 +82,7 @@
 </template>
 
 <script>
+import Clipboard from 'clipboard'
 	export default {
 		data() {
 			return {
@@ -90,9 +91,9 @@
 			}
 		},
 		mounted() {
-            console.log(this.$route.query.order)
-				this.merchant=this.$route.query.order.merchant
-				this.order=this.$route.query.order.order
+            // console.log(this.$route.query.order,998)
+				this.merchant=this.$route.query.order.data.merchant
+				this.order=this.$route.query.order.data.order
 		},
 		filters:{
 			fomarTime(value){
@@ -121,14 +122,15 @@
 				//        success: function () {
 				//        }
 				//    });
-                this.$copyText(this.order.order_id).then(
-                    e=>{
-                        console.log('复制成功：', e);
-                    },
-                    e=>{
-                        console.log('复制失败：', e);
-                    }
-                )
+                const clipboard = new Clipboard('.copybox', {
+						text: () => this.order.order_id
+					})
+					clipboard.on('success', e => {
+						this.$toast('复制成功')
+					})
+					clipboard.on('error', e => {
+						this.$toast('复制失败')
+					})
 			},
 		}
 	}

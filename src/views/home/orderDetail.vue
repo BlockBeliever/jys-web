@@ -176,8 +176,6 @@ export default {
             _this.merchant = res.data.merchant
           }
 
-          console.log('info', _this.info)
-          console.log('merchant', _this.merchant)
         })
         .catch(err => {
           _this.$toast('err')
@@ -199,12 +197,12 @@ export default {
   height: 60px;
   opacity: 1;
   background: linear-gradient(180deg, rgba(46, 107, 219, 1) 0%, rgba(85, 136, 220, 1) 100%);
-  position: relative;
+  position: fixed;
 }
 
 .order {
   padding: 25px 20px;
-  // padding-top: calc(var(--status-bar-height) + 80px);
+  padding-top: calc( 80px);
   box-sizing: border-box;
   font-size: 15.5px;
   padding-bottom: 0;
@@ -243,7 +241,7 @@ export default {
   width: 340px;
   margin: 0 auto;
   background-color: #fff;
-  height: calc(100vh - 310px);
+  height: calc(100vh - 210px);
   margin-top: 10px;
 
   .saddwq {
@@ -310,7 +308,7 @@ export default {
   align-items: center;
   justify-content: center;
   margin: 0 auto;
-  margin-top: 100px;
+  margin-top: 50px;
   margin-bottom: 30px;
 }
 </style>

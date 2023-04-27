@@ -7,7 +7,7 @@
       <van-nav-bar fixed left-text="交易所" :safe-area-inset-top="true"  :border="false" />
     </div>
     <div class="">
-      <div style="width: 100%; text-align: center; padding-top: 22.5px; padding-bottom: 20px">
+      <div style="width: 100%; text-align: center; padding-top: 90px; padding-bottom: 20px">
         <span style="font-size: 18px">订单</span>
       </div>
       <div class="listcard" v-for="(item, index) in list" :key="index" @click="moveGoodsDetail(item.id)">
@@ -18,8 +18,8 @@
             <span style="color: rgba(51, 51, 51, 1)">{{ item.coin_en_name.toUpperCase() }}</span>
           </div>
           <div>
-            <span style="font-size: 12px; color: rgba(242, 39, 68, 1)" v-if="item.status == 'enable'">进行中</span>
-            <span style="font-size: 12px; color: rgba(46, 107, 219, 1)" v-if="item.status == 'disenable'"
+            <span style="font-size: 12px; color: rgba(242, 39, 68, 1)" v-if="item.status == 'wait'">进行中</span>
+            <span style="font-size: 12px; color: rgba(46, 107, 219, 1)" v-if="item.status == 'done'"
               >交易完成</span
             >
           </div>
@@ -127,11 +127,13 @@ export default {
   height: 60px;
   opacity: 1;
   background: linear-gradient(180deg, rgba(46, 107, 219, 1) 0%, rgba(85, 136, 220, 1) 100%);
-  position: relative;
+  position: fixed;
+  z-index: 999;
 }
 
 .listcard {
   padding: 22px 25px 17px;
+ 
   box-sizing: border-box;
   width: 355px;
   height: 180px;

@@ -17,15 +17,13 @@
 			</div>
 			<div style="padding-top: 24px;"><span>您提交的【{{formData.merchant_name}}】<p style="color: rgba(46, 107, 219, 1);display: inline-block;">申请正在</p></span></div>
 			<div style="padding-top: 5px;"><span>请耐心等待审核结果！</span></div>
-			
-			
 		</div>
 		<div class="listnone" v-if="status=='agree'">
 			<div class="imgiconbox">
 				<img src="../../assets/img/statusapply.png" alt="" srcset="">
 			</div>
 			<div style="padding-top: 24px;"><span>您提交的【{{formData.merchant_name}}】<p style="color: rgba(46, 107, 219, 1);display: inline-block;">已通过审核</p></span></div>
-			<div style="padding-top: 5px;"><span>请耐心等待审核结果！</span></div>
+			<div style="padding-top: 5px;"><span>到xxxx开启商家之旅~</span></div>
 		</div>
 		
 		<div class="listnone" v-if="status=='refuse'">

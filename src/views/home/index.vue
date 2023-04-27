@@ -34,14 +34,14 @@
 				<div class="sadas flex1">
 					<span v-if="tabIndex==0">我要购买</span>
 				<span v-if="tabIndex==1">我要出售</span>
-					<div class="chooseconi">
-						<span style="padding-right: 5px;">USDT</span>
+					<div class="chooseconi" @click="changeCoin()">
+						<span style="padding-right: 5px;">{{chooseCoinname}}</span>
 						<van-icon name="arrow-down"/>
 						<!-- <uni-icons type="bottom" size="14"></uni-icons> -->
 					</div>
 				</div>
-				<div class=" boxqie" @click="changeCoin()">
-					<div>{{chooseCoinname}}</div>
+				<div class=" boxqie" @click="changecnyName()">
+					<div>{{chooseusdtname}}</div>
 					<div class="imgqie"><img src="../../assets/img/qiehuan.png" alt="" srcset=""></div>
 				</div>
 			</div>
@@ -66,7 +66,7 @@
 						<span>支付方式</span>
 					</div>
 					<div v-if="tabIndex==0" class="buy" @click="moveDeatil(item.id)">购买</div>
-					<div  v-if="tabIndex==1" class="buyout">出售</div>
+					<div  v-if="tabIndex==1" class="buyout"  @click="moveDeatil(item.id)">出售</div>
 				</div>
 			</div>
 			<div class="listnone" v-if="list.length==0">
@@ -108,11 +108,42 @@
 
 					</van-radio-group>
 			</div>
-
-
 				 
 			</div>
         </van-popup>
+
+		<van-popup v-model="fabishow" position="bottom">
+			<div class="coinList" style="">
+				<div class="searchCpon">
+					<!-- <uni-icons type="search" size="20" color="#C7C7C7"></uni-icons> -->
+					<input type="text" placeholder="搜索" placeholder-style="color:#C7C7C7">
+				</div>
+				<div style="padding: 25px 30px;">
+					<van-radio-group v-model="checkedusdt"  >
+					<div class="listcoinall flex2" v-for="(item,index) in list2" :key="index">
+										 <div class="flex" style="align-items: center;">
+											 <div class="cpongom">
+												 <img src="../../assets/img/head.png" alt="" srcset="">
+											 </div>
+											 <div class="tista">
+												 <span>{{item.name}}</span>
+												  <span style="color: #B8B8B8;font-size: 12px;">{{item.ch_name}}</span>
+											 </div>
+										 </div>
+										<div>  
+												<van-radio :name="index.toString()"  @click="cahgeUsdt(index)"></van-radio>
+											
+
+											<!-- <checkbox :value="index" :checked="item.checked" color="#0FBD6C" style="transform:scale(0.7)" @change="changeCointype(e)"/> -->
+										 </div>
+										 
+					</div>
+
+					</van-radio-group>
+			</div>
+				 
+			</div>
+		</van-popup>
 		<!-- <uni-popup ref="popup" type="bottom">
 			<div class="coinList" style="">
 				<div class="searchCpon">
@@ -150,6 +181,7 @@
 			return {
 				tabIndex: 0,
 				bookShowPicker: false,
+				fabishow:false,
 				checked:"",
 				tabList: [{
 					name: "购买"
@@ -160,32 +192,28 @@
 					coin_id:1,
 					page:1,
 					limit:10,
-					type:"buy"
+					type:"buy",
+					price_type:''
 				},
 				list:[],
-				chooseCoinname:'CNY',
+				chooseCoinname:'',
+				chooseusdtname:'',
+				checkedusdt:'',
 				themeColor:'#33CCCC',
                 val:'',
                 listall:[],
                 list2:[{
-                    name:'选项1',
-                    val:'1',
-                    switch:true,
+                    name:'CNY',
                 },
                 {
-                    name:'选项2',
-                    val:'2',
-                    switch:false,
-                },
-                {
-                    name:'选项3',
-                    val:'3',
-                    switch:false,
+                    name:'USD',
                 }],
 
 			}
 		},
 		mounted() {
+			this.filters.price_type=this.list2[0].name
+				this.chooseusdtname=this.list2[0].name
 			this.getList()
 			this.getcoinList()
 		},
@@ -197,12 +225,23 @@
 				this.bookShowPicker=false
 				this.getList()
 			},
+			cahgeUsdt(e){
+				this.checkedusdt=e.toString()
+				this.filters.price_type=this.list2[e].name
+				this.chooseusdtname=this.list2[e].name
+				this.fabishow=false
+				this.getList()
+			},
 			testTabClick(index) {
 				this.tabIndex = index
 				this.getList()
 			},
 			changeCoin(){
 				this.bookShowPicker = true;
+				//  this.$refs.popup.open('bottom')
+			},
+			changecnyName(){
+				this.fabishow = true;
 				//  this.$refs.popup.open('bottom')
 			},
 		    getcoinList(){
@@ -267,7 +306,9 @@
 				this.$router.push({
 					name:'goodDetail',
 					query:{
-					id:id
+					id:id,
+					coin_name:this.chooseCoinnamem,
+					usdt_name:this.chooseusdtname
 					}
 				})
 				// uni.navigateTo({
