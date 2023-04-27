@@ -307,7 +307,7 @@
 					name:'goodDetail',
 					query:{
 					id:id,
-					coin_name:this.chooseCoinnamem,
+					coin_name:this.chooseCoinname,
 					usdt_name:this.chooseusdtname
 					}
 				})

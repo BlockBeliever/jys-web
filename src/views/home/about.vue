@@ -34,11 +34,11 @@
         <van-icon name="arrow" />
 				<!-- <uni-icons type="forward" color="#CFCFCF" size="14"></uni-icons> -->
 			</div>
-			<div class="cardalls flex2">
+			<!-- <div class="cardalls flex2">
 				<span>退出登录</span>
         <van-icon name="arrow" />
-				<!-- <uni-icons type="forward" color="#CFCFCF" size="14"></uni-icons> -->
-			</div>
+				<uni-icons type="forward" color="#CFCFCF" size="14"></uni-icons>
+			</div> -->
 		</div>
 	</div>
 </template>
