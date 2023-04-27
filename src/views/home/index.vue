@@ -80,10 +80,6 @@
 			<div class="stats_bottom"></div>
 		</div>
 		<van-popup v-model="bookShowPicker" position="bottom">
-			<van-radio-group v-model="checked">
-  <van-radio name="1">单选框 1</van-radio>
-  <van-radio name="2">单选框 2</van-radio>
-</van-radio-group>
             <div class="coinList" style="">
 				<div class="searchCpon">
 					<!-- <uni-icons type="search" size="20" color="#C7C7C7"></uni-icons> -->
@@ -102,8 +98,7 @@
 											 </div>
 										 </div>
 										<div>  
-											{{ index }}{{ checked }}
-												<van-checkbox :name="index"  @click="changeCointype(index)"></van-checkbox>
+												<van-radio :name="index.toString()"  @click="changeCointype(index)"></van-radio>
 											
 
 											<!-- <checkbox :value="index" :checked="item.checked" color="#0FBD6C" style="transform:scale(0.7)" @change="changeCointype(e)"/> -->
@@ -192,10 +187,15 @@
 		},
 		mounted() {
 			this.getList()
+			this.getcoinList()
 		},
 		methods: {
 			changeCointype(e){
 				this.checked=e.toString()
+				this.filters.coin_id=this.listall[e].id
+				this.chooseCoinname=this.listall[e].en_name
+				this.bookShowPicker=false
+				this.getList()
 			},
 			testTabClick(index) {
 				this.tabIndex = index
@@ -204,6 +204,21 @@
 			changeCoin(){
 				this.bookShowPicker = true;
 				//  this.$refs.popup.open('bottom')
+			},
+		    getcoinList(){
+				this.$api.coinList(this.filters).then((res)=>{
+					if(res.code==0){
+						_this.listall=res.data.coins
+							this.listall.forEach(item=>{
+								item.checked=false
+							})
+							this.listall[0].checked=true
+							this.checked='0'
+							this.filters.coin_id=this.listall[0].id
+							this.chooseCoinname=this.listall[0].en_name
+					}
+					
+				})
 			},
 			getList() {
 				_this=this
@@ -218,17 +233,7 @@
 					}
 					
 				})
-				this.$api.coinList(this.filters).then((res)=>{
-					if(res.code==0){
-						_this.listall=res.data.coins
-							this.listall.forEach(item=>{
-								item.checked=false
-							})
-							this.listall[0].checked=true
-							this.chooseCoinname=this.listall[0].en_name
-					}
-					
-				})
+				
 				// _this.$post('/api/user/advertising/list',{
 				// 	data:_this.filters,
 				// 	success: (res)=>{
@@ -356,11 +361,11 @@
 		}
 
 		.buyout {
-			border-radius: 35px;
+			border-radius: 18px;
 			background: linear-gradient(90deg, rgba(50, 120, 247, 1) 0%, rgba(105, 157, 255, 1) 100%);
-			width: 168px;
-			height: 70px;
-			font-size: 28px;
+			width: 84px;
+			height: 35px;
+			font-size: 14px;
 			color: rgba(255, 255, 255, 1);
 			display: flex;
 			align-items: center;
