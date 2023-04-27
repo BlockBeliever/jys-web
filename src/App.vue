@@ -64,6 +64,6 @@ body {
 		width: 100%;
 	}
 	.stats_bottom{
-		padding-bottom: 50rpx;
+		padding-bottom: 50px;
 	}
 </style>

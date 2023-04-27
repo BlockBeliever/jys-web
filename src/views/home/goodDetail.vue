@@ -121,13 +121,13 @@
 				if(this.tabIndex==0){
 					let xprice=this.typein/this.info.price
 					if(this.typein>this.info.high_price){
-						Toast("不能超过最大限额")
+						_this.$toast("不能超过最大限额")
 					}
 					return xprice.toFixed(2)
 				}else{
 					let yprice=this.typein*this.info.price
 					if(yprice>this.info.high_price){
-						Toast("不能超过最大限额")
+						_this.$toast("不能超过最大限额")
 					}
 					return this.typein?this.typein:'0.00'
 				}
@@ -174,9 +174,9 @@
 					query:{
                         order:res
 					}
-                    },400)
+                    })
                    
-				    })
+				    },400)
                     }else{
                         _this.$toast(res.error)
                     }

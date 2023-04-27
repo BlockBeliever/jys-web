@@ -11,4 +11,18 @@ Vue.prototype.$api = {
   submitOrder: params => { return http.post(`/api/user/advertising/buy`,  params ) },
   // 订单详情
   submitOrder: params => { return http.post(`/api/user/advertising/buy`,  params ) },
+   // 发布买入
+   submitBuy: params => { return http.post(`/api/user/merchant/advertising/create`,  params ) },
+    // 发布买入
+    myInfo: params => { return http.post(`/api/user/account`,  params ) },
+    // 广告列表
+    adList: params => { return http.post(`/api/user/merchant/advertising/list`,  params ) },
+    // 删除广告
+    delAd: params => { return http.post(`/api/user/merchant/advertising/delete`,  params ) },
+    // 上架
+    upAd: params => { return http.post(`/api/user/merchant/advertising/update_status`,  params ) },
+    // 发布卖出
+   submitSell: params => { return http.post(`/api/user/merchant/advertising/create`,  params ) },
+    // 获取信息
+    merchantInfo: params => { return http.post(`/api/user/merchant/info`,  params ) },
 }

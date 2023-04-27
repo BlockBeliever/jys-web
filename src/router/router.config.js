@@ -25,6 +25,30 @@ export const constantRouterMap = [
         meta: { title: '列表', keepAlive: false }
       },
       {
+        path: '/mybuy',
+        name: 'Mybuy',
+        component: () => import('@/views/home/mybuy'),
+        meta: { title: '我的买入', keepAlive: false }
+      },
+      {
+        path: '/mysale',
+        name: 'Mysale',
+        component: () => import('@/views/home/mysale'),
+        meta: { title: '我的卖出', keepAlive: false }
+      },
+      {
+        path: '/myAd',
+        name: 'MyAd',
+        component: () => import('@/views/home/myAd'),
+        meta: { title: '我的广告', keepAlive: false }
+      },
+      {
+        path: '/applyMerchant',
+        name: 'ApplyMerchant',
+        component: () => import('@/views/home/applyMerchant'),
+        meta: { title: '申请商家', keepAlive: false }
+      },
+      {
         path: '/goodDetail',
         name: 'goodDetail',
         component: () => import('@/views/home/goodDetail'),
