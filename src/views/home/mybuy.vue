@@ -37,7 +37,7 @@
 			<div class="formitem">
 				<span class="formname">买入数量</span>
 				<div class="inputbox">
-					<input v-model="formData.number" placeholder="请输入数量" placeholder-style="color:#C8C8C8;font-size:13px" type="number"> 
+					<input v-model="formData.number" placeholder="请输入数量" placeholder-style="color:#C8C8C8;font-size:13px" type="text"> 
 				</div>
 			</div>
 			
@@ -46,7 +46,7 @@
 			<div class="formitem">
 				<span class="formname">价格</span>
 				<div class="inputbox flex2">
-					<input v-model="formData.price" placeholder="请输入价格" placeholder-style="color:#C8C8C8;font-size:13px" type="number"> 
+					<input v-model="formData.price" placeholder="请输入价格" placeholder-style="color:#C8C8C8;font-size:13px" type="text"> 
 					<div style="font-size: 14px;">
 						<span style="padding-right: 5px;">{{chooseTypename}}</span>
                         <van-icon name="arrow-down" v-if="!showdown" @click="showdown=!showdown"/>
@@ -174,7 +174,6 @@
 				this.chooseCoinname=""
 				this.showcoindown=false
 				this.formData.coin_name=name
-				console.log(this.cointypelist[index],996)
 				this.formData.coin_id=this.cointypelist[index].coin_id
 			},
 			 selectedPriceType(index,name){
@@ -209,10 +208,10 @@
 					return
 				}
 				let data=this.formData
-				data.high_price=parseInt(data.high_price)
-				data.low_price=parseInt(data.low_price)
-				data.price=parseInt(data.price)
-				data.number=parseInt(data.number)
+				data.high_price=Number(data.high_price)
+				data.low_price=Number(data.low_price)
+				data.price=Number(data.price)
+				data.number=Number(data.number)
                 this.$api.submitBuy(data).then((res)=>{
                     if(res.code==0){
                         _this.$toast("提交成功")

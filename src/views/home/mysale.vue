@@ -207,10 +207,10 @@
 					return
 				}
 				let data=this.formData
-				data.high_price=parseInt(data.high_price)
-				data.low_price=parseInt(data.low_price)
-				data.price=parseInt(data.price)
-				data.number=parseInt(data.number)
+				data.high_price=Number(data.high_price)
+				data.low_price=Number(data.low_price)
+				data.price=Number(data.price)
+				data.number=Number(data.number)
                 this.$api.submitBuy(data).then((res)=>{
                     if(res.code==0){
                         _this.$toast("提交成功")
