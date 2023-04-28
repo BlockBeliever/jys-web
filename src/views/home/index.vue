@@ -35,7 +35,7 @@
 					<span v-if="tabIndex==0">我要购买</span>
 				<span v-if="tabIndex==1">我要出售</span>
 					<div class="chooseconi" @click="changeCoin()">
-						<span style="padding-right: 5px;">{{chooseCoinname}}</span>
+						<span style="padding-right: 5px;">{{chooseCoinname.toUpperCase()}}</span>
 						<van-icon name="arrow-down"/>
 						<!-- <uni-icons type="bottom" size="14"></uni-icons> -->
 					</div>
@@ -57,7 +57,7 @@
 						<span style="font-weight: 600;font-size: 14px;">￥</span>
 					</div>
 
-					<span class="neirong">数量 {{item.number}} USTD</span>
+					<span class="neirong">数量 {{item.number}} {{ item.coin_en_name.toUpperCase()}}</span>
 					<span class="xiane">限额<p style="padding-left: 10px;color: rgba(51, 51, 51, 1);">{{item.low_price}}-{{item.high_price}}
 							{{item.price_type}}</p></span>
 				</div>
@@ -93,7 +93,7 @@
 												 <img src="../../assets/img/head.png" alt="" srcset="">
 											 </div>
 											 <div class="tista">
-												 <span>{{item.en_name}}</span>
+												 <span>{{item.en_name.toUpperCase()}}</span>
 												  <span style="color: #B8B8B8;font-size: 12px;">{{item.ch_name}}</span>
 											 </div>
 										 </div>

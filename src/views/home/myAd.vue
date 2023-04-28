@@ -6,7 +6,7 @@
             <van-nav-bar  left-text="返回" :safe-area-inset-top="true"  :border="false" left-arrow
   @click-left="onClickLeft"/>
 		</div>
-		<div style="text-align: center;padding: 13px 0;font-weight: 600;padding-top: 30px;">
+		<div style="text-align: center;padding: 13px 0;font-weight: 600;padding-top: 65px;">
 			<span style="font-size: 15px;">我的广告</span>
 		</div>
 		<div class="cardbox" v-for="(item,index) in list" :key="index">
@@ -22,7 +22,7 @@
 			<div class="detialcard">
 				<div class="addetail">
 					<span>数量</span>
-					<span style="padding-left: 8px;">{{item.number}} USTD</span>
+					<span style="padding-left: 8px;">{{item.number}} {{ item.price_type }}</span>
 				</div>
 				<div class="addetail">
 					<span>限额    </span>
@@ -186,7 +186,7 @@ page{
 		height:45px;
 		opacity: 1;
 		background: linear-gradient(180deg, rgba(46, 107, 219, 1) 0%, rgba(85, 136, 220, 1) 100%);
-	
+		position: fixed;
 	}
 	.cardbox{
 		

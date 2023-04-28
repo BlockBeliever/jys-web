@@ -97,7 +97,7 @@
 					price_type:'',
 					low_price:'',
 					high_price :'',
-					type:"buy",
+					type:"sell",
 					contact:"",
 					status:"enable"
 				},

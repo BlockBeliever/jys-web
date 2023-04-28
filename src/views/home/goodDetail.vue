@@ -10,11 +10,11 @@
 					<div class="rate">
 						<div class="allin flex1">
 							<div class="imgallin"><img src="../../assets/img/usdticon.png" alt=""></div>
-							<span>{{ coin_name }}</span>
+							<span>{{ coin_name.toUpperCase() }}</span>
 						</div>
 						<div class="ucoasd">
 							<span>{{info.price}}</span>
-							<span style="font-size: 20px;">￥</span>
+							<span style="font-size: 20px;">{{ usdt_name }}</span>
 						</div>
 
 					</div>
@@ -44,11 +44,16 @@
 					<div class="xiane">
 						<span>*</span>
 						<span style="padding-right: 13px;padding-left: 5px;">限额</span>
-						<span style="color: rgba(255, 32, 64, 1);">{{info.low_price}}-{{info.high_price}} CNY</span>
+						<span style="color: rgba(255, 32, 64, 1);">{{info.low_price}}-{{info.high_price}} {{ usdt_name }}</span>
 					</div>
-					<div class="kede flex1">
+					<div class="kede flex1" v-if="tabIndex==0">
 						<span>可得 </span>
-						<span style="color: rgba(207, 207, 207, 1);padding-left: 13px;font-size: 25px;">{{usdtnum}}{{ coin_name }}
+						<span style="color: rgba(207, 207, 207, 1);padding-left: 13px;font-size: 25px;">{{usdtnum}}{{ coin_name.toUpperCase() }}
+						</span>
+					</div>
+					<div class="kede flex1" v-if="tabIndex==1">
+						<span>应付 </span>
+						<span style="color: rgba(207, 207, 207, 1);padding-left: 13px;font-size: 25px;">{{usdtnum}}{{ usdt_name }}
 						</span>
 					</div>
 				</div>
@@ -134,7 +139,7 @@
 					if(yprice>this.info.high_price){
 						_this.$toast("不能超过最大限额")
 					}
-					return this.typein?this.typein:'0.00'
+					return this.typein?this.typein*this.info.price:'0.00'
 				}
 			}
 		},
@@ -168,7 +173,7 @@
 			orderPay(){
 				let data={
 					merchant_advertising_id:this.id,
-					number:this.usdtnum
+					number:this.tabIndex==0?this.usdtnum:this.typein
 				}
                 this.$api.submitOrder(data).then((res)=>{
                     if(res.code==0){

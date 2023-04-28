@@ -47,10 +47,21 @@
 	export default{
 		data() {
 			return {
-
+				status:''
 			}
 		},
+		mounted(){
+			this.getInfo()
+		},
 		methods: {
+			getInfo(){
+				this.$api.merchantInfo().then((res)=>{
+					if(res.code==0){
+							this.status=res.data.info.status
+					}
+					
+				})
+			},
 			moveAd(){
         this.$router.push({
 					name:'MyAd',})
@@ -59,22 +70,36 @@
 				// })
 			},
 			moveBuy(){
-        this.$router.push({
+				if(this.status==''){
+					_this.$toast("请申请成为商家")
+				}else if(this.status=='agree'){
+					this.$router.push({
 					name:'Mybuy',})
+				}else if(this.status=='refuse'){
+					_this.$toast("申请被拒绝，请重新申请")
+				}
+        
 				// uni.navigateTo({
 				// 	url:"/pages/mybuy/mybuy"
 				// })
 			},
 			applySupplier(){
-        this.$router.push({
-					name:'ApplyMerchant',})
+				this.$router.push({
+							name:'ApplyMerchant',})
 				// uni.navigateTo({
 				// 	url:"/pages/applyMerchant/applyMerchant"
 				// })
 			},
 			moveSale(){
-        this.$router.push({
+				if(this.status==''){
+					_this.$toast("请申请成为商家")
+				}else if(this.status=='agree'){
+					this.$router.push({
 					name:'Mysale',})
+				}else if(this.status=='refuse'){
+					_this.$toast("申请被拒绝，请重新申请")
+				}
+				
 				// uni.navigateTo({
 				// 	url:"/pages/mysale/mysale"
 				// })

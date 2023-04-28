@@ -31,7 +31,7 @@
 			<div class="boxorderdetail">
 				<div class="flex1 saddwq">
 					<div class="usdtimg"><img src="../../assets/img/usdticon.png" alt=""></div>
-					<span class="butusdtt">购买USTD</span>
+					<span class="butusdtt">购买{{ coin.en_name.toUpperCase()}}</span>
 				</div>
 				<div class="boxdetailsa">
 					<div class="flex2 adsawq">
@@ -44,19 +44,19 @@
 					<div class="flex2 adsawq">
 						<span>单价</span>
 						<div class="flex">
-							<span>￥{{order.price}}</span>
+							<span>{{order.price}} {{ order.price_type }}</span>
 						</div>
 					</div>
 					<div class="flex2 adsawq">
 						<span>数量</span>
 						<div class="flex">
-							<span>478.98 USDT</span>
+							<span>{{ order.number }} {{ coin.en_name.toUpperCase()}}</span>
 						</div>
 					</div>
 					<div class="flex2 adsawq">
 						<span>总金额</span>
 						<div class="flex">
-							<span>￥{{order.total_price}}</span>
+							<span>{{order.total_price}} {{ order.price_type }}</span>
 							
 						</div>
 					</div>
@@ -87,13 +87,15 @@ import Clipboard from 'clipboard'
 		data() {
 			return {
 				order:{},
-				merchant:{}
+				merchant:{},
+				coin:{}
 			}
 		},
 		mounted() {
             // console.log(this.$route.query.order,998)
 				this.merchant=this.$route.query.order.data.merchant
 				this.order=this.$route.query.order.data.order
+				this.coin=this.$route.query.order.data.coin
 		},
 		filters:{
 			fomarTime(value){

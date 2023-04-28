@@ -27,6 +27,7 @@ export const constantRouterMap = [
       {
         path: '/mybuy',
         name: 'Mybuy',
+        hidden: true,
         component: () => import('@/views/home/mybuy'),
         meta: { title: '我的买入', keepAlive: false }
       },
