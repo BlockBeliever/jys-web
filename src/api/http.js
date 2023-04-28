@@ -4,10 +4,10 @@ import { Toast } from 'vant'
 
 // 设置接口路径
 const url = process.env.NODE_ENV === 'development' ? 'http://192.168.124.7:8082' : 'http://192.168.124.7:8082' // 测试
-
+console.log(process.env,778)
 let http = axios.create({
     // baseURL: url,
-    baseURL:process.env.NODE_ENV.VUE_APP_BASE_API,
+    baseURL:process.env.VUE_APP_BASE_API,
     timeout: 10000, // 请求延时时间
 })
 

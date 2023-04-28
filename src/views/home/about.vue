@@ -71,12 +71,12 @@
 			},
 			moveBuy(){
 				if(this.status==''){
-					_this.$toast("请申请成为商家")
+					this.$toast("请申请成为商家")
 				}else if(this.status=='agree'){
 					this.$router.push({
 					name:'Mybuy',})
 				}else if(this.status=='refuse'){
-					_this.$toast("申请被拒绝，请重新申请")
+					this.$toast("申请被拒绝，请重新申请")
 				}
         
 				// uni.navigateTo({
@@ -92,12 +92,12 @@
 			},
 			moveSale(){
 				if(this.status==''){
-					_this.$toast("请申请成为商家")
+					this.$toast("请申请成为商家")
 				}else if(this.status=='agree'){
 					this.$router.push({
 					name:'Mysale',})
 				}else if(this.status=='refuse'){
-					_this.$toast("申请被拒绝，请重新申请")
+					this.$toast("申请被拒绝，请重新申请")
 				}
 				
 				// uni.navigateTo({
