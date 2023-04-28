@@ -6,7 +6,8 @@ import { Toast } from 'vant'
 const url = process.env.NODE_ENV === 'development' ? 'http://192.168.124.7:8082' : 'http://192.168.124.7:8082' // 测试
 
 let http = axios.create({
-    baseURL: url,
+    // baseURL: url,
+    baseURL:process.env.NODE_ENV.VUE_APP_BASE_API,
     timeout: 10000, // 请求延时时间
 })
 
