@@ -14,12 +14,12 @@
 			</div>
 			<div class="flex2">
 				<div class="cardbuy" @click="moveBuy">
-					<span style="font-weight: 600;">我要买入</span>
-					<span style="color: rgba(254, 66, 74, 1);">实现理财自由</span>
+					<span style="font-weight: 600;font-size: 13px;">我要买入</span>
+					<span style="color: rgba(254, 66, 74, 1);font-size: 11px;">实现理财自由</span>
 				</div>
 				<div class="cardsale" @click="moveSale">
-					<span style="font-weight: 600;">我要出售</span>
-					<span style="color: rgba(254, 66, 74, 1);">随买随买，高效收益</span>
+					<span style="font-weight: 600;font-size: 13px;">我要出售</span>
+					<span style="color: rgba(254, 66, 74, 1);font-size: 11px;">随买随买，高效收益</span>
 				</div>
 			</div>
 		</div>
