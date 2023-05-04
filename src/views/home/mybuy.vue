@@ -97,7 +97,7 @@
 					price_type:'',
 					low_price:'',
 					high_price :'',
-					type:"sell",
+					type:"buy",
 					contact:"",
 					status:"enable"
 				},
@@ -147,7 +147,7 @@
 					if(res.code==0){
 						let data
 						data=res.data.merchant
-						this.formData.price_type=data.pay_type
+						// this.formData.price_type=data.pay_type
 						this.formData.name=data.name
 						this.formData.contact=data.pay_type
 					}
@@ -205,6 +205,10 @@
 				}
 				if (this.formData.low_price == '') {
 					_this.$toast('请输入最低价格')
+					return
+				}
+				if (this.formData.price_type == '') {
+					_this.$toast('请选择货币类型')
 					return
 				}
 				let data=this.formData

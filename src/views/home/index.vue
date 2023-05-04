@@ -35,8 +35,8 @@
 					<span v-if="tabIndex==0">我要购买</span>
 				<span v-if="tabIndex==1">我要出售</span>
 					<div class="chooseconi" @click="changeCoin()">
-						<span style="padding-right: 5px;">{{chooseCoinname.toUpperCase()}}</span>
-						<van-icon name="arrow-down"/>
+						<span >{{chooseCoinname.toUpperCase()}}</span>
+						<van-icon name="arrow-down" style="padding-left: 5px;"/>
 						<!-- <uni-icons type="bottom" size="14"></uni-icons> -->
 					</div>
 				</div>
@@ -54,7 +54,8 @@
 				<div class="flex4 xianshi">
 					<div class="asdadwq ">
 						<span class="price">{{item.price}}</span>
-						<span style="font-weight: 600;font-size: 14px;">￥</span>
+						<span style="font-weight: 600;font-size: 14px;" v-if="item.price_type=='CNY'">￥</span>
+						<span style="font-weight: 600;font-size: 14px;" v-else>$</span>
 					</div>
 
 					<span class="neirong">数量 {{item.number}} {{ item.coin_en_name.toUpperCase()}}</span>
@@ -65,8 +66,8 @@
 					<div>
 						<span>支付方式</span>
 					</div>
-					<div v-if="tabIndex==0" class="buy" @click="moveDeatil(item.id)">购买</div>
-					<div  v-if="tabIndex==1" class="buyout"  @click="moveDeatil(item.id)">出售</div>
+					<div v-if="tabIndex==0" class="buy" @click="moveDeatil(item)">购买</div>
+					<div  v-if="tabIndex==1" class="buyout"  @click="moveDeatil(item)">出售</div>
 				</div>
 			</div>
 			<div class="listnone" v-if="list.length==0">
@@ -189,10 +190,10 @@
 					name: "出售"
 				}],
 				filters:{
-					coin_id:1,
+					coin_id:0,
 					page:1,
 					limit:10,
-					type:"buy",
+					type:"sell",
 					price_type:''
 				},
 				list:[],
@@ -214,10 +215,21 @@
 		mounted() {
 			this.filters.price_type=this.list2[0].name
 				this.chooseusdtname=this.list2[0].name
+				this.checkedusdt='0'
+				if(this.$route.query.code){
+				this.getAuther(this.$router.query.code)
+			}
 			this.getList()
 			this.getcoinList()
+			
+			
 		},
 		methods: {
+			getAuther(code){
+				this.$api.getAuther({code:code}).then((res)=>{
+					localStorage.setItem('token',res.data.auth.access)
+				})
+			},
 			changeCointype(e){
 				this.checked=e.toString()
 				this.filters.coin_id=this.listall[e].id
@@ -248,6 +260,11 @@
 				this.$api.coinList(this.filters).then((res)=>{
 					if(res.code==0){
 						_this.listall=res.data.coins
+						let obj={
+							en_name:'全部',
+							id:0
+						}
+						this.listall.unshift(obj)
 							this.listall.forEach(item=>{
 								item.checked=false
 							})
@@ -262,9 +279,9 @@
 			getList() {
 				_this=this
 				if(this.tabIndex==0){
-					this.filters.type="buy"
-				}else{
 					this.filters.type="sell"
+				}else{
+					this.filters.type="buy"
 				}
 				this.$api.homeList(this.filters).then((res)=>{
 					if(res.code==0){
@@ -302,12 +319,13 @@
 				// 	},
 				// )
 			},
-			moveDeatil(id) {
+			moveDeatil(val) {
+				console.log(val)
 				this.$router.push({
 					name:'goodDetail',
 					query:{
-					id:id,
-					coin_name:this.chooseCoinname,
+					id:val.id,
+					coin_name:val.coin_en_name,
 					usdt_name:this.chooseusdtname
 					}
 				})

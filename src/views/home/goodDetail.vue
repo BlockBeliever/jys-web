@@ -36,9 +36,10 @@
 							placeholder-style="color: rgba(207, 207, 207, 1);">
 						<!-- <span class="pricetext">0.00</span> -->
 						<div class="sada">
-							<span>{{ usdt_name }}</span>
-							<span style="padding: 0 9px;">|</span>
-							<span style="color: rgba(73, 135, 249, 1);">最大</span>
+							<span v-if="tabIndex==0">{{ usdt_name }}</span>
+							<span v-if="tabIndex==1">{{ coin_name.toUpperCase() }}</span>
+							<span style="padding: 0 9px;padding-bottom: 2px;">|</span>
+							<span style="color: rgba(73, 135, 249, 1);padding-bottom: 3px;" @click="maxAll">最大</span>
 						</div>
 					</div>
 					<div class="xiane">
@@ -144,6 +145,14 @@
 			}
 		},
 		methods: {
+			maxAll(){
+				if(this.tabIndex==0){
+					this.typein=this.info.high_price
+				}else{
+					this.typein=(this.info.high_price/this.info.price).toFixed(2)
+
+				}
+			},
             onClickLeft(){
                 this.$router.push({ name:'Home'})
             },
@@ -215,6 +224,7 @@
 				
 			},
 			testTabClick(index) {
+				this.typein=""
 				this.tabIndex = index
 			}
 		}

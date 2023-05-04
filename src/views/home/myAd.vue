@@ -10,27 +10,37 @@
 			<span style="font-size: 15px;">我的广告</span>
 		</div>
 		<div class="cardbox" v-for="(item,index) in list" :key="index">
+			<div class="biaoqian">
+				<img src="../../assets/img/mybuy.png" alt="" v-if="item.type=='buy'">
+				<img src="../../assets/img/maysale.png" alt="" v-if="item.type=='sell'">
+			</div>
 			<div class="fontname">
 				<span>广告号：{{item.id}}</span>
 				<span style="color: #2E6BDB;font-size: 12px;font-weight: 600;" v-if="item.status=='enable'">上架中</span>
 				<span style="color:rgba(209, 209, 209, 1);font-size: 12px;font-weight: 600;" v-else>已下架</span>
 			</div>
 			<div class="pricead">
-				<span>{{item.price}}</span>
-				<span style="font-size: 12px;">￥</span>
+				<div>
+					<span>{{item.price}}</span>
+					<span style="font-size: 12px;" v-if="item.price_type=='CNY'">￥</span>
+					<span style="font-size: 12px;" v-else>$</span>
+				</div>
+				<div class="boxtype">
+					{{ item.en_name.toUpperCase() }}
+				</div>
 			</div>
 			<div class="detialcard">
-				<div class="addetail">
+				<div class="addetail" style="color:rgba(120, 137, 166, 1)">
 					<span>数量</span>
-					<span style="padding-left: 8px;">{{item.number}} {{ item.price_type }}</span>
+					<span style="padding-left: 8px;">{{item.number}} {{ item.en_name.toUpperCase() }}</span>
 				</div>
 				<div class="addetail">
-					<span>限额    </span>
-					<span style="padding-left: 8px;color: #333333;">{{item.low_price}}-{{item.high_price}} {{item.price_type}}</span>
+					<span style="color:rgba(120, 137, 166, 1)">限额    </span>
+					<span style="padding-left: 8px;color: #333333;">{{item.low_price}}-{{item.high_price}} {{item.price_type.toUpperCase()}}</span>
 				</div>
 				<div class="addetail">
-					<span>支付方式</span>
-					<span style="padding-left: 8px;color: #333333;">{{item.contact}}</span>
+					<span style="color:rgba(120, 137, 166, 1)">支付方式</span>
+					<span style="padding-left: 8px;color: #333333;">{{item.contact.toUpperCase()}}</span>
 				</div>
 				
 			</div>
@@ -159,7 +169,7 @@
 </script>
 
 <style lang="scss" scoped>
-page{
+.page{
 		background: linear-gradient(180deg, rgba(247, 250, 255, 1) 0%, rgba(247, 250, 255, 1) 100%);
 	}
 	.listnone{
@@ -187,6 +197,7 @@ page{
 		opacity: 1;
 		background: linear-gradient(180deg, rgba(46, 107, 219, 1) 0%, rgba(85, 136, 220, 1) 100%);
 		position: fixed;
+		z-index: 100;
 	}
 	.cardbox{
 		
@@ -198,6 +209,19 @@ page{
 		margin: 0 auto;
 		margin-bottom: 10px;
 		box-shadow: 0px 5px 8px 0px #E6ECF7;
+		position: relative;
+		.biaoqian{
+			position: absolute;
+			width: 50px;
+			height: 50px;
+			z-index: 99;
+			left:0px;
+			top:0;
+			img{
+				width: 100%;
+				height: 100%;
+			}
+		}
 		.fontname{
 			font-size: 11px;
 			display: flex;
@@ -210,6 +234,21 @@ page{
 			font-size: 23px;
 			font-weight: 700;
 			padding-top: 13px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+		.boxtype{
+			width:58px;
+			height: 18px;
+			opacity: 0.3;
+			border-radius: 17.5px;
+			color: #fff;
+			font-size: 19px;
+			text-align: center;
+			line-height: 19px;
+			font-weight: 300;
+			background: rgba(120, 137, 166, 1);
 		}
 		.detialcard{
 			padding-top: 5px;

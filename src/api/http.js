@@ -14,10 +14,10 @@ let http = axios.create({
 // 添加请求拦截器
 http.interceptors.request.use(
     config => {
-      let token = session.get('token')
+      let token = localStorage.getItem('token')
       if (token) {
         // config.headers.Authorization = token // 将token设置成请求头
-        config.headers["Authorization"] = 1;
+        config.headers["Authorization"] = token?token:1;
         config.headers['Content-Type'] = 'application/json' // 将token设置成请求头
       }
       return Promise.resolve(config)
