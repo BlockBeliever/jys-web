@@ -109,12 +109,12 @@
 </script>
 
 <style lang="scss" scoped>
-	page{
+	.page{
 		background: linear-gradient(180deg, rgba(247, 250, 255, 1) 0%, rgba(247, 250, 255, 1) 100%);
 	}
 	.navbartitle {
 		color: rgba(16, 16, 16, 1);
-		width: 375px;
+		width: 100%;
 		height: 60px;
 		opacity: 1;
 		background: linear-gradient(180deg, rgba(46, 107, 219, 1) 0%, rgba(85, 136, 220, 1) 100%);
