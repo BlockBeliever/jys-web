@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="body">
 		<div class="navbartitle">
 			<!-- <div class="status_bar"></div> -->
 			<!-- <uni-nav-bar left-text="我的" :border="false" statusBar="true" backgroundColor="transparent" color="#fff"></uni-nav-bar> -->
@@ -109,8 +109,9 @@
 </script>
 
 <style lang="scss" scoped>
-	.page{
-		background: linear-gradient(180deg, rgba(247, 250, 255, 1) 0%, rgba(247, 250, 255, 1) 100%);
+	.body{
+		box-sizing: border-box;
+		
 	}
 	.navbartitle {
 		color: rgba(16, 16, 16, 1);
@@ -118,11 +119,13 @@
 		height: 60px;
 		opacity: 1;
 		background: linear-gradient(180deg, rgba(46, 107, 219, 1) 0%, rgba(85, 136, 220, 1) 100%);
-	
+		
 	}
 	.cardin{
-		width:340px;
-		
+		// width:340px;
+		width: 90%;
+		margin: 10px 15px;
+		// box-sizing: border-box;
 		box-sizing: border-box;
 		border-radius: 10px;
 		margin: 0 auto;
@@ -140,7 +143,7 @@
 		}
 	}
 	.cardbuy{
-		width: 145px;
+		width: 48%;
 		height: 65px;
 		background: url("../../assets/img/myle.png");
 		background-size: 100% 100%;
@@ -153,7 +156,7 @@
 		justify-content: space-between;
 	}
 	.cardsale{
-		width: 145px;
+		width: 48%;
 		height: 65px;
 		background: url("../../assets/img/myri.png");
 		background-size: 100% 100%;
@@ -167,7 +170,7 @@
 	}
 	.cardbt{
 		font-size: 14px;
-		width: 340px;
+		width: 90%;
 		background-color: #fff;
 		margin: 0 auto;
 		margin-top: 10px;

@@ -93,7 +93,7 @@
 			<span>如果您同意与凤凰进行C2C交易，即标识您接受</span>
 			<span style="color: rgba(58, 116, 219, 1);border-bottom:1px solid  rgba(58, 116, 219, 1)">凤凰C2C交易法律免责声明。</span>
 		</div>
-            <div class="buybtn" @click="orderPay">买入{{ coin_name }}</div>
+            <div class="buybtn" @click="orderPay">买入{{ coin_name.toUpperCase() }}</div>
 		
 		<div style="padding-bottom: 94px;"></div>
 	</div>
@@ -147,7 +147,12 @@
 		methods: {
 			maxAll(){
 				if(this.tabIndex==0){
-					this.typein=this.info.high_price
+					if(this.info.number*this.info.price>this.info.high_price){
+						this.typein=this.info.high_price
+					}else{
+						this.typein=this.info.number*this.info.price
+					}
+					
 				}else{
 					this.typein=(this.info.high_price/this.info.price).toFixed(2)
 

@@ -13,7 +13,7 @@ export default {
 </script>
 <style lang="scss">
 body {
-  background-color: #f7f8fa;
+	background: linear-gradient(180deg, rgba(247, 250, 255, 1) 0%, rgba(247, 250, 255, 1) 100%);
 }
 .van-icon-arrow-left:before{
 	color: #fff;

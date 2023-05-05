@@ -218,7 +218,9 @@
 				this.checkedusdt='0'
 				if(this.$route.query.code){
 				this.getAuther(this.$router.query.code)
-			}
+				}else if(localStorage.getItem('token')){
+					this.getAuther(localStorage.getItem('token'))
+				}
 			this.getList()
 			this.getcoinList()
 			
@@ -226,6 +228,7 @@
 		},
 		methods: {
 			getAuther(code){
+				console.log(code,77777)
 				this.$api.getAuther({code:code}).then((res)=>{
 					localStorage.setItem('token',res.data.auth.access)
 				})
