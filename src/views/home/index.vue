@@ -64,7 +64,7 @@
 				</div>
 				<div class="buybtn flex2">
 					<div>
-						<span>支付方式</span>
+						<span>支付方式  {{ item.contact }}</span>
 					</div>
 					<div v-if="tabIndex==0" class="buy" @click="moveDeatil(item)">购买</div>
 					<div  v-if="tabIndex==1" class="buyout"  @click="moveDeatil(item)">出售</div>

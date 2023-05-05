@@ -134,28 +134,32 @@
 					if(this.typein>this.info.high_price){
 						_this.$toast("不能超过最大限额")
 					}
-					return xprice.toFixed(2)
+					return xprice.toFixed(4)
 				}else{
 					let yprice=this.typein*this.info.price
-					if(yprice>this.info.high_price){
+					let bprice=Number(_this.info.high_price)
+					if(yprice.toFixed(4)>bprice){
 						_this.$toast("不能超过最大限额")
 					}
-					return this.typein?this.typein*this.info.price:'0.00'
+					return this.typein?(this.typein*this.info.price).toFixed(4):'0.00'
 				}
 			}
 		},
 		methods: {
 			maxAll(){
 				if(this.tabIndex==0){
-					if(this.info.number*this.info.price>this.info.high_price){
+					if(this.info.number*this.info.price>=this.info.high_price){
 						this.typein=this.info.high_price
 					}else{
 						this.typein=this.info.number*this.info.price
 					}
 					
 				}else{
-					this.typein=(this.info.high_price/this.info.price).toFixed(2)
-
+					if(this.info.number*this.info.price<=this.info.high_price){
+						this.typein=this.info.number
+					}else{
+						this.typein=(this.info.high_price/this.info.price).toFixed(4)
+					}
 				}
 			},
             onClickLeft(){
