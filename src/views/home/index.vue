@@ -45,8 +45,9 @@
 					<div class="imgqie"><img src="../../assets/img/qiehuan.png" alt="" srcset=""></div>
 				</div>
 			</div>
-			<div class="cardlist" v-for="(item,index) in list" :key="index">
-				<div class="titlename flex1">
+			<div  v-for="(item,index) in list" :key="index" >
+				<div v-if="item.status=='enable'" class="cardlist">
+					<div class="titlename flex1">
 					<div class="headbox" v-if="item.user_head==''"><img src="../../assets/img/head.png" alt=""></div>
 					<div class="headbox" v-if="item.user_head!=''"><img :src="item.user_head" alt=""></div>
 					<span class="namein">{{item.merchant_name}}</span>
@@ -69,6 +70,8 @@
 					<div v-if="tabIndex==0" class="buy" @click="moveDeatil(item)">购买</div>
 					<div  v-if="tabIndex==1" class="buyout"  @click="moveDeatil(item)">出售</div>
 				</div>
+				</div>
+				
 			</div>
 			<div class="listnone" v-if="list.length==0">
 				<div class="imgiconbox">
