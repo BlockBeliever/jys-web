@@ -144,7 +144,6 @@
 			usdtnum(){	
 				if(this.tabIndex==0){
 					let xprice=this.typein/this.info.price
-					console.log(this.typein,this.info.high_price,666)
 					if(this.typein>this.info.high_price){
 						_this.$toast("不能超过最大限额")
 					}
@@ -165,7 +164,7 @@
 					if(this.info.number*this.info.price>=this.info.high_price){
 						this.typein=this.info.high_price
 					}else{
-						this.typein=this.info.number*this.info.price
+						this.typein=(this.info.number*this.info.price)
 					}
 					
 				}else{
@@ -203,14 +202,39 @@
 				// )
 			},
 			orderPay(){
+				if(this.info.number==0){
+					_this.$toast("暂无库存")
+					return
+				}
 				if(this.usdtnum==0||this.typein==0){
 					_this.$toast("请输入购买量")
 					return
 				}
-				if(this.usdtnum*this.info.price<this.info.low_price){
+				console.log()
+				if(this.tabIndex==0){
+					if(this.usdtnum*this.info.price<this.info.low_price){
 					_this.$toast("不能低于最小限额")
 					return
 				}
+				}else{
+					if(this.usdtnum<this.info.low_price){
+					_this.$toast("不能低于最小限额")
+					return
+				}
+				}
+				if(this.tabIndex==1){
+					if(this.usdtnum>this.info.high_price||this.usdtnum>(this.info.number*this.info.price).toFixed(4)){
+					_this.$toast("不能高于最大限额")
+					return
+				}
+				}else{
+					if(this.usdtnum*this.info.price>this.info.high_price||this.usdtnum*this.info.price>this.info.number*this.info.price){
+					_this.$toast("不能高于最大限额")
+					return
+				}
+				}
+				
+				
 				let data={
 					merchant_advertising_id:this.id,
 					number:this.tabIndex==0?this.usdtnum:this.typein
