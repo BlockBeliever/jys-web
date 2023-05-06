@@ -12,7 +12,7 @@ Vue.prototype.$api = {
 // 提交
   submitOrder: params => { return http.post(`/api/user/advertising/buy`,  params ) },
   // 订单详情
-  submitOrder: params => { return http.post(`/api/user/advertising/buy`,  params ) },
+  submitOrderSell: params => { return http.post(`/api/user/advertising/sell`,  params ) },
    // 发布买入
    submitBuy: params => { return http.post(`/api/user/merchant/advertising/create`,  params ) },
     // 发布买入

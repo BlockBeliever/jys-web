@@ -24,9 +24,15 @@
 					<div class="imgall">
 						<img src="../../assets/img/save.png" alt="" srcset="">
 					</div>
-					<div class="tab-box">
+					<div class="tab-box" v-if="type=='sell'">
 						<div class="tab-item" @click="testTabClick(index)" :class="tabIndex == index?'active':''"
-							v-for="(item,index) in tabList" :key="index">
+							v-for="(item,index) in tabList1" :key="index">
+							{{item.name}}
+						</div>
+					</div>
+					<div class="tab-box" v-if="type=='buy'">
+						<div class="tab-item" @click="testTabClick(index)" :class="tabIndex == index?'active':''"
+							v-for="(item,index) in tabList2" :key="index">
 							{{item.name}}
 						</div>
 					</div>
@@ -48,12 +54,14 @@
 						<span style="color: rgba(255, 32, 64, 1);">{{info.low_price}}-{{info.high_price}} {{ usdt_name }}</span>
 					</div>
 					<div class="kede flex1" v-if="tabIndex==0">
-						<span>可得 </span>
+						<span v-if="type=='sell'">可得 </span>
+						<span v-else>出售 </span>
 						<span style="color: rgba(207, 207, 207, 1);padding-left: 13px;font-size: 25px;">{{usdtnum}}{{ coin_name.toUpperCase() }}
 						</span>
 					</div>
 					<div class="kede flex1" v-if="tabIndex==1">
-						<span>应付 </span>
+						<span v-if="type=='sell'">应付 </span>
+						<span v-else>可得 </span>
 						<span style="color: rgba(207, 207, 207, 1);padding-left: 13px;font-size: 25px;">{{usdtnum}}{{ usdt_name }}
 						</span>
 					</div>
@@ -93,8 +101,8 @@
 			<span>如果您同意与凤凰进行C2C交易，即标识您接受</span>
 			<span style="color: rgba(58, 116, 219, 1);border-bottom:1px solid  rgba(58, 116, 219, 1)">凤凰C2C交易法律免责声明。</span>
 		</div>
-            <div class="buybtn" @click="orderPay">买入{{ coin_name.toUpperCase() }}</div>
-		
+            <div class="buybtn" @click="orderPay" v-if="type=='sell'">买入{{ coin_name.toUpperCase() }}</div>
+			<div class="buybtn" @click="orderPay" v-else>出售{{ coin_name.toUpperCase() }}</div>
 		<div style="padding-bottom: 94px;"></div>
 	</div>
 </template>
@@ -104,10 +112,15 @@
 	export default {
 		data() {
 			return {
-				tabList: [{
+				tabList1: [{
 					name: "按金额购买"
 				}, {
 					name: "按数量购买"
+				}],
+				tabList2: [{
+					name: "按金额出售"
+				}, {
+					name: "按数量出售"
 				}],
 				tabIndex: 0,
 				typein:null,
@@ -124,10 +137,11 @@
             this.id= parseInt(this.$route.query.id)
 			this.coin_name=this.$route.query.coin_name
 			this.usdt_name=this.$route.query.usdt_name
+			this.type=this.$route.query.type
 			this.loadDetail()
 		},
 		computed:{
-			usdtnum(){
+			usdtnum(){	
 				if(this.tabIndex==0){
 					let xprice=this.typein/this.info.price
 					console.log(this.typein,this.info.high_price,666)
@@ -189,11 +203,16 @@
 				// )
 			},
 			orderPay(){
+				if(this.usdtnum==0||this.typein==0){
+					_this.$toast("请输入购买量")
+					return
+				}
 				let data={
 					merchant_advertising_id:this.id,
 					number:this.tabIndex==0?this.usdtnum:this.typein
 				}
-                this.$api.submitOrder(data).then((res)=>{
+				if(this.type=='sell'){
+					this.$api.submitOrder(data).then((res)=>{
                     if(res.code==0){
                         _this.$toast("订单提交成功")
                     setTimeout(()=>{
@@ -210,6 +229,26 @@
                     }
 					
 				})
+				}else{
+					this.$api.submitOrderSell(data).then((res)=>{
+                    if(res.code==0){
+                        _this.$toast("订单提交成功")
+                    setTimeout(()=>{
+                        this.$router.push({
+					name:'order',
+					query:{
+                        order:res
+					}
+                    })
+                   
+				    },400)
+                    }else{
+                        _this.$toast(res.error)
+                    }
+					
+				})
+				}
+                
 				// _this.$post('/api/user/advertising/buy',{
 				// 	data:data,
 				// 	success: (res)=>{

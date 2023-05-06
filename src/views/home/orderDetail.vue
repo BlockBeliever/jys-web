@@ -50,7 +50,8 @@
       <div class="boxorderdetail">
         <div class="flex1 saddwq">
           <div class="usdtimg"><img src="../../../static/img/usdticon.png" alt="" /></div>
-          <span class="butusdtt">购买USTD</span>
+          <span class="butusdtt" v-if="info.type=='buy'">购买{{ coin.en_name.toUpperCase()}}</span>
+          <span class="butusdtt" v-else>出售{{ coin.en_name.toUpperCase()}}</span>
         </div>
         <div class="boxdetailsa">
           <div class="flex2 adsawq">
@@ -69,7 +70,7 @@
           <div class="flex2 adsawq">
             <span>数量</span>
             <div class="flex">
-              <span>{{ info.number }} USDT</span>
+              <span>{{ info.number }} {{ coin.en_name.toUpperCase()}}</span>
             </div>
           </div>
           <div class="flex2 adsawq">
@@ -110,7 +111,8 @@ export default {
     return {
       id: 1,
       info: {},
-      merchant: {}
+      merchant: {},
+      coin:{}
     }
   },
   mounted() {
@@ -174,6 +176,7 @@ export default {
           if (res.code == 0) {
             _this.info = res.data.order
             _this.merchant = res.data.merchant
+            _this.coin=res.data.coin
           }
 
         })

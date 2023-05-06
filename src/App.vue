@@ -8,7 +8,24 @@
 import './api/index.js' // 导入api
 
 export default {
-  name: 'App'
+  name: 'App',
+  mounted() {
+				if(this.$route.query.code){
+				this.getAuther(this.$router.query.code)
+				}else if(localStorage.getItem('token')){
+					this.getAuther(localStorage.getItem('token'))
+				}
+			
+			
+		},
+		methods: {
+			getAuther(code){
+				console.log(code,77777)
+				this.$api.getAuther({code:code}).then((res)=>{
+					localStorage.setItem('token',res.data.auth.access)
+				})
+			},
+		}
 }
 </script>
 <style lang="scss">

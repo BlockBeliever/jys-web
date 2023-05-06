@@ -331,6 +331,7 @@
 					name:'goodDetail',
 					query:{
 					id:val.id,
+					type:this.filters.type,
 					coin_name:val.coin_en_name,
 					usdt_name:this.chooseusdtname
 					}
