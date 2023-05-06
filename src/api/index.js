@@ -32,7 +32,7 @@ Vue.prototype.$api = {
     // 获取信息
     sumbmitReplyMerchan : params => { return http.post(`/api/user/merchant/reapply`,  params ) },
     // 订单列表
-  orderList: params => { return http.post(`/api/user/advertising/order/list`, { params }) },
+  orderList: params => { return http.post(`/api/user/advertising/order/list`, params ) },
 
   // 订单详情
   orderDetail: id => { return http.post(`/api/user/advertising/order/detail`, { id }) },
@@ -40,5 +40,5 @@ Vue.prototype.$api = {
   // 完成订单
   orderEnd: id => { return http.post(`/api/user/advertising/order/end`, { id }) },
    // 获取TOKEN
-   getAuther: id => { return http.post(`/api/user/auth/code_to_token`, { id }) }
+   getAuther: params => { return http.post(`/api/user/auth/code_to_token`, params) }
 }
