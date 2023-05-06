@@ -17,12 +17,12 @@ export default {
 					this.getAuther(localStorage.getItem('code'))
 				}
 				this.getAuther(localStorage.getItem('code'))
-				console.log(88888888887)
+				
 		},
 		methods: {
 			getAuther(code){
-				console.log(code,77788)
 				this.$api.getAuther({code:code}).then((res)=>{
+					console.log(res.data.auth.access,88888888887)
 					localStorage.setItem('token',res.data.auth.access)
 				})
 			},

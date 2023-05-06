@@ -17,7 +17,7 @@ http.interceptors.request.use(
       let token = localStorage.getItem('token')
       if (token) {
         // config.headers.Authorization = token // 将token设置成请求头
-        config.headers["Authorization"] = token?token:1;
+        config.headers["Authorization"] = token;
         config.headers['Content-Type'] = 'application/json' // 将token设置成请求头
       }
       return Promise.resolve(config)
