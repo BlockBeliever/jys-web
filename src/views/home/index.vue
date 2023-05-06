@@ -221,13 +221,14 @@
 				this.checkedusdt='0'
 				if(this.$route.query.code){
 				this.getAuther(this.$router.query.code)
-				}else if(localStorage.getItem('token')){
-					this.getAuther(localStorage.getItem('token'))
+				}else if(localStorage.getItem('code')){
+					this.getAuther(localStorage.getItem('code'))
 				}
 			this.getList()
 			this.getcoinList()
-			
-			
+			this.getAuther(localStorage.getItem('code'))
+			console.log(localStorage.getItem('code'))
+			console.log(8888888888)
 		},
 		methods: {
 			getAuther(code){

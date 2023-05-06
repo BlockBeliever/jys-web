@@ -36,8 +36,12 @@ export default {
 </script>
 
 <style scoped>
+.van-tabbar--fixed{
+  z-index: 999;
+}
 .tab-bar {
   height: 50px;
+  z-index: 999;
 }
 h3 {
   margin: 40px 0 0;

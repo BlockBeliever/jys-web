@@ -40,7 +40,7 @@
 				</div>
 				<div class="addetail">
 					<span style="color:rgba(120, 137, 166, 1)">支付方式</span>
-					<span style="padding-left: 8px;color: #333333;">{{item.contact.toUpperCase()}}</span>
+					<span style="padding-left: 8px;color: #333333;">{{item.contact}}</span>
 				</div>
 				
 			</div>
