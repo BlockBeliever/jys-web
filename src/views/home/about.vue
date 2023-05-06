@@ -8,9 +8,10 @@
 		<div class="cardin">
 			<div class="flex1">
 				<div class="myheadbox">
-					<img src="../../assets/img/head.png" alt="" srcset="">
+					<img src="../../assets/img/head.png" alt="" srcset="" v-if="!account.head">
+					<img :src="account.head" alt="" srcset="" v-else>
 				</div>
-				<span style="font-size:16px;color: rgba(16, 16, 16, 1);padding-left: 7px;">啦啦啦啦小可爱</span>
+				<span style="font-size:16px;color: rgba(16, 16, 16, 1);padding-left: 7px;">{{ account.name }}</span>
 			</div>
 			<div class="flex2">
 				<div class="cardbuy" @click="moveBuy">
@@ -47,7 +48,8 @@
 	export default{
 		data() {
 			return {
-				status:''
+				status:'',
+				account:{}
 			}
 		},
 		mounted(){
@@ -55,11 +57,15 @@
 		},
 		methods: {
 			getInfo(){
+				this.$api.getAccount().then((res)=>{
+					if(res.code==0){
+							this.account=res.data.user
+					}
+				})
 				this.$api.merchantInfo().then((res)=>{
 					if(res.code==0){
 							this.status=res.data.info.status
 					}
-					
 				})
 			},
 			moveAd(){

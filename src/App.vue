@@ -9,15 +9,7 @@ import './api/index.js' // 导入api
 
 export default {
   name: 'App',
-  mounted() {
-				if(this.$route.query.code){
-				this.getAuther(this.$route.query.code)
-				}else if(localStorage.getItem('code')){
-					this.getAuther(localStorage.getItem('code'))
-				}
-				this.getAuther(localStorage.getItem('code'))
-				console.log(8888888888)
-		},
+ 
 		created(){
 			if(this.$route.query.code){
 				this.getAuther(this.$route.query.code)
@@ -25,7 +17,7 @@ export default {
 					this.getAuther(localStorage.getItem('code'))
 				}
 				this.getAuther(localStorage.getItem('code'))
-				console.log(8888888888)
+				console.log(88888888887)
 		},
 		methods: {
 			getAuther(code){

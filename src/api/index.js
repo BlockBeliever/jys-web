@@ -40,5 +40,7 @@ Vue.prototype.$api = {
   // 完成订单
   orderEnd: id => { return http.post(`/api/user/advertising/order/end`, { id }) },
    // 获取TOKEN
-   getAuther: params => { return http.post(`/api/user/auth/code_to_token`, params) }
+   getAuther: params => { return http.post(`/api/user/auth/code_to_token`, params) },
+   // 获取TOKEN
+   getAccount: params => { return http.post(`/api/user/account`, params) }
 }

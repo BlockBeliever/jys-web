@@ -219,20 +219,20 @@
 			this.filters.price_type=this.list2[0].name
 				this.chooseusdtname=this.list2[0].name
 				this.checkedusdt='0'
-				if(this.$route.query.code){
-				this.getAuther(this.$router.query.code)
-				}else if(localStorage.getItem('code')){
-					this.getAuther(localStorage.getItem('code'))
-				}
+				// if(this.$route.query.code){
+				// this.getAuther(this.$router.query.code)
+				// }else if(localStorage.getItem('code')){
+				// 	this.getAuther(localStorage.getItem('code'))
+				// }
 			this.getList()
 			this.getcoinList()
-			this.getAuther(localStorage.getItem('code'))
+			// this.getAuther(localStorage.getItem('code'))
 			console.log(localStorage.getItem('code'))
 			console.log(8888888888)
 		},
 		methods: {
 			getAuther(code){
-				console.log(code,77777)
+				// console.log(code,77777)
 				this.$api.getAuther({code:code}).then((res)=>{
 					localStorage.setItem('token',res.data.auth.access)
 				})
