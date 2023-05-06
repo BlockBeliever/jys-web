@@ -46,7 +46,7 @@
 				</div>
 			</div>
 			<div  v-for="(item,index) in list" :key="index" >
-				<div v-if="item.status=='enable'" class="cardlist">
+				<div  class="cardlist">
 					<div class="titlename flex1">
 					<div class="headbox" v-if="item.user_head==''"><img src="../../assets/img/head.png" alt=""></div>
 					<div class="headbox" v-if="item.user_head!=''"><img :src="item.user_head" alt=""></div>
@@ -242,6 +242,7 @@
 				this.filters.coin_id=this.listall[e].id
 				this.chooseCoinname=this.listall[e].en_name
 				this.bookShowPicker=false
+				this.list=[]
 				this.getList()
 			},
 			cahgeUsdt(e){
@@ -249,10 +250,12 @@
 				this.filters.price_type=this.list2[e].name
 				this.chooseusdtname=this.list2[e].name
 				this.fabishow=false
+				this.list=[]
 				this.getList()
 			},
 			testTabClick(index) {
 				this.tabIndex = index
+				this.list=[]
 				this.getList()
 			},
 			changeCoin(){
@@ -292,7 +295,13 @@
 				}
 				this.$api.homeList(this.filters).then((res)=>{
 					if(res.code==0){
-						_this.list=res.data.list
+						let all=res.data.list
+						all.forEach(item=>{
+							if(item.status=='enable'){
+								_this.list.push(item)
+							}
+						})
+						
 					}
 					
 				})

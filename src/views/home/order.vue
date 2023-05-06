@@ -31,7 +31,8 @@
 			<div class="boxorderdetail">
 				<div class="flex1 saddwq">
 					<div class="usdtimg"><img src="../../assets/img/usdticon.png" alt=""></div>
-					<span class="butusdtt">购买{{ coin.en_name.toUpperCase()}}</span>
+					<span class="butusdtt" v-if="order.type=='buy'">购买{{ coin.en_name.toUpperCase()}}</span>
+					<span class="butusdtt" v-else>出售{{ coin.en_name.toUpperCase()}}</span>
 				</div>
 				<div class="boxdetailsa">
 					<div class="flex2 adsawq">

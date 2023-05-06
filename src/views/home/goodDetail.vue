@@ -207,6 +207,10 @@
 					_this.$toast("请输入购买量")
 					return
 				}
+				if(this.usdtnum*this.info.price<this.info.low_price){
+					_this.$toast("不能低于最小限额")
+					return
+				}
 				let data={
 					merchant_advertising_id:this.id,
 					number:this.tabIndex==0?this.usdtnum:this.typein
