@@ -13,8 +13,10 @@
       <div class="listcard" v-for="(item, index) in list" :key="index" @click="moveGoodsDetail(item.id)">
         <div class="flex2">
           <div style="font-size: 16px">
-            <span style="color: rgba(242, 39, 68, 1)" v-if="item.type == 'sell'">出售</span>
-            <span style="color: rgba(46, 107, 219, 1)" v-if="item.type == 'buy'">购买</span>
+            <span style="color: rgba(242, 39, 68, 1)" v-if="item.type == 'sell'&&merchantid==item.merchant_id">购买</span>
+            <span style="color: rgba(242, 39, 68, 1)" v-if="item.type == 'sell'&&merchantid!=item.merchant_id">出售</span>
+            <span style="color: rgba(46, 107, 219, 1)" v-if="item.type == 'buy'&&merchantid==item.merchant_id">出售</span>
+            <span style="color: rgba(46, 107, 219, 1)" v-if="item.type == 'buy'&&merchantid!=item.merchant_id">购买</span>
             <span style="color: rgba(51, 51, 51, 1)">{{ item.coin_en_name.toUpperCase() }}</span>
           </div>
           <div>
@@ -75,7 +77,8 @@ export default {
         page: 1,
         limit: 10
       },
-      list: []
+      list: [],
+      merchantid:0
     }
   },
   mounted() {
@@ -109,8 +112,11 @@ export default {
       _this = this
       this.$api.orderList(this.filters).then(res => {
         _this.list = res.data.order
-        console.log(res)
       })
+      this.$api.getAccount().then((res)=>{
+							this.merchantid=res.data.user.user_id
+              localStorage.setItem('merchantid',this.merchantid)
+				})
     }
   }
 }

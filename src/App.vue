@@ -17,6 +17,7 @@ export default {
 					this.getAuther(localStorage.getItem('code'))
 				}
 				this.getAuther(localStorage.getItem('code'))
+				// this.getAuther('ZTUZNJZHNTUTN2M0NC0ZZMNJLTLIY2ITZTQ3ZGE5NTBJYZY3')
 				
 		},
 		methods: {
@@ -24,6 +25,7 @@ export default {
 				this.$api.getAuther({code:code}).then((res)=>{
 					console.log(res.data.auth.access,88888888887)
 					localStorage.setItem('token',res.data.auth.access)
+					
 				})
 			},
 		}
