@@ -34,6 +34,14 @@
         订单已完成
       </div>
       <div class="ordercard">
+        <div class="contract">
+					<div class="iconimg">
+						<img src="../../assets/img/chant.png" alt="" srcset=""></img>
+					</div>
+					<span style="padding-left:2px">联系客服</span>
+
+
+				</div>
         <div class="allcard">
           <span class="tetinfo">卖家信息</span>
           <div class="contract"></div>
@@ -218,7 +226,32 @@ export default {
   // background: linear-gradient(180deg, rgba(204, 222, 255, 1) 0%, rgba(255, 255, 255, 0.01) 100%);
   background: url('../../../static/img/bg.png');
   background-size: 100% 100%;
-
+  position: relative;
+  .contract{
+			position: absolute;
+			display: flex;
+			align-items: center;
+			font-size: 10px;
+			color: rgba(128, 128, 128, 1);
+			border-radius: 16px;
+			border: 1px solid rgba(103, 199, 255, 1);
+			width: 84px;
+			height: 27px;
+			right: 8.5px;
+			top:13px;
+			justify-content: center;
+			// padding-left: 8px;
+			// box-sizing: border-box;
+			.iconimg{
+				
+				width: 18px;
+				height: 16.5px;
+				img{
+				width: 100%;
+				height: 100%;
+				}
+			}
+		}
   .allcard {
     padding: 15px;
     box-sizing: border-box;
