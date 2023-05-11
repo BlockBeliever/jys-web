@@ -9,7 +9,7 @@
 			<div class="flex1">
 				<div class="myheadbox">
 					<img src="../../assets/img/head.png" alt="" srcset="" v-if="!account.head">
-					<img :src="account.head" alt="" srcset="" v-else>
+					<img :src="$IMGURL+ account.head" alt="" srcset="" v-else>
 				</div>
 				<span style="font-size:16px;color: rgba(16, 16, 16, 1);padding-left: 7px;">{{ account.name }}</span>
 			</div>
@@ -45,14 +45,18 @@
 </template>
 
 <script>
+
+
 	export default{
 		data() {
 			return {
 				status:'',
-				account:{}
+				account:{},
+				$IMGURL:''
 			}
 		},
 		mounted(){
+			this.$IMGURL = process.env.VUE_APP_IMGURL
 			this.getInfo()
 		},
 		methods: {
@@ -143,6 +147,7 @@
 		width: 43px;
 		height: 43px;
 		border-radius: 50%;
+		overflow:hidden;
 		img{
 			width: 100%;
 			height: 100%;

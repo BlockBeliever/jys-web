@@ -70,6 +70,8 @@ import 'lib-flexible/flexible.js'
 import './filters'
 Vue.config.productionTip = false
 
+// Vue.prototype.$APIURL = process.env.VUE_APP_BASE_API;
+// Vue.prototype.$IMGURL = process.env.VUE_APP_IMGURL;
 // 过滤器
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])

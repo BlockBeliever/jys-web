@@ -36,8 +36,9 @@
         </div>
         <div class="flex2 nametime">
           <div class="flex1">
-            <div class="headimgbox">
-              <img src="../../../static/img/head.png" alt="" srcset="" />
+            <div class="headimgbox" >
+              <img  v-if="item.user_head==''"  src="../../../static/img/head.png" alt="" srcset="" />
+              <img :src="$IMGURL+ item.merchant_head" alt="" v-else />
             </div>
             <span style="margin-left: 8.5px">{{ item.merchant_name }}</span>
           </div>
@@ -78,10 +79,12 @@ export default {
         limit: 10
       },
       list: [],
-      merchantid:0
+      merchantid:0,
+      $IMGURL:'',
     }
   },
   mounted() {
+    this.$IMGURL = process.env.VUE_APP_IMGURL
     this.getList()
   },
   filters: {
@@ -176,7 +179,7 @@ export default {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-
+  overflow: hidden;
   img {
     width: 100%;
     height: 100%;

@@ -24,8 +24,9 @@
 				</div>
 			</div>
 		</div>
-		<div class="content" >
-			<div class="flex2 ads">
+		<div class="content" style="margin-top:165px">
+			<div class="status_bar"></div>
+			<div class="flex2 ads" >
 				<!-- <div class="tab-box">
 						<div class="tab-item" @click="testTabClick(index)" :class="tabIndex == index?'active':''" v-for="(item,index) in tabList" :key="index">
 							{{item.name}}
@@ -49,7 +50,7 @@
 				<div  class="cardlist">
 					<div class="titlename flex1">
 					<div class="headbox" v-if="item.user_head==''"><img src="../../assets/img/head.png" alt=""></div>
-					<div class="headbox" v-if="item.user_head!=''"><img :src="item.user_head" alt=""></div>
+					<div class="headbox" v-else><img :src="$IMGURL+ item.user_head" alt=""></div>
 					<span class="namein">{{item.merchant_name}}</span>
 				</div>
 				<div class="flex4 xianshi">
@@ -199,6 +200,7 @@
 					type:"sell",
 					price_type:''
 				},
+				$IMGURL:'',
 				list:[],
 				chooseCoinname:'',
 				chooseusdtname:'',
@@ -216,6 +218,7 @@
 			}
 		},
 		mounted() {
+			this.$IMGURL = process.env.VUE_APP_IMGURL
 			this.filters.price_type=this.list2[0].name
 				this.chooseusdtname=this.list2[0].name
 				this.checkedusdt='0'
@@ -227,8 +230,6 @@
 			this.getList()
 			this.getcoinList()
 			// this.getAuther(localStorage.getItem('code'))
-			console.log(localStorage.getItem('code'))
-			console.log(8888888888)
 		},
 		methods: {
 			getAuther(code){
@@ -486,7 +487,7 @@
 				width: 40px;
 				height: 40px;
 				border-radius: 50%;
-
+				overflow: hidden;
 				img {
 					width: 100%;
 					height: 100%;
@@ -528,8 +529,9 @@
 		height: 110px;
 		opacity: 1;
 		background: linear-gradient(180deg, rgba(46, 107, 219, 1) 0%, rgba(85, 136, 220, 1) 100%);
-		position: relative;
-
+		position: fixed;
+		top:0;
+		z-index: 999;
 		.buyandsale {
 			padding: 0 17px;
 			box-sizing: border-box;

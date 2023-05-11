@@ -202,6 +202,7 @@
 				// )
 			},
 			orderPay(){
+				console.log(this.usdtnum,this.typein,this.info.price,this.tabIndex)
 				if(this.info.number==0){
 					_this.$toast("暂无库存")
 					return
@@ -217,17 +218,21 @@
 					return
 				}
 				}else{
+					console.log(this.usdtnum,this.info.low_price)
 					if(this.usdtnum<this.info.low_price){
 					_this.$toast("不能低于最小限额")
 					return
 				}
 				}
 				if(this.tabIndex==1){
-					if(this.usdtnum>this.info.high_price||this.usdtnum>(this.info.number*this.info.price).toFixed(4)){
+					let high_price = Number(_this.info.high_price)
+					console.log(this.usdtnum,high_price.toFixed(4))
+					if(this.usdtnum>high_price.toFixed(4)||this.usdtnum>(this.info.number*this.info.price)){
 					_this.$toast("不能高于最大限额")
 					return
 				}
 				}else{
+					
 					if(this.usdtnum*this.info.price>this.info.high_price||this.usdtnum*this.info.price>this.info.number*this.info.price){
 					_this.$toast("不能高于最大限额")
 					return

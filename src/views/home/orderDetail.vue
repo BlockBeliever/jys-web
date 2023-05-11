@@ -36,7 +36,7 @@
       <div class="ordercard">
         <div class="contract">
 					<div class="iconimg">
-						<img src="../../assets/img/chant.png" alt="" srcset=""></img>
+						<img src="../../assets/img/chant.png" alt="" srcset="" />
 					</div>
 					<span style="padding-left:2px">联系客服</span>
 
@@ -209,6 +209,7 @@ export default {
   opacity: 1;
   background: linear-gradient(180deg, rgba(46, 107, 219, 1) 0%, rgba(85, 136, 220, 1) 100%);
   position: fixed;
+  z-index: 999;
 }
 
 .order {
@@ -220,7 +221,7 @@ export default {
 }
 
 .ordercard {
-  width: 340px;
+  width:100%;
   height: 126px;
   border-radius: 10px;
   // background: linear-gradient(180deg, rgba(204, 222, 255, 1) 0%, rgba(255, 255, 255, 0.01) 100%);
@@ -275,7 +276,7 @@ export default {
 }
 
 .boxorderdetail {
-  width: 340px;
+  width:100%;
   margin: 0 auto;
   background-color: #fff;
   height: calc(100vh - 210px);

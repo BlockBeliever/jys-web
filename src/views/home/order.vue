@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="navbartitle">
-			<div class="status_bar"></div>
+			<!-- <div class="status_bar"></div> -->
             <van-nav-bar left-text="返回"  :safe-area-inset-top="true" :border="false" left-arrow
   @click-left="onClickLeft"/>
 			<!-- <uni-nav-bar left-text="返回" :border="false" statusBar="true" backgroundColor="transparent" color="#fff"
@@ -14,7 +14,7 @@
 			<div class="ordercard">
 				<div class="contract">
 						<div class="iconimg">
-						<img src="../../assets/img/chant.png" alt="" srcset=""></img>
+						<img src="../../assets/img/chant.png" alt="" srcset=""/>
 					</div>
 					<span style="padding-left:2px">联系客服</span>
 					
@@ -146,10 +146,10 @@ import Clipboard from 'clipboard'
 </script>
 
 <style lang="scss" scoped>
-	page {
-		background: linear-gradient(180deg, rgba(247, 250, 255, 1) 0%, rgba(247, 250, 255, 1) 100%);
-		color: rgba(51, 51, 51, 1);
-	}
+	// .page {
+	// 	background: linear-gradient(180deg, rgba(247, 250, 255, 1) 0%, rgba(247, 250, 255, 1) 100%);
+	// 	color: rgba(51, 51, 51, 1);
+	// }
 
 	.navbartitle {
 		color: rgba(16, 16, 16, 1);
@@ -157,8 +157,8 @@ import Clipboard from 'clipboard'
 		height: 60px;
 		opacity: 1;
 		background: linear-gradient(180deg, rgba(46, 107, 219, 1) 0%, rgba(85, 136, 220, 1) 100%);
-		position: fixed;
 		top: 0;
+		position: fixed;
 	}
 
 	.order {
