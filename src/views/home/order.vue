@@ -13,10 +13,11 @@
 			</div>
 			<div class="ordercard">
 				<div class="contract">
-					<div class="iconimg">
+						<div class="iconimg">
 						<img src="../../assets/img/chant.png" alt="" srcset=""></img>
 					</div>
 					<span style="padding-left:2px">联系客服</span>
+					
 
 
 				</div>
@@ -178,6 +179,7 @@ import Clipboard from 'clipboard'
 		background-size: 100% 100%;
 		position: relative;
 		.contract{
+			background-color: rgba(255, 255, 255, 1);
 			position: absolute;
 			display: flex;
 			align-items: center;

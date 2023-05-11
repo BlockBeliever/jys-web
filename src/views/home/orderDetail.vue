@@ -44,7 +44,7 @@
 				</div>
         <div class="allcard">
           <span class="tetinfo">卖家信息</span>
-          <div class="contract"></div>
+          <!-- <div class="contract"></div> -->
         </div>
         <div class="info">
           <span style="color: rgba(112, 169, 229, 1)">*</span>
@@ -228,6 +228,7 @@ export default {
   background-size: 100% 100%;
   position: relative;
   .contract{
+    background-color: rgba(255, 255, 255, 0.8);
 			position: absolute;
 			display: flex;
 			align-items: center;

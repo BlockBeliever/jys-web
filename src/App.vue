@@ -11,16 +11,21 @@ export default {
   name: 'App',
  
 		created(){
+			console.log(localStorage.getItem('code'),99888)
 			if(this.$route.query.code){
 				this.getAuther(this.$route.query.code)
 				}else if(localStorage.getItem('code')){
 					this.getAuther(localStorage.getItem('code'))
 				}
-				this.getAuther(localStorage.getItem('code'))
+				setTimeout(()=>{
+					this.getAuther(localStorage.getItem('code'))
+				},500)
+				
 				
 		},
 		methods: {
 			getAuther(code){
+				console.log(code,9988888888)
 				this.$api.getAuther({code:code}).then((res)=>{
 					localStorage.setItem('token',res.data.auth.access)
 				})
