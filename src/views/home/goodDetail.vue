@@ -215,7 +215,8 @@
 				}
 				console.log()
 				if(this.tabIndex==0){
-					if(this.usdtnum*this.info.price<this.info.low_price){
+					console.log(this.usdtnum*this.info.price,this.info.low_price)
+					if(this.typein*this.info.price<this.info.low_price){
 					_this.$toast("不能低于最小限额")
 					return
 				}
