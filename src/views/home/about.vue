@@ -7,9 +7,9 @@
 		</div>
 		<div class="cardin">
 			<div class="flex1">
-				<div class="myheadbox">
-					<img src="../../assets/img/head.png" alt="" srcset="" v-if="!account.head">
-					<img :src="$IMGURL+ account.head" alt="" srcset="" v-else>
+				<div class="myheadbox" v-if="account.head">
+					<!-- <img src="../../assets/img/head.png" alt="" srcset="" v-if="!account.head"> -->
+					<img :src="$IMGURL+ account.head" alt="" srcset="">
 				</div>
 				<span style="font-size:16px;color: rgba(16, 16, 16, 1);padding-left: 7px;">{{ account.name }}</span>
 			</div>
@@ -55,7 +55,7 @@
 				$IMGURL:''
 			}
 		},
-		mounted(){
+		created(){
 			this.$IMGURL = process.env.VUE_APP_IMGURL
 			this.getInfo()
 		},

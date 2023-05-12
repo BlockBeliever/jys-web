@@ -144,16 +144,16 @@
 			usdtnum(){	
 				if(this.tabIndex==0){
 					let xprice=this.typein/this.info.price
-					if(this.typein>this.info.high_price){
-						_this.$toast("不能超过最大限额")
-					}
+					// if(this.typein>this.info.high_price){
+					// 	_this.$toast("不能超过最大限额")
+					// }
 					return xprice.toFixed(4)
 				}else{
 					let yprice=this.typein*this.info.price
 					let bprice=Number(_this.info.high_price)
-					if(yprice.toFixed(4)>bprice){
-						_this.$toast("不能超过最大限额")
-					}
+					// if(yprice.toFixed(4)>bprice){
+					// 	_this.$toast("不能超过最大限额")
+					// }
 					return this.typein?(this.typein*this.info.price).toFixed(4):'0.00'
 				}
 			}

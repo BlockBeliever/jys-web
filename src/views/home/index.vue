@@ -94,8 +94,8 @@
 					<van-radio-group v-model="checked"  >
 					<div class="listcoinall flex2" v-for="(item,index) in listall" :key="index">
 										 <div class="flex" style="align-items: center;">
-											 <div class="cpongom">
-												 <img src="../../assets/img/head.png" alt="" srcset="">
+											 <div class="cpongom" v-if="item.en_name!='全部'">
+												 <img :src="$APIURL+'/'+item.icon" alt="" srcset="">
 											 </div>
 											 <div class="tista">
 												 <span>{{item.en_name.toUpperCase()}}</span>
@@ -125,9 +125,9 @@
 				</div>
 				<div style="padding: 25px 30px;">
 					<van-radio-group v-model="checkedusdt"  >
-					<div class="listcoinall flex2" v-for="(item,index) in list2" :key="index">
+					<div class="listcoinall flex2" v-for="(item,index) in list2" :key="index" >
 										 <div class="flex" style="align-items: center;">
-											 <div class="cpongom">
+											 <div class="cpongom" >
 												 <img src="../../assets/img/head.png" alt="" srcset="">
 											 </div>
 											 <div class="tista">
@@ -219,6 +219,7 @@
 		},
 		mounted() {
 			this.$IMGURL = process.env.VUE_APP_IMGURL
+			this.$APIURL = process.env.VUE_APP_BASE_API;
 			this.filters.price_type=this.list2[0].name
 				this.chooseusdtname=this.list2[0].name
 				this.checkedusdt='0'
@@ -422,7 +423,7 @@
 	}
 	.buybtn {
 		margin-top: 20px;
-		font-size: 6px;
+		font-size: 12px;
 		color: rgba(120, 137, 166, 1);
 
 		.buy {

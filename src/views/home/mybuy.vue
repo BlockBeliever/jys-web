@@ -26,7 +26,7 @@
 						<!-- <uni-icons type="bottom" size="12" v-if="!showcoindown" @click="showcoindown=!showcoindown"></uni-icons>
 						<uni-icons type="top" size="12" v-if="showcoindown"  @click="showcoindown=!showcoindown"></uni-icons> -->
 						<div class="downlistcoin"  v-if="showcoindown">
-							<div class="boxboadssad" v-for="(item,index) in cointypelist" :key="index" :style="selectedcoinIndex==index?'background:#F7FAFF':'background:#fff'" @click="selectedCoinType(index,item.name)">{{item.name}}</div>
+							<div class="boxboadssad" v-for="(item,index) in cointypelist" :key="index" :style="selectedcoinIndex==index?'background:#F7FAFF':'background:#fff'" @click="selectedCoinType(index,item.en_name)">{{item.en_name.toUpperCase()}}</div>
 						</div>
 					</div>
 				</div>
@@ -137,8 +137,17 @@
 		mounted() {
 			 _this=this
 			this.load()
+			this.getcoinList()
 		},
 		methods: {
+			getcoinList(){
+				this.$api.coinList(this.filters).then((res)=>{
+					if(res.code==0){
+						_this.cointypelist=res.data.coins
+					}
+					
+				})
+			},
             onClickLeft(){
                 this.$router.go(-1)
             },
@@ -173,8 +182,8 @@
 				this.selectedcoinIndex=index
 				this.chooseCoinname=""
 				this.showcoindown=false
-				this.formData.coin_name=name
-				this.formData.coin_id=this.cointypelist[index].coin_id
+				this.formData.coin_name=name.toUpperCase()
+				this.formData.coin_id=this.cointypelist[index].id
 			},
 			 selectedPriceType(index,name){
 				this.selectedIndex=index

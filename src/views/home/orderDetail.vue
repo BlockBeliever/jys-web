@@ -102,7 +102,10 @@
             </div>
           </div>
         </div>
-        <div class="submit" @click="submit" v-if="info.status == 'wait'">
+        <div class="submit" @click="submit" v-if="info.status == 'wait'&&info.type == 'sell'&&info.user_id==info.merchant_id">
+          <span>完成订单</span>
+        </div>
+        <div class="submit" @click="submit" v-if="info.status == 'wait'&&info.type == 'buy'&&info.user_id!=info.merchant_id">
           <span>完成订单</span>
         </div>
         <div class="stats_bottom"></div>
@@ -120,10 +123,12 @@ export default {
       id: 1,
       info: {},
       merchant: {},
-      coin:{}
+      coin:{},
+      merchantid:0,
     }
   },
   mounted() {
+    this.merchantid=localStorage.getItem("merchantid")
     let id = this.$route.query.id
     console.log('id', id)
     _this = this

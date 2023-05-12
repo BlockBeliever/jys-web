@@ -14,9 +14,9 @@
         <div class="flex2">
           <div style="font-size: 16px">
             <span style="color: rgba(242, 39, 68, 1)" v-if="item.type == 'sell'&&merchantid==item.merchant_id">购买</span>
-            <span style="color: rgba(242, 39, 68, 1)" v-if="item.type == 'sell'&&merchantid!=item.merchant_id">出售</span>
-            <span style="color: rgba(46, 107, 219, 1)" v-if="item.type == 'buy'&&merchantid==item.merchant_id">出售</span>
-            <span style="color: rgba(46, 107, 219, 1)" v-if="item.type == 'buy'&&merchantid!=item.merchant_id">购买</span>
+            <span style="color:rgba(46, 107, 219, 1) " v-if="item.type == 'sell'&&merchantid!=item.merchant_id">出售</span>
+            <span style="color:  rgba(46, 107, 219, 1)" v-if="item.type == 'buy'&&merchantid==item.merchant_id">出售</span>
+            <span style="color:rgba(242, 39, 68, 1)" v-if="item.type == 'buy'&&merchantid!=item.merchant_id">购买</span>
             <span style="color: rgba(51, 51, 51, 1)">{{ item.coin_en_name.toUpperCase() }}</span>
           </div>
           <div>
@@ -36,7 +36,11 @@
         </div>
         <div class="flex2 nametime">
           <div class="flex1">
-            <div class="headimgbox" >
+            <div class="headimgbox" v-if="merchantid==item.merchant_id">
+              <img  v-if="item.user_head==''"  src="../../../static/img/head.png" alt="" srcset="" />
+              <img :src="$IMGURL+ item.merchant_head" alt="" v-else />
+            </div>
+            <div class="headimgbox" v-if="merchantid!=item.merchant_id">
               <img  v-if="item.user_head==''"  src="../../../static/img/head.png" alt="" srcset="" />
               <img :src="$IMGURL+ item.merchant_head" alt="" v-else />
             </div>
@@ -53,7 +57,7 @@
           </div>
           <div>
             <span style="font-size: 11px">实付 </span>
-            <span style="padding-left: 2.5px; font-weight: 600">{{item.number * item.price}}{{ item.price_type }} </span>
+            <span style="padding-left: 2.5px; font-weight: 600">{{(item.number * Number(item.price)).toFixed(4)}}{{ item.price_type }} </span>
           </div>
         </div>
       </div>
