@@ -101,8 +101,8 @@
 			<span>如果您同意与凤凰进行C2C交易，即标识您接受</span>
 			<span style="color: rgba(58, 116, 219, 1);border-bottom:1px solid  rgba(58, 116, 219, 1)">凤凰C2C交易法律免责声明。</span>
 		</div>
-            <div class="buybtn" @click="orderPay" v-if="type=='sell'">买入{{ coin_name.toUpperCase() }}</div>
-			<div class="buybtn" @click="orderPay" v-else>出售{{ coin_name.toUpperCase() }}</div>
+            <button class="buybtn" :disabled="!flag" @click="orderPay" v-if="type=='sell'">买入{{ coin_name.toUpperCase() }}</button>
+			<button class="buybtn"  :disabled="!flag" @click="orderPay" v-else>出售{{ coin_name.toUpperCase() }}</button>
 		<div style="padding-bottom: 94px;"></div>
 	</div>
 </template>
@@ -128,7 +128,8 @@
 				info:{},
 				merchant:{},
 				coin_name:'',
-				usdt_name:''
+				usdt_name:'',
+				flag:true
 			}
 		},
 		mounted() {
@@ -202,6 +203,7 @@
 				// )
 			},
 			orderPay(){
+				
 				console.log(this.usdtnum,this.typein,this.info.price,this.tabIndex)
 				if(this.info.number==0){
 					_this.$toast("暂无库存")
@@ -239,48 +241,54 @@
 				}
 				}
 				
-				
-				let data={
+				this.flag=false
+					let data={
 					merchant_advertising_id:this.id,
 					number:this.tabIndex==0?this.usdtnum:this.typein
 				}
 				if(this.type=='sell'){
-					this.$api.submitOrder(data).then((res)=>{
-                    if(res.code==0){
-                        _this.$toast("订单提交成功")
-                    setTimeout(()=>{
-                        this.$router.push({
-					name:'order',
-					query:{
-                        order:res
-					}
-                    })
-                   
-				    },400)
-                    }else{
-                        _this.$toast(res.error)
-                    }
+						this.$api.submitOrder(data).then((res)=>{
+						if(res.code==0){
+							_this.$toast("订单提交成功")
+							
+						setTimeout(()=>{
+							this.flag=true
+							this.$router.push({
+						name:'order',
+						query:{
+							order:res
+						}
+						})
 					
-				})
-				}else{
-					this.$api.submitOrderSell(data).then((res)=>{
-                    if(res.code==0){
-                        _this.$toast("订单提交成功")
-                    setTimeout(()=>{
-                        this.$router.push({
-					name:'order',
-					query:{
-                        order:res
-					}
-                    })
-                   
-				    },400)
-                    }else{
-                        _this.$toast(res.error)
-                    }
+						},400)
+						}else{
+							this.flag=true
+							_this.$toast(res.error)
+						}
+						
+					})
+					}else{
+						this.$api.submitOrderSell(data).then((res)=>{
+						if(res.code==0){
+							_this.$toast("订单提交成功")
+						setTimeout(()=>{
+							this.flag=true
+							this.$router.push({
+						name:'order',
+						query:{
+							order:res
+						}
+						})
 					
-				})
-				}
+						},400)
+						}else{
+							this.flag=true
+							_this.$toast(res.error)
+						}
+						
+					})
+					}
+				
                 
 				// _this.$post('/api/user/advertising/buy',{
 				// 	data:data,
