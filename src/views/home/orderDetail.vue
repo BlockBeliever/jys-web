@@ -102,10 +102,10 @@
             </div>
           </div>
         </div>
-        <div class="submit" @click="submit" v-if="info.status == 'wait'&&info.type == 'sell'&&info.user_id==info.merchant_id">
+        <div class="submit" @click="submit" v-if="info.status == 'wait'&&info.type == 'sell'&&info.user_id!=info.merchant_id">
           <span>完成订单</span>
         </div>
-        <div class="submit" @click="submit" v-if="info.status == 'wait'&&info.type == 'buy'&&info.user_id!=info.merchant_id">
+        <div class="submit" @click="submit" v-if="info.status == 'wait'&&info.type == 'buy'&&info.user_id==info.merchant_id">
           <span>完成订单</span>
         </div>
         <div class="stats_bottom"></div>

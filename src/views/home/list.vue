@@ -36,15 +36,16 @@
         </div>
         <div class="flex2 nametime">
           <div class="flex1">
-            <div class="headimgbox" v-if="merchantid==item.merchant_id">
+            <div class="headimgbox" v-if="merchantid==item.user_id">
               <img  v-if="item.user_head==''"  src="../../../static/img/head.png" alt="" srcset="" />
               <img :src="$IMGURL+ item.merchant_head" alt="" v-else />
             </div>
-            <div class="headimgbox" v-if="merchantid!=item.merchant_id">
+            <div class="headimgbox" v-if="merchantid!=item.user_id">
               <img  v-if="item.user_head==''"  src="../../../static/img/head.png" alt="" srcset="" />
-              <img :src="$IMGURL+ item.merchant_head" alt="" v-else />
+              <img :src="$IMGURL+ item.user_head" alt="" v-else />
             </div>
-            <span style="margin-left: 8.5px">{{ item.merchant_name }}</span>
+            <span style="margin-left: 8.5px" v-if="merchantid==item.user_id">{{ item.merchant_name }}</span>
+            <span style="margin-left: 8.5px" v-if="merchantid!=item.user_id">{{ item.username }}</span>
           </div>
           <div>
             <span>{{ item.create_time | fomarTime }}</span>
