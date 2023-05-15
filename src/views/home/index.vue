@@ -210,11 +210,11 @@
                 listall:[],
                 list2:[{
                     name:'CNY',
-					// img:require("../../assets/img/cnyimg.png")
+					img:require("../../assets/img/cnypic.png")
                 },
                 {
                     name:'USD',
-					// img:require("../../assets/img/usdpic.png")
+					img:require("../../assets/img/usdpic.png")
                 }],
 
 			}

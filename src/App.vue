@@ -24,7 +24,7 @@ export default {
 		},
 		methods: {
 			getAuther(code){
-				console.log(code,9988888888)
+				// console.log(code,9988888888)
 				this.$api.getAuther({code:code}).then((res)=>{
 					localStorage.setItem('token',res.data.auth.access)
 				})
