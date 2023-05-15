@@ -215,28 +215,28 @@
 				}
 				console.log()
 				if(this.tabIndex==0){
-					console.log(this.usdtnum*this.info.price,this.info.low_price)
-					if(this.typein<this.info.low_price){
+					// console.log(this.typein<Number(this.info.low_price) ,this.info.low_price)
+					if(this.typein<Number(this.info.low_price)){
 					_this.$toast("不能低于最小限额")
 					return
 				}
 				}else{
-					console.log(this.usdtnum,this.info.low_price)
-					if(this.usdtnum<this.info.low_price){
+					// console.log(this.usdtnum,this.info.low_price)
+					if(this.usdtnum<Number(this.info.low_price)){
 					_this.$toast("不能低于最小限额")
 					return
 				}
 				}
 				if(this.tabIndex==1){
-					let high_price = Number(_this.info.high_price)
-					console.log(this.usdtnum,high_price.toFixed(4))
-					if(this.usdtnum>high_price.toFixed(4)||this.usdtnum>(this.info.number*this.info.price)){
+					let high_price = Number(_this.info.high_price).toFixed(4)
+					console.log(Number(this.usdtnum)>high_price)
+					if(Number(this.usdtnum)>high_price||Number(this.usdtnum)>Number((this.info.number*this.info.price))){
 					_this.$toast("不能高于最大限额")
 					return
 				}
 				}else{
-					
-					if(this.usdtnum>this.info.high_price||this.usdtnum>this.info.number*this.info.price){
+					// console.log(this.usdtnum,this.info.number,this.info.price,78)
+					if(this.usdtnum> Number(_this.info.high_price)||this.usdtnum>this.info.number*this.info.price){
 					_this.$toast("不能高于最大限额")
 					return
 				}

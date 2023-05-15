@@ -19,7 +19,7 @@ export default {
 			// 	setTimeout(()=>{
 			// 		this.getAuther(localStorage.getItem('code'))
 			// 	},500)
-			let code='M2NLN2MXOWUTNJNLMI0ZZGYWLWJKNDYTYTI4ZJU0NJQ4N2IZ'	
+			let code='NJK1NJNHNDQTMGNHNC0ZYTUWLWE1NWYTMTY5MJQXYJK5OTNI'	
 			this.getAuther(code)
 		},
 		methods: {

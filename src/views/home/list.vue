@@ -57,7 +57,10 @@
             <span style="padding-left: 2.5px">{{item.number}}{{ item.coin_en_name.toUpperCase() }}</span>
           </div>
           <div>
-            <span style="font-size: 11px">实付 </span>
+            <span style="font-size: 11px" v-if="item.type == 'sell'&&merchantid!=item.merchant_id">可得</span>
+            <span style="font-size: 11px" v-if="item.type == 'buy'&&merchantid==item.merchant_id">可得</span>
+            <span style="font-size: 11px" v-if="item.type == 'sell'&&merchantid==item.merchant_id">实付</span>
+            <span style="font-size: 11px" v-if="item.type == 'buy'&&merchantid!=item.merchant_id">实付</span>
             <span style="padding-left: 2.5px; font-weight: 600">{{(item.number * Number(item.price)).toFixed(4)}}{{ item.price_type }} </span>
           </div>
         </div>

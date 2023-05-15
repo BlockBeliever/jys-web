@@ -128,7 +128,7 @@
 					<div class="listcoinall flex2" v-for="(item,index) in list2" :key="index" >
 										 <div class="flex" style="align-items: center;">
 											 <div class="cpongom" >
-												 <img src="../../assets/img/head.png" alt="" srcset="">
+												 <img :src="item.img" alt="" srcset="">
 											 </div>
 											 <div class="tista">
 												 <span>{{item.name}}</span>
@@ -210,9 +210,11 @@
                 listall:[],
                 list2:[{
                     name:'CNY',
+					// img:require("../../assets/img/cnyimg.png")
                 },
                 {
                     name:'USD',
+					// img:require("../../assets/img/usdpic.png")
                 }],
 
 			}
