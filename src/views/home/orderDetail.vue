@@ -58,8 +58,12 @@
       <div class="boxorderdetail">
         <div class="flex1 saddwq">
           <div class="usdtimg"><img src="../../../static/img/usdticon.png" alt="" /></div>
-          <span class="butusdtt" v-if="info.type=='buy'">购买{{ coin.en_name.toUpperCase()}}</span>
-          <span class="butusdtt" v-else>出售{{ coin.en_name.toUpperCase()}}</span>
+          <!-- <span class="butusdtt" v-if="info.type=='buy'">购买{{ coin.en_name.toUpperCase()}}</span>
+          <span class="butusdtt" v-else>出售{{ coin.en_name.toUpperCase()}}</span> -->
+           <span class="butusdtt" v-if="info.type == 'sell'&&merchantid==info.merchant_id">购买{{ coin.en_name.toUpperCase()}}</span>
+            <span class="butusdtt" v-if="info.type == 'sell'&&merchantid!=info.merchant_id">出售{{ coin.en_name.toUpperCase()}}</span>
+            <span class="butusdtt" v-if="info.type == 'buy'&&merchantid==info.merchant_id">出售{{ coin.en_name.toUpperCase()}}</span>
+            <span class="butusdtt" v-if="info.type == 'buy'&&merchantid!=info.merchant_id">购买{{ coin.en_name.toUpperCase()}}</span>
         </div>
         <div class="boxdetailsa">
           <div class="flex2 adsawq">
@@ -102,10 +106,10 @@
             </div>
           </div>
         </div>
-        <div class="submit" @click="submit" v-if="info.status == 'wait'&&info.type == 'sell'&&info.user_id!=info.merchant_id">
+        <div class="submit" @click="submit" v-if="info.status == 'wait'&&info.type == 'sell'&&merchantid!=info.merchant_id">
           <span>完成订单</span>
         </div>
-        <div class="submit" @click="submit" v-if="info.status == 'wait'&&info.type == 'buy'&&info.user_id==info.merchant_id">
+        <div class="submit" @click="submit" v-if="info.status == 'wait'&&info.type == 'buy'&&merchantid==info.merchant_id">
           <span>完成订单</span>
         </div>
         <div class="stats_bottom"></div>

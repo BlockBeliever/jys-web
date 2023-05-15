@@ -323,7 +323,7 @@
 				border-radius: 10px;
 				background: #FFFFFF;
 				border: 1px solid #E6E6E6; 
-				overflow: hidden;
+				overflow: scroll;
 				 right: 0;
 				 bottom: -140px;
 				 z-index: 999;
