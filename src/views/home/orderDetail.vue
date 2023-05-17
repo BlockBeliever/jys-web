@@ -34,7 +34,7 @@
         订单已完成
       </div>
       <div class="ordercard">
-        <div class="contract">
+        <div class="contract" @click="moveContact">
 					<div class="iconimg">
 						<img src="../../assets/img/chant.png" alt="" srcset="" />
 					</div>
@@ -88,7 +88,7 @@
           <div class="flex2 adsawq">
             <span>总金额</span>
             <div class="flex">
-              <span>￥{{ info.total_price }}</span>
+              <span>￥{{ Number(info.total_price).toFixed(0) }} {{ info.price_type }}</span>
             </div>
           </div>
 
@@ -159,6 +159,10 @@ export default {
     }
   },
   methods: {
+    moveContact(){
+      
+      window.chatView({uid:this.info.user_id})
+    },
     onClickLeft() {
       this.$router.push({ name: 'List' })
     },

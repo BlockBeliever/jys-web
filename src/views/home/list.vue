@@ -61,7 +61,7 @@
             <span style="font-size: 11px" v-if="item.type == 'buy'&&merchantid==item.merchant_id">可得</span>
             <span style="font-size: 11px" v-if="item.type == 'sell'&&merchantid==item.merchant_id">实付</span>
             <span style="font-size: 11px" v-if="item.type == 'buy'&&merchantid!=item.merchant_id">实付</span>
-            <span style="padding-left: 2.5px; font-weight: 600">{{(item.number * Number(item.price)).toFixed(4)}}{{ item.price_type }} </span>
+            <span style="padding-left: 2.5px; font-weight: 600">{{(item.number * Number(item.price)).toFixed(0)}}{{ item.price_type }} </span>
           </div>
         </div>
       </div>
@@ -152,7 +152,7 @@ export default {
   padding: 22px 25px 17px;
  
   box-sizing: border-box;
-  width: 355px;
+  width: 95%;
   height: 180px;
   border-radius: 10px;
   background-color: #fff;

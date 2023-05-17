@@ -88,7 +88,7 @@
             <div class="coinList" style="">
 				<div class="searchCpon">
 					<!-- <uni-icons type="search" size="20" color="#C7C7C7"></uni-icons> -->
-					<input type="text" placeholder="搜索" placeholder-style="color:#C7C7C7">
+					<input type="text" placeholder="搜索" v-model="searchCoin" placeholder-style="color:#C7C7C7" @input="searchCoinInput(searchCoin)">
 				</div>
 				<div style="padding: 25px 30px;">
 					<van-radio-group v-model="checked"  >
@@ -187,6 +187,7 @@
 				tabIndex: 0,
 				bookShowPicker: false,
 				fabishow:false,
+				searchCoin:'',
 				checked:"",
 				tabList: [{
 					name: "购买"
@@ -202,6 +203,7 @@
 				},
 				$IMGURL:'',
 				list:[],
+				copyList:null,
 				chooseCoinname:'',
 				chooseusdtname:'',
 				checkedusdt:'',
@@ -235,11 +237,27 @@
 			// this.getAuther(localStorage.getItem('code'))
 		},
 		methods: {
+			searchCoinInput(val){
+				let all=[]
+				if(val==''){
+					this.listall=this.copyList
+				}else{
+					this.listall.forEach(item => {
+						let name=item.en_name
+					if(name.indexOf(val) >= 0 || name.toUpperCase().indexOf(val)>= 0 ){
+						all.push(item)
+					}
+					
+						})
+					this.listall=all
+				}
+				
+			},
 			getAuther(code){
 				// console.log(code,77777)
-				this.$api.getAuther({code:code}).then((res)=>{
-					localStorage.setItem('token',res.data.auth.access)
-				})
+				// this.$api.getAuther({code:code}).then((res)=>{
+				// 	localStorage.setItem('token',res.data.auth.access)
+				// })
 			},
 			changeCointype(e){
 				this.checked=e.toString()
@@ -270,6 +288,7 @@
 				this.fabishow = true;
 				//  this.$refs.popup.open('bottom')
 			},
+
 		    getcoinList(){
 				this.$api.coinList(this.filters).then((res)=>{
 					if(res.code==0){
@@ -282,10 +301,12 @@
 							this.listall.forEach(item=>{
 								item.checked=false
 							})
+							
 							this.listall[0].checked=true
 							this.checked='0'
 							this.filters.coin_id=this.listall[0].id
 							this.chooseCoinname=this.listall[0].en_name
+							this.copyList= [].concat(this.listall)
 					}
 					
 				})

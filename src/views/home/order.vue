@@ -12,7 +12,7 @@
 			<div style="margin-bottom: 15px;font-size: 16px;color: rgba(240, 38, 69, 1);font-weight: 600;">订单已生成
 			</div>
 			<div class="ordercard">
-				<div class="contract">
+				<div class="contract" @click="moveContact">
 						<div class="iconimg">
 						<img src="../../assets/img/chant.png" alt="" srcset=""/>
 					</div>
@@ -63,7 +63,7 @@
 					<div class="flex2 adsawq">
 						<span>总金额</span>
 						<div class="flex">
-							<span>{{order.total_price}} {{ order.price_type }}</span>
+							<span>{{Number(order.total_price).toFixed(0)}} {{ order.price_type }}</span>
 							
 						</div>
 					</div>
@@ -122,6 +122,10 @@ import Clipboard from 'clipboard'
 			}
 		},
 		methods: {
+			moveContact(){
+      
+			window.chatView({uid:this.info.user_id})
+			},
             onClickLeft(){
                 this.$router.push({ name:'List'})
             },
