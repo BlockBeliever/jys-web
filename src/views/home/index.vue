@@ -238,13 +238,16 @@
 		},
 		methods: {
 			searchCoinInput(val){
+				console.log(val+'1')
 				let all=[]
 				if(val==''){
 					this.listall=this.copyList
 				}else{
+					this.listall=this.copyList
 					this.listall.forEach(item => {
 						let name=item.en_name
-					if(name.indexOf(val) >= 0 || name.toUpperCase().indexOf(val)>= 0 ){
+					if(name.indexOf(val.trim()) >= 0 || name.toUpperCase().indexOf(val.trim())>= 0 ){
+						console.log(11111)
 						all.push(item)
 					}
 					

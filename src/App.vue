@@ -10,7 +10,7 @@ import './api/index.js' // 导入api
 export default {
   name: 'App',
  
-		created(){
+	 created(){
 			if(this.$route.query.code){
 				this.getAuther(this.$route.query.code)
 				}else if(localStorage.getItem('code')){
@@ -18,15 +18,18 @@ export default {
 				}
 				setTimeout(()=>{
 					this.getAuther(localStorage.getItem('code'))
-				},500)
-			// let code='YZK1MTJINWMTOTNHZS0ZMZJLLWFKZGYTMJFJMJQ1YJMWYTU5'	
-			// this.getAuther(code)
+			},500)
+			// let code='MJUYYWUZZDUTNWVLYY0ZNDBILTG0NWETMJLHNJBHNJC3YTI3'	
+		    // this.getAuther(code)
 		},
 		methods: {
 			getAuther(code){
 				// console.log(code,9988888888)
 				this.$api.getAuther({code:code}).then((res)=>{
-					localStorage.setItem('token',res.data.auth.access)
+					console.log(res)
+					let access=res.data.auth.access
+					console.log(res.data,666)
+					localStorage.setItem('token',access)
 				}) 
 			},
 		}

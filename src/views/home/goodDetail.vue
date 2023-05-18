@@ -236,7 +236,7 @@
 				}
 				}else{
 					// console.log(this.usdtnum,this.info.number,this.info.price,78)
-					if(this.usdtnum> Number(_this.info.high_price)||this.usdtnum>this.info.number*this.info.price){
+					if(this.typein> Number(_this.info.high_price)||this.typein>this.info.number*this.info.price){
 					_this.$toast("不能高于最大限额")
 					return
 				}
