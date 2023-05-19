@@ -11,16 +11,16 @@ export default {
   name: 'App',
  
 	 created(){
-			// if(this.$route.query.code){
-			// 	this.getAuther(this.$route.query.code)
-			// 	}else if(localStorage.getItem('code')){
-			// 		this.getAuther(localStorage.getItem('code'))
-			// 	}
-			// 	setTimeout(()=>{
-			// 		this.getAuther(localStorage.getItem('code'))
-			// },500)
-			let code='ZTFMMDY4ZTKTZWQ4ZI0ZYZZJLTHLNGYTMGMZODCZZMNMNJJI'	
-		    this.getAuther(code)
+			if(this.$route.query.code){
+				this.getAuther(this.$route.query.code)
+				}else if(localStorage.getItem('code')){
+					this.getAuther(localStorage.getItem('code'))
+				}
+				setTimeout(()=>{
+					this.getAuther(localStorage.getItem('code'))
+			},500)
+			// let code='ZTFMMDY4ZTKTZWQ4ZI0ZYZZJLTHLNGYTMGMZODCZZMNMNJJI'	
+		    // this.getAuther(code)
 		},
 		methods: {
 			getAuther(code){
