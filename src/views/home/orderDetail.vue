@@ -38,7 +38,10 @@
 					<div class="iconimg">
 						<img src="../../assets/img/chant.png" alt="" srcset="" />
 					</div>
-					<span style="padding-left:2px">联系客服</span>
+					<span style="padding-left:2px" v-if="info.type == 'buy'&&merchantid==info.merchant_id" @click="moveContact(info.user_id)">联系买家</span>
+          <span style="padding-left:2px" v-if="info.type == 'buy'&&merchantid!=info.merchant_id" @click="moveContact(info.merchant_id)">联系卖家</span>
+          <span style="padding-left:2px" v-if="info.type == 'sell'&&merchantid==info.merchant_id" @click="moveContact(info.merchant_id)">联系卖家</span>
+          <span class="butusdtt" v-if="info.type == 'sell'&&merchantid!=info.merchant_id" @click="moveContact(info.user_id)">联系买家</span>
 
 
 				</div>
@@ -48,11 +51,20 @@
         </div>
         <div class="info">
           <span style="color: rgba(112, 169, 229, 1)">*</span>
-          <span>卖家已通过平台实名及视频认证</span>
+          <span v-if="info.type == 'buy'&&merchantid==info.merchant_id">买家</span>
+          <span v-if="info.type == 'buy'&&merchantid!=info.merchant_id">卖家</span>
+          <span v-if="info.type == 'sell'&&merchantid==info.merchant_id">买家</span>
+          <span v-if="info.type == 'sell'&&merchantid!=info.merchant_id">卖家</span>
+          <span>已通过平台实名及视频认证</span>
         </div>
         <div class="info">
           <span style="color: rgba(112, 169, 229, 1)">*</span>
-          <span>平台7*24小时客服在线，保证您与卖家的交易安全</span>
+          <span>平台7*24小时客服在线，保证您与</span>
+          <span v-if="info.type == 'buy'&&merchantid==info.merchant_id">买家</span>
+          <span v-if="info.type == 'buy'&&merchantid!=info.merchant_id">卖家</span>
+          <span v-if="info.type == 'sell'&&merchantid==info.merchant_id">买家</span>
+          <span v-if="info.type == 'sell'&&merchantid!=info.merchant_id">卖家</span>
+          <span>的交易安全</span>
         </div>
       </div>
       <div class="boxorderdetail">
@@ -112,6 +124,10 @@
         <div class="submit" @click="submit" v-if="info.status == 'wait'&&info.type == 'buy'&&merchantid==info.merchant_id">
           <span>完成订单</span>
         </div>
+        <div class="contactkefy" @click="moveContact()">
+          <span>遇到问题？ </span>
+          <span style="color:rgba(97, 151, 254, 1)">联系客服 </span>
+        </div>
         <div class="stats_bottom"></div>
       </div>
     </div>
@@ -159,9 +175,9 @@ export default {
     }
   },
   methods: {
-    moveContact(){
+    moveContact(val){
       
-      window.chatView({uid:this.info.user_id})
+      window.chatView({uid:this.info.user_id,contact_id:val})
     },
     onClickLeft() {
       this.$router.push({ name: 'List' })
@@ -214,7 +230,17 @@ export default {
 //   background: linear-gradient(180deg, rgba(247, 250, 255, 1) 0%, rgba(247, 250, 255, 1) 100%);
 //   color: rgba(51, 51, 51, 1);
 // }
-
+.contactkefy{
+  // display: flex;
+  width: 100%;
+  text-align: center;
+  font-size: 13px;
+ margin: 0 auto;
+ left: 0;
+ right: 0;
+  position: fixed;
+  bottom: 80px;
+}
 .navbartitle {
   color: rgba(16, 16, 16, 1);
   width: 100%;
@@ -292,7 +318,7 @@ export default {
   width:100%;
   margin: 0 auto;
   background-color: #fff;
-  height: calc(100vh - 210px);
+  height: calc(100vh - 302px);
   margin-top: 10px;
 
   .saddwq {
