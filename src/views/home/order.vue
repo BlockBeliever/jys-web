@@ -16,21 +16,37 @@
 						<div class="iconimg">
 						<img src="../../assets/img/chant.png" alt="" srcset=""/>
 					</div>
-					<span style="padding-left:2px">联系客服</span>
+					<span style="padding-left:2px" v-if="order.type == 'buy'&&merchantid==order.merchant_id" @click="moveContact(order.user_id)">联系买家</span>
+          <span style="padding-left:2px" v-if="order.type == 'buy'&&merchantid!=order.merchant_id" @click="moveContact(order.merchant_id)">联系卖家</span>
+          <span style="padding-left:2px" v-if="order.type == 'sell'&&merchantid==order.merchant_id" @click="moveContact(order.user_id)">联系买家</span>
+          <span style="padding-left:2px" v-if="order.type == 'sell'&&merchantid!=order.merchant_id" @click="moveContact(order.merchant_id)">联系卖家</span>
 					
 
 
 				</div>
 				<div class="allcard">
-					<span class="tetinfo">卖家信息</span>
+					<span v-if="order.type == 'buy'&&merchantid==order.merchant_id">买家</span>
+					<span v-if="order.type == 'buy'&&merchantid!=order.merchant_id">卖家</span>
+					<span v-if="order.type == 'sell'&&merchantid==order.merchant_id">买家</span>
+					<span v-if="order.type == 'sell'&&merchantid!=order.merchant_id">卖家</span>
+					<span class="tetorder">信息</span>
 				</div>
-				<div class="info">
+				<div class="order">
 					<span style="color: rgba(112, 169, 229, 1);">*</span>
-					<span>卖家已通过平台实名及视频认证</span>
+					<span v-if="order.type == 'buy'&&merchantid==order.merchant_id">买家</span>
+          <span v-if="order.type == 'buy'&&merchantid!=order.merchant_id">卖家</span>
+          <span v-if="order.type == 'sell'&&merchantid==order.merchant_id">买家</span>
+          <span v-if="order.type == 'sell'&&merchantid!=order.merchant_id">卖家</span>
+					<span>已通过平台实名及视频认证</span>
 				</div>
-				<div class="info">
+				<div class="order">
 					<span style="color: rgba(112, 169, 229, 1);">*</span>
-					<span>平台7*24小时客服在线，保证您与卖家的交易安全</span>
+					<span>平台7*24小时客服在线，保证您与</span>
+					<span v-if="order.type == 'buy'&&merchantid==order.merchant_id">买家</span>
+					<span v-if="order.type == 'buy'&&merchantid!=order.merchant_id">卖家</span>
+					<span v-if="order.type == 'sell'&&merchantid==order.merchant_id">买家</span>
+					<span v-if="order.type == 'sell'&&merchantid!=order.merchant_id">卖家</span>
+					<span>的交易安全</span>
 				</div>
 
 			</div>
@@ -82,7 +98,11 @@
 						</div>
 					</div>
 				</div>
-
+				<div class="contactkefy" @click="moveContact(serveId)">
+				<span>遇到问题？ </span>
+				<span style="color:rgba(97, 151, 254, 1)">联系客服 </span>
+				</div>
+				<div class="stats_bottom"></div>
 			</div>
 		</div>
 	</div>
@@ -95,16 +115,21 @@ import Clipboard from 'clipboard'
 			return {
 				order:{},
 				merchant:{},
-				coin:{}
+				coin:{},
+				merchantid:0,
+				serveId:0
 			}
 		},
 		mounted() {
             // console.log(this.$route.query.order,998)
+			this.merchantid=localStorage.getItem("merchantid")
 				this.merchant=this.$route.query.order.data.merchant
 				this.order=this.$route.query.order.data.order
 				this.coin=this.$route.query.order.data.coin
+				this.getkefu()
 		},
 		filters:{
+			
 			fomarTime(value){
 				 let date = new Date(parseInt(value) * 1000);
 				      let y = date.getFullYear();
@@ -122,9 +147,15 @@ import Clipboard from 'clipboard'
 			}
 		},
 		methods: {
-			moveContact(){
-      
-			window.chatView({uid:this.info.user_id})
+			getkefu(){
+				this.$api.getConfigValue().then(res => {
+					if (res.code == 0) {
+						_this.serveId = res.data.order
+					}
+				})
+			},
+			moveContact(val){
+				window.chatView({uid:this.order.user_id,contact_id:val})
 			},
             onClickLeft(){
                 this.$router.push({ name:'List'})
@@ -154,7 +185,17 @@ import Clipboard from 'clipboard'
 	// 	background: linear-gradient(180deg, rgba(247, 250, 255, 1) 0%, rgba(247, 250, 255, 1) 100%);
 	// 	color: rgba(51, 51, 51, 1);
 	// }
-
+	.contactkefy{
+  // display: flex;
+  width: 100%;
+  text-align: center;
+  font-size: 13px;
+ margin: 0 auto;
+ left: 0;
+ right: 0;
+  position: fixed;
+  bottom: 80px;
+}
 	.navbartitle {
 		color: rgba(16, 16, 16, 1);
 		width: 100%;
@@ -214,12 +255,12 @@ import Clipboard from 'clipboard'
 
 		}
 
-		.tetinfo {
+		.tetorder {
 			font-size: 15px;
 			color: rgba(51, 51, 51, 1);
 		}
 
-		.info {
+		.order {
 
 			color: rgba(168, 168, 168, 1);
 			font-size: 13px;

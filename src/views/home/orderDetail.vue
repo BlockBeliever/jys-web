@@ -34,19 +34,23 @@
         订单已完成
       </div>
       <div class="ordercard">
-        <div class="contract" @click="moveContact">
+        <div class="contract">
 					<div class="iconimg">
 						<img src="../../assets/img/chant.png" alt="" srcset="" />
 					</div>
 					<span style="padding-left:2px" v-if="info.type == 'buy'&&merchantid==info.merchant_id" @click="moveContact(info.user_id)">联系买家</span>
           <span style="padding-left:2px" v-if="info.type == 'buy'&&merchantid!=info.merchant_id" @click="moveContact(info.merchant_id)">联系卖家</span>
-          <span style="padding-left:2px" v-if="info.type == 'sell'&&merchantid==info.merchant_id" @click="moveContact(info.merchant_id)">联系卖家</span>
-          <span class="butusdtt" v-if="info.type == 'sell'&&merchantid!=info.merchant_id" @click="moveContact(info.user_id)">联系买家</span>
+          <span style="padding-left:2px" v-if="info.type == 'sell'&&merchantid==info.merchant_id" @click="moveContact(info.user_id)">联系买家</span>
+          <span style="padding-left:2px" v-if="info.type == 'sell'&&merchantid!=info.merchant_id" @click="moveContact(info.merchant_id)">联系卖家</span>
 
 
 				</div>
         <div class="allcard">
-          <span class="tetinfo">卖家信息</span>
+          <span v-if="info.type == 'buy'&&merchantid==info.merchant_id">买家</span>
+          <span v-if="info.type == 'buy'&&merchantid!=info.merchant_id">卖家</span>
+          <span v-if="info.type == 'sell'&&merchantid==info.merchant_id">买家</span>
+          <span v-if="info.type == 'sell'&&merchantid!=info.merchant_id">卖家</span>
+          <span class="tetinfo">信息</span>
           <!-- <div class="contract"></div> -->
         </div>
         <div class="info">
@@ -124,7 +128,7 @@
         <div class="submit" @click="submit" v-if="info.status == 'wait'&&info.type == 'buy'&&merchantid==info.merchant_id">
           <span>完成订单</span>
         </div>
-        <div class="contactkefy" @click="moveContact()">
+        <div class="contactkefy" @click="moveContact(serveId)">
           <span>遇到问题？ </span>
           <span style="color:rgba(97, 151, 254, 1)">联系客服 </span>
         </div>
@@ -145,12 +149,16 @@ export default {
       merchant: {},
       coin:{},
       merchantid:0,
+      serveId:0,
+      filters: {
+        "config_key":"CustomerService",
+          "config_value":"",
+      },
     }
   },
   mounted() {
     this.merchantid=localStorage.getItem("merchantid")
     let id = this.$route.query.id
-    console.log('id', id)
     _this = this
     if (id) {
       this.id = parseInt(id)
@@ -176,7 +184,6 @@ export default {
   },
   methods: {
     moveContact(val){
-      
       window.chatView({uid:this.info.user_id,contact_id:val})
     },
     onClickLeft() {
@@ -206,10 +213,14 @@ export default {
     },
     loadDetail() {
       _this = this
+      this.$api.getConfigValue().then(res => {
+        if (res.code == 0) {
+            _this.serveId = res.data.order
+          }
+      })
       this.$api
         .orderDetail(_this.id)
         .then(res => {
-          console.log('res', res)
           if (res.code == 0) {
             _this.info = res.data.order
             _this.merchant = res.data.merchant

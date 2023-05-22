@@ -232,8 +232,14 @@
 				// }else if(localStorage.getItem('code')){
 				// 	this.getAuther(localStorage.getItem('code'))
 				// }
-			this.getList()
-			this.getcoinList()
+				let token = localStorage.getItem('token')
+				let TimeToken=setInterval(() =>{
+					if(token){
+						this.getList()
+						this.getcoinList()
+						clearInterval(TimeToken)
+					}
+				},500)
 			// this.getAuther(localStorage.getItem('code'))
 		},
 		methods: {

@@ -42,5 +42,7 @@ Vue.prototype.$api = {
    // 获取TOKEN
    getAuther: params => { return http.post(`/api/user/auth/code_to_token`, params) },
    // 获取TOKEN
-   getAccount: params => { return http.post(`/api/user/account`, params) }
+   getAccount: params => { return http.post(`/api/user/account`, params) },
+   // 获取config
+   getConfigValue: params => { return http.post(`/api/user/config/get_config_value`, params) },
 }
