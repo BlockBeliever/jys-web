@@ -148,9 +148,9 @@ import Clipboard from 'clipboard'
 		},
 		methods: {
 			getkefu(){
-				this.$api.getConfigValue().then(res => {
+				this.$api.getConfigValue(this.filters).then(res => {
 					if (res.code == 0) {
-						_this.serveId = res.data.order
+						_this.serveId = res.data.data
 					}
 				})
 			},
