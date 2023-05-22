@@ -221,7 +221,7 @@
 
 			}
 		},
-		mounted() {
+	  async	mounted() {
 			this.$IMGURL = process.env.VUE_APP_IMGURL
 			this.$APIURL = process.env.VUE_APP_BASE_API;
 			this.filters.price_type=this.list2[0].name
@@ -232,15 +232,16 @@
 				// }else if(localStorage.getItem('code')){
 				// 	this.getAuther(localStorage.getItem('code'))
 				// }
-				let token = localStorage.getItem('token')
-				let TimeToken=setInterval(() =>{
-					if(token){
-						this.getList()
-						this.getcoinList()
-						clearInterval(TimeToken)
-					}
-				},500)
-			// this.getAuther(localStorage.getItem('code'))
+			await	this.getAuther(localStorage.getItem('code'))
+				// let token = localStorage.getItem('token')
+				// let TimeToken=setInterval(() =>{
+				// 	if(token){
+					await	this.getList()
+					await	this.getcoinList()
+						// clearInterval(TimeToken)
+				// 	}
+				// },500)
+			
 		},
 		methods: {
 			searchCoinInput(val){
@@ -264,9 +265,9 @@
 			},
 			getAuther(code){
 				// console.log(code,77777)
-				// this.$api.getAuther({code:code}).then((res)=>{
-				// 	localStorage.setItem('token',res.data.auth.access)
-				// })
+				this.$api.getAuther({code:code}).then((res)=>{
+					localStorage.setItem('token',res.data.auth.access)
+				})
 			},
 			changeCointype(e){
 				this.checked=e.toString()
