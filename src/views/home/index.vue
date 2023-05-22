@@ -572,7 +572,7 @@
 			position: absolute;
 			width: 90%;
 			height: 78px;
-			background: url(https://img.js.design/assets/img/6442076bc7c0e98ff1a6b57f.png#736adb34c57999ee097e3e2f41d64be4);
+			background: url("https://img.js.design/assets/img/6442076bc7c0e98ff1a6b57f.png#736adb34c57999ee097e3e2f41d64be4");
 			background-size: 100% 100%;
 			bottom: -39px;
 			left: 0;
