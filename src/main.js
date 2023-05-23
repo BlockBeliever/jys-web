@@ -10,7 +10,7 @@ import Vconsole from 'vconsole'
 import * as filters from './filters'
 import './api/index'
 
-import { Icon ,Toast, Tab, Tabs, Form, Col, Row, NavBar, Field, Button, Divider, Calendar, PasswordInput, NumberKeyboard, RadioGroup, Radio, Checkbox, CheckboxGroup, Rate, Slider, Switch, Uploader, ShareSheet, SwipeCell, Card, CountDown, Grid, GridItem, Swipe, SwipeItem, Popup, Picker, Area, Cell, CellGroup, ActionSheet } from 'vant'
+import { Icon ,Toast, Tab, Tabs, Form, Col,List, Row, NavBar, Field, Button, Divider, Calendar, PasswordInput, NumberKeyboard, RadioGroup, Radio, Checkbox, CheckboxGroup, Rate, Slider, Switch, Uploader, ShareSheet, SwipeCell, Card, CountDown, Grid, GridItem, Swipe, SwipeItem, Popup, Picker, Area, Cell, CellGroup, ActionSheet } from 'vant'
 
 // 设置 js中可以访问 $cdn
 // import { $cdn } from '@/config'
@@ -56,6 +56,7 @@ Vue.use(Area)
 Vue.use(Cell)
 Vue.use(CellGroup)
 Vue.use(ActionSheet)
+Vue.use(List)
 
 // 全局引入按需引入UI库 vant
 import '@/plugins/vant'

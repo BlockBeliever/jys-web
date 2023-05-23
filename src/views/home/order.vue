@@ -117,7 +117,11 @@ import Clipboard from 'clipboard'
 				merchant:{},
 				coin:{},
 				merchantid:0,
-				serveId:0
+				serveId:0,
+				filters: {
+					"config_key":"CustomerService",
+					"config_value":"",
+				},
 			}
 		},
 		mounted() {
