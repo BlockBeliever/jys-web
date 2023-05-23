@@ -272,9 +272,9 @@
 				// }else if(localStorage.getItem('code')){
 				// 	this.getAuther(localStorage.getItem('code'))
 				// }
-			// await	this.getAuther(localStorage.getItem('code'))
-			let code='NTHKOWI0NGMTOGQZMS0ZMWFKLTKYYJATM2Y1ODHKMWUWNJU5'	
-		    this.getAuther(code)
+			await	this.getAuther(localStorage.getItem('code'))
+			// let code='NTHKOWI0NGMTOGQZMS0ZMWFKLTKYYJATM2Y1ODHKMWUWNJU5'	
+		    // this.getAuther(code)
 				// let token = localStorage.getItem('token')
 				// let TimeToken=setInterval(() =>{
 				// 	if(token){
