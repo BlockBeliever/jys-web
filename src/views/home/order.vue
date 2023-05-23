@@ -155,7 +155,7 @@ import Clipboard from 'clipboard'
 				})
 			},
 			moveContact(val){
-				window.chatView({uid:this.order.user_id,contact_id:val})
+				window.chatView({uid:this.order.user_id,contact_id:Number(val)})
 			},
             onClickLeft(){
                 this.$router.push({ name:'List'})

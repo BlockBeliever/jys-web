@@ -184,7 +184,7 @@ export default {
   },
   methods: {
     moveContact(val){
-      window.chatView({uid:this.info.user_id,contact_id:val})
+      window.chatView({uid:this.info.user_id,contact_id:Number(val)})
     },
     onClickLeft() {
       this.$router.push({ name: 'List' })
