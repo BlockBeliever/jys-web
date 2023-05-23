@@ -236,8 +236,11 @@
 				// let token = localStorage.getItem('token')
 				// let TimeToken=setInterval(() =>{
 				// 	if(token){
-					await	this.getList()
-					await	this.getcoinList()
+					setTimeout(() =>{
+							this.getList()
+							this.getcoinList()
+					},500)
+					
 						// clearInterval(TimeToken)
 				// 	}
 				// },500)
@@ -572,7 +575,7 @@
 			position: absolute;
 			width: 90%;
 			height: 78px;
-			background: url("https://img.js.design/assets/img/6442076bc7c0e98ff1a6b57f.png#736adb34c57999ee097e3e2f41d64be4");
+			background: url("../../assets/img/indexbanner.png") no-repeat;
 			background-size: 100% 100%;
 			bottom: -39px;
 			left: 0;
