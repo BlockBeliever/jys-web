@@ -46,7 +46,14 @@
 					<div class="imgqie"><img src="../../assets/img/qiehuan.png" alt="" srcset=""></div>
 				</div>
 			</div>
-			<div  v-for="(item,index) in list" :key="index" >
+
+			<van-list
+				:loading="loading"
+				:finished="finished"
+				finished-text="没有更多了"
+				@load="getList"
+				>
+					<div  v-for="(item,index) in list" :key="index" >
 				<div  class="cardlist">
 					<div class="titlename flex1">
 					<div class="headbox" v-if="item.user_head==''"><img src="../../assets/img/head.png" alt=""></div>
@@ -72,8 +79,39 @@
 					<div  v-if="tabIndex==1" class="buyout"  @click="moveDeatil(item)">出售</div>
 				</div>
 				</div>
-				
+
 			</div>
+			
+				</van-list>
+				<div class="stats_bottom"></div>
+			<!-- <div  v-for="(item,index) in list" :key="index" >
+				<div  class="cardlist">
+					<div class="titlename flex1">
+					<div class="headbox" v-if="item.user_head==''"><img src="../../assets/img/head.png" alt=""></div>
+					<div class="headbox" v-else><img :src="$IMGURL+ item.user_head" alt=""></div>
+					<span class="namein">{{item.merchant_name}}</span>
+				</div>
+				<div class="flex4 xianshi">
+					<div class="asdadwq ">
+						<span class="price">{{item.price}}</span>
+						<span style="font-weight: 600;font-size: 14px;" v-if="item.price_type=='CNY'">￥</span>
+						<span style="font-weight: 600;font-size: 14px;" v-else>$</span>
+					</div>
+
+					<span class="neirong">数量 {{item.number}} {{ item.coin_en_name.toUpperCase()}}</span>
+					<span class="xiane">限额<p style="padding-left: 10px;color: rgba(51, 51, 51, 1);">{{item.low_price}}-{{item.high_price}}
+							{{item.price_type}}</p></span>
+				</div>
+				<div class="buybtn flex2">
+					<div>
+						<span>支付方式  {{ item.contact }}</span>
+					</div>
+					<div v-if="tabIndex==0" class="buy" @click="moveDeatil(item)">购买</div>
+					<div  v-if="tabIndex==1" class="buyout"  @click="moveDeatil(item)">出售</div>
+				</div>
+				</div>
+
+			</div> -->
 			<div class="listnone" v-if="list.length==0">
 				<div class="imgiconbox">
 					<img src="../../assets/img/indexnonw.png" alt="" srcset="">
@@ -184,6 +222,8 @@
 		
 		data() {
 			return {
+				loading: false,
+      			finished: false,
 				tabIndex: 0,
 				bookShowPicker: false,
 				fabishow:false,
@@ -232,12 +272,14 @@
 				// }else if(localStorage.getItem('code')){
 				// 	this.getAuther(localStorage.getItem('code'))
 				// }
-			await	this.getAuther(localStorage.getItem('code'))
+			// await	this.getAuther(localStorage.getItem('code'))
+			let code='NTHKOWI0NGMTOGQZMS0ZMWFKLTKYYJATM2Y1ODHKMWUWNJU5'	
+		    this.getAuther(code)
 				// let token = localStorage.getItem('token')
 				// let TimeToken=setInterval(() =>{
 				// 	if(token){
 					setTimeout(() =>{
-							this.getList()
+							// this.getList()
 							this.getcoinList()
 					},500)
 					
@@ -278,7 +320,10 @@
 				this.chooseCoinname=this.listall[e].en_name
 				this.bookShowPicker=false
 				this.list=[]
+				this.finished=false
+				this.filters.page=1
 				this.getList()
+				
 			},
 			cahgeUsdt(e){
 				this.checkedusdt=e.toString()
@@ -286,11 +331,15 @@
 				this.chooseusdtname=this.list2[e].name
 				this.fabishow=false
 				this.list=[]
+				this.finished=false
+				this.filters.page=1
 				this.getList()
 			},
 			testTabClick(index) {
 				this.tabIndex = index
 				this.list=[]
+				this.finished=false
+				this.filters.page=1
 				this.getList()
 			},
 			changeCoin(){
@@ -325,20 +374,41 @@
 				})
 			},
 			getList() {
+				// console.log(1111)
 				_this=this
 				if(this.tabIndex==0){
 					this.filters.type="sell"
 				}else{
 					this.filters.type="buy"
 				}
+				
 				this.$api.homeList(this.filters).then((res)=>{
 					if(res.code==0){
 						let all=res.data.list
-						all.forEach(item=>{
-							if(item.status=='enable'){
-								_this.list.push(item)
-							}
-						})
+						this.loading = false;
+						if(all.length==10){
+							this.filters.page=Number(this.filters.page)+1
+							// this.finished = true;
+							all.forEach(item=>{
+								if(item.status=='enable'){
+									_this.list.push(item)
+									
+									
+								}
+							})
+						}else if(all.length<10&&!this.finished){
+							// console.log(1111)
+							this.finished = true;
+							console.log(this.finished)
+							all.forEach(item=>{
+								if(item.status=='enable'){
+									_this.list.push(item)
+									
+								}
+							})
+							
+						}
+						
 						
 					}
 					
@@ -546,7 +616,7 @@
 		border-radius: 20px 20px 0 0;
 		background: rgba(255, 255, 255, 1);
 		box-shadow: 0px 0px 6px 4px rgba(239, 244, 254, 0.6);
-		height: 100vh;
+		height: calc(100vh - 210px);
 		overflow-y: auto;
 	}
 

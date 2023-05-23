@@ -9,7 +9,55 @@
 		<div style="text-align: center;padding: 13px 0;font-weight: 600;padding-top: 65px;">
 			<span style="font-size: 15px;">我的广告</span>
 		</div>
-		<div class="cardbox" v-for="(item,index) in list" :key="index">
+		<van-list
+				:loading="loading"
+				:finished="finished"
+				finished-text="没有更多了"
+				@load="getList"
+				>
+			<div class="cardbox" v-for="(item,index) in list" :key="index">
+				<div class="biaoqian">
+					<img src="../../assets/img/mybuy.png" alt="" v-if="item.type=='buy'">
+					<img src="../../assets/img/maysale.png" alt="" v-if="item.type=='sell'">
+				</div>
+				<div class="fontname">
+					<span>广告号：{{item.id}}</span>
+					<span style="color: #2E6BDB;font-size: 12px;font-weight: 600;" v-if="item.status=='enable'">上架中</span>
+					<span style="color:rgba(209, 209, 209, 1);font-size: 12px;font-weight: 600;" v-else>已下架</span>
+				</div>
+				<div class="pricead">
+					<div>
+						<span>{{item.price}}</span>
+						<span style="font-size: 12px;" v-if="item.price_type=='CNY'">￥</span>
+						<span style="font-size: 12px;" v-else>$</span>
+					</div>
+					<div class="boxtype">
+						{{ item.en_name.toUpperCase() }}
+					</div>
+				</div>
+				<div class="detialcard">
+					<div class="addetail" style="color:rgba(120, 137, 166, 1)">
+						<span>数量</span>
+						<span style="padding-left: 8px;">{{item.number}} {{ item.en_name.toUpperCase() }}</span>
+					</div>
+					<div class="addetail">
+						<span style="color:rgba(120, 137, 166, 1)">限额    </span>
+						<span style="padding-left: 8px;color: #333333;">{{item.low_price}}-{{item.high_price}} {{item.price_type.toUpperCase()}}</span>
+					</div>
+					<div class="addetail">
+						<span style="color:rgba(120, 137, 166, 1)">支付方式</span>
+						<span style="padding-left: 8px;color: #333333;">{{item.contact}}</span>
+					</div>
+					
+				</div>
+				<div class="btncaozuo">
+					<div class="downall" @click="downStatus(item.id,'disable')" v-if="item.status=='enable'"> 下架</div>
+					<div class="downall" @click="downStatus(item.id,'enable')" v-else>上架</div>
+					<div class="delall" @click="delAd(item.id)">删除</div>
+				</div>
+			</div>
+		</van-list>
+		<!-- <div class="cardbox" v-for="(item,index) in list" :key="index">
 			<div class="biaoqian">
 				<img src="../../assets/img/mybuy.png" alt="" v-if="item.type=='buy'">
 				<img src="../../assets/img/maysale.png" alt="" v-if="item.type=='sell'">
@@ -49,7 +97,7 @@
 				<div class="downall" @click="downStatus(item.id,'enable')" v-else>上架</div>
 				<div class="delall" @click="delAd(item.id)">删除</div>
 			</div>
-		</div>
+		</div> -->
 		<div class="listnone" v-if="list.length==0">
 			<div class="imgiconbox">
 				<img src="../../assets/img/indexnonw.png" alt="" srcset="">
@@ -66,6 +114,8 @@
 	export default {
 		data() {
 			return {
+				loading: false,
+      			finished: false,
 				filters:{
 					page:1,
 					limit:10,
@@ -75,7 +125,7 @@
 		},
 		mounted() {
 			_this=this
-			this.getList()
+			// this.getList()
 		},
 		methods: {
             onClickLeft(){
@@ -144,8 +194,24 @@
 			},
 			getList(){
                 this.$api.adList(_this.filters).then((res)=>{
-                    if(res.code==0){
-                        _this.list=res.data.list
+                   if(res.code==0){
+						let all=res.data.list
+						this.loading = false;
+						if(all.length==10){
+							this.filters.page=Number(this.filters.page)+1
+							// this.finished = true;
+							all.forEach(item=>{
+									_this.list.push(item)
+								
+							})
+						}else if(all.length<10&&!this.finished){
+							// console.log(1111)
+							this.finished = true;
+							all.forEach(item=>{
+									_this.list.push(item)
+							})
+							
+						}
                     }else{
                         _this.$toast(res.error)
                     }

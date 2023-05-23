@@ -152,7 +152,7 @@ export default {
       serveId:0,
       filters: {
         "config_key":"CustomerService",
-          "config_value":"",
+        "config_value":"",
       },
     }
   },

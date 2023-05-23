@@ -10,7 +10,14 @@
       <div style="width: 100%; text-align: center; padding-top: 90px; padding-bottom: 10px">
         <span style="font-size: 18px">订单</span>
       </div>
-      <div class="listcard" v-for="(item, index) in list" :key="index" @click="moveGoodsDetail(item.id)">
+
+      <van-list
+  v-model="loading"
+  :finished="finished"
+  finished-text="没有更多了"
+  @load="getList"
+>
+  <div class="listcard" v-for="(item, index) in list" :key="index" @click="moveGoodsDetail(item.id)">
         <div class="flex2">
           <div style="font-size: 16px">
             <span style="color: rgba(242, 39, 68, 1)" v-if="item.type == 'sell'&&merchantid==item.merchant_id">购买</span>
@@ -31,7 +38,6 @@
             <span>单价 {{ item.price }}{{ item.price_type }}</span>
           </div>
           <div class="asdawq"> >
-            <!-- <uni-icons type="forward" color="#fff" size="13"></uni-icons> -->
           </div>
         </div>
         <div class="flex2 nametime">
@@ -65,6 +71,63 @@
           </div>
         </div>
       </div>
+
+</van-list>
+
+      <!-- <div class="listcard" v-for="(item, index) in list" :key="index" @click="moveGoodsDetail(item.id)">
+        <div class="flex2">
+          <div style="font-size: 16px">
+            <span style="color: rgba(242, 39, 68, 1)" v-if="item.type == 'sell'&&merchantid==item.merchant_id">购买</span>
+            <span style="color:rgba(46, 107, 219, 1) " v-if="item.type == 'sell'&&merchantid!=item.merchant_id">出售</span>
+            <span style="color:  rgba(46, 107, 219, 1)" v-if="item.type == 'buy'&&merchantid==item.merchant_id">出售</span>
+            <span style="color:rgba(242, 39, 68, 1)" v-if="item.type == 'buy'&&merchantid!=item.merchant_id">购买</span>
+            <span style="color: rgba(51, 51, 51, 1)">{{ item.coin_en_name.toUpperCase() }}</span>
+          </div>
+          <div>
+            <span style="font-size: 12px; color: rgba(242, 39, 68, 1)" v-if="item.status == 'wait'">进行中</span>
+            <span style="font-size: 12px; color: rgba(46, 107, 219, 1)" v-if="item.status == 'done'"
+              >交易完成</span
+            >
+          </div>
+        </div>
+        <div class="owbprice flex2">
+          <div>
+            <span>单价 {{ item.price }}{{ item.price_type }}</span>
+          </div>
+          <div class="asdawq"> >
+          </div>
+        </div>
+        <div class="flex2 nametime">
+          <div class="flex1">
+            <div class="headimgbox" v-if="merchantid==item.user_id">
+              <img  v-if="item.user_head==''"  src="../../../static/img/head.png" alt="" srcset="" />
+              <img :src="$IMGURL+ item.merchant_head" alt="" v-else />
+            </div>
+            <div class="headimgbox" v-if="merchantid!=item.user_id">
+              <img  v-if="item.user_head==''"  src="../../../static/img/head.png" alt="" srcset="" />
+              <img :src="$IMGURL+ item.user_head" alt="" v-else />
+            </div>
+            <span style="margin-left: 8.5px" v-if="merchantid==item.user_id">{{ item.merchant_name }}</span>
+            <span style="margin-left: 8.5px" v-if="merchantid!=item.user_id">{{ item.username }}</span>
+          </div>
+          <div>
+            <span>{{ item.create_time | fomarTime }}</span>
+          </div>
+        </div>
+        <div class="boxboads flex2">
+          <div class="flex">
+            <div class="iconusnam"><img src="../../../static/img/cardsa.png" alt="" srcset="" /></div>
+            <span style="padding-left: 2.5px">{{item.number}}{{ item.coin_en_name.toUpperCase() }}</span>
+          </div>
+          <div>
+            <span style="font-size: 11px" v-if="item.type == 'sell'&&merchantid!=item.merchant_id">可得</span>
+            <span style="font-size: 11px" v-if="item.type == 'buy'&&merchantid==item.merchant_id">可得</span>
+            <span style="font-size: 11px" v-if="item.type == 'sell'&&merchantid==item.merchant_id">实付</span>
+            <span style="font-size: 11px" v-if="item.type == 'buy'&&merchantid!=item.merchant_id">实付</span>
+            <span style="padding-left: 2.5px; font-weight: 600">{{(item.number * Number(item.price)).toFixed(0)}}{{ item.price_type }} </span>
+          </div>
+        </div>
+      </div> -->
       <div class="listnone" v-if="list.length == 0">
         <div class="imgiconbox">
           <img src="../../assets/img/indexnonw.png" alt="" srcset="" />
@@ -89,11 +152,13 @@ export default {
       list: [],
       merchantid:0,
       $IMGURL:'',
+      loading: false,
+      finished: false,
     }
   },
   mounted() {
     this.$IMGURL = process.env.VUE_APP_IMGURL
-    this.getList()
+    // this.getList()
   },
   filters: {
     fomarTime(value) {
@@ -122,7 +187,22 @@ export default {
     getList() {
       _this = this
       this.$api.orderList(this.filters).then(res => {
-        _this.list = res.data.order
+        let all=res.data.order
+        this.loading = false;
+        if(all.length==10){
+          this.filters.page=Number(this.filters.page)+1
+            all.forEach(item=>{
+									_this.list.push(item)
+							})
+        }else if(all.length<10&&!this.finished){
+							// console.log(1111)
+							this.finished = true;
+              all.forEach(item=>{
+									_this.list.push(item)
+							})
+							
+						}
+        
       })
       this.$api.getAccount().then((res)=>{
 							this.merchantid=res.data.user.user_id
