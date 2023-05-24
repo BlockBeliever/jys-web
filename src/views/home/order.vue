@@ -17,11 +17,10 @@
 						<img src="../../assets/img/chant.png" alt="" srcset=""/>
 					</div>
 					<span style="padding-left:2px" v-if="order.type == 'buy'&&merchantid==order.merchant_id" @click="moveContact(order.user_id)">联系买家</span>
-          <span style="padding-left:2px" v-if="order.type == 'buy'&&merchantid!=order.merchant_id" @click="moveContact(order.merchant_id)">联系卖家</span>
-          <span style="padding-left:2px" v-if="order.type == 'sell'&&merchantid==order.merchant_id" @click="moveContact(order.user_id)">联系买家</span>
-          <span style="padding-left:2px" v-if="order.type == 'sell'&&merchantid!=order.merchant_id" @click="moveContact(order.merchant_id)">联系卖家</span>
+					<span style="padding-left:2px" v-if="order.type == 'buy'&&merchantid!=order.merchant_id" @click="moveContact(order.merchant_id)">联系卖家</span>
+					<span style="padding-left:2px" v-if="order.type == 'sell'&&merchantid==order.merchant_id" @click="moveContact(order.user_id)">联系买家</span>
+					<span style="padding-left:2px" v-if="order.type == 'sell'&&merchantid!=order.merchant_id" @click="moveContact(order.merchant_id)">联系卖家</span>
 					
-
 
 				</div>
 				<div class="allcard">
@@ -109,6 +108,7 @@
 </template>
 
 <script>
+let _this
 import Clipboard from 'clipboard'
 	export default {
 		data() {
@@ -125,6 +125,7 @@ import Clipboard from 'clipboard'
 			}
 		},
 		mounted() {
+			_this = this
             // console.log(this.$route.query.order,998)
 			this.merchantid=localStorage.getItem("merchantid")
 				this.merchant=this.$route.query.order.data.merchant
