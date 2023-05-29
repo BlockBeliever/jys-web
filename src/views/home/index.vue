@@ -281,7 +281,7 @@
 					setTimeout(() =>{
 							// this.getList()
 							this.getcoinList()
-					},500)
+					},1000)
 					
 						// clearInterval(TimeToken)
 				// 	}

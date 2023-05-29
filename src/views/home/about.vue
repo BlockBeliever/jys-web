@@ -148,6 +148,7 @@
 		height: 43px;
 		border-radius: 50%;
 		overflow:hidden;
+		
 		img{
 			// width: 100%;
 			height: 100%;
