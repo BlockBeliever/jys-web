@@ -382,37 +382,41 @@
 					this.filters.type="buy"
 				}
 				
-				this.$api.homeList(this.filters).then((res)=>{
-					if(res.code==0){
-						let all=res.data.list
-						this.loading = false;
-						if(all.length==10){
-							this.filters.page=Number(this.filters.page)+1
-							// this.finished = true;
-							all.forEach(item=>{
-								if(item.status=='enable'){
-									_this.list.push(item)
-									
-									
-								}
-							})
-						}else if(all.length<10&&!this.finished){
-							// console.log(1111)
-							this.finished = true;
-							console.log(this.finished)
-							all.forEach(item=>{
-								if(item.status=='enable'){
-									_this.list.push(item)
-									
-								}
-							})
+				setTimeout(()=>{
+						this.$api.homeList(this.filters).then((res)=>{
+						if(res.code==0){
+							let all=res.data.list
+							this.loading = false;
+							if(all.length==10){
+								this.filters.page=Number(this.filters.page)+1
+								// this.finished = true;
+								all.forEach(item=>{
+									if(item.status=='enable'){
+										_this.list.push(item)
+										
+										
+									}
+								})
+							}else if(all.length<10&&!this.finished){
+								// console.log(1111)
+								this.finished = true;
+								console.log(this.finished)
+								all.forEach(item=>{
+									if(item.status=='enable'){
+										_this.list.push(item)
+										
+									}
+								})
+								
+							}
+							
 							
 						}
 						
-						
-					}
-					
-				})
+					})
+				},500)
+
+				
 				
 				// _this.$post('/api/user/advertising/list',{
 				// 	data:_this.filters,
