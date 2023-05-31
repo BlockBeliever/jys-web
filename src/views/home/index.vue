@@ -272,9 +272,7 @@
 				// }else if(localStorage.getItem('code')){
 				// 	this.getAuther(localStorage.getItem('code'))
 				// }
-				setTimeout(()=>{
-					this.getAuther(localStorage.getItem('code'))
-				},1000)
+			this.timer = setInterval(this.getAuther(localStorage.getItem('code')), 2000)
 				
 			// let code='NTHKOWI0NGMTOGQZMS0ZMWFKLTKYYJATM2Y1ODHKMWUWNJU5'	
 		    // this.getAuther(code)
@@ -306,11 +304,15 @@
 			},
 			getAuther(code){
 				// console.log(code,77777)
-				this.$api.getAuther({code:code}).then((res)=>{
+				if(code!="null"){
+					this.$api.getAuther({code:code}).then((res)=>{
 					localStorage.setItem('token',res.data.auth.access)
 					this.getcoinList()
 			        this.getList()
+					clearInterval(this.timer)
 				})
+				}
+				
 			},
 			changeCointype(e){
 				this.checked=e.toString()
