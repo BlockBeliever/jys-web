@@ -281,8 +281,8 @@
 					setTimeout(() =>{
 							// this.getList()
 							this.getcoinList()
-					},1000)
-					
+					},500)
+					this.getList()
 						// clearInterval(TimeToken)
 				// 	}
 				// },500)
@@ -374,6 +374,7 @@
 				})
 			},
 			getList() {
+				
 				// console.log(1111)
 				_this=this
 				if(this.tabIndex==0){
