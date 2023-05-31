@@ -273,11 +273,11 @@
 				// 	this.getAuther(localStorage.getItem('code'))
 				// }
 			// this.timer = setInterval(this.getAuther(localStorage.getItem('code')), 500)
-			setTimeout(this.getAuther(localStorage.getItem('code')),1000)	
+			setTimeout(this.getAuther(localStorage.getItem('code')),2000)	
 			// let code='NTHKOWI0NGMTOGQZMS0ZMWFKLTKYYJATM2Y1ODHKMWUWNJU5'	
 		    // this.getAuther(code)
-				
-							// this.getList()
+			this.getcoinList()
+			this.getList()
 			
 				
 			
