@@ -272,8 +272,8 @@
 				// }else if(localStorage.getItem('code')){
 				// 	this.getAuther(localStorage.getItem('code'))
 				// }
-			this.timer = setInterval(this.getAuther(localStorage.getItem('code')), 500)
-				
+			// this.timer = setInterval(this.getAuther(localStorage.getItem('code')), 500)
+			setTimeout(this.getAuther(localStorage.getItem('code')),1000)	
 			// let code='NTHKOWI0NGMTOGQZMS0ZMWFKLTKYYJATM2Y1ODHKMWUWNJU5'	
 		    // this.getAuther(code)
 				
@@ -309,7 +309,7 @@
 					localStorage.setItem('token',res.data.auth.access)
 					this.getcoinList()
 			        this.getList()
-					clearInterval(this.timer)
+					// clearInterval(this.timer)
 				})
 				}
 				
