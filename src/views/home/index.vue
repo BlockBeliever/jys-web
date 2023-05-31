@@ -275,17 +275,10 @@
 			await	this.getAuther(localStorage.getItem('code'))
 			// let code='NTHKOWI0NGMTOGQZMS0ZMWFKLTKYYJATM2Y1ODHKMWUWNJU5'	
 		    // this.getAuther(code)
-				// let token = localStorage.getItem('token')
-				// let TimeToken=setInterval(() =>{
-				// 	if(token){
-					setTimeout(() =>{
+				
 							// this.getList()
-							this.getcoinList()
-					},500)
-					this.getList()
-						// clearInterval(TimeToken)
-				// 	}
-				// },500)
+			
+				
 			
 		},
 		methods: {
@@ -312,6 +305,8 @@
 				// console.log(code,77777)
 				this.$api.getAuther({code:code}).then((res)=>{
 					localStorage.setItem('token',res.data.auth.access)
+					this.getcoinList()
+			        this.getList()
 				})
 			},
 			changeCointype(e){
