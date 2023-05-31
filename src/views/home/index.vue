@@ -272,7 +272,10 @@
 				// }else if(localStorage.getItem('code')){
 				// 	this.getAuther(localStorage.getItem('code'))
 				// }
-			await	this.getAuther(localStorage.getItem('code'))
+				setTimeout(()=>{
+					this.getAuther(localStorage.getItem('code'))
+				},1000)
+				
 			// let code='NTHKOWI0NGMTOGQZMS0ZMWFKLTKYYJATM2Y1ODHKMWUWNJU5'	
 		    // this.getAuther(code)
 				
@@ -378,7 +381,7 @@
 					this.filters.type="buy"
 				}
 				
-				setTimeout(()=>{
+				// setTimeout(()=>{
 						this.$api.homeList(this.filters).then((res)=>{
 						if(res.code==0){
 							let all=res.data.list
@@ -410,7 +413,7 @@
 						}
 						
 					})
-				},500)
+				// },500)
 
 				
 				
