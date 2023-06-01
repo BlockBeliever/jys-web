@@ -16,6 +16,7 @@ module.exports = {
 	lintOnSave: false, // 是否在开发环境下通过 eslint-loader 在每次保存时 lint 代码
 	runtimeCompiler: true, // 是否使用包含运行时编译器的 Vue 构建版本
 	productionSourceMap: !IS_PROD, // 生产环境的 source map
+	
 	css: {
 		extract: IS_PROD,
 		requireModuleExtension: true,
@@ -59,6 +60,7 @@ module.exports = {
 			'@i': path.resolve(__dirname, './src/assets'),
 		  }
 		},
+		
 		plugins: [
 		  new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
 		  // 下面两项配置才是 compression-webpack-plugin 压缩配置
@@ -90,7 +92,7 @@ module.exports = {
 		  splitChunks: {
 			chunks: 'all',
 			maxInitialRequests: Infinity,
-			minSize: 20000,
+			minSize: 5000,
 			cacheGroups: {
 			  vendor: {
 				test: /[\\/]node_modules[\\/]/,
@@ -106,6 +108,6 @@ module.exports = {
 		  }
 		}
 	  }
-	
+
 
 }
