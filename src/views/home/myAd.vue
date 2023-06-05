@@ -9,27 +9,85 @@
 		<div style="text-align: center;padding: 13px 0;font-weight: 600;padding-top: 65px;">
 			<span style="font-size: 15px;">我的广告</span>
 		</div>
-		<div class="cardbox" v-for="(item,index) in list" :key="index">
+		<van-list
+				:loading="loading"
+				:finished="finished"
+				finished-text="没有更多了"
+				@load="getList"
+				>
+			<div class="cardbox" v-for="(item,index) in list" :key="index">
+				<div class="biaoqian">
+					<img src="../../assets/img/mybuy.png" alt="" v-if="item.type=='buy'">
+					<img src="../../assets/img/maysale.png" alt="" v-if="item.type=='sell'">
+				</div>
+				<div class="fontname">
+					<span>广告号：{{item.id}}</span>
+					<span style="color: #2E6BDB;font-size: 12px;font-weight: 600;" v-if="item.status=='enable'">上架中</span>
+					<span style="color:rgba(209, 209, 209, 1);font-size: 12px;font-weight: 600;" v-else>已下架</span>
+				</div>
+				<div class="pricead">
+					<div>
+						<span>{{item.price}}</span>
+						<span style="font-size: 12px;" v-if="item.price_type=='CNY'">￥</span>
+						<span style="font-size: 12px;" v-else>$</span>
+					</div>
+					<div class="boxtype">
+						{{ item.en_name.toUpperCase() }}
+					</div>
+				</div>
+				<div class="detialcard">
+					<div class="addetail" style="color:rgba(120, 137, 166, 1)">
+						<span>数量</span>
+						<span style="padding-left: 8px;">{{item.number}} {{ item.en_name.toUpperCase() }}</span>
+					</div>
+					<div class="addetail">
+						<span style="color:rgba(120, 137, 166, 1)">限额    </span>
+						<span style="padding-left: 8px;color: #333333;">{{item.low_price}}-{{item.high_price}} {{item.price_type.toUpperCase()}}</span>
+					</div>
+					<div class="addetail">
+						<span style="color:rgba(120, 137, 166, 1)">支付方式</span>
+						<span style="padding-left: 8px;color: #333333;">{{item.contact}}</span>
+					</div>
+					
+				</div>
+				<div class="btncaozuo">
+					<div class="downall" @click="downStatus(item.id,'disable')" v-if="item.status=='enable'"> 下架</div>
+					<div class="downall" @click="downStatus(item.id,'enable')" v-else>上架</div>
+					<div class="delall" @click="delAd(item.id)">删除</div>
+				</div>
+			</div>
+		</van-list>
+		<!-- <div class="cardbox" v-for="(item,index) in list" :key="index">
+			<div class="biaoqian">
+				<img src="../../assets/img/mybuy.png" alt="" v-if="item.type=='buy'">
+				<img src="../../assets/img/maysale.png" alt="" v-if="item.type=='sell'">
+			</div>
 			<div class="fontname">
 				<span>广告号：{{item.id}}</span>
 				<span style="color: #2E6BDB;font-size: 12px;font-weight: 600;" v-if="item.status=='enable'">上架中</span>
 				<span style="color:rgba(209, 209, 209, 1);font-size: 12px;font-weight: 600;" v-else>已下架</span>
 			</div>
 			<div class="pricead">
-				<span>{{item.price}}</span>
-				<span style="font-size: 12px;">￥</span>
+				<div>
+					<span>{{item.price}}</span>
+					<span style="font-size: 12px;" v-if="item.price_type=='CNY'">￥</span>
+					<span style="font-size: 12px;" v-else>$</span>
+				</div>
+				<div class="boxtype">
+					{{ item.en_name.toUpperCase() }}
+				</div>
 			</div>
 			<div class="detialcard">
-				<div class="addetail">
+				<div class="addetail" style="color:rgba(120, 137, 166, 1)">
 					<span>数量</span>
-					<span style="padding-left: 8px;">{{item.number}} {{ item.price_type }}</span>
+					<span style="padding-left: 8px;">{{item.number}} {{ item.en_name.toUpperCase() }}</span>
 				</div>
 				<div class="addetail">
-					<span>限额    </span>
-					<span style="padding-left: 8px;color: #333333;">{{item.low_price}}-{{item.high_price}} {{item.price_type}}</span>
+					<span style="color:rgba(120, 137, 166, 1)">限额    </span>
+					<span style="padding-left: 8px;color: #333333;">{{item.low_price}}-{{item.high_price}} {{item.price_type.toUpperCase()}}</span>
 				</div>
 				<div class="addetail">
-					<span>支付方式</span>
+					<span style="color:rgba(120, 137, 166, 1)">支付方式</span>
 					<span style="padding-left: 8px;color: #333333;">{{item.contact}}</span>
 				</div>
 				
@@ -39,7 +97,7 @@
 				<div class="downall" @click="downStatus(item.id,'enable')" v-else>上架</div>
 				<div class="delall" @click="delAd(item.id)">删除</div>
 			</div>
-		</div>
+		</div> -->
 		<div class="listnone" v-if="list.length==0">
 			<div class="imgiconbox">
 				<img src="../../assets/img/indexnonw.png" alt="" srcset="">
@@ -56,6 +114,8 @@
 	export default {
 		data() {
 			return {
+				loading: false,
+      			finished: false,
 				filters:{
 					page:1,
 					limit:10,
@@ -65,7 +125,7 @@
 		},
 		mounted() {
 			_this=this
-			this.getList()
+			// this.getList()
 		},
 		methods: {
             onClickLeft(){
@@ -134,8 +194,24 @@
 			},
 			getList(){
                 this.$api.adList(_this.filters).then((res)=>{
-                    if(res.code==0){
-                        _this.list=res.data.list
+                   if(res.code==0){
+						let all=res.data.list
+						this.loading = false;
+						if(all.length==10){
+							this.filters.page=Number(this.filters.page)+1
+							// this.finished = true;
+							all.forEach(item=>{
+									_this.list.push(item)
+								
+							})
+						}else if(all.length<10&&!this.finished){
+							// console.log(1111)
+							this.finished = true;
+							all.forEach(item=>{
+									_this.list.push(item)
+							})
+							
+						}
                     }else{
                         _this.$toast(res.error)
                     }
@@ -159,7 +235,7 @@
 </script>
 
 <style lang="scss" scoped>
-page{
+.page{
 		background: linear-gradient(180deg, rgba(247, 250, 255, 1) 0%, rgba(247, 250, 255, 1) 100%);
 	}
 	.listnone{
@@ -187,6 +263,7 @@ page{
 		opacity: 1;
 		background: linear-gradient(180deg, rgba(46, 107, 219, 1) 0%, rgba(85, 136, 220, 1) 100%);
 		position: fixed;
+		z-index: 100;
 	}
 	.cardbox{
 		
@@ -198,6 +275,19 @@ page{
 		margin: 0 auto;
 		margin-bottom: 10px;
 		box-shadow: 0px 5px 8px 0px #E6ECF7;
+		position: relative;
+		.biaoqian{
+			position: absolute;
+			width: 50px;
+			height: 50px;
+			z-index: 99;
+			left:0px;
+			top:0;
+			img{
+				width: 100%;
+				height: 100%;
+			}
+		}
 		.fontname{
 			font-size: 11px;
 			display: flex;
@@ -210,6 +300,21 @@ page{
 			font-size: 23px;
 			font-weight: 700;
 			padding-top: 13px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+		.boxtype{
+			width:58px;
+			height: 18px;
+			opacity: 0.3;
+			border-radius: 17.5px;
+			color: #fff;
+			font-size: 19px;
+			text-align: center;
+			line-height: 19px;
+			font-weight: 300;
+			background: rgba(120, 137, 166, 1);
 		}
 		.detialcard{
 			padding-top: 5px;

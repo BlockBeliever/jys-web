@@ -3,20 +3,21 @@ import session from '@/utils/session' // 引入sessiontorage组件
 import { Toast } from 'vant'
 
 // 设置接口路径
-const url = process.env.NODE_ENV === 'development' ? 'http://192.168.124.7:8082' : 'http://192.168.124.7:8082' // 测试
-
+const url = 'http://192.168.124.15:8082'  // 测试
+console.log(process.env,778)
 let http = axios.create({
-    baseURL: url,
+    // baseURL: url,
+    baseURL:process.env.VUE_APP_BASE_API,
     timeout: 10000, // 请求延时时间
 })
 
 // 添加请求拦截器
 http.interceptors.request.use(
     config => {
-      let token = session.get('token')
+      let token = localStorage.getItem('token')
       if (token) {
         // config.headers.Authorization = token // 将token设置成请求头
-        config.headers["Authorization"] = 1;
+        config.headers["Authorization"] = token;
         config.headers['Content-Type'] = 'application/json' // 将token设置成请求头
       }
       return Promise.resolve(config)

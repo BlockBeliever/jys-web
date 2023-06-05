@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="body">
 		<div class="navbartitle">
 			<!-- <div class="status_bar"></div> -->
 			<!-- <uni-nav-bar left-text="我的" :border="false" statusBar="true" backgroundColor="transparent" color="#fff"></uni-nav-bar> -->
@@ -7,19 +7,20 @@
 		</div>
 		<div class="cardin">
 			<div class="flex1">
-				<div class="myheadbox">
-					<img src="../../assets/img/head.png" alt="" srcset="">
+				<div class="myheadbox" v-if="account.head">
+					<!-- <img src="../../assets/img/head.png" alt="" srcset="" v-if="!account.head"> -->
+					<img :src="$IMGURL+ account.head" alt="" srcset="">
 				</div>
-				<span style="font-size:16px;color: rgba(16, 16, 16, 1);padding-left: 7px;">啦啦啦啦小可爱</span>
+				<span style="font-size:16px;color: rgba(16, 16, 16, 1);padding-left: 7px;">{{ account.name }}</span>
 			</div>
 			<div class="flex2">
 				<div class="cardbuy" @click="moveBuy">
-					<span style="font-weight: 600;">我要买入</span>
-					<span style="color: rgba(254, 66, 74, 1);">实现理财自由</span>
+					<span style="font-weight: 600;font-size: 13px;">我要买入</span>
+					<span style="color: rgba(254, 66, 74, 1);font-size: 11px;">实现理财自由</span>
 				</div>
 				<div class="cardsale" @click="moveSale">
-					<span style="font-weight: 600;">我要出售</span>
-					<span style="color: rgba(254, 66, 74, 1);">随买随买，高效收益</span>
+					<span style="font-weight: 600;font-size: 13px;">我要出售</span>
+					<span style="color: rgba(254, 66, 74, 1);font-size: 11px;">随买随买，高效收益</span>
 				</div>
 			</div>
 		</div>
@@ -44,22 +45,31 @@
 </template>
 
 <script>
+
+
 	export default{
 		data() {
 			return {
-				status:''
+				status:'',
+				account:{},
+				$IMGURL:''
 			}
 		},
-		mounted(){
+		created(){
+			this.$IMGURL = process.env.VUE_APP_IMGURL
 			this.getInfo()
 		},
 		methods: {
 			getInfo(){
+				this.$api.getAccount().then((res)=>{
+					if(res.code==0){
+							this.account=res.data.user
+					}
+				})
 				this.$api.merchantInfo().then((res)=>{
 					if(res.code==0){
 							this.status=res.data.info.status
 					}
-					
 				})
 			},
 			moveAd(){
@@ -71,12 +81,12 @@
 			},
 			moveBuy(){
 				if(this.status==''){
-					_this.$toast("请申请成为商家")
+					this.$toast("请申请成为商家")
 				}else if(this.status=='agree'){
 					this.$router.push({
 					name:'Mybuy',})
 				}else if(this.status=='refuse'){
-					_this.$toast("申请被拒绝，请重新申请")
+					this.$toast("申请被拒绝，请重新申请")
 				}
         
 				// uni.navigateTo({
@@ -92,12 +102,12 @@
 			},
 			moveSale(){
 				if(this.status==''){
-					_this.$toast("请申请成为商家")
+					this.$toast("请申请成为商家")
 				}else if(this.status=='agree'){
 					this.$router.push({
 					name:'Mysale',})
 				}else if(this.status=='refuse'){
-					_this.$toast("申请被拒绝，请重新申请")
+					this.$toast("申请被拒绝，请重新申请")
 				}
 				
 				// uni.navigateTo({
@@ -109,20 +119,23 @@
 </script>
 
 <style lang="scss" scoped>
-	page{
-		background: linear-gradient(180deg, rgba(247, 250, 255, 1) 0%, rgba(247, 250, 255, 1) 100%);
+	.body{
+		box-sizing: border-box;
+		
 	}
 	.navbartitle {
 		color: rgba(16, 16, 16, 1);
-		width: 375px;
+		width: 100%;
 		height: 60px;
 		opacity: 1;
 		background: linear-gradient(180deg, rgba(46, 107, 219, 1) 0%, rgba(85, 136, 220, 1) 100%);
-	
+		
 	}
 	.cardin{
-		width:340px;
-		
+		// width:340px;
+		width: 90%;
+		margin: 10px 15px;
+		// box-sizing: border-box;
 		box-sizing: border-box;
 		border-radius: 10px;
 		margin: 0 auto;
@@ -134,13 +147,15 @@
 		width: 43px;
 		height: 43px;
 		border-radius: 50%;
+		overflow:hidden;
+		
 		img{
-			width: 100%;
+			// width: 100%;
 			height: 100%;
 		}
 	}
 	.cardbuy{
-		width: 145px;
+		width: 48%;
 		height: 65px;
 		background: url("../../assets/img/myle.png");
 		background-size: 100% 100%;
@@ -153,7 +168,7 @@
 		justify-content: space-between;
 	}
 	.cardsale{
-		width: 145px;
+		width: 48%;
 		height: 65px;
 		background: url("../../assets/img/myri.png");
 		background-size: 100% 100%;
@@ -167,7 +182,7 @@
 	}
 	.cardbt{
 		font-size: 14px;
-		width: 340px;
+		width: 90%;
 		background-color: #fff;
 		margin: 0 auto;
 		margin-top: 10px;

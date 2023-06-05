@@ -279,7 +279,7 @@
 	.applycardall {
 		background-color: #fff;
 		border-radius: 10px 10px 0 0;
-		width:340px;
+		width:90%;
 		margin: 0 auto;
 		height: calc(100vh - 40px - 75px);
 		padding: 0 20px;

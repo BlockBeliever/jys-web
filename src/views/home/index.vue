@@ -24,8 +24,9 @@
 				</div>
 			</div>
 		</div>
-		<div class="content" >
-			<div class="flex2 ads">
+		<div class="content" style="margin-top:165px">
+			<div class="status_bar"></div>
+			<div class="flex2 ads" >
 				<!-- <div class="tab-box">
 						<div class="tab-item" @click="testTabClick(index)" :class="tabIndex == index?'active':''" v-for="(item,index) in tabList" :key="index">
 							{{item.name}}
@@ -35,8 +36,8 @@
 					<span v-if="tabIndex==0">我要购买</span>
 				<span v-if="tabIndex==1">我要出售</span>
 					<div class="chooseconi" @click="changeCoin()">
-						<span style="padding-right: 5px;">{{chooseCoinname.toUpperCase()}}</span>
-						<van-icon name="arrow-down"/>
+						<span >{{chooseCoinname.toUpperCase()}}</span>
+						<van-icon name="arrow-down" style="padding-left: 5px;"/>
 						<!-- <uni-icons type="bottom" size="14"></uni-icons> -->
 					</div>
 				</div>
@@ -45,16 +46,25 @@
 					<div class="imgqie"><img src="../../assets/img/qiehuan.png" alt="" srcset=""></div>
 				</div>
 			</div>
-			<div class="cardlist" v-for="(item,index) in list" :key="index">
-				<div class="titlename flex1">
+
+			<van-list
+				:loading="loading"
+				:finished="finished"
+				finished-text="没有更多了"
+				@load="getList"
+				>
+					<div  v-for="(item,index) in list" :key="index" >
+				<div  class="cardlist">
+					<div class="titlename flex1">
 					<div class="headbox" v-if="item.user_head==''"><img src="../../assets/img/head.png" alt=""></div>
-					<div class="headbox" v-if="item.user_head!=''"><img :src="item.user_head" alt=""></div>
+					<div class="headbox" v-else><img :src="$IMGURL+ item.user_head" alt=""></div>
 					<span class="namein">{{item.merchant_name}}</span>
 				</div>
 				<div class="flex4 xianshi">
 					<div class="asdadwq ">
 						<span class="price">{{item.price}}</span>
-						<span style="font-weight: 600;font-size: 14px;">￥</span>
+						<span style="font-weight: 600;font-size: 14px;" v-if="item.price_type=='CNY'">￥</span>
+						<span style="font-weight: 600;font-size: 14px;" v-else>$</span>
 					</div>
 
 					<span class="neirong">数量 {{item.number}} {{ item.coin_en_name.toUpperCase()}}</span>
@@ -63,12 +73,45 @@
 				</div>
 				<div class="buybtn flex2">
 					<div>
-						<span>支付方式</span>
+						<span>支付方式  {{ item.contact }}</span>
 					</div>
-					<div v-if="tabIndex==0" class="buy" @click="moveDeatil(item.id)">购买</div>
-					<div  v-if="tabIndex==1" class="buyout"  @click="moveDeatil(item.id)">出售</div>
+					<div v-if="tabIndex==0" class="buy" @click="moveDeatil(item)">购买</div>
+					<div  v-if="tabIndex==1" class="buyout"  @click="moveDeatil(item)">出售</div>
 				</div>
+				</div>
+
 			</div>
+			
+				</van-list>
+				<div class="stats_bottom"></div>
+			<!-- <div  v-for="(item,index) in list" :key="index" >
+				<div  class="cardlist">
+					<div class="titlename flex1">
+					<div class="headbox" v-if="item.user_head==''"><img src="../../assets/img/head.png" alt=""></div>
+					<div class="headbox" v-else><img :src="$IMGURL+ item.user_head" alt=""></div>
+					<span class="namein">{{item.merchant_name}}</span>
+				</div>
+				<div class="flex4 xianshi">
+					<div class="asdadwq ">
+						<span class="price">{{item.price}}</span>
+						<span style="font-weight: 600;font-size: 14px;" v-if="item.price_type=='CNY'">￥</span>
+						<span style="font-weight: 600;font-size: 14px;" v-else>$</span>
+					</div>
+
+					<span class="neirong">数量 {{item.number}} {{ item.coin_en_name.toUpperCase()}}</span>
+					<span class="xiane">限额<p style="padding-left: 10px;color: rgba(51, 51, 51, 1);">{{item.low_price}}-{{item.high_price}}
+							{{item.price_type}}</p></span>
+				</div>
+				<div class="buybtn flex2">
+					<div>
+						<span>支付方式  {{ item.contact }}</span>
+					</div>
+					<div v-if="tabIndex==0" class="buy" @click="moveDeatil(item)">购买</div>
+					<div  v-if="tabIndex==1" class="buyout"  @click="moveDeatil(item)">出售</div>
+				</div>
+				</div>
+
+			</div> -->
 			<div class="listnone" v-if="list.length==0">
 				<div class="imgiconbox">
 					<img src="../../assets/img/indexnonw.png" alt="" srcset="">
@@ -83,14 +126,14 @@
             <div class="coinList" style="">
 				<div class="searchCpon">
 					<!-- <uni-icons type="search" size="20" color="#C7C7C7"></uni-icons> -->
-					<input type="text" placeholder="搜索" placeholder-style="color:#C7C7C7">
+					<input type="text" placeholder="搜索" v-model="searchCoin" placeholder-style="color:#C7C7C7" @input="searchCoinInput(searchCoin)">
 				</div>
 				<div style="padding: 25px 30px;">
 					<van-radio-group v-model="checked"  >
 					<div class="listcoinall flex2" v-for="(item,index) in listall" :key="index">
 										 <div class="flex" style="align-items: center;">
-											 <div class="cpongom">
-												 <img src="../../assets/img/head.png" alt="" srcset="">
+											 <div class="cpongom" v-if="item.en_name!='全部'">
+												 <img :src="$APIURL+'/'+item.icon" alt="" srcset="">
 											 </div>
 											 <div class="tista">
 												 <span>{{item.en_name.toUpperCase()}}</span>
@@ -120,10 +163,10 @@
 				</div>
 				<div style="padding: 25px 30px;">
 					<van-radio-group v-model="checkedusdt"  >
-					<div class="listcoinall flex2" v-for="(item,index) in list2" :key="index">
+					<div class="listcoinall flex2" v-for="(item,index) in list2" :key="index" >
 										 <div class="flex" style="align-items: center;">
-											 <div class="cpongom">
-												 <img src="../../assets/img/head.png" alt="" srcset="">
+											 <div class="cpongom" >
+												 <img :src="item.img" alt="" srcset="">
 											 </div>
 											 <div class="tista">
 												 <span>{{item.name}}</span>
@@ -179,9 +222,12 @@
 		
 		data() {
 			return {
+				loading: false,
+      			finished: false,
 				tabIndex: 0,
 				bookShowPicker: false,
 				fabishow:false,
+				searchCoin:'',
 				checked:"",
 				tabList: [{
 					name: "购买"
@@ -189,13 +235,15 @@
 					name: "出售"
 				}],
 				filters:{
-					coin_id:1,
+					coin_id:0,
 					page:1,
 					limit:10,
-					type:"buy",
+					type:"sell",
 					price_type:''
 				},
+				$IMGURL:'',
 				list:[],
+				copyList:null,
 				chooseCoinname:'',
 				chooseusdtname:'',
 				checkedusdt:'',
@@ -204,36 +252,94 @@
                 listall:[],
                 list2:[{
                     name:'CNY',
+					img:require("../../assets/img/cnypic.png")
                 },
                 {
                     name:'USD',
+					img:require("../../assets/img/usdpic.png")
                 }],
 
 			}
 		},
-		mounted() {
+	  async	mounted() {
+			this.$IMGURL = process.env.VUE_APP_IMGURL
+			this.$APIURL = process.env.VUE_APP_BASE_API;
 			this.filters.price_type=this.list2[0].name
 				this.chooseusdtname=this.list2[0].name
-			this.getList()
+				this.checkedusdt='0'
+				// if(this.$route.query.code){
+				// this.getAuther(this.$router.query.code)
+				// }else if(localStorage.getItem('code')){
+				// 	this.getAuther(localStorage.getItem('code'))
+				// }
+			// this.timer = setInterval(this.getAuther(localStorage.getItem('code')), 500)
+			setTimeout(this.getAuther(localStorage.getItem('code')),2000)	
+			// let code='NTHKOWI0NGMTOGQZMS0ZMWFKLTKYYJATM2Y1ODHKMWUWNJU5'	
+		    // this.getAuther(code)
 			this.getcoinList()
+			this.getList()
+			
+				
+			
 		},
 		methods: {
+			searchCoinInput(val){
+				console.log(val+'1')
+				let all=[]
+				if(val==''){
+					this.listall=this.copyList
+				}else{
+					this.listall=this.copyList
+					this.listall.forEach(item => {
+						let name=item.en_name
+					if(name.indexOf(val.trim()) >= 0 || name.toUpperCase().indexOf(val.trim())>= 0 ){
+						console.log(11111)
+						all.push(item)
+					}
+					
+						})
+					this.listall=all
+				}
+				
+			},
+			getAuther(code){
+				// console.log(code,77777)
+				if(code!="null"){
+					this.$api.getAuther({code:code}).then((res)=>{
+					localStorage.setItem('token',res.data.auth.access)
+					this.getcoinList()
+			        this.getList()
+					// clearInterval(this.timer)
+				})
+				}
+				
+			},
 			changeCointype(e){
 				this.checked=e.toString()
 				this.filters.coin_id=this.listall[e].id
 				this.chooseCoinname=this.listall[e].en_name
 				this.bookShowPicker=false
+				this.list=[]
+				this.finished=false
+				this.filters.page=1
 				this.getList()
+				
 			},
 			cahgeUsdt(e){
 				this.checkedusdt=e.toString()
 				this.filters.price_type=this.list2[e].name
 				this.chooseusdtname=this.list2[e].name
 				this.fabishow=false
+				this.list=[]
+				this.finished=false
+				this.filters.page=1
 				this.getList()
 			},
 			testTabClick(index) {
 				this.tabIndex = index
+				this.list=[]
+				this.finished=false
+				this.filters.page=1
 				this.getList()
 			},
 			changeCoin(){
@@ -244,34 +350,74 @@
 				this.fabishow = true;
 				//  this.$refs.popup.open('bottom')
 			},
+
 		    getcoinList(){
 				this.$api.coinList(this.filters).then((res)=>{
 					if(res.code==0){
 						_this.listall=res.data.coins
+						let obj={
+							en_name:'全部',
+							id:0
+						}
+						this.listall.unshift(obj)
 							this.listall.forEach(item=>{
 								item.checked=false
 							})
+							
 							this.listall[0].checked=true
 							this.checked='0'
 							this.filters.coin_id=this.listall[0].id
 							this.chooseCoinname=this.listall[0].en_name
+							this.copyList= [].concat(this.listall)
 					}
 					
 				})
 			},
 			getList() {
+				
+				// console.log(1111)
 				_this=this
 				if(this.tabIndex==0){
-					this.filters.type="buy"
-				}else{
 					this.filters.type="sell"
+				}else{
+					this.filters.type="buy"
 				}
-				this.$api.homeList(this.filters).then((res)=>{
-					if(res.code==0){
-						_this.list=res.data.list
-					}
-					
-				})
+				
+				// setTimeout(()=>{
+						this.$api.homeList(this.filters).then((res)=>{
+						if(res.code==0){
+							let all=res.data.list
+							this.loading = false;
+							if(all.length==10){
+								this.filters.page=Number(this.filters.page)+1
+								// this.finished = true;
+								all.forEach(item=>{
+									if(item.status=='enable'){
+										_this.list.push(item)
+										
+										
+									}
+								})
+							}else if(all.length<10&&!this.finished){
+								// console.log(1111)
+								this.finished = true;
+								console.log(this.finished)
+								all.forEach(item=>{
+									if(item.status=='enable'){
+										_this.list.push(item)
+										
+									}
+								})
+								
+							}
+							
+							
+						}
+						
+					})
+				// },500)
+
+				
 				
 				// _this.$post('/api/user/advertising/list',{
 				// 	data:_this.filters,
@@ -302,12 +448,14 @@
 				// 	},
 				// )
 			},
-			moveDeatil(id) {
+			moveDeatil(val) {
+				console.log(val)
 				this.$router.push({
 					name:'goodDetail',
 					query:{
-					id:id,
-					coin_name:this.chooseCoinname,
+					id:val.id,
+					type:this.filters.type,
+					coin_name:val.coin_en_name,
 					usdt_name:this.chooseusdtname
 					}
 				})
@@ -386,7 +534,7 @@
 	}
 	.buybtn {
 		margin-top: 20px;
-		font-size: 6px;
+		font-size: 12px;
 		color: rgba(120, 137, 166, 1);
 
 		.buy {
@@ -451,7 +599,7 @@
 				width: 40px;
 				height: 40px;
 				border-radius: 50%;
-
+				overflow: hidden;
 				img {
 					width: 100%;
 					height: 100%;
@@ -473,7 +621,7 @@
 		border-radius: 20px 20px 0 0;
 		background: rgba(255, 255, 255, 1);
 		box-shadow: 0px 0px 6px 4px rgba(239, 244, 254, 0.6);
-		height: 100vh;
+		height: calc(100vh - 210px);
 		overflow-y: auto;
 	}
 
@@ -493,15 +641,16 @@
 		height: 110px;
 		opacity: 1;
 		background: linear-gradient(180deg, rgba(46, 107, 219, 1) 0%, rgba(85, 136, 220, 1) 100%);
-		position: relative;
-
+		position: fixed;
+		top:0;
+		z-index: 999;
 		.buyandsale {
 			padding: 0 17px;
 			box-sizing: border-box;
 			position: absolute;
-			width: 320px;
+			width: 90%;
 			height: 78px;
-			background: url(https://img.js.design/assets/img/6442076bc7c0e98ff1a6b57f.png#736adb34c57999ee097e3e2f41d64be4);
+			background: url("../../assets/img/indexbanner.png") no-repeat;
 			background-size: 100% 100%;
 			bottom: -39px;
 			left: 0;

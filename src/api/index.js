@@ -12,7 +12,7 @@ Vue.prototype.$api = {
 // 提交
   submitOrder: params => { return http.post(`/api/user/advertising/buy`,  params ) },
   // 订单详情
-  submitOrder: params => { return http.post(`/api/user/advertising/buy`,  params ) },
+  submitOrderSell: params => { return http.post(`/api/user/advertising/sell`,  params ) },
    // 发布买入
    submitBuy: params => { return http.post(`/api/user/merchant/advertising/create`,  params ) },
     // 发布买入
@@ -32,11 +32,17 @@ Vue.prototype.$api = {
     // 获取信息
     sumbmitReplyMerchan : params => { return http.post(`/api/user/merchant/reapply`,  params ) },
     // 订单列表
-  orderList: params => { return http.post(`/api/user/advertising/order/list`, { params }) },
+  orderList: params => { return http.post(`/api/user/advertising/order/list`, params ) },
 
   // 订单详情
   orderDetail: id => { return http.post(`/api/user/advertising/order/detail`, { id }) },
 
   // 完成订单
-  orderEnd: id => { return http.post(`/api/user/advertising/order/end`, { id }) }
+  orderEnd: id => { return http.post(`/api/user/advertising/order/end`, { id }) },
+   // 获取TOKEN
+   getAuther: params => { return http.post(`/api/user/auth/code_to_token`, params) },
+   // 获取TOKEN
+   getAccount: params => { return http.post(`/api/user/account`, params) },
+   // 获取config
+   getConfigValue: params => { return http.post(`/api/user/config/get_config_value`, params) },
 }

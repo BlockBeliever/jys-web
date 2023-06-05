@@ -34,23 +34,52 @@
         订单已完成
       </div>
       <div class="ordercard">
+        <div class="contract">
+					<div class="iconimg">
+						<img src="../../assets/img/chant.png" alt="" srcset="" />
+					</div>
+					<span style="padding-left:2px" v-if="info.type == 'buy'&&merchantid==info.merchant_id" @click="moveContact(info.user_id)">联系买家</span>
+          <span style="padding-left:2px" v-if="info.type == 'buy'&&merchantid!=info.merchant_id" @click="moveContact(info.merchant_id)">联系卖家</span>
+          <span style="padding-left:2px" v-if="info.type == 'sell'&&merchantid==info.merchant_id" @click="moveContact(info.user_id)">联系买家</span>
+          <span style="padding-left:2px" v-if="info.type == 'sell'&&merchantid!=info.merchant_id" @click="moveContact(info.merchant_id)">联系卖家</span>
+
+
+				</div>
         <div class="allcard">
-          <span class="tetinfo">卖家信息</span>
-          <div class="contract"></div>
+          <span v-if="info.type == 'buy'&&merchantid==info.merchant_id">买家</span>
+          <span v-if="info.type == 'buy'&&merchantid!=info.merchant_id">卖家</span>
+          <span v-if="info.type == 'sell'&&merchantid==info.merchant_id">买家</span>
+          <span v-if="info.type == 'sell'&&merchantid!=info.merchant_id">卖家</span>
+          <span class="tetinfo">信息</span>
+          <!-- <div class="contract"></div> -->
         </div>
         <div class="info">
           <span style="color: rgba(112, 169, 229, 1)">*</span>
-          <span>卖家已通过平台实名及视频认证</span>
+          <span v-if="info.type == 'buy'&&merchantid==info.merchant_id">买家</span>
+          <span v-if="info.type == 'buy'&&merchantid!=info.merchant_id">卖家</span>
+          <span v-if="info.type == 'sell'&&merchantid==info.merchant_id">买家</span>
+          <span v-if="info.type == 'sell'&&merchantid!=info.merchant_id">卖家</span>
+          <span>已通过平台实名及视频认证</span>
         </div>
         <div class="info">
           <span style="color: rgba(112, 169, 229, 1)">*</span>
-          <span>平台7*24小时客服在线，保证您与卖家的交易安全</span>
+          <span>平台7*24小时客服在线，保证您与</span>
+          <span v-if="info.type == 'buy'&&merchantid==info.merchant_id">买家</span>
+          <span v-if="info.type == 'buy'&&merchantid!=info.merchant_id">卖家</span>
+          <span v-if="info.type == 'sell'&&merchantid==info.merchant_id">买家</span>
+          <span v-if="info.type == 'sell'&&merchantid!=info.merchant_id">卖家</span>
+          <span>的交易安全</span>
         </div>
       </div>
       <div class="boxorderdetail">
         <div class="flex1 saddwq">
           <div class="usdtimg"><img src="../../../static/img/usdticon.png" alt="" /></div>
-          <span class="butusdtt">购买USTD</span>
+          <!-- <span class="butusdtt" v-if="info.type=='buy'">购买{{ coin.en_name.toUpperCase()}}</span>
+          <span class="butusdtt" v-else>出售{{ coin.en_name.toUpperCase()}}</span> -->
+           <span class="butusdtt" v-if="info.type == 'sell'&&merchantid==info.merchant_id">购买{{ coin.en_name.toUpperCase()}}</span>
+            <span class="butusdtt" v-if="info.type == 'sell'&&merchantid!=info.merchant_id">出售{{ coin.en_name.toUpperCase()}}</span>
+            <span class="butusdtt" v-if="info.type == 'buy'&&merchantid==info.merchant_id">出售{{ coin.en_name.toUpperCase()}}</span>
+            <span class="butusdtt" v-if="info.type == 'buy'&&merchantid!=info.merchant_id">购买{{ coin.en_name.toUpperCase()}}</span>
         </div>
         <div class="boxdetailsa">
           <div class="flex2 adsawq">
@@ -69,13 +98,13 @@
           <div class="flex2 adsawq">
             <span>数量</span>
             <div class="flex">
-              <span>{{ info.number }} USDT</span>
+              <span>{{ info.number }} {{ coin.en_name.toUpperCase()}}</span>
             </div>
           </div>
           <div class="flex2 adsawq">
             <span>总金额</span>
             <div class="flex">
-              <span>￥{{ info.total_price }}</span>
+              <span>￥{{ Number(info.total_price).toFixed(0) }} {{ info.price_type }}</span>
             </div>
           </div>
 
@@ -93,8 +122,15 @@
             </div>
           </div>
         </div>
-        <div class="submit" @click="submit" v-if="info.status == 'wait'">
+        <div class="submit" @click="submit" v-if="info.status == 'wait'&&info.type == 'sell'&&merchantid!=info.merchant_id">
           <span>完成订单</span>
+        </div>
+        <div class="submit" @click="submit" v-if="info.status == 'wait'&&info.type == 'buy'&&merchantid==info.merchant_id">
+          <span>完成订单</span>
+        </div>
+        <div class="contactkefy" @click="moveContact(serveId)">
+          <span>遇到问题？ </span>
+          <span style="color:rgba(97, 151, 254, 1)">联系客服 </span>
         </div>
         <div class="stats_bottom"></div>
       </div>
@@ -110,12 +146,19 @@ export default {
     return {
       id: 1,
       info: {},
-      merchant: {}
+      merchant: {},
+      coin:{},
+      merchantid:0,
+      serveId:0,
+      filters: {
+        "config_key":"CustomerService",
+        "config_value":"",
+      },
     }
   },
   mounted() {
+    this.merchantid=localStorage.getItem("merchantid")
     let id = this.$route.query.id
-    console.log('id', id)
     _this = this
     if (id) {
       this.id = parseInt(id)
@@ -140,6 +183,9 @@ export default {
     }
   },
   methods: {
+    moveContact(val){
+      window.chatView({uid:this.info.user_id,contact_id:Number(val)})
+    },
     onClickLeft() {
       this.$router.push({ name: 'List' })
     },
@@ -167,13 +213,18 @@ export default {
     },
     loadDetail() {
       _this = this
+      this.$api.getConfigValue(this.filters).then(res => {
+        if (res.code == 0) {
+            _this.serveId = res.data.data
+          }
+      })
       this.$api
         .orderDetail(_this.id)
         .then(res => {
-          console.log('res', res)
           if (res.code == 0) {
             _this.info = res.data.order
             _this.merchant = res.data.merchant
+            _this.coin=res.data.coin
           }
 
         })
@@ -190,7 +241,17 @@ export default {
 //   background: linear-gradient(180deg, rgba(247, 250, 255, 1) 0%, rgba(247, 250, 255, 1) 100%);
 //   color: rgba(51, 51, 51, 1);
 // }
-
+.contactkefy{
+  // display: flex;
+  width: 100%;
+  text-align: center;
+  font-size: 13px;
+ margin: 0 auto;
+ left: 0;
+ right: 0;
+  position: fixed;
+  bottom: 80px;
+}
 .navbartitle {
   color: rgba(16, 16, 16, 1);
   width: 100%;
@@ -198,6 +259,7 @@ export default {
   opacity: 1;
   background: linear-gradient(180deg, rgba(46, 107, 219, 1) 0%, rgba(85, 136, 220, 1) 100%);
   position: fixed;
+  z-index: 999;
 }
 
 .order {
@@ -209,13 +271,39 @@ export default {
 }
 
 .ordercard {
-  width: 340px;
+  width:100%;
   height: 126px;
   border-radius: 10px;
   // background: linear-gradient(180deg, rgba(204, 222, 255, 1) 0%, rgba(255, 255, 255, 0.01) 100%);
   background: url('../../../static/img/bg.png');
   background-size: 100% 100%;
-
+  position: relative;
+  .contract{
+    background-color: rgba(255, 255, 255, 0.8);
+			position: absolute;
+			display: flex;
+			align-items: center;
+			font-size: 10px;
+			color: rgba(128, 128, 128, 1);
+			border-radius: 16px;
+			border: 1px solid rgba(103, 199, 255, 1);
+			width: 84px;
+			height: 27px;
+			right: 8.5px;
+			top:13px;
+			justify-content: center;
+			// padding-left: 8px;
+			// box-sizing: border-box;
+			.iconimg{
+				
+				width: 18px;
+				height: 16.5px;
+				img{
+				width: 100%;
+				height: 100%;
+				}
+			}
+		}
   .allcard {
     padding: 15px;
     box-sizing: border-box;
@@ -238,10 +326,10 @@ export default {
 }
 
 .boxorderdetail {
-  width: 340px;
+  width:100%;
   margin: 0 auto;
   background-color: #fff;
-  height: calc(100vh - 210px);
+  height: calc(100vh - 302px);
   margin-top: 10px;
 
   .saddwq {

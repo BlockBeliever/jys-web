@@ -24,9 +24,15 @@
 					<div class="imgall">
 						<img src="../../assets/img/save.png" alt="" srcset="">
 					</div>
-					<div class="tab-box">
+					<div class="tab-box" v-if="type=='sell'">
 						<div class="tab-item" @click="testTabClick(index)" :class="tabIndex == index?'active':''"
-							v-for="(item,index) in tabList" :key="index">
+							v-for="(item,index) in tabList1" :key="index">
+							{{item.name}}
+						</div>
+					</div>
+					<div class="tab-box" v-if="type=='buy'">
+						<div class="tab-item" @click="testTabClick(index)" :class="tabIndex == index?'active':''"
+							v-for="(item,index) in tabList2" :key="index">
 							{{item.name}}
 						</div>
 					</div>
@@ -36,9 +42,10 @@
 							placeholder-style="color: rgba(207, 207, 207, 1);">
 						<!-- <span class="pricetext">0.00</span> -->
 						<div class="sada">
-							<span>{{ usdt_name }}</span>
-							<span style="padding: 0 9px;">|</span>
-							<span style="color: rgba(73, 135, 249, 1);">最大</span>
+							<span v-if="tabIndex==0">{{ usdt_name }}</span>
+							<span v-if="tabIndex==1">{{ coin_name.toUpperCase() }}</span>
+							<span style="padding: 0 9px;padding-bottom: 2px;">|</span>
+							<span style="color: rgba(73, 135, 249, 1);padding-bottom: 3px;" @click="maxAll">最大</span>
 						</div>
 					</div>
 					<div class="xiane">
@@ -47,12 +54,14 @@
 						<span style="color: rgba(255, 32, 64, 1);">{{info.low_price}}-{{info.high_price}} {{ usdt_name }}</span>
 					</div>
 					<div class="kede flex1" v-if="tabIndex==0">
-						<span>可得 </span>
+						<span v-if="type=='sell'">可得 </span>
+						<span v-else>出售 </span>
 						<span style="color: rgba(207, 207, 207, 1);padding-left: 13px;font-size: 25px;">{{usdtnum}}{{ coin_name.toUpperCase() }}
 						</span>
 					</div>
 					<div class="kede flex1" v-if="tabIndex==1">
-						<span>应付 </span>
+						<span v-if="type=='sell'">应付 </span>
+						<span v-else>可得 </span>
 						<span style="color: rgba(207, 207, 207, 1);padding-left: 13px;font-size: 25px;">{{usdtnum}}{{ usdt_name }}
 						</span>
 					</div>
@@ -92,8 +101,8 @@
 			<span>如果您同意与凤凰进行C2C交易，即标识您接受</span>
 			<span style="color: rgba(58, 116, 219, 1);border-bottom:1px solid  rgba(58, 116, 219, 1)">凤凰C2C交易法律免责声明。</span>
 		</div>
-            <div class="buybtn" @click="orderPay">买入{{ coin_name }}</div>
-		
+            <button class="buybtn" :disabled="!flag" @click="orderPay" v-if="type=='sell'">买入{{ coin_name.toUpperCase() }}</button>
+			<button class="buybtn"  :disabled="!flag" @click="orderPay" v-else>出售{{ coin_name.toUpperCase() }}</button>
 		<div style="padding-bottom: 94px;"></div>
 	</div>
 </template>
@@ -103,10 +112,15 @@
 	export default {
 		data() {
 			return {
-				tabList: [{
+				tabList1: [{
 					name: "按金额购买"
 				}, {
 					name: "按数量购买"
+				}],
+				tabList2: [{
+					name: "按金额出售"
+				}, {
+					name: "按数量出售"
 				}],
 				tabIndex: 0,
 				typein:null,
@@ -114,7 +128,8 @@
 				info:{},
 				merchant:{},
 				coin_name:'',
-				usdt_name:''
+				usdt_name:'',
+				flag:true
 			}
 		},
 		mounted() {
@@ -123,27 +138,44 @@
             this.id= parseInt(this.$route.query.id)
 			this.coin_name=this.$route.query.coin_name
 			this.usdt_name=this.$route.query.usdt_name
+			this.type=this.$route.query.type
 			this.loadDetail()
 		},
 		computed:{
-			usdtnum(){
+			usdtnum(){	
 				if(this.tabIndex==0){
 					let xprice=this.typein/this.info.price
-					console.log(this.typein,this.info.high_price,666)
-					if(this.typein>this.info.high_price){
-						_this.$toast("不能超过最大限额")
-					}
-					return xprice.toFixed(2)
+					// if(this.typein>this.info.high_price){
+					// 	_this.$toast("不能超过最大限额")
+					// }
+					return xprice.toFixed(4)
 				}else{
 					let yprice=this.typein*this.info.price
-					if(yprice>this.info.high_price){
-						_this.$toast("不能超过最大限额")
-					}
-					return this.typein?this.typein*this.info.price:'0.00'
+					let bprice=Number(_this.info.high_price)
+					// if(yprice.toFixed(4)>bprice){
+					// 	_this.$toast("不能超过最大限额")
+					// }
+					return this.typein?(this.typein*this.info.price).toFixed(4):'0.00'
 				}
 			}
 		},
 		methods: {
+			maxAll(){
+				if(this.tabIndex==0){
+					if(this.info.number*this.info.price>=this.info.high_price){
+						this.typein=this.info.high_price
+					}else{
+						this.typein=(this.info.number*this.info.price)
+					}
+					
+				}else{
+					if(this.info.number*this.info.price<=this.info.high_price){
+						this.typein=this.info.number
+					}else{
+						this.typein=(this.info.high_price/this.info.price).toFixed(4)
+					}
+				}
+			},
             onClickLeft(){
                 this.$router.push({ name:'Home'})
             },
@@ -171,27 +203,94 @@
 				// )
 			},
 			orderPay(){
-				let data={
+				
+				console.log(this.usdtnum,this.typein,this.info.price,this.tabIndex)
+				if(this.info.number==0){
+					_this.$toast("暂无库存")
+					return
+				}
+				if(this.usdtnum==0||this.typein==0){
+					_this.$toast("请输入购买量")
+					return
+				}
+				console.log()
+				if(this.tabIndex==0){
+					// console.log(this.typein<Number(this.info.low_price) ,this.info.low_price)
+					if(this.typein<Number(this.info.low_price)){
+					_this.$toast("不能低于最小限额")
+					return
+				}
+				}else{
+					// console.log(this.usdtnum,this.info.low_price)
+					if(this.usdtnum<Number(this.info.low_price)){
+					_this.$toast("不能低于最小限额")
+					return
+				}
+				}
+				if(this.tabIndex==1){
+					let high_price = Number(_this.info.high_price).toFixed(4)
+					console.log(Number(this.usdtnum)>high_price)
+					if(Number(this.usdtnum)>high_price||Number(this.usdtnum)>Number((this.info.number*this.info.price))){
+					_this.$toast("不能高于最大限额")
+					return
+				}
+				}else{
+					// console.log(this.usdtnum,this.info.number,this.info.price,78)
+					if(this.typein> Number(_this.info.high_price)||this.typein>this.info.number*this.info.price){
+					_this.$toast("不能高于最大限额")
+					return
+				}
+				}
+				
+				this.flag=false
+					let data={
 					merchant_advertising_id:this.id,
 					number:this.tabIndex==0?this.usdtnum:this.typein
 				}
-                this.$api.submitOrder(data).then((res)=>{
-                    if(res.code==0){
-                        _this.$toast("订单提交成功")
-                    setTimeout(()=>{
-                        this.$router.push({
-					name:'order',
-					query:{
-                        order:res
-					}
-                    })
-                   
-				    },400)
-                    }else{
-                        _this.$toast(res.error)
-                    }
+				if(this.type=='sell'){
+						this.$api.submitOrder(data).then((res)=>{
+						if(res.code==0){
+							_this.$toast("订单提交成功")
+							
+						setTimeout(()=>{
+							this.flag=true
+							this.$router.push({
+						name:'order',
+						query:{
+							order:res
+						}
+						})
 					
-				})
+						},400)
+						}else{
+							this.flag=true
+							_this.$toast(res.error)
+						}
+						
+					})
+					}else{
+						this.$api.submitOrderSell(data).then((res)=>{
+						if(res.code==0){
+							_this.$toast("订单提交成功")
+						setTimeout(()=>{
+							this.flag=true
+							this.$router.push({
+						name:'order',
+						query:{
+							order:res
+						}
+						})
+					
+						},400)
+						}else{
+							this.flag=true
+							_this.$toast(res.error)
+						}
+						
+					})
+					}
+				
+                
 				// _this.$post('/api/user/advertising/buy',{
 				// 	data:data,
 				// 	success: (res)=>{
@@ -215,6 +314,7 @@
 				
 			},
 			testTabClick(index) {
+				this.typein=""
 				this.tabIndex = index
 			}
 		}

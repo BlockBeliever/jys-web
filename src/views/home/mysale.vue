@@ -24,7 +24,7 @@
                         <van-icon name="arrow-down" v-if="!showcoindown" @click="showcoindown=!showcoindown"/>
                         <van-icon name="arrow-up" v-if="showcoindown"  @click="showcoindown=!showcoindown"/>
 						<div class="downlistcoin"  v-if="showcoindown">
-							<div class="boxboadssad" v-for="(item,index) in cointypelist" :key="index" :style="selectedcoinIndex==index?'background:#F7FAFF':'background:#fff'" @click="selectedCoinType(index,item.name)">{{item.name}}</div>
+							<div class="boxboadssad" v-for="(item,index) in cointypelist" :key="index" :style="selectedcoinIndex==index?'background:#F7FAFF':'background:#fff'" @click="selectedCoinType(index,item.en_name)">{{item.en_name.toUpperCase()}}</div>
 						</div>
 					</div>
 				</div>
@@ -95,7 +95,7 @@
 					price_type:'',
 					low_price:'',
 					high_price :'',
-					type:"buy",
+					type:"sell",
 					contact:"",
 					status:"enable"
 				},
@@ -135,8 +135,18 @@
 		mounted() {
 			 _this=this
 			this.load()
+			this.getcoinList()
+
 		},
 		methods: {
+			getcoinList(){
+				this.$api.coinList(this.filters).then((res)=>{
+					if(res.code==0){
+						_this.cointypelist=res.data.coins
+					}
+					
+				})
+			},
             onClickLeft(){
                 this.$router.go(-1)
             },
@@ -145,7 +155,7 @@
 					if(res.code==0){
 						let data
 						data=res.data.merchant
-						this.formData.price_type=data.pay_type
+						// this.formData.price_type=data.pay_type
 						this.formData.name=data.name
 						this.formData.contact=data.pay_type
 					}
@@ -171,9 +181,9 @@
 				this.selectedcoinIndex=index
 				this.chooseCoinname=""
 				this.showcoindown=false
-				this.formData.coin_name=name
-				console.log(this.cointypelist[index],996)
-				this.formData.coin_id=this.cointypelist[index].coin_id
+				this.formData.coin_name=name.toUpperCase()
+				// console.log(this.cointypelist[index],996)
+				this.formData.coin_id=this.cointypelist[index].id
 			},
 			 selectedPriceType(index,name){
 				this.selectedIndex=index
@@ -204,6 +214,10 @@
 				}
 				if (this.formData.low_price == '') {
 					_this.$toast('请输入最低价格')
+					return
+				}
+				if (this.formData.price_type == '') {
+					_this.$toast('请选择货币类型')
 					return
 				}
 				let data=this.formData
@@ -309,7 +323,7 @@
 				border-radius: 10px;
 				background: #FFFFFF;
 				border: 1px solid #E6E6E6; 
-				overflow: hidden;
+				overflow: scroll;
 				 right: 0;
 				 bottom: -140px;
 				 z-index: 999;
