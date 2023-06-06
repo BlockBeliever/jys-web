@@ -1,6 +1,6 @@
 // 兼容 IE
 // https://github.com/zloirock/core-js/blob/master/docs/2019-03-19-core-js-3-babel-and-a-look-into-the-future.md#babelpolyfill
-// import 'core-js/stable'
+import 'core-js/stable'
 import 'regenerator-runtime/runtime'
 import Vue from 'vue'
 import App from './App.vue'
@@ -29,9 +29,9 @@ Vue.use(Tabs)
 // Vue.use(Col)
 // Vue.use(Row)
 Vue.use(NavBar)
-Vue.use(Field)
+// Vue.use(Field)
 Vue.use(Button)
-Vue.use(Divider)
+// Vue.use(Divider)
 // Vue.use(Calendar)
 // Vue.use(PasswordInput)
 // Vue.use(NumberKeyboard)
