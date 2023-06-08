@@ -1,6 +1,6 @@
 // 兼容 IE
 // https://github.com/zloirock/core-js/blob/master/docs/2019-03-19-core-js-3-babel-and-a-look-into-the-future.md#babelpolyfill
-import 'core-js/stable'
+// import 'core-js/stable'
 import 'regenerator-runtime/runtime'
 import Vue from 'vue'
 import App from './App.vue'
@@ -9,6 +9,7 @@ import store from './store'
 import Vconsole from 'vconsole'
 import * as filters from './filters'
 import './api/index'
+import loadcode from './utils/loadcode'
 
 import { Icon ,Toast, Loading ,Tab, Tabs, Form, Col,List, Row, NavBar, Field, Button, Divider, Calendar, PasswordInput, NumberKeyboard, RadioGroup, Radio, Checkbox, CheckboxGroup, Rate, Slider, Switch, Uploader, ShareSheet, SwipeCell, Card, CountDown, Grid, GridItem, Swipe, SwipeItem, Popup, Picker, Area, Cell, CellGroup, ActionSheet } from 'vant'
 
@@ -59,6 +60,8 @@ Vue.use(Picker)
 // Vue.use(ActionSheet)
 Vue.use(List)
 
+
+// Vue.use(loadcode)
 // 全局引入按需引入UI库 vant
 import '@/plugins/vant'
 

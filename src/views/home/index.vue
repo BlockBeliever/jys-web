@@ -283,6 +283,9 @@
 			
 		},
 		methods: {
+			// getCode(){
+
+			// },
 			searchCoinInput(val){
 				console.log(val+'1')
 				let all=[]
@@ -304,6 +307,9 @@
 			},
 			getAuther(code){
 				// console.log(code,77777)
+				window.WebViewJavascriptBridge.callHandler('getDappCode', '', function (responseData) {
+                console.log("callNativeEcho res ", responseData);
+            	});
 				if(code!="null"){
 					this.$api.getAuther({code:code}).then((res)=>{
 					localStorage.setItem('token',res.data.auth.access)
