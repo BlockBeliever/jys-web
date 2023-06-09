@@ -263,7 +263,6 @@
 			}
 		},
 	  async	mounted() {
-		_this=this
 			this.$IMGURL = process.env.VUE_APP_IMGURL
 			this.$APIURL = process.env.VUE_APP_BASE_API;
 			this.filters.price_type=this.list2[0].name
@@ -308,20 +307,19 @@
 				
 			},
 			getAuther(){
+				var code=""
 				// console.log(code,77777)
 				window.WebViewJavascriptBridge.callHandler('getDappCode', '', function (responseData) {
-					console.log("coderesponse======",responseData)
-					// if(responseData){
-						_this.$api.getAuther({code:responseData}).then((res)=>{
-						
-					localStorage.setItem('token',res.data.auth.access)
-					_this.getcoinList()
-			        _this.getList()
-					// clearInterval(this.timer)
-				})
-				// }
+					code=responseData
                 console.log("callNativeEcho res ", responseData);
             	});
+				setTimeout(()=>{
+					this.$api.getAuther({code:code}).then((res)=>{
+					localStorage.setItem('token',res.data.auth.access)
+					this.getcoinList()
+			        this.getList()
+				})
+				})
 				
 				
 			},
