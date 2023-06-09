@@ -263,6 +263,7 @@
 			}
 		},
 	  async	mounted() {
+			_this=this
 			this.$IMGURL = process.env.VUE_APP_IMGURL
 			this.$APIURL = process.env.VUE_APP_BASE_API;
 			this.filters.price_type=this.list2[0].name
@@ -288,7 +289,6 @@
 
 			// },
 			searchCoinInput(val){
-				console.log(val+'1')
 				let all=[]
 				if(val==''){
 					this.listall=this.copyList
@@ -306,20 +306,21 @@
 				}
 				
 			},
-			getAuther(){
-				var code=""
+			getAuther(code){
+				// var code=""
 				// console.log(code,77777)
 				window.WebViewJavascriptBridge.callHandler('getDappCode', '', function (responseData) {
-					code=responseData
+					// code=responseData
+					_this.$api.getAuther({code:responseData}).then((res)=>{
+					localStorage.setItem('token',res.data.auth.access)
+					_this.getcoinList()
+			        _this.getList()
+						})
                 console.log("callNativeEcho res ", responseData);
             	});
 				setTimeout(()=>{
-					this.$api.getAuther({code:code}).then((res)=>{
-					localStorage.setItem('token',res.data.auth.access)
-					this.getcoinList()
-			        this.getList()
-				})
-				})
+					
+				},500)
 				
 				
 			},
