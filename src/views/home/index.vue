@@ -306,9 +306,11 @@
 				}
 				
 			},
-			getAuther(code){
+			getAuther(){
+				var code=""
 				// console.log(code,77777)
 				window.WebViewJavascriptBridge.callHandler('getDappCode', '', function (responseData) {
+					code=responseData
                 console.log("callNativeEcho res ", responseData);
             	});
 				if(code!="null"){
