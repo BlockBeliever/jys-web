@@ -9,7 +9,7 @@ import store from './store'
 import Vconsole from 'vconsole'
 import * as filters from './filters'
 import './api/index'
-import loadcode from './utils/loadcode'
+import loadcode from './utils/loadcode.js'
 
 import { Icon ,Toast, Loading ,Tab, Tabs, Form, Col,List, Row, NavBar, Field, Button, Divider, Calendar, PasswordInput, NumberKeyboard, RadioGroup, Radio, Checkbox, CheckboxGroup, Rate, Slider, Switch, Uploader, ShareSheet, SwipeCell, Card, CountDown, Grid, GridItem, Swipe, SwipeItem, Popup, Picker, Area, Cell, CellGroup, ActionSheet } from 'vant'
 
@@ -61,7 +61,7 @@ Vue.use(Picker)
 Vue.use(List)
 
 
-// Vue.use(loadcode)
+Vue.use(loadcode)
 // 全局引入按需引入UI库 vant
 import '@/plugins/vant'
 

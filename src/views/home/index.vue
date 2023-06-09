@@ -218,6 +218,7 @@
 
 <script>
 	let _this
+	import loadcode from '../../utils/loadcode.js'
 	export default {
 		
 		data() {
