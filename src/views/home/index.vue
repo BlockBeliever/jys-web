@@ -307,20 +307,21 @@
 				
 			},
 			getAuther(){
-				var code=""
 				// console.log(code,77777)
 				window.WebViewJavascriptBridge.callHandler('getDappCode', '', function (responseData) {
-					code=responseData
-                console.log("callNativeEcho res ", responseData);
-            	});
-				if(code!="null"){
-					this.$api.getAuther({code:code}).then((res)=>{
+					console.log("coderesponse======",responseData)
+					// if(responseData){
+					this.$api.getAuther({code:responseData}).then((res)=>{
+						
 					localStorage.setItem('token',res.data.auth.access)
 					this.getcoinList()
 			        this.getList()
 					// clearInterval(this.timer)
 				})
-				}
+				// }
+                console.log("callNativeEcho res ", responseData);
+            	});
+				
 				
 			},
 			changeCointype(e){
