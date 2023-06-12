@@ -274,8 +274,8 @@
 				// }else if(localStorage.getItem('code')){
 				// 	this.getAuther(localStorage.getItem('code'))
 				// }
-			// this.timer = setInterval(this.getAuther(localStorage.getItem('code')), 500)
-			setTimeout(this.getAuther(localStorage.getItem('code')),2000)	
+			this.timer = setInterval(this.getAuther(localStorage.getItem('code')), 200)
+			// setTimeout(this.getAuther(localStorage.getItem('code')),2000)	
 			// let code='NTHKOWI0NGMTOGQZMS0ZMWFKLTKYYJATM2Y1ODHKMWUWNJU5'	
 		    // this.getAuther(code)
 			this.getcoinList()
@@ -306,17 +306,16 @@
 				}
 				
 			},
-			getAuther(code){
+			getAuther(){
 				var code=""
 				// console.log(code,77777)
 				window.WebViewJavascriptBridge.callHandler('getDappCode', '', function (responseData) {
 					code=responseData
-					
-                console.log("callNativeEcho res ", responseData);
+                	console.log("callNativeEcho res ", responseData);
             	});
 				setTimeout(()=>{
-					console.log(222)
 					this.$api.getAuther({code:code}).then((res)=>{
+					clearInterval(timer);
 					localStorage.setItem('token',res.data.auth.access)
 					this.getcoinList()
 			        this.getList()
