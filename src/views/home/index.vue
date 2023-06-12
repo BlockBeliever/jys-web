@@ -313,13 +313,13 @@
 				// 	code=responseData
                 // 	console.log("callNativeEcho res ", responseData);
             	// });
-				setTimeout(()=>{
+				// setTimeout(()=>{
 					this.$api.getAuther({code:code}).then((res)=>{
 					localStorage.setItem('token',res.data.auth.access)
 					this.getcoinList()
 			        this.getList()
 						})
-				},500)
+				// },500)
 				
 				
 			},
