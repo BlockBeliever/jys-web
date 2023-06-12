@@ -229,7 +229,7 @@
 				}
 				if(this.tabIndex==1){
 					let high_price = Number(_this.info.high_price).toFixed(4)
-					console.log(Number(this.usdtnum)>high_price)
+					// console.log(Number(this.usdtnum)>high_price)
 					if(Number(this.usdtnum)>high_price||Number(this.usdtnum)>Number((this.info.number*this.info.price))){
 					_this.$toast("不能高于最大限额")
 					return

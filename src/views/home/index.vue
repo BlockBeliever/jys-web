@@ -307,19 +307,20 @@
 				
 			},
 			getAuther(code){
-				// var code=""
+				var code=""
 				// console.log(code,77777)
 				window.WebViewJavascriptBridge.callHandler('getDappCode', '', function (responseData) {
-					// code=responseData
-					_this.$api.getAuther({code:responseData}).then((res)=>{
-					localStorage.setItem('token',res.data.auth.access)
-					_this.getcoinList()
-			        _this.getList()
-						})
+					code=responseData
+					
                 console.log("callNativeEcho res ", responseData);
             	});
 				setTimeout(()=>{
-					
+					console.log(222)
+					this.$api.getAuther({code:code}).then((res)=>{
+					localStorage.setItem('token',res.data.auth.access)
+					this.getcoinList()
+			        this.getList()
+						})
 				},500)
 				
 				
@@ -411,7 +412,6 @@
 							}else if(all.length<10&&!this.finished){
 								// console.log(1111)
 								this.finished = true;
-								console.log(this.finished)
 								all.forEach(item=>{
 									if(item.status=='enable'){
 										_this.list.push(item)
