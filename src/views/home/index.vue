@@ -242,7 +242,6 @@
 					type:"sell",
 					price_type:''
 				},
-				timer: '',
 				$IMGURL:'',
 				list:[],
 				copyList:null,
@@ -263,7 +262,7 @@
 
 			}
 		},
-	  	mounted() {
+	  async	mounted() {
 			_this=this
 			this.$IMGURL = process.env.VUE_APP_IMGURL
 			this.$APIURL = process.env.VUE_APP_BASE_API;
@@ -275,11 +274,8 @@
 				// }else if(localStorage.getItem('code')){
 				// 	this.getAuther(localStorage.getItem('code'))
 				// }
-			this.timer = setInterval(()=>{
-				this.getAuther(localStorage.getItem('code'))
-			}
-			, 200)
-			// setTimeout(this.getAuther(localStorage.getItem('code')),2000)	
+			// this.timer = setInterval(this.getAuther(localStorage.getItem('code')), 500)
+			setTimeout(this.getAuther(localStorage.getItem('code')),1500)	
 			// let code='NTHKOWI0NGMTOGQZMS0ZMWFKLTKYYJATM2Y1ODHKMWUWNJU5'	
 		    // this.getAuther(code)
 			this.getcoinList()
@@ -288,7 +284,6 @@
 				
 			
 		},
-		
 		methods: {
 			// getCode(){
 
@@ -302,7 +297,7 @@
 					this.listall.forEach(item => {
 						let name=item.en_name
 					if(name.indexOf(val.trim()) >= 0 || name.toUpperCase().indexOf(val.trim())>= 0 ){
-						// console.log(11111)
+						console.log(11111)
 						all.push(item)
 					}
 					
@@ -312,31 +307,19 @@
 				
 			},
 			getAuther(code){
-				var data=""
-				var netcode=""
-				// console.log(code,77777)
-				window.WebViewJavascriptBridge.callHandler('getDappCode', '', function (responseData) {
-					netcode=responseData
-                	console.log("callNativeEcho res ", responseData);
-            	});
-				if(code){
-					data=code
-				}else{
-					data=netcode
-				}
-					this.$api.getAuther({code:data}).then((res)=>{
-						console.log("callNativeEcho888")
-						
-						if(res.code==0){
-							console.log("callNativeEcho999")
-							clearInterval(this.timer);
-							localStorage.setItem('token',res.data.auth.access)
-							this.getcoinList()
-							this.getList()
-						}
-					
+				// var code=""
+				// // console.log(code,77777)
+				// window.WebViewJavascriptBridge.callHandler('getDappCode', '', function (responseData) {
+				// 	code=responseData
+                // 	console.log("callNativeEcho res ", responseData);
+            	// });
+				setTimeout(()=>{
+					this.$api.getAuther({code:code}).then((res)=>{
+					localStorage.setItem('token',res.data.auth.access)
+					this.getcoinList()
+			        this.getList()
 						})
-				
+				},500)
 				
 				
 			},
