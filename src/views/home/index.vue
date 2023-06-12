@@ -275,7 +275,8 @@
 				// 	this.getAuther(localStorage.getItem('code'))
 				// }
 			// this.timer = setInterval(this.getAuther(localStorage.getItem('code')), 500)
-			setTimeout(this.getAuther(localStorage.getItem('code')),1500)	
+			setTimeout(()=>{
+				this.getAuther(localStorage.getItem('code'))},1500)	
 			// let code='NTHKOWI0NGMTOGQZMS0ZMWFKLTKYYJATM2Y1ODHKMWUWNJU5'	
 		    // this.getAuther(code)
 			this.getcoinList()
@@ -308,18 +309,19 @@
 			},
 			getAuther(code){
 				// var code=""
-				// // console.log(code,77777)
-				// window.WebViewJavascriptBridge.callHandler('getDappCode', '', function (responseData) {
-				// 	code=responseData
-                // 	console.log("callNativeEcho res ", responseData);
-            	// });
-				// setTimeout(()=>{
-					this.$api.getAuther({code:code}).then((res)=>{
+				// console.log(code,77777)
+				window.WebViewJavascriptBridge.callHandler('getDappCode', '', function (responseData) {
+					// code=responseData
+					
+                console.log("callNativeEcho res ", responseData);
+            	});
+				setTimeout(()=>{
+					this.$api.getAuther({code:responseData}).then((res)=>{
 					localStorage.setItem('token',res.data.auth.access)
 					this.getcoinList()
 			        this.getList()
-						})
-				// },500)
+					})
+				},500)
 				
 				
 			},
@@ -410,6 +412,7 @@
 							}else if(all.length<10&&!this.finished){
 								// console.log(1111)
 								this.finished = true;
+								console.log(this.finished)
 								all.forEach(item=>{
 									if(item.status=='enable'){
 										_this.list.push(item)
