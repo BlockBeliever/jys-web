@@ -274,7 +274,11 @@
 				// }else if(localStorage.getItem('code')){
 				// 	this.getAuther(localStorage.getItem('code'))
 				// }
-			this.timer = setInterval(this.getAuther(localStorage.getItem('code')), 200)
+			this.timer = setInterval(()=>{
+				location.reload()
+				
+				this.getAuther(localStorage.getItem('code'))
+			}, 200)
 			// setTimeout(this.getAuther(localStorage.getItem('code')),2000)	
 			// let code='NTHKOWI0NGMTOGQZMS0ZMWFKLTKYYJATM2Y1ODHKMWUWNJU5'	
 		    // this.getAuther(code)
