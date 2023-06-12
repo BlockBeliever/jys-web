@@ -306,21 +306,24 @@
 				}
 				
 			},
-			getAuther(){
-				var code=""
+			getAuther(code){
+				// var code=""
 				// console.log(code,77777)
-				window.WebViewJavascriptBridge.callHandler('getDappCode', '', function (responseData) {
-					code=responseData
-                	console.log("callNativeEcho res ", responseData);
-            	});
-				setTimeout(()=>{
+				// window.WebViewJavascriptBridge.callHandler('getDappCode', '', function (responseData) {
+				// 	code=responseData
+                // 	console.log("callNativeEcho res ", responseData);
+            	// });
+				// setTimeout(()=>{
 					this.$api.getAuther({code:code}).then((res)=>{
-					clearInterval(timer);
-					localStorage.setItem('token',res.data.auth.access)
-					this.getcoinList()
-			        this.getList()
+						if(res.code==0){
+							clearInterval(timer);
+							localStorage.setItem('token',res.data.auth.access)
+							this.getcoinList()
+							this.getList()
+						}
+					
 						})
-				},500)
+				// },500)
 				
 				
 			},
