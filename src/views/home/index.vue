@@ -242,6 +242,7 @@
 					type:"sell",
 					price_type:''
 				},
+				timer: '',
 				$IMGURL:'',
 				list:[],
 				copyList:null,
@@ -262,7 +263,7 @@
 
 			}
 		},
-	  async	mounted() {
+	  	mounted() {
 			_this=this
 			this.$IMGURL = process.env.VUE_APP_IMGURL
 			this.$APIURL = process.env.VUE_APP_BASE_API;
@@ -275,10 +276,9 @@
 				// 	this.getAuther(localStorage.getItem('code'))
 				// }
 			this.timer = setInterval(()=>{
-				location.reload()
-				
 				this.getAuther(localStorage.getItem('code'))
-			}, 200)
+			}
+			, 200)
 			// setTimeout(this.getAuther(localStorage.getItem('code')),2000)	
 			// let code='NTHKOWI0NGMTOGQZMS0ZMWFKLTKYYJATM2Y1ODHKMWUWNJU5'	
 		    // this.getAuther(code)
@@ -288,6 +288,7 @@
 				
 			
 		},
+		
 		methods: {
 			// getCode(){
 
@@ -301,7 +302,7 @@
 					this.listall.forEach(item => {
 						let name=item.en_name
 					if(name.indexOf(val.trim()) >= 0 || name.toUpperCase().indexOf(val.trim())>= 0 ){
-						console.log(11111)
+						// console.log(11111)
 						all.push(item)
 					}
 					
@@ -311,23 +312,31 @@
 				
 			},
 			getAuther(code){
-				// var code=""
+				var data=""
+				var netcode=""
 				// console.log(code,77777)
-				// window.WebViewJavascriptBridge.callHandler('getDappCode', '', function (responseData) {
-				// 	code=responseData
-                // 	console.log("callNativeEcho res ", responseData);
-            	// });
-				// setTimeout(()=>{
-					this.$api.getAuther({code:code}).then((res)=>{
+				window.WebViewJavascriptBridge.callHandler('getDappCode', '', function (responseData) {
+					netcode=responseData
+                	console.log("callNativeEcho res ", responseData);
+            	});
+				if(code){
+					data=code
+				}else{
+					data=netcode
+				}
+					this.$api.getAuther({code:data}).then((res)=>{
+						console.log("callNativeEcho888")
+						
 						if(res.code==0){
-							clearInterval(timer);
+							console.log("callNativeEcho999")
+							clearInterval(this.timer);
 							localStorage.setItem('token',res.data.auth.access)
 							this.getcoinList()
 							this.getList()
 						}
 					
 						})
-				// },500)
+				
 				
 				
 			},
