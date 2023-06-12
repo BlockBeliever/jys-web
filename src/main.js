@@ -61,7 +61,7 @@ Vue.use(Picker)
 Vue.use(List)
 
 
-Vue.use(loadcode)
+// Vue.use(loadcode)
 // 全局引入按需引入UI库 vant
 import '@/plugins/vant'
 
