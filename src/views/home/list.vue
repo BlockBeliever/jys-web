@@ -158,7 +158,7 @@ export default {
   },
   mounted() {
     this.$IMGURL = process.env.VUE_APP_IMGURL
-    // this.getList()
+    this.getList()
   },
   filters: {
     fomarTime(value) {
