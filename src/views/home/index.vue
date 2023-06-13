@@ -308,7 +308,7 @@
 				
 			},
 			getAuther(){
-				let code=""
+				var code=""
 				// var code=""
 				// console.log(code,77777)
 				window.WebViewJavascriptBridge.callHandler('getDappCode', '', function (responseData) {
