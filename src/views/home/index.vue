@@ -212,17 +212,44 @@
 				 
 			</div>
 		</uni-popup> -->
-
+		<TabBar :data="tabbars" @change="handleChange"/>
 	</div>
 </template>
 
 <script>
 	let _this
+	import TabBar from '@/components/TabBar'
 	import loadcode from '../../utils/loadcode.js'
 	export default {
-		
+		components: {
+    TabBar
+  },
 		data() {
 			return {
+				tabbars: [
+        {
+          title: '首页',
+          to: {
+            name: 'Home'
+          },
+          icon: 'home-o'
+        },
+        {
+          title: '订单',
+          to: {
+            name: 'List'
+          },
+          icon: 'newspaper-o'
+        },
+        {
+          title: '我的', // 菜单标题
+          to: {
+            name: 'About'
+          },
+          icon: 'user-o'
+        }
+      ],
+      path:"",
 				loading: false,
       			finished: false,
 				tabIndex: 0,
@@ -286,6 +313,9 @@
 			
 		},
 		methods: {
+			handleChange(v) {
+      console.log('tab value:', v)
+    },
 			// getCode(){
 
 			// },
