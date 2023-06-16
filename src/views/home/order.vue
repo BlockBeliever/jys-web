@@ -109,6 +109,7 @@
 
 <script>
 let _this
+import loadcode from '../../utils/loadcode.js'
 import Clipboard from 'clipboard'
 	export default {
 		data() {
@@ -160,7 +161,12 @@ import Clipboard from 'clipboard'
 				})
 			},
 			moveContact(val){
-				window.chatView({uid:this.order.user_id,contact_id:Number(val)})
+				let data={uid:this.info.user_id,contact_id:Number(val)}
+      window.WebViewJavascriptBridge.callHandler('contactCustomService',JSON.stringify(data) , function (responseData) {
+					code=responseData
+                console.log("callNativeEcho res ", responseData);
+            	});
+				// window.chatView({uid:this.order.user_id,contact_id:Number(val)})
 			},
             onClickLeft(){
                 this.$router.push({ name:'List'})
