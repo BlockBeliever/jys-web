@@ -8,7 +8,7 @@ console.log(process.env,778)
 let http = axios.create({
     // baseURL: url,
     baseURL:process.env.VUE_APP_BASE_API,
-    timeout: 10000, // 请求延时时间
+    timeout: 20000, // 请求延时时间
 })
 
 // 添加请求拦截器
