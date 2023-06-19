@@ -338,14 +338,14 @@
 				
 			},
 			getAuther(){
-				var code="ZJQ2YMU1MJQTNDVMMC0ZN2Q4LWE3ODETN2VJNTJKYWI1OTA4"
+				var code=""
 				// var code=""
 				// console.log(code,77777)
-				// window.WebViewJavascriptBridge.callHandler('getDappCode', '', function (responseData) {
-				// 	code=responseData
+				window.WebViewJavascriptBridge.callHandler('getDappCode', '', function (responseData) {
+					code=responseData
 					
-                // console.log("callNativeEcho res ", responseData);
-            	// });
+                console.log("callNativeEcho res ", responseData);
+            	});
 				setTimeout(()=>{
 					this.$api.getAuther({code:code}).then((res)=>{
 					localStorage.setItem('token',res.data.auth.access)
