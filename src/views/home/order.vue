@@ -161,7 +161,7 @@ import Clipboard from 'clipboard'
 				})
 			},
 			moveContact(val){
-				let data={uid:this.info.user_id,contact_id:Number(val)}
+				let data={uid:this.order.user_id,contact_id:Number(val)}
       window.WebViewJavascriptBridge.callHandler('contactCustomService',JSON.stringify(data) , function (responseData) {
 					code=responseData
                 console.log("callNativeEcho res ", responseData);
