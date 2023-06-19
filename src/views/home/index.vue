@@ -5,7 +5,7 @@
 			<!-- <div class="status_bar"></div> -->
 			<!-- <uni-nav-bar left-span="首页" backgroundColor="transparent" :border="false" color="#fff"></uni-nav-bar> -->
 			<div class="buyandsale ">
-				<div class="allsas flex1" @click="testTabClick(0)" :class="[tabIndex==0 ? 'activeTab' : '']">
+				<div class="allsas flex1" @click="testTabClick(0)" :class="[tabIndex==1 ? 'activeTab' : '']">
 					<div class="iconbox"><img src="../../assets/img/sale.png" alt="" srcset=""></div>
 					<div class="flex4  ">
 						<span class="buytitle">快捷购买</span>
@@ -14,7 +14,7 @@
 
 				</div>
 				<div class="shau"></div>
-				<div class="allsas flex1" @click="testTabClick(1)" :class="[tabIndex==1 ? 'activeTab' : '']">
+				<div class="allsas flex1" @click="testTabClick(1)" :class="[tabIndex==0 ? 'activeTab' : '']">
 					<div class="iconbox"><img src="../../assets/img/buy.png" alt="" srcset=""></div>
 					<div class="flex4 alslda">
 						<span class="buytitle">挂单出售</span>
