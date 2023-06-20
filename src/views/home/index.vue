@@ -336,17 +336,17 @@
 				}
 				
 			},
-			getAuther(){
+			getAuther(val){
 				var code=""
 				// var code=""
 				// console.log(code,77777)
-				window.WebViewJavascriptBridge.callHandler('getDappCode', '', function (responseData) {
-					code=responseData
+				// window.WebViewJavascriptBridge.callHandler('getDappCode', '', function (responseData) {
+				// 	code=responseData
 					
-                console.log("callNativeEcho res ", responseData);
-            	});
+                // console.log("callNativeEcho res ", responseData);
+            	// });
 				setTimeout(()=>{
-					this.$api.getAuther({code:code}).then((res)=>{
+					this.$api.getAuther({code:val}).then((res)=>{
 					localStorage.setItem('token',res.data.auth.access)
 					this.getcoinList()
 			        this.getList()
