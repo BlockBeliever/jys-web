@@ -345,6 +345,9 @@
 					
                 console.log("callNativeEcho res ", responseData);
             	});
+				window.onerror = function(msg, url, lineNo, columnNo, error) {
+    console.error("Error: " + msg + "\nURL: " + url + "\nLine: " + lineNo + "\nColumn: " + columnNo + "\nStackTrace: " + ((error && error.stack) ? error.stack : "N/A"));
+  };
 				// this.$jsbridge.callHandler('getDappCode','', (data) => {
 				// 	console.log("获取到的数据",data)
 				// 	code=responseData
