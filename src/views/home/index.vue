@@ -339,14 +339,19 @@
 			getAuther(val){
 				var code=""
 				// var code=""
-				// console.log(code,77777)
+				console.log(77777)
 				// window.WebViewJavascriptBridge.callHandler('getDappCode', '', function (responseData) {
 				// 	code=responseData
 					
                 // console.log("callNativeEcho res ", responseData);
             	// });
+				this.$jsbridge.callHandler('getDappCode','', (data) => {
+					console.log("获取到的数据",data)
+					code=responseData
+				})
+
 				setTimeout(()=>{
-					this.$api.getAuther({code:val}).then((res)=>{
+					this.$api.getAuther({code:code}).then((res)=>{
 					localStorage.setItem('token',res.data.auth.access)
 					this.getcoinList()
 			        this.getList()

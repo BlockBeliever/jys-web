@@ -10,7 +10,7 @@ import Vconsole from 'vconsole'
 import * as filters from './filters'
 import './api/index'
 import loadcode from './utils/loadcode.js'
-
+import JsBridge from "./utils/JsBridge"
 import { Icon ,Toast, Loading ,Tab, Tabs, Form, Col,List, Row, NavBar, Field, Button, Divider, Calendar, PasswordInput, NumberKeyboard, RadioGroup, Radio, Checkbox, CheckboxGroup, Rate, Slider, Switch, Uploader, ShareSheet, SwipeCell, Card, CountDown, Grid, GridItem, Swipe, SwipeItem, Popup, Picker, Area, Cell, CellGroup, ActionSheet } from 'vant'
 
 // 设置 js中可以访问 $cdn
@@ -74,7 +74,7 @@ import 'lib-flexible/flexible.js'
 // filters
 import './filters'
 Vue.config.productionTip = false
-
+Vue.prototype.$jsbridge = JsBridge;
 // Vue.prototype.$APIURL = process.env.VUE_APP_BASE_API;
 // Vue.prototype.$IMGURL = process.env.VUE_APP_IMGURL;
 // 过滤器
