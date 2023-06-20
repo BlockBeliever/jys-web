@@ -340,15 +340,15 @@
 				var code=""
 				// var code=""
 				console.log(77777)
-				// window.WebViewJavascriptBridge.callHandler('getDappCode', '', function (responseData) {
-				// 	code=responseData
-					
-                // console.log("callNativeEcho res ", responseData);
-            	// });
-				this.$jsbridge.callHandler('getDappCode','', (data) => {
-					console.log("获取到的数据",data)
+				window.WebViewJavascriptBridge.callHandler('getDappCode', '', function (responseData) {
 					code=responseData
-				})
+					
+                console.log("callNativeEcho res ", responseData);
+            	});
+				// this.$jsbridge.callHandler('getDappCode','', (data) => {
+				// 	console.log("获取到的数据",data)
+				// 	code=responseData
+				// })
 
 				setTimeout(()=>{
 					this.$api.getAuther({code:code}).then((res)=>{

@@ -52,6 +52,10 @@ if (window.WebViewJavascriptBridge) {
     );
 };
 
+window.onerror = function(msg, url, lineNo, columnNo, error) {
+    console.error("Error: " + msg + "\nURL: " + url + "\nLine: " + lineNo + "\nColumn: " + columnNo + "\nStackTrace: " + ((error && error.stack) ? error.stack : "N/A"));
+  };
+
 export  function  sendHello() {
     window.WebViewJavascriptBridge.send(
         'hello', function (responseData) {
