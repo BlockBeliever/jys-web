@@ -223,6 +223,7 @@
 		components: {
     TabBar
   },
+  inject:['reload'],
 		data() {
 			return {
 				tabbars: [
@@ -288,7 +289,9 @@
 
 			}
 		},
-	  async	mounted() {
+	 	mounted() {
+			// window.location.reload()
+			this.click_close()
 			_this=this
 			this.$IMGURL = process.env.VUE_APP_IMGURL
 			this.$APIURL = process.env.VUE_APP_BASE_API;
@@ -302,16 +305,26 @@
 				// }
 			// this.timer = setInterval(this.getAuther(localStorage.getItem('code')), 500)
 			setTimeout(()=>{
-				this.getAuther(localStorage.getItem('code'))},1500)	
+				this.getAuther(localStorage.getItem('code'))
+				
+			},1500)	
 			// let code='NTHKOWI0NGMTOGQZMS0ZMWFKLTKYYJATM2Y1ODHKMWUWNJU5'	
 		    // this.getAuther(code)
 			this.getcoinList()
-			this.getList()
+			this.getList()	
 			
 				
 			
 		},
 		methods: {
+			click_close(){    
+				
+				if(this.$route.meta.reload.indexOf('one')==-1){
+				this.$route.meta.reload='one'
+				this.reload()
+					}      
+			},
+
 			handleChange(v) {
 			// console.log('tab value:', v)
 			},
@@ -327,7 +340,7 @@
 					this.listall.forEach(item => {
 						let name=item.en_name
 					if(name.indexOf(val.trim()) >= 0 || name.toUpperCase().indexOf(val.trim())>= 0 ){
-						console.log(11111)
+						// console.log(11111)
 						all.push(item)
 					}
 					

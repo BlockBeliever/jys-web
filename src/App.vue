@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view />
+    <router-view v-if="isRouterAlive"/>
   </div>
 </template>
 
@@ -9,7 +9,16 @@ import './api/index.js' // 导入api
 
 export default {
   name: 'App',
- 
+  provide(){
+    return{
+      reload:this.reload //提供数据
+    }
+  },
+  data() {
+    return {
+      isRouterAlive:true,
+    }
+  },
 	 created(){
 			// if(this.$route.query.code){
 			// 	this.getAuther(this.$route.query.code)
@@ -20,9 +29,17 @@ export default {
 				// 	this.getAuther(localStorage.getItem('code'))
 				// },1000)
 			// let code='MZM0NMY5ZWQTNDMWNY0ZNDKZLTLKYZCTM2FLOWMWNGZIZTC3'	
-		    // this.getAuther(code)
+		    this.getAuther(localStorage.getItem('code'))
 		},
 		methods: {
+			reload(){
+			this.isRouterAlive=false
+			this.$nextTick(()=>{
+				this.isRouterAlive=true
+				console.log("确实刷新了")
+			})
+			},
+
 			getAuther(code){
 				// console.log(code,9988888888)
 				this.$api.getAuther({code:code}).then((res)=>{
