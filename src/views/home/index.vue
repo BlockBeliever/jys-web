@@ -313,8 +313,8 @@
 		},
 		methods: {
 			handleChange(v) {
-      console.log('tab value:', v)
-    },
+			// console.log('tab value:', v)
+			},
 			// getCode(){
 
 			// },
@@ -339,14 +339,14 @@
 			getAuther(val){
 				var code=""
 				// var code=""
-				window.WebViewJavascriptBridge.callHandler('getDappCode', '', function (responseData) {
-					code=responseData
+// 				window.WebViewJavascriptBridge.callHandler('getDappCode', '', function (responseData) {
+// 					code=responseData
 					
-                console.log("callNativeEcho res ", responseData);
-            	});
-				window.onerror = function(msg, url, lineNo, columnNo, error) {
-    console.error("Error: " + msg + "\nURL: " + url + "\nLine: " + lineNo + "\nColumn: " + columnNo + "\nStackTrace: " + ((error && error.stack) ? error.stack : "N/A"));
-  };
+//                 console.log("callNativeEcho res ", responseData);
+//             	});
+// 				window.onerror = function(msg, url, lineNo, columnNo, error) {
+//     console.error("Error: " + msg + "\nURL: " + url + "\nLine: " + lineNo + "\nColumn: " + columnNo + "\nStackTrace: " + ((error && error.stack) ? error.stack : "N/A"));
+//   };
 				// this.$jsbridge.callHandler('getDappCode','', (data) => {
 				// 	console.log("获取到的数据",data)
 				// 	code=responseData
