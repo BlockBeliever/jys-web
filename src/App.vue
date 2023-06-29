@@ -29,23 +29,20 @@ export default {
 				// 	this.getAuther(localStorage.getItem('code'))
 				// },1000)
 			// let code='MZM0NMY5ZWQTNDMWNY0ZNDKZLTLKYZCTM2FLOWMWNGZIZTC3'	
-		    this.getAuther(localStorage.getItem('code'))
+		    // this.getAuther(localStorage.getItem('code'))
 		},
 		methods: {
 			reload(){
 			this.isRouterAlive=false
 			this.$nextTick(()=>{
 				this.isRouterAlive=true
-				console.log("确实刷新了")
+				// console.log("确实刷新了")
 			})
 			},
 
 			getAuther(code){
-				// console.log(code,9988888888)
 				this.$api.getAuther({code:code}).then((res)=>{
-					// console.log(res)
 					let access=res.data.auth.access
-					// console.log(res.data,666)
 					localStorage.setItem('token',access)
 				}) 
 			},
