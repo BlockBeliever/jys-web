@@ -32,13 +32,13 @@ export default {
 		    // this.getAuther(localStorage.getItem('code'))
 		},
 		methods: {
-			reload(){
-			this.isRouterAlive=false
-			this.$nextTick(()=>{
-				this.isRouterAlive=true
-				// console.log("确实刷新了")
-			})
-			},
+			// reload(){
+			// this.isRouterAlive=false
+			// this.$nextTick(()=>{
+			// 	this.isRouterAlive=true
+			// 	// console.log("确实刷新了")
+			// })
+			// },
 
 			getAuther(code){
 				this.$api.getAuther({code:code}).then((res)=>{

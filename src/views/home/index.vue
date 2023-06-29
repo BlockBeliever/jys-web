@@ -223,7 +223,7 @@
 		components: {
     TabBar
   },
-  inject:['reload'],
+//   inject:['reload'],
 		data() {
 			return {
 				tabbars: [
@@ -291,7 +291,7 @@
 		},
 	 	mounted() {
 			// window.location.reload()
-			this.click_close()
+			// this.click_close()
 			_this=this
 			this.$IMGURL = process.env.VUE_APP_IMGURL
 			this.$APIURL = process.env.VUE_APP_BASE_API;
@@ -317,13 +317,12 @@
 			
 		},
 		methods: {
-			click_close(){    
-				
-				if(this.$route.meta.reload.indexOf('one')==-1){
-				this.$route.meta.reload='one'
-				this.reload()
-					}      
-			},
+			// click_close(){    
+			// 	if(this.$route.meta.reload.indexOf('one')==-1){
+			// 	this.$route.meta.reload='one'
+			// 	this.reload()
+			// 		}      
+			// },
 
 			handleChange(v) {
 			// console.log('tab value:', v)
