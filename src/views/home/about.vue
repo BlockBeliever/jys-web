@@ -94,7 +94,7 @@ import TabBar from '@/components/TabBar'
 				return val
 			}else{
 				if(val.indexOf("thumb2.jpg") != -1){
-				    return this.$IMGURL+val
+				    return this.$IMGURL+'/'+val
 				}else{
 				    return this.$IMGURL+val
 				}
