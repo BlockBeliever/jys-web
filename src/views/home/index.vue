@@ -132,7 +132,7 @@
 					<div class="listcoinall flex2" v-for="(item,index) in listall" :key="index">
 										 <div class="flex" style="align-items: center;">
 											 <div class="cpongom" v-if="item.en_name!='全部'">
-												 <img :src="$APIURL+'/'+item.icon" alt="" srcset="">
+												 <img :src="cover(item.icon)" alt="" srcset="">
 											 </div>
 											 <div class="tista">
 												 <span>{{item.en_name.toUpperCase()}}</span>
@@ -323,7 +323,18 @@
 			// 	this.reload()
 			// 		}      
 			// },
-
+			cover(val){
+			let arr=val.split("/")
+			if(arr[0]=="http:"||arr[0]=="https:"){
+				return val
+			}else{
+				if(val.indexOf("thumb2.jpg") != -1){
+				    return this.$APIURL+'/'+val
+				}else{
+				    return this.$APIURL+val
+				}
+			}
+		},
 			handleChange(v) {
 			// console.log('tab value:', v)
 			},

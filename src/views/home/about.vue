@@ -88,6 +88,18 @@ import TabBar from '@/components/TabBar'
 			this.getInfo()
 		},
 		methods: {
+			cover(val){
+			let arr=val.split("/")
+			if(arr[0]=="http:"||arr[0]=="https:"){
+				return val
+			}else{
+				if(val.indexOf("thumb2.jpg") != -1){
+				    return this.$IMGURL+'/'+val
+				}else{
+				    return this.$IMGURL+val
+				}
+			}
+		},
 			handleChange(v) {
       console.log('tab value:', v)
     },
