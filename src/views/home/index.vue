@@ -329,7 +329,7 @@
 				return val
 			}else{
 				if(val.indexOf("thumb2.jpg") != -1){
-				    return this.$APIURL+'/'+val
+				    return this.$APIURL+val
 				}else{
 				    return this.$APIURL+val
 				}
