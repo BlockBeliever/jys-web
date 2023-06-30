@@ -18,8 +18,8 @@ import { Icon ,Toast, Loading ,Tab, Tabs, Form, Col,List, Row, NavBar, Field, Bu
 // Vue.prototype.$cdn = $cdn
 
 // 引入vconsole控制台
-// const vConsole = new Vconsole()
-// Vue.use(vConsole)
+const vConsole = new Vconsole()
+Vue.use(vConsole)
 Vue.use(Tab)
 // Vue.use(Form).use(Field).use(Calendar)
 // Vue.use(Loading)
