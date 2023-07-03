@@ -80,7 +80,7 @@
 				</div>
 
 			</div>
-			
+
 				</van-list>
 				<div class="stats_bottom"></div>
 			<!-- <div  v-for="(item,index) in list" :key="index" >
@@ -118,7 +118,7 @@
 				<div style="padding-top: 24px;"><span>这里空空如也~</span></div>
 				<div style="padding-top: 5px;"><span>你是风儿我是沙，出售一单就有啦！</span></div>
 			</div>
-			
+
 			<div class="stats_bottom"></div>
 		</div>
 		<van-popup v-model="bookShowPicker" position="bottom">
@@ -139,18 +139,18 @@
 												  <span style="color: #B8B8B8;font-size: 12px;">{{item.ch_name}}</span>
 											 </div>
 										 </div>
-										<div>  
+										<div>
 												<van-radio :name="index.toString()"  @click="changeCointype(index)"></van-radio>
-											
+
 
 											<!-- <checkbox :value="index" :checked="item.checked" color="#0FBD6C" style="transform:scale(0.7)" @change="changeCointype(e)"/> -->
 										 </div>
-										 
+
 					</div>
 
 					</van-radio-group>
 			</div>
-				 
+
 			</div>
         </van-popup>
 
@@ -172,18 +172,18 @@
 												  <span style="color: #B8B8B8;font-size: 12px;">{{item.ch_name}}</span>
 											 </div>
 										 </div>
-										<div>  
+										<div>
 												<van-radio :name="index.toString()"  @click="cahgeUsdt(index)"></van-radio>
-											
+
 
 											<!-- <checkbox :value="index" :checked="item.checked" color="#0FBD6C" style="transform:scale(0.7)" @change="changeCointype(e)"/> -->
 										 </div>
-										 
+
 					</div>
 
 					</van-radio-group>
 			</div>
-				 
+
 			</div>
 		</van-popup>
 		<!-- <uni-popup ref="popup" type="bottom">
@@ -208,7 +208,7 @@
 										 </div>
 					</div>
 				</div>
-				 
+
 			</div>
 		</uni-popup> -->
 		<TabBar :data="tabbars" @change="handleChange"/>
@@ -306,22 +306,22 @@
 			// this.timer = setInterval(this.getAuther(localStorage.getItem('code')), 500)
 			setTimeout(()=>{
 				this.getAuther(localStorage.getItem('code'))
-				
-			},1500)	
-			// let code='NTHKOWI0NGMTOGQZMS0ZMWFKLTKYYJATM2Y1ODHKMWUWNJU5'	
+
+			},1500)
+			// let code='NTHKOWI0NGMTOGQZMS0ZMWFKLTKYYJATM2Y1ODHKMWUWNJU5'
 		    // this.getAuther(code)
 			this.getcoinList()
-			this.getList()	
-			
-				
-			
+			this.getList()
+
+
+
 		},
 		methods: {
-			// click_close(){    
+			// click_close(){
 			// 	if(this.$route.meta.reload.indexOf('one')==-1){
 			// 	this.$route.meta.reload='one'
 			// 	this.reload()
-			// 		}      
+			// 		}
 			// },
 			cover(val){
 			let arr=val.split("/")
@@ -331,7 +331,7 @@
 				if(val.indexOf("thumb2.jpg") != -1){
 				    return this.$APIURL+'/'+val
 				}else{
-				    return this.$APIURL+val
+				    return this.$APIURL+'/'+val
 				}
 			}
 		},
@@ -353,18 +353,18 @@
 						// console.log(11111)
 						all.push(item)
 					}
-					
+
 						})
 					this.listall=all
 				}
-				
+
 			},
 			getAuther(val){
 				var code=""
 				// var code=""
 // 				window.WebViewJavascriptBridge.callHandler('getDappCode', '', function (responseData) {
 // 					code=responseData
-					
+
 //                 console.log("callNativeEcho res ", responseData);
 //             	});
 // 				window.onerror = function(msg, url, lineNo, columnNo, error) {
@@ -382,8 +382,8 @@
 			        this.getList()
 					})
 				// },500)
-				
-				
+
+
 			},
 			changeCointype(e){
 				this.checked=e.toString()
@@ -394,7 +394,7 @@
 				this.finished=false
 				this.filters.page=1
 				this.getList()
-				
+
 			},
 			cahgeUsdt(e){
 				this.checkedusdt=e.toString()
@@ -434,18 +434,18 @@
 							this.listall.forEach(item=>{
 								item.checked=false
 							})
-							
+
 							this.listall[0].checked=true
 							this.checked='0'
 							this.filters.coin_id=this.listall[0].id
 							this.chooseCoinname=this.listall[0].en_name
 							this.copyList= [].concat(this.listall)
 					}
-					
+
 				})
 			},
 			getList() {
-				
+
 				// console.log(1111)
 				_this=this
 				if(this.tabIndex==0){
@@ -453,7 +453,7 @@
 				}else{
 					this.filters.type="buy"
 				}
-				
+
 				// setTimeout(()=>{
 						this.$api.homeList(this.filters).then((res)=>{
 						if(res.code==0){
@@ -465,8 +465,8 @@
 								all.forEach(item=>{
 									if(item.status=='enable'){
 										_this.list.push(item)
-										
-										
+
+
 									}
 								})
 							}else if(all.length<10&&!this.finished){
@@ -476,20 +476,20 @@
 								all.forEach(item=>{
 									if(item.status=='enable'){
 										_this.list.push(item)
-										
+
 									}
 								})
-								
+
 							}
-							
-							
+
+
 						}
-						
+
 					})
 				// },500)
 
-				
-				
+
+
 				// _this.$post('/api/user/advertising/list',{
 				// 	data:_this.filters,
 				// 	success: (res)=>{
@@ -596,7 +596,7 @@
 		.imgiconbox{
 			margin: 0 auto;
 			margin-top: 88px;
-			
+
 			width: 132px;
 			height: 143px;
 			img{
