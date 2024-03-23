@@ -1,15 +1,21 @@
 <template>
 	<div class="">
 		<div class="navbartitle">
-			<van-nav-bar left-text="交易所" :safe-area-inset-top="true" :border="false" />
+			<van-nav-bar :left-text="$t('home_page.exchange')" :safe-area-inset-top="true" :border="false" >
+				<template #right>
+					<van-dropdown-menu class="mt10">
+						<van-dropdown-item @change="changeLang()" v-model="lang" :options="locales" />
+					</van-dropdown-menu>
+				</template>
+			</van-nav-bar>
 			<!-- <div class="status_bar"></div> -->
 			<!-- <uni-nav-bar left-span="首页" backgroundColor="transparent" :border="false" color="#fff"></uni-nav-bar> -->
 			<div class="buyandsale ">
 				<div class="allsas flex1" @click="testTabClick(0)" :class="[tabIndex==1 ? 'activeTab' : '']">
 					<div class="iconbox"><img src="../../assets/img/sale.png" alt="" srcset=""></div>
 					<div class="flex4  ">
-						<span class="buytitle">快捷购买</span>
-						<span class="secondtitle">高效率 快支付</span>
+						<span class="buytitle">{{$t('home_page.quick_purchase')}}</span>
+						<span class="secondtitle">{{$t('home_page.quick_purchase_label')}}</span>
 					</div>
 
 				</div>
@@ -17,8 +23,8 @@
 				<div class="allsas flex1" @click="testTabClick(1)" :class="[tabIndex==0 ? 'activeTab' : '']">
 					<div class="iconbox"><img src="../../assets/img/buy.png" alt="" srcset=""></div>
 					<div class="flex4 alslda">
-						<span class="buytitle">挂单出售</span>
-						<span class="secondtitle">快速挂单卖出</span>
+						<span class="buytitle">{{$t('home_page.sale')}}</span>
+						<span class="secondtitle">{{$t('home_page.sale_label')}}</span>
 					</div>
 				</div>
 			</div>
@@ -32,10 +38,10 @@
 						</div>
 				</div> -->
 				<div class="sadas flex1">
-					<span v-if="tabIndex==0">我要购买</span>
-				<span v-if="tabIndex==1">我要出售</span>
+					<span v-if="tabIndex==0">{{$t('home_page.to_buy')}}</span>
+				<span v-if="tabIndex==1">{{$t('home_page.to_sell')}}</span>
 					<div class="chooseconi" @click="changeCoin()">
-						<span >{{chooseCoinname.toUpperCase()}}</span>
+						<span >{{$t(chooseCoinname).toUpperCase()}}</span>
 						<van-icon name="arrow-down" style="padding-left: 5px;"/>
 						<!-- <uni-icons type="bottom" size="14"></uni-icons> -->
 					</div>
@@ -49,7 +55,7 @@
 			<van-list
 				:loading="loading"
 				:finished="finished"
-				finished-text="没有更多了"
+				:finished-text="$t('no_more')"
 				@load="getList"
 				>
 					<div  v-for="(item,index) in list" :key="index" >
@@ -66,16 +72,16 @@
 						<span style="font-weight: 600;font-size: 14px;" v-else>$</span>
 					</div>
 
-					<span class="neirong">数量 {{item.number}} {{ item.coin_en_name.toUpperCase()}}</span>
-					<span class="xiane">限额<p style="padding-left: 10px;color: rgba(51, 51, 51, 1);">{{item.low_price}}-{{item.high_price}}
+					<span class="neirong">{{$t('quantity')}} {{item.number}} {{ item.coin_en_name.toUpperCase()}}</span>
+					<span class="xiane">{{$t('range')}}<p style="padding-left: 10px;color: rgba(51, 51, 51, 1);">{{item.low_price}}-{{item.high_price}}
 							{{item.price_type}}</p></span>
 				</div>
 				<div class="buybtn flex2">
 					<div>
-						<span>支付方式  {{ item.contact }}</span>
+						<span>{{$t('payment_method')}}  {{ item.contact }}</span>
 					</div>
-					<div v-if="tabIndex==0" class="buy" @click="moveDeatil(item)">购买</div>
-					<div  v-if="tabIndex==1" class="buyout"  @click="moveDeatil(item)">出售</div>
+					<div v-if="tabIndex==0" class="buy" @click="moveDeatil(item)">{{$t('buy')}} </div>
+					<div  v-if="tabIndex==1" class="buyout"  @click="moveDeatil(item)">{{$t('sell')}} </div>
 				</div>
 				</div>
 
@@ -115,8 +121,8 @@
 				<div class="imgiconbox">
 					<img src="../../assets/img/indexnonw.png" alt="" srcset="">
 				</div>
-				<div style="padding-top: 24px;"><span>这里空空如也~</span></div>
-				<div style="padding-top: 5px;"><span>你是风儿我是沙，出售一单就有啦！</span></div>
+				<div style="padding-top: 24px;"><span>{{ $t('home_page.empty_exchange_list') }}</span></div>
+				<div style="padding-top: 5px;" class="ml20 mr20"><span>{{ $t('home_page.empty_exchange_list_label') }} </span></div>
 			</div>
 
 			<div class="stats_bottom"></div>
@@ -125,17 +131,17 @@
             <div class="coinList" style="">
 				<div class="searchCpon">
 					<!-- <uni-icons type="search" size="20" color="#C7C7C7"></uni-icons> -->
-					<input type="text" placeholder="搜索" v-model="searchCoin" placeholder-style="color:#C7C7C7" @input="searchCoinInput(searchCoin)">
+					<input type="text" :placeholder="$t('search')" v-model="searchCoin" placeholder-style="color:#C7C7C7" @input="searchCoinInput(searchCoin)">
 				</div>
 				<div style="padding: 25px 30px;">
 					<van-radio-group v-model="checked"  >
 					<div class="listcoinall flex2" v-for="(item,index) in listall" :key="index">
 										 <div class="flex" style="align-items: center;">
-											 <div class="cpongom" v-if="item.en_name!='全部'">
+											 <div class="cpongom" v-if="item.en_name!='all'">
 												 <img :src="cover(item.icon)" alt="" srcset="">
 											 </div>
 											 <div class="tista">
-												 <span>{{item.en_name.toUpperCase()}}</span>
+												 <span>{{$t(item.en_name).toUpperCase()}}</span>
 												  <span style="color: #B8B8B8;font-size: 12px;">{{item.ch_name}}</span>
 											 </div>
 										 </div>
@@ -158,7 +164,7 @@
 			<div class="coinList" style="">
 				<div class="searchCpon">
 					<!-- <uni-icons type="search" size="20" color="#C7C7C7"></uni-icons> -->
-					<input type="text" placeholder="搜索" placeholder-style="color:#C7C7C7">
+					<input type="text" :placeholder="$t('search')" placeholder-style="color:#C7C7C7">
 				</div>
 				<div style="padding: 25px 30px;">
 					<van-radio-group v-model="checkedusdt"  >
@@ -224,32 +230,41 @@
     TabBar
   },
 //   inject:['reload'],
+		computed: {
+			tabbars() {
+				return [
+					{
+					title: this.$t('home'),
+					to: {
+						name: 'Home'
+					},
+					icon: 'home-o'
+					},
+					{
+					title: this.$t('transaction_order'),
+					to: {
+						name: 'List'
+					},
+					icon: 'newspaper-o'
+					},
+					{
+					title: this.$t('profile'), // 菜单标题
+					to: {
+						name: 'About'
+					},
+					icon: 'user-o'
+					}
+				];
+			},
+		},
 		data() {
 			return {
-				tabbars: [
-        {
-          title: '首页',
-          to: {
-            name: 'Home'
-          },
-          icon: 'home-o'
-        },
-        {
-          title: '订单',
-          to: {
-            name: 'List'
-          },
-          icon: 'newspaper-o'
-        },
-        {
-          title: '我的', // 菜单标题
-          to: {
-            name: 'About'
-          },
-          icon: 'user-o'
-        }
-      ],
-      path:"",
+				lang: "zh",
+				locales: [
+					{ text: 'Chinese', value: "zh" },
+					{ text: 'English', value: "en" }
+      			],
+      			path:"",
 				loading: false,
       			finished: false,
 				tabIndex: 0,
@@ -317,6 +332,9 @@
 
 		},
 		methods: {
+			changeLang(){
+				this.$i18n.locale = this.lang
+			},
 			// click_close(){
 			// 	if(this.$route.meta.reload.indexOf('one')==-1){
 			// 	this.$route.meta.reload='one'
@@ -427,7 +445,7 @@
 					if(res.code==0){
 						_this.listall=res.data.coins
 						let obj={
-							en_name:'全部',
+							en_name:'all',
 							id:0
 						}
 						this.listall.unshift(obj)

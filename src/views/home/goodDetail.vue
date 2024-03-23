@@ -2,9 +2,9 @@
 	<div>
 		<div class="topall">
 			<!-- <uni-nav-bar left-text="返回" :border="false" statusBar="true" backgroundColor="transparent" color="#fff"  leftIcon="back" @clickLeft="back"></uni-nav-bar> -->
-            <van-nav-bar left-text="返回" :safe-area-inset-top="true"  :border="false" left-arrow
+            <van-nav-bar :left-text="$t('back')" :safe-area-inset-top="true"  :border="false" left-arrow
   @click-left="onClickLeft"/>
-			<div class="ontroa"><span>自由理财 每日收益 随买随卖</span></div>
+			<div class="ontroa"><span>{{$t('advertising_detail.adv_label')}}</span></div>
 			<div class="sudt">
 				<div class="usdttop">
 					<div class="rate">
@@ -45,23 +45,23 @@
 							<span v-if="tabIndex==0">{{ usdt_name }}</span>
 							<span v-if="tabIndex==1">{{ coin_name.toUpperCase() }}</span>
 							<span style="padding: 0 9px;padding-bottom: 2px;">|</span>
-							<span style="color: rgba(73, 135, 249, 1);padding-bottom: 3px;" @click="maxAll">最大</span>
+							<span style="color: rgba(73, 135, 249, 1);padding-bottom: 3px;" @click="maxAll">{{$t('advertising_detail.maximum')}}</span>
 						</div>
 					</div>
 					<div class="xiane">
 						<span>*</span>
-						<span style="padding-right: 13px;padding-left: 5px;">限额</span>
+						<span style="padding-right: 13px;padding-left: 5px;">{{ $t('range') }}</span>
 						<span style="color: rgba(255, 32, 64, 1);">{{info.low_price}}-{{info.high_price}} {{ usdt_name }}</span>
 					</div>
 					<div class="kede flex1" v-if="tabIndex==0">
-						<span v-if="type=='sell'">可得 </span>
-						<span v-else>出售 </span>
+						<span v-if="type=='sell'">{{ $t('avaliable') }} </span>
+						<span v-else>{{ $t('sell') }} </span>
 						<span style="color: rgba(207, 207, 207, 1);padding-left: 13px;font-size: 25px;">{{usdtnum}}{{ coin_name.toUpperCase() }}
 						</span>
 					</div>
 					<div class="kede flex1" v-if="tabIndex==1">
-						<span v-if="type=='sell'">应付 </span>
-						<span v-else>可得 </span>
+						<span v-if="type=='sell'">{{ $t('handle') }} </span>
+						<span v-else>{{ $t('avaliable') }} </span>
 						<span style="color: rgba(207, 207, 207, 1);padding-left: 13px;font-size: 25px;">{{usdtnum}}{{ usdt_name }}
 						</span>
 					</div>
@@ -69,15 +69,15 @@
 			</div>
 		</div>
 		<div class="paytype">
-			<div class="paytupetitle"><span>支付方式</span></div>
+			<div class="paytupetitle"><span>{{ $t('payment_method') }}</span></div>
 			<div class="payname">{{ merchant.pay_type }}</div>
 		</div>
 		<div class="paytop">
 			<div>
-				<div class="paytupetitle">商家信息</div>
+				<div class="paytupetitle">{{ $t('payment_method') }}</div>
 			</div>
 			<div class="paytopname">
-				<span>商家昵称</span>
+				<span>{{ $t('advertising_detail.nick_name') }}</span>
 				<div >
 					<span style="color: rgba(16, 16, 16, 1);">{{merchant.name}}</span>
 					<van-icon name="arrow" />
@@ -85,24 +85,24 @@
 
 			</div>
 			<div class="payintro">
-				<span>商家留言</span>
+				<span>{{ $t('advertising_detail.message') }}</span>
 				<div style="padding-top: 9px;">
-					1、添加付款时不得备注任何信息，如欧意买币-okex货币- USDT买U等敏感字。
+					{{ $t('advertising_detail.payment_rule_1') }}
 					<br/>
-					2、黑钱勿扰，否则报警处理！
+					{{ $t('advertising_detail.payment_rule_2') }}
 					<br/>
-					3、必须本人实名付款，否则不放币，不退款。
+					{{ $t('advertising_detail.payment_rule_3') }}
 					<br/>
-					4、微信付款请使用零钱通付款！
+					{{ $t('advertising_detail.payment_rule_5') }}
 				</div>
 			</div>
 		</div>
 		<div class="remind">
-			<span>如果您同意与凤凰进行C2C交易，即标识您接受</span>
-			<span style="color: rgba(58, 116, 219, 1);border-bottom:1px solid  rgba(58, 116, 219, 1)">凤凰C2C交易法律免责声明。</span>
+			<span>{{ $t('advertising_detail.agree_c2c_transaction_rule') }}</span>
+			<span style="color: rgba(58, 116, 219, 1);border-bottom:1px solid  rgba(58, 116, 219, 1)">{{ $t('advertising_detail.transaction_rule_link') }}</span>
 		</div>
-            <button class="buybtn" :disabled="!flag" @click="orderPay" v-if="type=='sell'">买入{{ coin_name.toUpperCase() }}</button>
-			<button class="buybtn"  :disabled="!flag" @click="orderPay" v-else>出售{{ coin_name.toUpperCase() }}</button>
+            <button class="buybtn" :disabled="!flag" @click="orderPay" v-if="type=='sell'">{{ $t('buy') }} {{ coin_name.toUpperCase() }}</button>
+			<button class="buybtn"  :disabled="!flag" @click="orderPay" v-else>{{ $t('sell') }} {{ coin_name.toUpperCase() }}</button>
 		<div style="padding-bottom: 94px;"></div>
 	</div>
 </template>
@@ -113,14 +113,14 @@
 		data() {
 			return {
 				tabList1: [{
-					name: "按金额购买"
+					name: this.$t('advertising_detail.buy_by_amount')
 				}, {
-					name: "按数量购买"
+					name: this.$t('advertising_detail.buy_by_quantity')
 				}],
 				tabList2: [{
-					name: "按金额出售"
+					name: this.$t('advertising_detail.sell_by_amount')
 				}, {
-					name: "按数量出售"
+					name: this.$t('advertising_detail.sell_by_quantity')
 				}],
 				tabIndex: 0,
 				typein:null,

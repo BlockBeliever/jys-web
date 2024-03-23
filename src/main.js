@@ -11,8 +11,12 @@ import * as filters from './filters'
 import './api/index'
 import loadcode from './utils/loadcode.js'
 import JsBridge from "./utils/JsBridge"
-import { Icon ,Toast, Loading ,Tab, Tabs, Form, Col,List, Row, NavBar, Field, Button, Divider, Calendar, PasswordInput, NumberKeyboard, RadioGroup, Radio, Checkbox, CheckboxGroup, Rate, Slider, Switch, Uploader, ShareSheet, SwipeCell, Card, CountDown, Grid, GridItem, Swipe, SwipeItem, Popup, Picker, Area, Cell, CellGroup, ActionSheet } from 'vant'
+import { Icon ,Toast, Loading, DropdownItem, DropdownMenu ,Tab, Tabs, Form, Col,List, Row, NavBar, Field, Button, Divider, Calendar, PasswordInput, NumberKeyboard, RadioGroup, Radio, Checkbox, CheckboxGroup, Rate, Slider, Switch, Uploader, ShareSheet, SwipeCell, Card, CountDown, Grid, GridItem, Swipe, SwipeItem, Popup, Picker, Area, Cell, CellGroup, ActionSheet } from 'vant'
+import { Locale } from 'vant';
+import zhCN from 'vant/es/locale/lang/zh-CN';
+import i18n from "./utils/i18n.js";
 
+Locale.use('zh-CN', zhCN);
 // 设置 js中可以访问 $cdn
 // import { $cdn } from '@/config'
 // Vue.prototype.$cdn = $cdn
@@ -21,6 +25,8 @@ import { Icon ,Toast, Loading ,Tab, Tabs, Form, Col,List, Row, NavBar, Field, Bu
 // const vConsole = new Vconsole()
 // Vue.use(vConsole)
 Vue.use(Tab)
+Vue.use(DropdownItem);
+Vue.use(DropdownMenu);
 // Vue.use(Form).use(Field).use(Calendar)
 // Vue.use(Loading)
 Vue.use(Icon )
@@ -86,5 +92,6 @@ new Vue({
   el: '#app',
   router,
   store,
+  i18n,
   render: h => h(App)
 })
