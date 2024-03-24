@@ -134,8 +134,8 @@
         <div class="imgiconbox">
           <img src="../../assets/img/indexnonw.png" alt="" srcset="" />
         </div>
-        <div style="padding-top: 24px"><span>这里空空如也~</span></div>
-        <div style="padding-top: 5px"><span>你是风儿我是沙，出售一单就有啦！</span></div>
+        <div style="padding-top: 24px"><span>{{ $t("empty_exchange_list") }}</span></div>
+        <div style="padding: 12px"><span>{{ $t("empty_exchange_list_label") }}</span></div>
       </div>
     </div>
     <TabBar :data="tabbars" @change="handleChange" />

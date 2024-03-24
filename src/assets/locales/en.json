@@ -13,17 +13,21 @@
     "back": "Back",
     "avaliable": "Avaliable",
     "handle": "Handle",
-    "unit_price" : "Unit price",
+    "unit_price": "Unit price",
     "exchange": "Exchange",
+    "my_ad": "My advertisement",
+    "apply_merchant": "Apply as a merchant",
+    "to_buy": "I want to buy",
+    "empty_exchange_list": "No data yet",
+    "empty_exchange_list_label": "You are Feng'er and I am Sha, just place one order and start right now!",
+    "loading": "Loading...",
     "home_page": {
         "quick_purchase": "Purchase",
         "sale": "Sale",
         "quick_purchase_label": "Efficient and fast payment",
         "sale_label": "Quick sell order",
         "to_buy": "To buy",
-        "to_sell": "To sell",
-        "empty_exchange_list": "No data yet",
-        "empty_exchange_list_label": "You are Feng'er and I am Sha, just place one order and start right now!"
+        "to_sell": "To sell"
     },
     "advertising_detail": {
         "adv_label": "Daily income from free financial management, buy and sell at any time",
@@ -43,32 +47,53 @@
         "transaction_rule_link": "Phoenix C2C Transaction Legal Disclaimer."
     },
     "order_list": {
-        "wait" : "ongoing",
-        "done" : "done",
-        "paid" : "Paid"
+        "wait": "ongoing",
+        "done": "done",
+        "paid": "Paid"
     },
     "order_detail": {
-        "order_status" : " Order in progress",
-        "seller" : "Seller",
-        "buyer" : "Buyer",
-        "information" : "Information",
-        "contact" : "Contact seller",
-        "real_name" : "Real name and video certification",
-        "online" : "The platform's 7*24-hour customer service is online to ensure that you and ",
-        "safe" : " with safe transactions",
-        "order_number" : "Order number",
-        "total" : "Total",
-        "payment" : "Payment type",
-        "time" : "Order time",
-        "problem" : "Have a problem?",
-        "contact_service" : "Contact Customer service"
+        "order_status": " Order in progress",
+        "seller": "Seller",
+        "buyer": "Buyer",
+        "information": "Information",
+        "contact": "Contact seller",
+        "real_name": "Real name and video certification",
+        "online": "The platform's 7*24-hour customer service is online to ensure that you and ",
+        "safe": " with safe transactions",
+        "order_number": "Order number",
+        "total": "Total",
+        "payment": "Payment type",
+        "time": "Order time",
+        "problem": "Have a problem?",
+        "contact_service": "Contact Customer service"
     },
     "profile_detail": {
-        "to_buy" : "I want to buy",
-        "to_sell" : "I want to sell",
-        "free_money" : "Realizable financial freedom",
-        "easy_to_sell" : "Easy to sell, high-return",
-        "my_ad" : "My advertisement",
-        "apply_merchant" : "Apply as a merchant"
+        "to_sell": "I want to sell",
+        "free_money": "Realizable financial freedom",
+        "easy_to_sell": "Easy to sell, high-return"
+    },
+    "my_advertising": {
+        "submitted": "Submitted",
+        "approved": "Approved",
+        "to_start": "to start the merchant's journey"
+    },
+    "my_order": {
+        "business_name": "Business name",
+        "city": "City with gold point",
+        "token": "Token name",
+        "token_name": "Please enter token name",
+        "select_token": "Select token name",
+        "buy_amount": "Buy amount",
+        "input_amount": "Please enter amount",
+        "price": "Price",
+        "input_price": "Please enter price",
+        "select_currency": "Select currency type",
+        "payment": "Payment method",
+        "c2c": "C2C Transaction",
+        "input_min_amount": "minimum amount",
+        "input_max_amount": "maximum amount",
+        "publish": "Publish advertisement",
+        "to_sell": "I want to sell",
+        "sell_amount": "Sell amount"
     }
 }

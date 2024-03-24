@@ -15,7 +15,7 @@
 			</div>
 			<div class="flex2">
 				<div class="cardbuy" @click="moveBuy">
-					<span style="font-weight: 600;font-size: 13px;">{{ $t("profile_detail.to_buy") }}</span>
+					<span style="font-weight: 600;font-size: 13px;">{{ $t("to_buy") }}</span>
 					<span style="color: rgba(254, 66, 74, 1);font-size: 11px;">{{ $t("profile_detail.free_money") }}</span>
 				</div>
 				<div class="cardsale" @click="moveSale">
@@ -26,12 +26,12 @@
 		</div>
 		<div class="cardbt">
 			<div class="cardalls flex2" @click="moveAd()">
-				<span>{{ $t("profile_detail.my_ad") }}</span>
+				<span>{{ $t("my_ad") }}</span>
 				<van-icon name="arrow" />
 				<!-- <uni-icons type="forward" color="#CFCFCF" size="14"></uni-icons> -->
 			</div>
 			<div class="cardalls flex2" @click="applySupplier">
-				<span>{{ $t("profile_detail.apply_merchant") }}</span>
+				<span>{{ $t("apply_merchant") }}</span>
 				<van-icon name="arrow" />
 				<!-- <uni-icons type="forward" color="#CFCFCF" size="14"></uni-icons> -->
 			</div>

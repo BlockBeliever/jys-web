@@ -121,8 +121,8 @@
 				<div class="imgiconbox">
 					<img src="../../assets/img/indexnonw.png" alt="" srcset="">
 				</div>
-				<div style="padding-top: 24px;"><span>{{ $t('home_page.empty_exchange_list') }}</span></div>
-				<div style="padding-top: 5px;" class="ml20 mr20"><span>{{ $t('home_page.empty_exchange_list_label') }} </span></div>
+				<div style="padding-top: 24px;"><span>{{ $t('empty_exchange_list') }}</span></div>
+				<div style="padding-top: 5px;" class="ml20 mr20"><span>{{ $t('empty_exchange_list_label') }} </span></div>
 			</div>
 
 			<div class="stats_bottom"></div>
