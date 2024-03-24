@@ -1,7 +1,7 @@
 <template>
 	<div class="">
 		<div class="navbartitle">
-			<van-nav-bar :left-text="$t('home_page.exchange')" :safe-area-inset-top="true" :border="false" >
+			<van-nav-bar :left-text="$t('exchange')" :safe-area-inset-top="true" :border="false" >
 				<template #right>
 					<van-dropdown-menu class="mt10">
 						<van-dropdown-item @change="changeLang()" v-model="lang" :options="locales" />

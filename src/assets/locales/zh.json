@@ -13,12 +13,13 @@
     "back": "返回",
     "avaliable": "可得",
     "handle": "应付",
+    "unit_price" : "单价 ",
+    "exchange": "交易所",
     "home_page": {
         "quick_purchase": "快捷购买",
         "sale": "快捷购买",
         "quick_purchase_label": "高效率 快支付",
         "sale_label": "快速挂单卖出",
-        "exchange": "交易所",
         "to_buy": "我要购买",
         "to_sell": "我要出售",
         "empty_exchange_list": "这里空空如也",
@@ -40,5 +41,34 @@
         "payment_rule_4": "4、微信付款请使用零钱通付款！",
         "agree_c2c_transaction_rule": "如果您同意与凤凰进行C2C交易，即标识您接受",
         "transaction_rule_link": "凤凰C2C交易法律免责声明。"
+    },
+    "order_list": {
+        "wait" : "进行中",
+        "done" : "交易完成",
+        "paid" : "实付"
+    },
+    "order_detail": {
+        "order_status" : " 订单进行中",
+        "seller" : "卖家",
+        "buyer" : "买家",
+        "information" : "信息",
+        "contact" : "联系卖家",
+        "real_name" : "已通过平台实名及视频认证",
+        "online" : "平台7*24小时客服在线，保证您与",
+        "safe" : "的交易安全",
+        "order_number" : "订单编号",
+        "total" : "总金额",
+        "payment" : "卖家收款方式",
+        "time" : "下单时间",
+        "problem" : "遇到问题？",
+        "contact_service" : "联系客服 "
+    },
+    "profile_detail": {
+        "to_buy" : "我要买入",
+        "to_sell" : "我要出售",
+        "free_money" : "实现理财自由",
+        "easy_to_sell" : "随买随买，高效收益",
+        "my_ad" : "我的广告",
+        "apply_merchant" : "申请商家"
     }
 }

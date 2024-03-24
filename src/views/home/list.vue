@@ -4,75 +4,77 @@
       <!-- <van-nav-bar left-text="订单" safe-area-inset-top :border="false" /> -->
       <!-- <div class="status_bar"></div> -->
       <!-- <vant-nav-bar left-text="订单" :border="false" statusBar="true" backgroundColor="transparent" color="#fff" @clickLeft="back"></vant-nav-bar> -->
-      <van-nav-bar fixed left-text="交易所" :safe-area-inset-top="true"  :border="false" />
+      <van-nav-bar fixed :left-text="$t('exchange')" :safe-area-inset-top="true" :border="false" />
     </div>
     <div class="">
       <div style="width: 100%; text-align: center; padding-top: 90px; padding-bottom: 10px">
-        <span style="font-size: 18px">订单</span>
+        <span style="font-size: 18px">{{ $t("transaction_order") }}</span>
       </div>
 
-      <van-list
-  v-model="loading"
-  :finished="finished"
-  finished-text="没有更多了"
-  @load="getList"
->
-  <div class="listcard" v-for="(item, index) in list" :key="index" @click="moveGoodsDetail(item.id)">
-        <div class="flex2">
-          <div style="font-size: 16px">
-            <span style="color: rgba(242, 39, 68, 1)" v-if="item.type == 'sell'&&merchantid==item.merchant_id">购买</span>
-            <span style="color:rgba(46, 107, 219, 1) " v-if="item.type == 'sell'&&merchantid!=item.merchant_id">出售</span>
-            <span style="color:  rgba(46, 107, 219, 1)" v-if="item.type == 'buy'&&merchantid==item.merchant_id">出售</span>
-            <span style="color:rgba(242, 39, 68, 1)" v-if="item.type == 'buy'&&merchantid!=item.merchant_id">购买</span>
-            <span style="color: rgba(51, 51, 51, 1)">{{ item.coin_en_name.toUpperCase() }}</span>
-          </div>
-          <div>
-            <span style="font-size: 12px; color: rgba(242, 39, 68, 1)" v-if="item.status == 'wait'">进行中</span>
-            <span style="font-size: 12px; color: rgba(46, 107, 219, 1)" v-if="item.status == 'done'"
-              >交易完成</span
-            >
-          </div>
-        </div>
-        <div class="owbprice flex2">
-          <div>
-            <span>单价 {{ item.price }}{{ item.price_type }}</span>
-          </div>
-          <div class="asdawq"> >
-          </div>
-        </div>
-        <div class="flex2 nametime">
-          <div class="flex1">
-            <div class="headimgbox" v-if="merchantid==item.user_id">
-              <img  v-if="item.user_head==''"  src="../../../static/img/head.png" alt="" srcset="" />
-              <img :src="$IMGURL+ item.merchant_head" alt="" v-else />
+      <van-list v-model="loading" :finished="finished" :finished-text="$t('no_more')" @load="getList">
+        <div class="listcard" v-for="(item, index) in list" :key="index" @click="moveGoodsDetail(item.id)">
+          <div class="flex2">
+            <div style="font-size: 16px">
+              <span style="color: rgba(242, 39, 68, 1)" v-if="item.type == 'sell' && merchantid == item.merchant_id">{{
+        $t("buy") }}</span>
+              <span style="color:rgba(46, 107, 219, 1) "
+                v-if="item.type == 'sell' && merchantid != item.merchant_id">出售</span>
+              <span style="color:  rgba(46, 107, 219, 1)"
+                v-if="item.type == 'buy' && merchantid == item.merchant_id">出售</span>
+              <span style="color:rgba(242, 39, 68, 1)" v-if="item.type == 'buy' && merchantid != item.merchant_id">{{
+        $t("buy") }}</span>
+              <span style="color: rgba(51, 51, 51, 1)">{{ item.coin_en_name.toUpperCase() }}</span>
             </div>
-            <div class="headimgbox" v-if="merchantid!=item.user_id">
-              <img  v-if="item.user_head==''"  src="../../../static/img/head.png" alt="" srcset="" />
-              <img :src="$IMGURL+ item.user_head" alt="" v-else />
+            <div>
+              <span style="font-size: 12px; color: rgba(242, 39, 68, 1)" v-if="item.status == 'wait'">{{
+        $t("order_list.wait") }}</span>
+              <span style="font-size: 12px; color: rgba(46, 107, 219, 1)" v-if="item.status == 'done'">{{
+        $t("order_list.done") }}</span>
             </div>
-            <span style="margin-left: 8.5px" v-if="merchantid==item.user_id">{{ item.merchant_name }}</span>
-            <span style="margin-left: 8.5px" v-if="merchantid!=item.user_id">{{ item.username }}</span>
           </div>
-          <div>
-            <span>{{ item.create_time | fomarTime }}</span>
+          <div class="owbprice flex2">
+            <div>
+              <span>{{ $t("unit_price") }} {{ item.price }}{{ item.price_type }}</span>
+            </div>
+            <div class="asdawq"> >
+            </div>
+          </div>
+          <div class="flex2 nametime">
+            <div class="flex1">
+              <div class="headimgbox" v-if="merchantid == item.user_id">
+                <img v-if="item.user_head == ''" src="../../../static/img/head.png" alt="" srcset="" />
+                <img :src="$IMGURL + item.merchant_head" alt="" v-else />
+              </div>
+              <div class="headimgbox" v-if="merchantid != item.user_id">
+                <img v-if="item.user_head == ''" src="../../../static/img/head.png" alt="" srcset="" />
+                <img :src="$IMGURL + item.user_head" alt="" v-else />
+              </div>
+              <span style="margin-left: 8.5px" v-if="merchantid == item.user_id">{{ item.merchant_name }}</span>
+              <span style="margin-left: 8.5px" v-if="merchantid != item.user_id">{{ item.username }}</span>
+            </div>
+            <div>
+              <span>{{ item.create_time | fomarTime }}</span>
+            </div>
+          </div>
+          <div class="boxboads flex2">
+            <div class="flex">
+              <div class="iconusnam"><img src="../../../static/img/cardsa.png" alt="" srcset="" /></div>
+              <span style="padding-left: 2.5px">{{ item.number }}{{ item.coin_en_name.toUpperCase() }}</span>
+            </div>
+            <div>
+              <span style="font-size: 11px" v-if="item.type == 'sell' && merchantid != item.merchant_id">可得</span>
+              <span style="font-size: 11px" v-if="item.type == 'buy' && merchantid == item.merchant_id">可得</span>
+              <span style="font-size: 11px" v-if="item.type == 'sell' && merchantid == item.merchant_id">{{
+        $t("order_list.paid") }}</span>
+              <span style="font-size: 11px" v-if="item.type == 'buy' && merchantid != item.merchant_id">{{
+        $t("order_list.paid") }}</span>
+              <span style="padding-left: 2.5px; font-weight: 600">{{ (item.number * Number(item.price)).toFixed(0) }}{{
+                item.price_type }} </span>
+            </div>
           </div>
         </div>
-        <div class="boxboads flex2">
-          <div class="flex">
-            <div class="iconusnam"><img src="../../../static/img/cardsa.png" alt="" srcset="" /></div>
-            <span style="padding-left: 2.5px">{{item.number}}{{ item.coin_en_name.toUpperCase() }}</span>
-          </div>
-          <div>
-            <span style="font-size: 11px" v-if="item.type == 'sell'&&merchantid!=item.merchant_id">可得</span>
-            <span style="font-size: 11px" v-if="item.type == 'buy'&&merchantid==item.merchant_id">可得</span>
-            <span style="font-size: 11px" v-if="item.type == 'sell'&&merchantid==item.merchant_id">实付</span>
-            <span style="font-size: 11px" v-if="item.type == 'buy'&&merchantid!=item.merchant_id">实付</span>
-            <span style="padding-left: 2.5px; font-weight: 600">{{(item.number * Number(item.price)).toFixed(0)}}{{ item.price_type }} </span>
-          </div>
-        </div>
-      </div>
 
-</van-list>
+      </van-list>
 
       <!-- <div class="listcard" v-for="(item, index) in list" :key="index" @click="moveGoodsDetail(item.id)">
         <div class="flex2">
@@ -136,7 +138,7 @@
         <div style="padding-top: 5px"><span>你是风儿我是沙，出售一单就有啦！</span></div>
       </div>
     </div>
-    <TabBar :data="tabbars" @change="handleChange"/>
+    <TabBar :data="tabbars" @change="handleChange" />
   </div>
 </template>
 
@@ -152,35 +154,35 @@ export default {
     return {
       tabbars: [
         {
-          title: '首页',
+          title: this.$t('home'),
           to: {
             name: 'Home'
           },
           icon: 'home-o'
         },
         {
-          title: '订单',
+          title: this.$t('transaction_order'),
           to: {
             name: 'List'
           },
           icon: 'newspaper-o'
         },
         {
-          title: '我的', // 菜单标题
+          title: this.$t('profile'), // 菜单标题
           to: {
             name: 'About'
           },
           icon: 'user-o'
         }
       ],
-      path:"",
+      path: "",
       filters: {
         page: 1,
         limit: 10
       },
       list: [],
-      merchantid:0,
-      $IMGURL:'',
+      merchantid: 0,
+      $IMGURL: '',
       loading: false,
       finished: false,
     }
@@ -219,27 +221,27 @@ export default {
     getList() {
       _this = this
       this.$api.orderList(this.filters).then(res => {
-        let all=res.data.order
+        let all = res.data.order
         this.loading = false;
-        if(all.length==10){
-          this.filters.page=Number(this.filters.page)+1
-            all.forEach(item=>{
-									_this.list.push(item)
-							})
-        }else if(all.length<10&&!this.finished){
-							// console.log(1111)
-							this.finished = true;
-              all.forEach(item=>{
-									_this.list.push(item)
-							})
-							
-						}
-        
+        if (all.length == 10) {
+          this.filters.page = Number(this.filters.page) + 1
+          all.forEach(item => {
+            _this.list.push(item)
+          })
+        } else if (all.length < 10 && !this.finished) {
+          // console.log(1111)
+          this.finished = true;
+          all.forEach(item => {
+            _this.list.push(item)
+          })
+
+        }
+
       })
-      this.$api.getAccount().then((res)=>{
-							this.merchantid=res.data.user.user_id
-              localStorage.setItem('merchantid',this.merchantid)
-				})
+      this.$api.getAccount().then((res) => {
+        this.merchantid = res.data.user.user_id
+        localStorage.setItem('merchantid', this.merchantid)
+      })
     }
   }
 }
@@ -262,7 +264,7 @@ export default {
 
 .listcard {
   padding: 22px 25px 17px;
- 
+
   box-sizing: border-box;
   width: 95%;
   height: 180px;
@@ -300,6 +302,7 @@ export default {
   height: 20px;
   border-radius: 50%;
   overflow: hidden;
+
   img {
     width: 100%;
     height: 100%;
@@ -322,12 +325,14 @@ export default {
   font-size: 13px;
   color: rgba(120, 137, 166, 1);
   align-items: center;
+
   .imgiconbox {
     margin: 0 auto;
     margin-top: 88px;
 
     width: 132px;
     height: 143px;
+
     img {
       width: 100%;
       height: 100%;

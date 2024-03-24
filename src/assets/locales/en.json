@@ -13,12 +13,13 @@
     "back": "Back",
     "avaliable": "Avaliable",
     "handle": "Handle",
+    "unit_price" : "Unit price",
+    "exchange": "Exchange",
     "home_page": {
         "quick_purchase": "Purchase",
         "sale": "Sale",
         "quick_purchase_label": "Efficient and fast payment",
         "sale_label": "Quick sell order",
-        "exchange": "Exchange",
         "to_buy": "To buy",
         "to_sell": "To sell",
         "empty_exchange_list": "No data yet",
@@ -40,5 +41,34 @@
         "payment_rule_4": "4. Please use Lingqiantong for WeChat payment!",
         "agree_c2c_transaction_rule": "If you agree to conduct C2C transactions with Phoenix, it indicates that you accept ",
         "transaction_rule_link": "Phoenix C2C Transaction Legal Disclaimer."
+    },
+    "order_list": {
+        "wait" : "ongoing",
+        "done" : "done",
+        "paid" : "Paid"
+    },
+    "order_detail": {
+        "order_status" : " Order in progress",
+        "seller" : "Seller",
+        "buyer" : "Buyer",
+        "information" : "Information",
+        "contact" : "Contact seller",
+        "real_name" : "Real name and video certification",
+        "online" : "The platform's 7*24-hour customer service is online to ensure that you and ",
+        "safe" : " with safe transactions",
+        "order_number" : "Order number",
+        "total" : "Total",
+        "payment" : "Payment type",
+        "time" : "Order time",
+        "problem" : "Have a problem?",
+        "contact_service" : "Contact Customer service"
+    },
+    "profile_detail": {
+        "to_buy" : "I want to buy",
+        "to_sell" : "I want to sell",
+        "free_money" : "Realizable financial freedom",
+        "easy_to_sell" : "Easy to sell, high-return",
+        "my_ad" : "My advertisement",
+        "apply_merchant" : "Apply as a merchant"
     }
 }
