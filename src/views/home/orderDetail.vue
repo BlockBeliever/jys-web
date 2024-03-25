@@ -21,7 +21,7 @@
       </div>
       <div style="margin-bottom: 15px; font-size: 16px; color: rgba(240, 38, 69, 1); font-weight: 600"
         v-if="info.status == 'done'">
-        订单已完成
+        {{ $t("order_status.completed") }}
       </div>
       <div class="ordercard">
         <div class="contract">
@@ -29,11 +29,11 @@
             <img src="../../assets/img/chant.png" alt="" srcset="" />
           </div>
           <span style="padding-left:2px" v-if="info.type == 'buy' && merchantid == info.merchant_id"
-            @click="moveContact(info.user_id)">联系买家</span>
+            @click="moveContact(info.user_id)">{{ $t("order_detail.contact_buyer") }}</span>
           <span style="padding-left:2px" v-if="info.type == 'buy' && merchantid != info.merchant_id"
             @click="moveContact(info.merchant_id)">{{ $t("order_detail.contact") }}</span>
           <span style="padding-left:2px" v-if="info.type == 'sell' && merchantid == info.merchant_id"
-            @click="moveContact(info.user_id)">联系买家</span>
+            @click="moveContact(info.user_id)">{{ $t("order_detail.contact_buyer") }}</span>
           <span style="padding-left:2px" v-if="info.type == 'sell' && merchantid != info.merchant_id"
             @click="moveContact(info.merchant_id)">{{ $t("order_detail.contact") }}</span>
 
@@ -44,7 +44,7 @@
           <span v-if="info.type == 'buy' && merchantid != info.merchant_id">{{ $t("order_detail.seller") }}</span>
           <span v-if="info.type == 'sell' && merchantid == info.merchant_id">{{ $t("order_detail.buyer") }}</span>
           <span v-if="info.type == 'sell' && merchantid != info.merchant_id">{{ $t("order_detail.seller") }}</span>
-          <span class="tetinfo">{{ $t("order_detail.information") }}</span>
+          <span class="tetinfo"> {{ $t("order_detail.information") }}</span>
           <!-- <div class="contract"></div> -->
         </div>
         <div class="info">
@@ -53,7 +53,7 @@
           <span v-if="info.type == 'buy' && merchantid != info.merchant_id">{{ $t("order_detail.seller") }}</span>
           <span v-if="info.type == 'sell' && merchantid == info.merchant_id">{{ $t("order_detail.buyer") }}</span>
           <span v-if="info.type == 'sell' && merchantid != info.merchant_id">{{ $t("order_detail.seller") }}</span>
-          <span>{{ $t("order_detail.real_name") }}</span>
+          <span> {{ $t("order_detail.real_name") }}</span>
         </div>
         <div class="info">
           <span style="color: rgba(112, 169, 229, 1)">*</span>
@@ -72,11 +72,11 @@
           <span class="butusdtt" v-else>出售{{ coin.en_name.toUpperCase()}}</span> -->
           <span class="butusdtt" v-if="info.type == 'sell' && merchantid == info.merchant_id">
             {{ $t("buy") }} {{coin.en_name.toUpperCase() }}</span>
-          <span class="butusdtt" v-if="info.type == 'sell' && merchantid != info.merchant_id">出售{{
+          <span class="butusdtt" v-if="info.type == 'sell' && merchantid != info.merchant_id">{{ $t("sell") }} {{
         coin.en_name.toUpperCase() }}</span>
-          <span class="butusdtt" v-if="info.type == 'buy' && merchantid == info.merchant_id">出售{{
+          <span class="butusdtt" v-if="info.type == 'buy' && merchantid == info.merchant_id">{{ $t("sell") }} {{
         coin.en_name.toUpperCase() }}</span>
-          <span class="butusdtt" v-if="info.type == 'buy' && merchantid != info.merchant_id">{{ $t("buy") }}{{
+          <span class="butusdtt" v-if="info.type == 'buy' && merchantid != info.merchant_id">{{ $t("buy") }} {{
         coin.en_name.toUpperCase() }}</span>
         </div>
         <div class="boxdetailsa">
@@ -122,15 +122,15 @@
         </div>
         <div class="submit" @click="submit"
           v-if="info.status == 'wait' && info.type == 'sell' && merchantid != info.merchant_id">
-          <span>完成订单</span>
+          <span>{{ $t("order_detail.complete_order") }}</span>
         </div>
         <div class="submit" @click="submit"
           v-if="info.status == 'wait' && info.type == 'buy' && merchantid == info.merchant_id">
-          <span>完成订单</span>
+          <span>{{ $t("order_detail.complete_order") }}</span>
         </div>
         <div class="contactkefy" @click="moveContact(serveId)">
           <span>{{ $t("order_detail.problem") }}</span>
-          <span style="color:rgba(97, 151, 254, 1)">{{ $t("order_detail.contact_service") }}</span>
+          <span style="color:rgba(97, 151, 254, 1)"> {{ $t("order_detail.contact_service") }}</span>
         </div>
         <div class="stats_bottom"></div>
       </div>
@@ -200,10 +200,10 @@ export default {
         text: () => this.info.order_id
       })
       clipboard.on('success', e => {
-        this.$toast('复制成功')
+        this.$toast(this.$t('copied_success'))
       })
       clipboard.on('error', e => {
-        this.$toast('复制失败')
+        this.$toast(this.$t('copied_failed'))
       })
     },
     submit() {

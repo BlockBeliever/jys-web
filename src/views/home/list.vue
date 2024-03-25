@@ -11,16 +11,16 @@
         <span style="font-size: 18px">{{ $t("transaction_order") }}</span>
       </div>
 
-      <van-list v-model="loading" :finished="finished" :finished-text="$t('no_more')" @load="getList">
+      <van-list v-model="loading" :finished="finished" :finished-text="$t('no_more')" :loading-text="$t('loading')" @load="getList">
         <div class="listcard" v-for="(item, index) in list" :key="index" @click="moveGoodsDetail(item.id)">
           <div class="flex2">
             <div style="font-size: 16px">
               <span style="color: rgba(242, 39, 68, 1)" v-if="item.type == 'sell' && merchantid == item.merchant_id">{{
         $t("buy") }}</span>
               <span style="color:rgba(46, 107, 219, 1) "
-                v-if="item.type == 'sell' && merchantid != item.merchant_id">出售</span>
+                v-if="item.type == 'sell' && merchantid != item.merchant_id">{{ $t("sell") }}</span>
               <span style="color:  rgba(46, 107, 219, 1)"
-                v-if="item.type == 'buy' && merchantid == item.merchant_id">出售</span>
+                v-if="item.type == 'buy' && merchantid == item.merchant_id">{{ $t("sell") }}</span>
               <span style="color:rgba(242, 39, 68, 1)" v-if="item.type == 'buy' && merchantid != item.merchant_id">{{
         $t("buy") }}</span>
               <span style="color: rgba(51, 51, 51, 1)">{{ item.coin_en_name.toUpperCase() }}</span>
@@ -62,8 +62,8 @@
               <span style="padding-left: 2.5px">{{ item.number }}{{ item.coin_en_name.toUpperCase() }}</span>
             </div>
             <div>
-              <span style="font-size: 11px" v-if="item.type == 'sell' && merchantid != item.merchant_id">可得</span>
-              <span style="font-size: 11px" v-if="item.type == 'buy' && merchantid == item.merchant_id">可得</span>
+              <span style="font-size: 11px" v-if="item.type == 'sell' && merchantid != item.merchant_id">{{ $t("avaliable") }}</span>
+              <span style="font-size: 11px" v-if="item.type == 'buy' && merchantid == item.merchant_id">{{ $t("avaliable") }}</span>
               <span style="font-size: 11px" v-if="item.type == 'sell' && merchantid == item.merchant_id">{{
         $t("order_list.paid") }}</span>
               <span style="font-size: 11px" v-if="item.type == 'buy' && merchantid != item.merchant_id">{{

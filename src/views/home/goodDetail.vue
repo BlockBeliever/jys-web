@@ -206,24 +206,24 @@
 				
 				console.log(this.usdtnum,this.typein,this.info.price,this.tabIndex)
 				if(this.info.number==0){
-					_this.$toast("暂无库存")
+					_this.$toast(this.$t('advertising_detail.validation.out_of_stock'))
 					return
 				}
 				if(this.usdtnum==0||this.typein==0){
-					_this.$toast("请输入购买量")
+					_this.$toast(this.$t('advertising_detail.validation.enter_purchase_amout'))
 					return
 				}
 				console.log()
 				if(this.tabIndex==0){
 					// console.log(this.typein<Number(this.info.low_price) ,this.info.low_price)
 					if(this.typein<Number(this.info.low_price)){
-					_this.$toast("不能低于最小限额")
+					_this.$toast(this.$t('advertising_detail.validation.min_limit'))
 					return
 				}
 				}else{
 					// console.log(this.usdtnum,this.info.low_price)
 					if(this.usdtnum<Number(this.info.low_price)){
-					_this.$toast("不能低于最小限额")
+					_this.$toast(this.$t('advertising_detail.validation.min_limit'))
 					return
 				}
 				}
@@ -231,13 +231,13 @@
 					let high_price = Number(_this.info.high_price).toFixed(4)
 					// console.log(Number(this.usdtnum)>high_price)
 					if(Number(this.usdtnum)>high_price||Number(this.usdtnum)>Number((this.info.number*this.info.price))){
-					_this.$toast("不能高于最大限额")
+					_this.$toast(this.$t('advertising_detail.validation.max_limit'))
 					return
 				}
 				}else{
 					// console.log(this.usdtnum,this.info.number,this.info.price,78)
 					if(this.typein> Number(_this.info.high_price)||this.typein>this.info.number*this.info.price){
-					_this.$toast("不能高于最大限额")
+					_this.$toast(this.$t('advertising_detail.validation.max_limit'))
 					return
 				}
 				}
@@ -250,7 +250,7 @@
 				if(this.type=='sell'){
 						this.$api.submitOrder(data).then((res)=>{
 						if(res.code==0){
-							_this.$toast("订单提交成功")
+							_this.$toast(this.$t('advertising_detail.order_submitted_success'))
 							
 						setTimeout(()=>{
 							this.flag=true
@@ -271,7 +271,7 @@
 					}else{
 						this.$api.submitOrderSell(data).then((res)=>{
 						if(res.code==0){
-							_this.$toast("订单提交成功")
+							_this.$toast(this.$t('advertising_detail.order_submitted_success'))
 						setTimeout(()=>{
 							this.flag=true
 							this.$router.push({

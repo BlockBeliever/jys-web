@@ -46,7 +46,14 @@
         "payment_rule_3": "3、必须本人实名付款，否则不放币，不退款。",
         "payment_rule_4": "4、微信付款请使用零钱通付款！",
         "agree_c2c_transaction_rule": "如果您同意与凤凰进行C2C交易，即标识您接受",
-        "transaction_rule_link": "凤凰C2C交易法律免责声明。"
+        "transaction_rule_link": "凤凰C2C交易法律免责声明。",
+        "order_submitted_success": "订单提交成功",
+        "validation": {
+            "out_of_stock": "暂无库存",
+            "enter_purchase_amout": "请输入购买量",
+            "min_limit": "不能低于最小限额",
+            "max_limit": "不能高于最大限额"
+        }
     },
     "order_list": {
         "wait": "进行中",
@@ -67,7 +74,9 @@
         "payment": "卖家收款方式",
         "time": "下单时间",
         "problem": "遇到问题？",
-        "contact_service": "联系客服 "
+        "contact_service": "联系客服 ",
+        "contact_buyer": "联系买家 ",
+        "complete_order": "完成订单"
     },
     "profile_detail": {
         "to_sell": "我要出售",
@@ -130,5 +139,13 @@
             "order_generated": "订单已生成",
             "contact_buyer": "联系买家"
         }
+        
+    },
+    "about": {
+        "apply_merchant_maessage": "请申请成为商家",
+        "reject_apply_merchant_message": "申请被拒绝，请重新申请"
+    },
+    "order_status": {
+        "completed": "订单已完成"
     }
 }

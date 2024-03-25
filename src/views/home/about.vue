@@ -125,13 +125,13 @@ export default {
 		},
 		moveBuy() {
 			if (this.status == '') {
-				this.$toast("请申请成为商家")
+				this.$toast(this.$t('about.apply_merchant_maessage'))
 			} else if (this.status == 'agree') {
 				this.$router.push({
 					name: 'Mybuy',
 				})
 			} else if (this.status == 'refuse') {
-				this.$toast("申请被拒绝，请重新申请")
+				this.$toast(this.$t('about.reject_apply_merchant_message'))
 			}
 
 			// uni.navigateTo({
@@ -148,13 +148,13 @@ export default {
 		},
 		moveSale() {
 			if (this.status == '') {
-				this.$toast("请申请成为商家")
+				this.$toast(this.$t('about.apply_merchant_maessage'))
 			} else if (this.status == 'agree') {
 				this.$router.push({
 					name: 'Mysale',
 				})
 			} else if (this.status == 'refuse') {
-				this.$toast("申请被拒绝，请重新申请")
+				this.$toast(this.$t('about.reject_apply_merchant_message'))
 			}
 
 			// uni.navigateTo({
