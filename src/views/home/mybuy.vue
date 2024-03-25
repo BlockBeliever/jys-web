@@ -247,7 +247,7 @@ export default {
 
 					}, 400)
 				} else {
-					_this.$toast(res.error)
+					_this.$toast(this.$t(res.error))
 				}
 
 			})

@@ -146,6 +146,19 @@
     },
     "order_status": {
         "completed": "Completed"
+    },
+    "api_response": {
+        "inventory_shortage": "Inventory Shortage",
+        "adv_not_exist": "Advertisement doesn't exist",
+        "wrong_ad_type": "Wrong advertisement type",
+        "cant_operate_yourself": "Can't operate your advertisement",
+        "no_permission_to_create": "You don;t have permission to create",
+        "only_same_currency_can_be_allowed": "Only one of the same currency can be allowed",
+        "dont_apply_repeat": "Please do not apply repeatedly",
+        "application_not_submitted_yet": "Your application have not been submitted yet",
+        "application_is_under_review": "Your application is still under review",
+        "appication_already_approved": "Your application was already approved",
+        "approval_status_is_abnormal": "Approval status is abnormal"
     }
-
+   
 }

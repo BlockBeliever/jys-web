@@ -93,7 +93,7 @@
 					<br/>
 					{{ $t('advertising_detail.payment_rule_3') }}
 					<br/>
-					{{ $t('advertising_detail.payment_rule_5') }}
+					{{ $t('advertising_detail.payment_rule_4') }}
 				</div>
 			</div>
 		</div>
@@ -264,7 +264,7 @@
 						},400)
 						}else{
 							this.flag=true
-							_this.$toast(res.error)
+							_this.$toast(this.$t(res.error))
 						}
 						
 					})
@@ -284,7 +284,7 @@
 						},400)
 						}else{
 							this.flag=true
-							_this.$toast(res.error)
+							_this.$toast(this.$t(res.error))
 						}
 						
 					})

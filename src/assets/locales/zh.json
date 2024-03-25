@@ -147,5 +147,19 @@
     },
     "order_status": {
         "completed": "订单已完成"
+    },
+    "api_response": {
+        "inventory_shortage": "库存不足",
+        "adv_not_exist": "广告不存在",
+        "wrong_ad_type": "广告类型有误",
+        "cant_operate_yourself": "不能自己操作自己的广告",
+        "no_permission_to_create": "您没有创建的权限",
+        "only_same_currency_can_be_allowed": "同样的币种只能上架一个",
+        "dont_apply_repeat": "请勿重复申请",
+        "application_not_submitted_yet": "您还未提交过申请",
+        "application_is_under_review": "您的申请还在审核中",
+        "appication_already_approved": "您的申请已同意",
+        "approval_status_is_abnormal": "您的审批状态异常"
     }
+    
 }

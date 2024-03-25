@@ -134,7 +134,7 @@ export default {
 					_this.$toast(_this.$t("my_advertising.delete_success"))
 					this.getList()
 				} else {
-					_this.$toast(res.error)
+					_this.$toast(this.$t(res.error))
 				}
 
 			})
@@ -166,7 +166,7 @@ export default {
 					}
 					this.getList()
 				} else {
-					_this.$toast(res.error)
+					_this.$toast(this.$t(res.error))
 				}
 
 			})
@@ -210,7 +210,7 @@ export default {
 
 					}
 				} else {
-					_this.$toast(res.error)
+					_this.$toast(this.$t(res.error))
 				}
 
 			})

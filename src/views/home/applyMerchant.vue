@@ -170,7 +170,7 @@ export default {
 						// })
 					})
 				} else {
-					_this.$toast(res.error)
+					_this.$toast(this.$t(res.error))
 				}
 
 			})
@@ -220,7 +220,7 @@ export default {
 						// })
 					})
 				} else {
-					_this.$toast(res.error)
+					_this.$toast(this.$t(res.error))
 				}
 
 			})
