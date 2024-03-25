@@ -33,7 +33,7 @@
 					<span v-if="order.type == 'buy' && merchantid != order.merchant_id">{{ $t("order_detail.seller") }}</span>
 					<span v-if="order.type == 'sell' && merchantid == order.merchant_id">{{ $t("order_detail.buyer") }}</span>
 					<span v-if="order.type == 'sell' && merchantid != order.merchant_id">{{ $t("order_detail.seller") }}</span>
-					<span class="tetorder">{{ $t("order_detail.information") }}</span>
+					<span class="tetorder"> {{ $t("order_detail.information") }}</span>
 				</div>
 				<div class="order">
 					<span style="color: rgba(112, 169, 229, 1);">*</span>
@@ -41,7 +41,7 @@
 					<span v-if="order.type == 'buy' && merchantid != order.merchant_id">{{ $t("order_detail.seller") }}</span>
 					<span v-if="order.type == 'sell' && merchantid == order.merchant_id">{{ $t("order_detail.buyer") }}</span>
 					<span v-if="order.type == 'sell' && merchantid != order.merchant_id">{{ $t("order_detail.seller") }}</span>
-					<span>{{ $t("order_detail.real_name") }}</span>
+					<span> {{ $t("order_detail.real_name") }}</span>
 				</div>
 				<div class="order">
 					<span style="color: rgba(112, 169, 229, 1);">*</span>
@@ -50,15 +50,15 @@
 					<span v-if="order.type == 'buy' && merchantid != order.merchant_id">{{ $t("order_detail.seller") }}</span>
 					<span v-if="order.type == 'sell' && merchantid == order.merchant_id">{{ $t("order_detail.buyer") }}</span>
 					<span v-if="order.type == 'sell' && merchantid != order.merchant_id">{{ $t("order_detail.seller") }}</span>
-					<span>{{ $t("order_detail.safe") }}</span>
+					<span> {{ $t("order_detail.safe") }}</span>
 				</div>
 
 			</div>
 			<div class="boxorderdetail">
 				<div class="flex1 saddwq">
 					<div class="usdtimg"><img src="../../assets/img/usdticon.png" alt=""></div>
-					<span class="butusdtt" v-if="order.type == 'buy'">{{$t("buy")}}{{ coin.en_name.toUpperCase() }}</span>
-					<span class="butusdtt" v-else>{{$t("sell")}}{{ coin.en_name.toUpperCase() }}</span>
+					<span class="butusdtt" v-if="order.type == 'buy'">{{$t("buy")}} {{ coin.en_name.toUpperCase() }}</span>
+					<span class="butusdtt" v-else>{{$t("sell")}} {{ coin.en_name.toUpperCase() }}</span>
 				</div>
 				<div class="boxdetailsa">
 					<div class="flex2 adsawq">
@@ -104,7 +104,7 @@
 				</div>
 				<div class="contactkefy" @click="moveContact(serveId)">
 					<span>{{ $t("order_detail.problem") }}</span>
-					<span style="color:rgba(97, 151, 254, 1)">{{ $t("order_detail.contact_service") }}</span>
+					<span style="color:rgba(97, 151, 254, 1)"> {{ $t("order_detail.contact_service") }}</span>
 				</div>
 				<div class="stats_bottom"></div>
 			</div>
@@ -250,11 +250,11 @@ export default {
 		color: rgba(128, 128, 128, 1);
 		border-radius: 16px;
 		border: 1px solid rgba(103, 199, 255, 1);
-		width: 84px;
 		height: 27px;
 		right: 8.5px;
 		top: 13px;
 		justify-content: center;
+        padding: 0px 8px;
 
 		// padding-left: 8px;
 		// box-sizing: border-box;

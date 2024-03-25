@@ -200,10 +200,10 @@ export default {
         text: () => this.info.order_id
       })
       clipboard.on('success', e => {
-        this.$toast(this.$t('copied_success'))
+        this.$toast(this.$t('copy_success'))
       })
       clipboard.on('error', e => {
-        this.$toast(this.$t('copied_failed'))
+        this.$toast(this.$t('copy_fail'))
       })
     },
     submit() {
@@ -295,11 +295,11 @@ export default {
     color: rgba(128, 128, 128, 1);
     border-radius: 16px;
     border: 1px solid rgba(103, 199, 255, 1);
-    width: 84px;
     height: 27px;
     right: 8.5px;
     top: 13px;
     justify-content: center;
+    padding: 0px 8px;
 
     // padding-left: 8px;
     // box-sizing: border-box;
