@@ -21,6 +21,8 @@
     "empty_exchange_list": "No data yet",
     "empty_exchange_list_label": "You are Feng'er and I am Sha, just place one order and start right now!",
     "loading": "Loading...",
+    "copy_success": "Copied successfully",
+    "copy_fail": "Copy failed",
     "home_page": {
         "quick_purchase": "Purchase",
         "sale": "Sale",
@@ -75,7 +77,29 @@
     "my_advertising": {
         "submitted": "Submitted",
         "approved": "Approved",
-        "to_start": "to start the merchant's journey"
+        "to_start": "to start the merchant's journey",
+        "rejected": "Rejected",
+        "rejected_reason": "Reason for rejection：",
+        "reapply": "Reapply",
+        "identity": "Merchant identity",
+        "input_name": "Please enter business name",
+        "input_method": "Please enter payment method",
+        "confirm": "Confirm",
+        "pending": "Application in progress",
+        "waiting": "Please wait for the review result",
+        "input_business_name": "Please enter business name",
+        "input_message": "Please enter message",
+        "reapply_success": "Reapply success",
+        "apply_success": "Apply success",
+        "on_shelf": "On shelf",
+        "off_shelf": "Off shelf",
+        "adv_number": "Advertisement number :",
+        "off": "Off",
+        "on": "On",
+        "delete": "Delete",
+        "delete_success": "Delete success",
+        "on_shelf_success": "On shelf success",
+        "off_shelf_success": "Off shelf success"
     },
     "my_order": {
         "business_name": "Business name",
@@ -94,6 +118,17 @@
         "input_max_amount": "maximum amount",
         "publish": "Publish advertisement",
         "to_sell": "I want to sell",
-        "sell_amount": "Sell amount"
+        "sell_amount": "Sell amount",
+        "select_currency_name": "Please select currency name",
+        "input_buy_amount": "Please enter buy amount",
+        "input_max_price": "Please enter the highest price",
+        "input_min_price": "Please enter the lowest price",
+        "select_currency_type": "Please select currency type", 
+        "buy_success": "Buy success",
+        "publish_success": "Publish success",
+        "order_list" : {
+            "order_generated": "Order generated",
+            "contact_buyer": "Contact buyer"
+        }
     }
 }

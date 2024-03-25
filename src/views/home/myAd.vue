@@ -16,10 +16,10 @@
 					<img src="../../assets/img/maysale.png" alt="" v-if="item.type == 'sell'">
 				</div>
 				<div class="fontname">
-					<span>广告号：{{ item.id }}</span>
+					<span>{{ $t("my_advertising.adv_number")}}{{ item.id }}</span>
 					<span style="color: #2E6BDB;font-size: 12px;font-weight: 600;"
-						v-if="item.status == 'enable'">上架中</span>
-					<span style="color:rgba(209, 209, 209, 1);font-size: 12px;font-weight: 600;" v-else>已下架</span>
+						v-if="item.status == 'enable'">{{ $t("my_advertising.on_shelf") }}</span>
+					<span style="color:rgba(209, 209, 209, 1);font-size: 12px;font-weight: 600;" v-else>{{ $t("my_advertising.off_shelf") }}</span>
 				</div>
 				<div class="pricead">
 					<div>
@@ -33,24 +33,24 @@
 				</div>
 				<div class="detialcard">
 					<div class="addetail" style="color:rgba(120, 137, 166, 1)">
-						<span>数量</span>
+						<span>{{ $t("quantity") }}</span>
 						<span style="padding-left: 8px;">{{ item.number }} {{ item.en_name.toUpperCase() }}</span>
 					</div>
 					<div class="addetail">
-						<span style="color:rgba(120, 137, 166, 1)">限额 </span>
+						<span style="color:rgba(120, 137, 166, 1)">{{ $t("range") }} </span>
 						<span style="padding-left: 8px;color: #333333;">{{ item.low_price }}-{{ item.high_price }}
 							{{ item.price_type.toUpperCase() }}</span>
 					</div>
 					<div class="addetail">
-						<span style="color:rgba(120, 137, 166, 1)">支付方式</span>
+						<span style="color:rgba(120, 137, 166, 1)">{{ $t("payment_method") }}</span>
 						<span style="padding-left: 8px;color: #333333;">{{ item.contact }}</span>
 					</div>
 
 				</div>
 				<div class="btncaozuo">
-					<div class="downall" @click="downStatus(item.id, 'disable')" v-if="item.status == 'enable'"> 下架</div>
-					<div class="downall" @click="downStatus(item.id, 'enable')" v-else>上架</div>
-					<div class="delall" @click="delAd(item.id)">删除</div>
+					<div class="downall" @click="downStatus(item.id, 'disable')" v-if="item.status == 'enable'">{{ $t("my_advertising.off") }}</div>
+					<div class="downall" @click="downStatus(item.id, 'enable')" v-else>{{ $t("my_advertising.on") }}</div>
+					<div class="delall" @click="delAd(item.id)">{{ $t("my_advertising.delete") }}</div>
 				</div>
 			</div>
 		</van-list>
@@ -61,8 +61,8 @@
 			</div>
 			<div class="fontname">
 				<span>广告号：{{item.id}}</span>
-				<span style="color: #2E6BDB;font-size: 12px;font-weight: 600;" v-if="item.status=='enable'">上架中</span>
-				<span style="color:rgba(209, 209, 209, 1);font-size: 12px;font-weight: 600;" v-else>已下架</span>
+				<span style="color: #2E6BDB;font-size: 12px;font-weight: 600;" v-if="item.status=='enable'">{{ $t("my_advertising.on_shelf") }}</span>
+				<span style="color:rgba(209, 209, 209, 1);font-size: 12px;font-weight: 600;" v-else>{{ $t("my_advertising.off_shelf") }}</span>
 			</div>
 			<div class="pricead">
 				<div>
@@ -76,23 +76,23 @@
 			</div>
 			<div class="detialcard">
 				<div class="addetail" style="color:rgba(120, 137, 166, 1)">
-					<span>数量</span>
+					<span>{{ $t("quantity") }}</span>
 					<span style="padding-left: 8px;">{{item.number}} {{ item.en_name.toUpperCase() }}</span>
 				</div>
 				<div class="addetail">
-					<span style="color:rgba(120, 137, 166, 1)">限额    </span>
+					<span style="color:rgba(120, 137, 166, 1)">{{ $t("range") }}    </span>
 					<span style="padding-left: 8px;color: #333333;">{{item.low_price}}-{{item.high_price}} {{item.price_type.toUpperCase()}}</span>
 				</div>
 				<div class="addetail">
-					<span style="color:rgba(120, 137, 166, 1)">支付方式</span>
+					<span style="color:rgba(120, 137, 166, 1)">{{ $t("payment_method") }}</span>
 					<span style="padding-left: 8px;color: #333333;">{{item.contact}}</span>
 				</div>
 				
 			</div>
 			<div class="btncaozuo">
-				<div class="downall" @click="downStatus(item.id,'disable')" v-if="item.status=='enable'"> 下架</div>
-				<div class="downall" @click="downStatus(item.id,'enable')" v-else>上架</div>
-				<div class="delall" @click="delAd(item.id)">删除</div>
+				<div class="downall" @click="downStatus(item.id,'disable')" v-if="item.status=='enable'">{{ $t("my_advertising.off") }}</div>
+				<div class="downall" @click="downStatus(item.id,'enable')" v-else>{{ $t("my_advertising.on") }}</div>
+				<div class="delall" @click="delAd(item.id)">{{ $t("my_advertising.delete") }}</div>
 			</div>
 		</div> -->
 		<div class="listnone" v-if="list.length == 0">
@@ -131,7 +131,7 @@ export default {
 		delAd(id) {
 			this.$api.delAd({ id: id }).then((res) => {
 				if (res.code == 0) {
-					_this.$toast("删除成功")
+					_this.$toast(_this.$t("my_advertising.delete_success"))
 					this.getList()
 				} else {
 					_this.$toast(res.error)
@@ -142,7 +142,7 @@ export default {
 			// 	data:{id:id},
 			// 	success: (res)=>{
 			// 		if(res.code==0){
-			// 			_this.$toast("删除成功")
+			// 			_this.$toast(_this.$t("my_advertising.delete_success"))
 			// 			this.getList()
 			// 		}
 			// 	},
@@ -160,9 +160,9 @@ export default {
 			this.$api.upAd(data).then((res) => {
 				if (res.code == 0) {
 					if (val == 'enable') {
-						_this.$toast("上架成功")
+						_this.$toast(_this.$t("my_advertising.on_shelf_success"))
 					} else {
-						_this.$toast("下架成功")
+						_this.$toast(_this.$t("my_advertising.off_shelf_success"))
 					}
 					this.getList()
 				} else {
@@ -175,9 +175,9 @@ export default {
 			// 	success: (res)=>{
 			// 		if(res.code==0){
 			// 			if(val=='enable'){
-			// 				_this.$toast("上架成功")
+			// 				_this.$toast(_this.$t("my_advertising.on_shelf_success"))
 			// 			}else{
-			// 				_this.$toast("下架成功")
+			// 				_this.$toast(_this.$t("my_advertising.off_shelf_success"))
 			// 			}
 
 			// 			this.getList()

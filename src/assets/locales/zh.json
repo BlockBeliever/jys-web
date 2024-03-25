@@ -21,6 +21,8 @@
     "empty_exchange_list": "这里空空如也~",
     "empty_exchange_list_label": "你是风儿我是沙，出售一单就有啦！",
     "loading": "加载中...",
+    "copy_success": "复制成功",
+    "copy_fail": "复制失败",
     "home_page": {
         "quick_purchase": "快捷购买",
         "sale": "快捷购买",
@@ -75,7 +77,29 @@
     "my_advertising": {
         "submitted": "您提交的",
         "approved": "已通过审核",
-        "to_start": "到xxxx开启商家之旅~"
+        "to_start": "到xxxx开启商家之旅~",
+        "rejected": "未通过审核",
+        "rejected_reason": "被拒原因：",
+        "reapply": "重新申请",
+        "identity": "商家身份",
+        "input_name": "请输入商家名称",
+        "input_method": "请输入交易方式",
+        "confirm": "确定",
+        "pending": "申请正在",
+        "waiting": "请耐心等待审核结果！",
+        "input_business_name": "请输入商家名",
+        "input_message": "请输入商留言",
+        "reapply_success": "重新申请成功",
+        "apply_success": "申请成功",
+        "on_shelf": "上架中",
+        "off_shelf": "已下架",
+        "adv_number": "广告号：",
+        "off": "下架",
+        "on": "上架",
+        "delete": "删除",
+        "delete_success": "删除成功",
+        "on_shelf_success": "上架成功",
+        "off_shelf_success": "下架成功"
     },
     "my_order": {
         "business_name": "商家名称",
@@ -94,6 +118,17 @@
         "input_max_amount": "请输入最高金额",
         "publish": "发布广告",
         "to_sell": "我要卖出",
-        "sell_amount": "卖出数量"
+        "sell_amount": "卖出数量",
+        "select_currency_name": "请选择货币名",
+        "input_buy_amount": "请输入买入数量",
+        "input_max_price": "请输入最高价格",
+        "input_min_price": "请输入最低价格",
+        "select_currency_type": "请选择货币类型", 
+        "buy_success": "提交成功",
+        "publish_success": "发布成功",
+        "order_list" : {
+            "order_generated": "订单已生成",
+            "contact_buyer": "联系买家"
+        }
     }
 }

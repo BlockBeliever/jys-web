@@ -207,28 +207,28 @@ export default {
 		},
 		submit() {
 			if (this.formData.coin_name == '') {
-				_this.$toast('请选择货币名')
+				_this.$toast(_this.$t('my_order.select_currency_name'))
 				return
 			}
 
 			if (this.formData.number == '') {
-				_this.$toast('请输入买入数量')
+				_this.$toast(_this.$t('my_order.input_buy_amount'))
 				return
 			}
 			if (this.formData.low_price == '') {
-				_this.$toast('请输入价格')
+				_this.$toast(_this.$t('my_order.input_price'))
 				return
 			}
 			if (this.formData.high_price == '') {
-				_this.$toast('请输入最高价格')
+				_this.$toast(_this.$t('my_order.input_max_price'))
 				return
 			}
 			if (this.formData.low_price == '') {
-				_this.$toast('请输入最低价格')
+				_this.$toast(_this.$t('my_order.input_min_price'))
 				return
 			}
 			if (this.formData.price_type == '') {
-				_this.$toast('请选择货币类型')
+				_this.$toast(_this.$t('my_order.select_currency_type'))
 				return
 			}
 			let data = this.formData
@@ -238,7 +238,7 @@ export default {
 			data.number = Number(data.number)
 			this.$api.submitBuy(data).then((res) => {
 				if (res.code == 0) {
-					_this.$toast("提交成功")
+					_this.$toast(_this.$t('my_order.buy_success'))
 					setTimeout(() => {
 						this.$router.push({
 							name: 'MyAd',
@@ -255,7 +255,7 @@ export default {
 			// 	data:_this.formData,
 			// 	success: (res)=>{
 			// 		if(res.code==0){
-			// 			this.$toast("发布成功")
+			// 			this.$toast(_this.$t('my_order.publish_success'))
 			// 			setTimeout(()=>{
 			// 				uni.navigateTo({
 			// 					url:"/pages/myAd/myAd"
