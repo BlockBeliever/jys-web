@@ -72,7 +72,7 @@
 					</div>
 					<div>
 						<textarea name="" id="" cols="30" rows="10" placeholder-style="font-size: 26px;"
-							placeholder="请输入留言内容" class="sear" maxlength="300" @input="sumfontnum"
+							:placeholder="$t('my_order.input_message')" class="sear" maxlength="300" @input="sumfontnum"
 							v-model="formData.msg" style="color: rgba(200, 200, 200, 1);"></textarea>
 					</div>
 					<div style="float: right;color: #7889A6;margin-top: 10px">{{ numtxt }}/300</div>

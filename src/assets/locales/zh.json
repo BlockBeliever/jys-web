@@ -135,6 +135,7 @@
         "select_currency_type": "请选择货币类型", 
         "buy_success": "提交成功",
         "publish_success": "发布成功",
+        "input_message": "请输入留言内容",
         "order_list" : {
             "order_generated": "订单已生成",
             "contact_buyer": "联系买家"
