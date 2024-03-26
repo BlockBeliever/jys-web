@@ -23,7 +23,7 @@
                 v-if="item.type == 'buy' && merchantid == item.merchant_id">{{ $t("sell") }}</span>
               <span style="color:rgba(242, 39, 68, 1)" v-if="item.type == 'buy' && merchantid != item.merchant_id">{{
         $t("buy") }}</span>
-              <span style="color: rgba(51, 51, 51, 1)">{{ item.coin_en_name.toUpperCase() }}</span>
+              <span style="color: rgba(51, 51, 51, 1)"> {{ item.coin_en_name.toUpperCase() }}</span>
             </div>
             <div>
               <span style="font-size: 12px; color: rgba(242, 39, 68, 1)" v-if="item.status == 'wait'">{{
@@ -59,7 +59,7 @@
           <div class="boxboads flex2">
             <div class="flex">
               <div class="iconusnam"><img src="../../../static/img/cardsa.png" alt="" srcset="" /></div>
-              <span style="padding-left: 2.5px">{{ item.number }}{{ item.coin_en_name.toUpperCase() }}</span>
+              <span style="padding-left: 2.5px">{{ item.number }} {{ item.coin_en_name.toUpperCase() }}</span>
             </div>
             <div>
               <span style="font-size: 11px" v-if="item.type == 'sell' && merchantid != item.merchant_id">{{ $t("avaliable") }}</span>

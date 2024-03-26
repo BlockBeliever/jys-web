@@ -1,13 +1,7 @@
 <template>
 	<div class="">
 		<div class="navbartitle">
-			<van-nav-bar :left-text="$t('exchange')" :safe-area-inset-top="true" :border="false" >
-				<template #right>
-					<van-dropdown-menu class="mt10">
-						<van-dropdown-item @change="changeLang()" v-model="lang" :options="locales" />
-					</van-dropdown-menu>
-				</template>
-			</van-nav-bar>
+			<van-nav-bar :left-text="$t('exchange')" :safe-area-inset-top="true" :border="false" />
 			<!-- <div class="status_bar"></div> -->
 			<!-- <uni-nav-bar left-span="首页" backgroundColor="transparent" :border="false" color="#fff"></uni-nav-bar> -->
 			<div class="buyandsale ">
@@ -41,7 +35,7 @@
 					<span v-if="tabIndex==0">{{$t('home_page.to_buy')}}</span>
 				<span v-if="tabIndex==1">{{$t('home_page.to_sell')}}</span>
 					<div class="chooseconi" @click="changeCoin()">
-						<span >{{$t(chooseCoinname).toUpperCase()}}</span>
+						<span >{{chooseCoinname.toUpperCase()}}</span>
 						<van-icon name="arrow-down" style="padding-left: 5px;"/>
 						<!-- <uni-icons type="bottom" size="14"></uni-icons> -->
 					</div>
@@ -141,7 +135,8 @@
 												 <img :src="cover(item.icon)" alt="" srcset="">
 											 </div>
 											 <div class="tista">
-												 <span>{{$t(item.en_name).toUpperCase()}}</span>
+												<span v-if="item.en_name == 'all'">{{$t(item.en_name).toUpperCase()}}</span>
+												 <span v-else>{{item.en_name.toUpperCase()}}</span>
 												  <span style="color: #B8B8B8;font-size: 12px;">{{item.ch_name}}</span>
 											 </div>
 										 </div>
@@ -259,11 +254,6 @@
 		},
 		data() {
 			return {
-				lang: "zh",
-				locales: [
-					{ text: 'Chinese', value: "zh" },
-					{ text: 'English', value: "en" }
-      			],
       			path:"",
 				loading: false,
       			finished: false,
@@ -332,9 +322,6 @@
 
 		},
 		methods: {
-			changeLang(){
-				this.$i18n.locale = this.lang
-			},
 			// click_close(){
 			// 	if(this.$route.meta.reload.indexOf('one')==-1){
 			// 	this.$route.meta.reload='one'
@@ -406,7 +393,7 @@
 			changeCointype(e){
 				this.checked=e.toString()
 				this.filters.coin_id=this.listall[e].id
-				this.chooseCoinname=this.listall[e].en_name
+				this.chooseCoinname=this.listall[e].en_name == 'all' ? this.$t(this.listall[e].en_name) : this.listall[e].en_name
 				this.bookShowPicker=false
 				this.list=[]
 				this.finished=false
@@ -456,7 +443,7 @@
 							this.listall[0].checked=true
 							this.checked='0'
 							this.filters.coin_id=this.listall[0].id
-							this.chooseCoinname=this.listall[0].en_name
+							this.chooseCoinname=this.$t(obj.en_name)
 							this.copyList= [].concat(this.listall)
 					}
 

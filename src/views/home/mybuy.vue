@@ -86,7 +86,7 @@
 				</div>
 			</div>
 			<div class="submit" @click="submit">
-				<span>{{ $t("publish") }}</span>
+				<span>{{ $t("my_order.publish") }}</span>
 			</div>
 			<div class="stats_bottom"></div>
 		</div>

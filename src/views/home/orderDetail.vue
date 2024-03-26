@@ -57,12 +57,12 @@
         </div>
         <div class="info">
           <span style="color: rgba(112, 169, 229, 1)">*</span>
-          <span>{{ $t("order_detail.online") }}</span>
+          <span>{{ $t("order_detail.online") }} </span>
           <span v-if="info.type == 'buy' && merchantid == info.merchant_id">{{ $t("order_detail.buyer") }}</span>
           <span v-if="info.type == 'buy' && merchantid != info.merchant_id">{{ $t("order_detail.seller") }}</span>
           <span v-if="info.type == 'sell' && merchantid == info.merchant_id">{{ $t("order_detail.buyer") }}</span>
           <span v-if="info.type == 'sell' && merchantid != info.merchant_id">{{ $t("order_detail.seller") }}</span>
-          <span>{{ $t("order_detail.safe") }}</span>
+          <span> {{ $t("order_detail.safe") }}</span>
         </div>
       </div>
       <div class="boxorderdetail">
