@@ -46,7 +46,7 @@
 			<div class="formitem">
 				<span class="formname">{{ $t("my_advertising.identity") }}</span>
 				<div class="inputbox">
-					<input type="text" v-model="formData.name" :placeholder="$t('my_order.publish')"
+					<input type="text" v-model="formData.name" :placeholder="$t('my_order.identity')"
 						placeholder-style="color:#7889A6;font-size:26px" disabled="true">
 				</div>
 			</div>
@@ -54,14 +54,14 @@
 				<span class="formname">{{ $t('my_order.business_name') }}</span>
 				<div class="inputbox">
 					<input type="text" v-model="formData.merchant_name" :placeholder="$t('my_advertising.input_name')"
-						placeholder-style="color:rgba(200, 200, 200, 1);font-size:26px">
+						placeholder-style="color:rgba(200, 200, 200, 1);font-size:26px" class="input-field">
 				</div>
 			</div>
 			<div class="formitem">
 				<span class="formname">{{ $t("my_order.payment") }}</span>
 				<div class="inputbox">
 					<input type="text" v-model="formData.pay_type" :placeholder="$t('my_advertising.input_method')"
-						placeholder-style="color:rgba(200, 200, 200, 1);font-size:26px">
+						placeholder-style="color:rgba(200, 200, 200, 1);font-size:26px" class="input-field">
 				</div>
 			</div>
 			<div class="formitem">

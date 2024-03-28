@@ -230,6 +230,11 @@ a {
 	padding-left: 50px;
 	text-align: left;
 }
+
+.applycardall .inputbox .input-field{
+	width: 100% !important;
+}
+
 /* 设置动画 */
 @keyframes offsetLeft {
   0%{

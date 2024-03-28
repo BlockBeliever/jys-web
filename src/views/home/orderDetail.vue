@@ -279,7 +279,7 @@ export default {
 
 .ordercard {
   width: 100%;
-  height: 126px;
+  min-height: 126px;
   border-radius: 10px;
   // background: linear-gradient(180deg, rgba(204, 222, 255, 1) 0%, rgba(255, 255, 255, 0.01) 100%);
   background: url('../../../static/img/bg.png');

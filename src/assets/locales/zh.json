@@ -25,7 +25,7 @@
     "copy_fail": "复制失败",
     "home_page": {
         "quick_purchase": "快捷购买",
-        "sale": "快捷购买",
+        "sale": "挂单出售",
         "quick_purchase_label": "高效率 快支付",
         "sale_label": "快速挂单卖出",
         "to_buy": "我要购买",
@@ -126,6 +126,7 @@
         "input_min_amount": "请输入最低金额",
         "input_max_amount": "请输入最高金额",
         "publish": "发布广告",
+        "identity": "发布广告",
         "to_sell": "我要卖出",
         "sell_amount": "卖出数量",
         "select_currency_name": "请选择货币名",

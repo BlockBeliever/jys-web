@@ -42,7 +42,7 @@
 				<span class="formname">{{  $t("my_order.buy_amount") }}</span>
 				<div class="inputbox">
 					<input v-model="formData.number" :placeholder="$t('my_order.input_amount')"
-						placeholder-style="color:#C8C8C8;font-size:13px" type="text">
+						placeholder-style="color:#C8C8C8;font-size:13px" type="text" class="input-field">
 				</div>
 			</div>
 
