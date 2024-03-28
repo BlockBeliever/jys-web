@@ -207,7 +207,7 @@ export default {
 
 .cardbuy {
 	width: 48%;
-	height: 65px;
+	min-height: 65px;
 	background: url("../../assets/img/myle.png");
 	background-size: 100% 100%;
 	margin-top: 20px;
@@ -221,7 +221,7 @@ export default {
 
 .cardsale {
 	width: 48%;
-	height: 65px;
+	min-height: 65px;
 	background: url("../../assets/img/myri.png");
 	background-size: 100% 100%;
 	margin-top: 20px;
