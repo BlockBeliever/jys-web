@@ -15,11 +15,10 @@ export default new VueI18n({
     localeDir: "locales",
     messages: {
         en: en,
-        zh: zh,
+        zh: localStorage.getItem("country_code") === 'TW' ? zhHant : zh,
         th: th,
         vi: vi,
         ms: ms,
         km: km,
-        zhHant: zhHant,
     }
 })
