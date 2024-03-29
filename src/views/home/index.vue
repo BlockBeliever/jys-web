@@ -45,12 +45,10 @@
 					<div class="imgqie"><img src="../../assets/img/qiehuan.png" alt="" srcset=""></div>
 				</div>
 			</div>
-
 			<van-list
 				:loading="loading"
 				:finished="finished"
 				:finished-text="$t('no_more')"
-				@load="getList"
 				>
 					<div  v-for="(item,index) in list" :key="index" >
 				<div  class="cardlist">
@@ -382,9 +380,11 @@
 
 				// setTimeout(()=>{
 					this.$api.getAuther({code:val}).then((res)=>{
-					localStorage.setItem('token',res.data.auth.access)
-					this.getcoinList()
-			        this.getList()
+					if(res.code==0){
+						localStorage.setItem('token',res.data.auth.access)
+						this.getcoinList()
+						this.getList()
+					}
 					})
 				// },500)
 
@@ -477,7 +477,6 @@
 							}else if(all.length<10&&!this.finished){
 								// console.log(1111)
 								this.finished = true;
-								console.log(this.finished)
 								all.forEach(item=>{
 									if(item.status=='enable'){
 										_this.list.push(item)

@@ -11,7 +11,7 @@
         <span style="font-size: 18px">{{ $t("transaction_order") }}</span>
       </div>
 
-      <van-list v-model="loading" :finished="finished" :finished-text="$t('no_more')" :loading-text="$t('loading')" @load="getList">
+      <van-list v-model="loading" :finished="finished" :finished-text="$t('no_more')" :loading-text="$t('loading')">
         <div class="listcard" v-for="(item, index) in list" :key="index" @click="moveGoodsDetail(item.id)">
           <div class="flex2">
             <div style="font-size: 16px">
