@@ -134,7 +134,6 @@
 		},
 		mounted() {
 			_this=this
-			console.log(this.$route.query,7878)
             this.id= parseInt(this.$route.query.id)
 			this.coin_name=this.$route.query.coin_name
 			this.usdt_name=this.$route.query.usdt_name

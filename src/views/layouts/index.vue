@@ -4,9 +4,8 @@
         <router-view></router-view>
       </keep-alive>
       <router-view v-else></router-view>
-
       <!-- tabBar -->
-      <!-- <TabBar :data="tabbars" @change="handleChange" /> -->
+      <TabBar :data="tabbars" @change="handleChange" />
 
   </div>
 </template>
@@ -19,21 +18,21 @@ export default {
     return {
       tabbars: [
         {
-          title: '首页',
+          title: this.$t('home'),
           to: {
             name: 'Home'
           },
           icon: 'home-o'
         },
         {
-          title: '订单',
+          title: this.$t('transaction_order'),
           to: {
             name: 'List'
           },
           icon: 'newspaper-o'
         },
         {
-          title: '我的', // 菜单标题
+          title: this.$t('profile'), // 菜单标题
           to: {
             name: 'About'
           },
@@ -47,7 +46,6 @@ export default {
   },
   methods: {
     handleChange(v) {
-      console.log('tab value:', v)
     }
   }
 }

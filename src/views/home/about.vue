@@ -41,42 +41,14 @@
 				<uni-icons type="forward" color="#CFCFCF" size="14"></uni-icons>
 			</div> -->
 		</div>
-		<TabBar :data="tabbars" @change="handleChange" />
 	</div>
 </template>
 
 <script>
 
-import TabBar from '@/components/TabBar'
 export default {
-	components: {
-		TabBar
-	},
 	data() {
 		return {
-			tabbars: [
-				{
-					title: this.$t('home'),
-					to: {
-						name: 'Home'
-					},
-					icon: 'home-o'
-				},
-				{
-					title: this.$t('transaction_order'),
-					to: {
-						name: 'List'
-					},
-					icon: 'newspaper-o'
-				},
-				{
-					title: this.$t('profile'), // 菜单标题
-					to: {
-						name: 'About'
-					},
-					icon: 'user-o'
-				}
-			],
 			path: "",
 			status: '',
 			account: {},
@@ -99,9 +71,6 @@ export default {
 					return this.$IMGURL + val
 				}
 			}
-		},
-		handleChange(v) {
-			console.log('tab value:', v)
 		},
 		getInfo() {
 			this.$api.getAccount().then((res) => {

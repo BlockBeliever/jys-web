@@ -49,6 +49,7 @@
 				:loading="loading"
 				:finished="finished"
 				:finished-text="$t('no_more')"
+				@load="filters.page > 1 ? getList : ''"
 				>
 					<div  v-for="(item,index) in list" :key="index" >
 				<div  class="cardlist">
@@ -210,46 +211,15 @@
 
 			</div>
 		</uni-popup> -->
-		<TabBar :data="tabbars" @change="handleChange"/>
+		
 	</div>
 </template>
 
 <script>
 	let _this
-	import TabBar from '@/components/TabBar'
 	import loadcode from '../../utils/loadcode.js'
 	export default {
-		components: {
-    TabBar
-  },
 //   inject:['reload'],
-		computed: {
-			tabbars() {
-				return [
-					{
-					title: this.$t('home'),
-					to: {
-						name: 'Home'
-					},
-					icon: 'home-o'
-					},
-					{
-					title: this.$t('transaction_order'),
-					to: {
-						name: 'List'
-					},
-					icon: 'newspaper-o'
-					},
-					{
-					title: this.$t('profile'), // 菜单标题
-					to: {
-						name: 'About'
-					},
-					icon: 'user-o'
-					}
-				];
-			},
-		},
 		data() {
 			return {
       			path:"",
@@ -270,7 +240,8 @@
 					page:1,
 					limit:10,
 					type:"sell",
-					price_type:''
+					price_type:'',
+					status: ''
 				},
 				$IMGURL:'',
 				list:[],
@@ -292,31 +263,21 @@
 
 			}
 		},
-	 	mounted() {
-			// window.location.reload()
-			// this.click_close()
+		async mounted() {
 			_this=this
 			this.$IMGURL = process.env.VUE_APP_IMGURL
 			this.$APIURL = process.env.VUE_APP_BASE_API;
 			this.filters.price_type=this.list2[0].name
-				this.chooseusdtname=this.list2[0].name
-				this.checkedusdt='0'
-				// if(this.$route.query.code){
-				// this.getAuther(this.$router.query.code)
-				// }else if(localStorage.getItem('code')){
-				// 	this.getAuther(localStorage.getItem('code'))
-				// }
-			// this.timer = setInterval(this.getAuther(localStorage.getItem('code')), 500)
-			setTimeout(()=>{
-				this.getAuther(localStorage.getItem('code'))
+			this.chooseusdtname=this.list2[0].name
+			this.checkedusdt='0'
 
-			},1500)
-			// let code='NTHKOWI0NGMTOGQZMS0ZMWFKLTKYYJATM2Y1ODHKMWUWNJU5'
-		    // this.getAuther(code)
-			this.getcoinList()
-			this.getList()
-
-
+			try {
+				await this.getAuther("ODLLMZFMOWITY2NMMC01YJZMLTGWNZCTMJG0OTQYY2YWMTHI");
+				await this.getList();
+				await this.getcoinList();
+			} catch (error) {
+				throw error
+			}
 
 		},
 		methods: {
@@ -341,54 +302,28 @@
 			handleChange(v) {
 			// console.log('tab value:', v)
 			},
-			// getCode(){
 
-			// },
 			searchCoinInput(val){
-				let all=[]
-				if(val==''){
-					this.listall=this.copyList
-				}else{
-					this.listall=this.copyList
-					this.listall.forEach(item => {
-						let name=item.en_name
-					if(name.indexOf(val.trim()) >= 0 || name.toUpperCase().indexOf(val.trim())>= 0 ){
-						// console.log(11111)
-						all.push(item)
-					}
-
-						})
-					this.listall=all
+				this.listall=this.copyList
+				if(val != ""){
+					this.listall = this.listall.filter(item => {
+						const name = item.en_name.toLowerCase();
+						const searchTerm = val.trim().toLowerCase();
+						return name.includes(searchTerm);
+					});
 				}
-
 			},
-			getAuther(val){
-				var code=""
-				// var code=""
-// 				window.WebViewJavascriptBridge.callHandler('getDappCode', '', function (responseData) {
-// 					code=responseData
-
-//                 console.log("callNativeEcho res ", responseData);
-//             	});
-// 				window.onerror = function(msg, url, lineNo, columnNo, error) {
-//     console.error("Error: " + msg + "\nURL: " + url + "\nLine: " + lineNo + "\nColumn: " + columnNo + "\nStackTrace: " + ((error && error.stack) ? error.stack : "N/A"));
-//   };
-				// this.$jsbridge.callHandler('getDappCode','', (data) => {
-				// 	console.log("获取到的数据",data)
-				// 	code=responseData
-				// })
-
-				// setTimeout(()=>{
-					this.$api.getAuther({code:val}).then((res)=>{
-					if(res.code==0){
-						localStorage.setItem('token',res.data.auth.access)
-						this.getcoinList()
-						this.getList()
-					}
+			
+			async getAuther(val){
+				try {
+					await this.$api.getAuther({code:val}).then( async(res)=>{
+						if(res.code==0){
+							await localStorage.setItem('token',res.data.auth.access)
+						}
 					})
-				// },500)
-
-
+				} catch (error) {
+					throw error;
+				}
 			},
 			changeCointype(e){
 				this.checked=e.toString()
@@ -427,8 +362,8 @@
 				//  this.$refs.popup.open('bottom')
 			},
 
-		    getcoinList(){
-				this.$api.coinList(this.filters).then((res)=>{
+		    async getcoinList(){
+				await this.$api.coinList(this.filters).then((res)=>{
 					if(res.code==0){
 						_this.listall=res.data.coins
 						let obj={
@@ -436,22 +371,20 @@
 							id:0
 						}
 						this.listall.unshift(obj)
-							this.listall.forEach(item=>{
-								item.checked=false
-							})
+						this.listall.forEach(item=>{
+							item.checked=false
+						})
 
-							this.listall[0].checked=true
-							this.checked='0'
-							this.filters.coin_id=this.listall[0].id
-							this.chooseCoinname=this.$t(obj.en_name)
-							this.copyList= [].concat(this.listall)
+						this.listall[0].checked=true
+						this.checked='0'
+						this.filters.coin_id=this.listall[0].id
+						this.chooseCoinname=this.$t(obj.en_name)
+						this.copyList= [].concat(this.listall)
 					}
 
 				})
 			},
-			getList() {
-
-				// console.log(1111)
+			async getList() {
 				_this=this
 				if(this.tabIndex==0){
 					this.filters.type="sell"
@@ -459,38 +392,23 @@
 					this.filters.type="buy"
 				}
 
-				// setTimeout(()=>{
-						this.$api.homeList(this.filters).then((res)=>{
-						if(res.code==0){
-							let all=res.data.list
-							this.loading = false;
-							if(all.length==10){
-								this.filters.page=Number(this.filters.page)+1
-								// this.finished = true;
-								all.forEach(item=>{
-									if(item.status=='enable'){
-										_this.list.push(item)
-
-
-									}
-								})
-							}else if(all.length<10&&!this.finished){
-								// console.log(1111)
-								this.finished = true;
-								all.forEach(item=>{
-									if(item.status=='enable'){
-										_this.list.push(item)
-
-									}
-								})
-
-							}
-
-
-						}
-
+				await this.$api.homeList(this.filters).then((res)=>{
+				if(res.code==0){
+					let all=res.data.list
+					this.loading = false;
+					all.forEach(item=>{
+						_this.list.push(item)
 					})
-				// },500)
+					if(_this.list.length < res.data.cnt){
+						this.filters.page=Number(this.filters.page)+1
+					}else {
+						this.finished = true;
+					}
+
+
+				}
+
+			})
 
 
 
@@ -524,7 +442,6 @@
 				// )
 			},
 			moveDeatil(val) {
-				console.log(val)
 				this.$router.push({
 					name:'goodDetail',
 					query:{

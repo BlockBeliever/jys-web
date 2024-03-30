@@ -11,7 +11,7 @@
         <span style="font-size: 18px">{{ $t("transaction_order") }}</span>
       </div>
 
-      <van-list v-model="loading" :finished="finished" :finished-text="$t('no_more')" :loading-text="$t('loading')">
+      <van-list v-model="loading" :finished="finished" :finished-text="$t('no_more')" :loading-text="$t('loading')" @load="getList()">
         <div class="listcard" v-for="(item, index) in list" :key="index" @click="moveGoodsDetail(item.id)">
           <div class="flex2">
             <div style="font-size: 16px">
@@ -53,7 +53,7 @@
               <span style="margin-left: 8.5px" v-if="merchantid != item.user_id">{{ item.username }}</span>
             </div>
             <div>
-              <span>{{ item.create_time | fomarTime }}</span>
+              <span>{{ item.create_time | dateFormat("yyyy-MM-dd hh:mm:ss") }}</span>
             </div>
           </div>
           <div class="boxboads flex2">
@@ -138,47 +138,19 @@
         <div style="padding: 12px"><span>{{ $t("empty_exchange_list_label") }}</span></div>
       </div>
     </div>
-    <TabBar :data="tabbars" @change="handleChange" />
   </div>
 </template>
 
 <script>
 let _this
-import TabBar from '@/components/TabBar'
 // import { orderList } from '../../api/index'
 export default {
-  components: {
-    TabBar
-  },
   data() {
     return {
-      tabbars: [
-        {
-          title: this.$t('home'),
-          to: {
-            name: 'Home'
-          },
-          icon: 'home-o'
-        },
-        {
-          title: this.$t('transaction_order'),
-          to: {
-            name: 'List'
-          },
-          icon: 'newspaper-o'
-        },
-        {
-          title: this.$t('profile'), // 菜单标题
-          to: {
-            name: 'About'
-          },
-          icon: 'user-o'
-        }
-      ],
       path: "",
       filters: {
         page: 1,
-        limit: 10
+        limit: 2
       },
       list: [],
       merchantid: 0,
@@ -189,29 +161,8 @@ export default {
   },
   mounted() {
     this.$IMGURL = process.env.VUE_APP_IMGURL
-    this.getList()
-  },
-  filters: {
-    fomarTime(value) {
-      let date = new Date(parseInt(value) * 1000)
-      let y = date.getFullYear()
-      let m = date.getMonth() + 1
-      m = m < 10 ? '0' + m : m
-      let d = date.getDate()
-      d = d < 10 ? '0' + d : d
-      let h = date.getHours()
-      h = h < 10 ? '0' + h : h
-      let minute = date.getMinutes()
-      let second = date.getSeconds()
-      minute = minute < 10 ? '0' + minute : minute
-      second = second < 10 ? '0' + second : second
-      return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second
-    }
   },
   methods: {
-    handleChange(v) {
-      console.log('tab value:', v)
-    },
     moveGoodsDetail(id) {
       this.$router.push({
         path: '/orderDetail',
@@ -223,18 +174,13 @@ export default {
       this.$api.orderList(this.filters).then(res => {
         let all = res.data.order
         this.loading = false;
-        if (all.length == 10) {
+        all.forEach(item => {
+          _this.list.push(item)
+        })
+        if (_this.list.length < res.data.cnt) {
           this.filters.page = Number(this.filters.page) + 1
-          all.forEach(item => {
-            _this.list.push(item)
-          })
-        } else if (all.length < 10 && !this.finished) {
-          // console.log(1111)
+        } else {
           this.finished = true;
-          all.forEach(item => {
-            _this.list.push(item)
-          })
-
         }
 
       })
