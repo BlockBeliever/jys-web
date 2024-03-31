@@ -114,7 +114,6 @@
 
 <script>
 let _this
-import loadcode from '../../utils/loadcode.js'
 import Clipboard from 'clipboard'
 export default {
 	data() {
@@ -138,24 +137,6 @@ export default {
 		this.order = this.$route.query.order.data.order
 		this.coin = this.$route.query.order.data.coin
 		this.getkefu()
-	},
-	filters: {
-
-		fomarTime(value) {
-			let date = new Date(parseInt(value) * 1000);
-			let y = date.getFullYear();
-			let m = date.getMonth() + 1;
-			m = m < 10 ? "0" + m : m;
-			let d = date.getDate();
-			d = d < 10 ? "0" + d : d;
-			let h = date.getHours();
-			h = h < 10 ? "0" + h : h;
-			let minute = date.getMinutes();
-			let second = date.getSeconds();
-			minute = minute < 10 ? "0" + minute : minute;
-			second = second < 10 ? "0" + second : second;
-			return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
-		}
 	},
 	methods: {
 		getkefu() {
@@ -289,8 +270,6 @@ export default {
 		padding-top: 0;
 
 	}
-
-	.contract {}
 }
 
 .boxorderdetail {
@@ -303,8 +282,6 @@ export default {
 	.saddwq {
 		padding: 15px;
 		box-sizing: border-box;
-
-		.saddwq {}
 
 		.usdtimg {
 			width: 22px;

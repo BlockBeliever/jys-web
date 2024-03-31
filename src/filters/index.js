@@ -36,7 +36,7 @@ let hidePhone = function (phone) {
 }
 
 // 转换日期为yyyy-MM-dd HH:mm:ss字符串
-let dateFormat =  function dateFormat(date, fmt) {
+let dateFormat =  function (date, fmt) {
   let ret
   let dateObj = new Date(parseInt(date) * 1000)
   const opt = {
@@ -57,4 +57,20 @@ let dateFormat =  function dateFormat(date, fmt) {
   return fmt
 }
 
-export { formatMoney, thousands, bindStatus, hidePhone, bankFormat, dateFormat }
+const fomarTime = function (value) {
+  let date = new Date(parseInt(value) * 1000)
+  let y = date.getFullYear()
+  let m = date.getMonth() + 1
+  m = m < 10 ? '0' + m : m
+  let d = date.getDate()
+  d = d < 10 ? '0' + d : d
+  let h = date.getHours()
+  h = h < 10 ? '0' + h : h
+  let minute = date.getMinutes()
+  let second = date.getSeconds()
+  minute = minute < 10 ? '0' + minute : minute
+  second = second < 10 ? '0' + second : second
+  return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second
+}
+
+export { formatMoney, thousands, bindStatus, hidePhone, bankFormat, dateFormat, fomarTime }

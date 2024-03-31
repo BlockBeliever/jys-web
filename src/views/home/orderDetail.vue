@@ -3,16 +3,6 @@
     <div class="navbartitle">
       <van-nav-bar fixed :left-text="$t('back')" :safe-area-inset-top="true" :border="false" left-arrow
         @click-left="onClickLeft" />
-      <!-- <div class="status_bar"></div> -->
-      <!-- <uni-nav-bar
-        left-text="返回"
-        :border="false"
-        statusBar="true"
-        backgroundColor="transparent"
-        color="#fff"
-        leftIcon="back"
-        @clickLeft="back"
-      ></uni-nav-bar> -->
     </div>
     <div class="order">
       <div style="margin-bottom: 15px; font-size: 16px; color: rgba(240, 38, 69, 1); font-weight: 600"
@@ -141,7 +131,6 @@
 <script>
 let _this
 import Clipboard from 'clipboard'
-import loadcode from '../../utils/loadcode.js'
 export default {
   data() {
     return {
@@ -165,23 +154,6 @@ export default {
       this.id = parseInt(id)
     }
     this.loadDetail()
-  },
-  filters: {
-    fomarTime(value) {
-      let date = new Date(parseInt(value) * 1000)
-      let y = date.getFullYear()
-      let m = date.getMonth() + 1
-      m = m < 10 ? '0' + m : m
-      let d = date.getDate()
-      d = d < 10 ? '0' + d : d
-      let h = date.getHours()
-      h = h < 10 ? '0' + h : h
-      let minute = date.getMinutes()
-      let second = date.getSeconds()
-      minute = minute < 10 ? '0' + minute : minute
-      second = second < 10 ? '0' + second : second
-      return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second
-    }
   },
   methods: {
     moveContact(val) {
@@ -332,7 +304,6 @@ export default {
     padding-top: 0;
   }
 
-  .contract {}
 }
 
 .boxorderdetail {
@@ -345,8 +316,6 @@ export default {
   .saddwq {
     padding: 15px;
     box-sizing: border-box;
-
-    .saddwq {}
 
     .usdtimg {
       width: 22px;

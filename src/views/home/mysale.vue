@@ -6,81 +6,33 @@
 				@click-left="onClickLeft" />
 		</div>
 		<div class="namebuy" style="text-align: center;font-weight: 600;">
-			<span style="font-size: 15px;">{{ $t("my_order.to_sell")}}</span>
+			<span style="font-size: 15px;">{{ $t("my_order.to_sell") }}</span>
 		</div>
 		<div class="applycardall">
-			<div class="formitem">
-				<span class="formname">{{ $t("my_order.business_name") }}</span>
-				<div class="inputbox">
-					<input type="span" v-model="formData.name" :placeholder="$t('my_order.city')"
-						placeholder-style="color:#7889A6;font-size:13px" disabled="true">
-				</div>
-			</div>
-			<div class="formitem">
-				<span class="formname">{{ $t("my_order.token") }}</span>
-				<div class="inputbox flex2">
-					<input type="span" v-model="formData.coin_name" :placeholder="$t('my_order.token_name')"
-						placeholder-style="color:#C8C8C8;font-size:13px" disabled="true">
-					<div style="font-size: 12px;">
-						<span style="padding-right: 5px;">{{ chooseCoinname }}</span>
-						<van-icon name="arrow-down" v-if="!showcoindown" @click="showcoindown = !showcoindown" />
-						<van-icon name="arrow-up" v-if="showcoindown" @click="showcoindown = !showcoindown" />
-						<div class="downlistcoin" v-if="showcoindown">
-							<div class="boxboadssad" v-for="(item, index) in cointypelist" :key="index"
-								:style="selectedcoinIndex == index ? 'background:#F7FAFF' : 'background:#fff'"
-								@click="selectedCoinType(index, item.en_name)">{{ item.en_name.toUpperCase() }}</div>
-						</div>
-					</div>
-				</div>
-			</div>
+			<FormInput @update:modelValue="value => formData.name = value" :placeholder="$t('my_order.city')"
+				:label="$t('my_order.business_name')" type="text" disabled />
+			<FormInputWithDropdown @update:modelValue="value => formData.coin_name = value"
+				:placeholder="$t('my_order.token_name')" :label="$t('my_order.token')" :chooseTypename="chooseCoinname"
+				:typeList="cointypelist" :selectedIndex="selectedIndex"
+				@change="(index, name) => selectedCoinType(index, name)" :showdown="showcoindown"
+				@toggle-showdown="(identifier) => toggleShowdown(identifier)" :identifier="1" disabled hidden />
 
-
-
-			<div class="formitem">
-				<span class="formname">{{ $t("my_order.sell_amount")}}</span>
-				<div class="inputbox">
-					<input v-model="formData.number" :placeholder="$t('my_order.input_amount')"
-						placeholder-style="color:#C8C8C8;font-size:13px" type="number" class="input-field">
-				</div>
-			</div>
-
-
-
-			<div class="formitem">
-				<span class="formname">{{ $t("my_order.price")}}</span>
-				<div class="inputbox flex2">
-					<input v-model="formData.price" :placeholder="$t('my_order.input_price')" placeholder-style="color:#C8C8C8;font-size:13px"
-						type="number">
-					<div style="font-size: 12px;">
-						<span style="padding-right: 5px;">{{ chooseTypename }}</span>
-						<van-icon name="arrow-down" v-if="!showdown" @click="showdown = !showdown" />
-						<van-icon name="arrow-up" v-if="showdown" @click="showdown = !showdown" />
-						<div class="downlist" v-if="showdown">
-							<div class="boxboadssad" v-for="(item, index) in paytypelist" :key="index"
-								:style="selectedIndex == index ? 'background:#F7FAFF' : 'background:#fff'"
-								@click="selectedPriceType(index, item.name)">{{ item.name }}</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-
-
-			<div class="formitem">
-				<span class="formname">{{ $t("my_order.payment") }}</span>
-				<div class="inputbox">
-					<input type="text" v-model="formData.contact" :placeholder="$t('my_order.c2c')"
-						placeholder-style="color:#7889A6;font-size:26px" disabled="true">
-				</div>
-			</div>
+			<FormInput @update:modelValue="value => formData.number = value" :placeholder="$t('my_order.input_amount')"
+				:label="$t('my_order.sell_amount')" type="number" />
+			<FormInputWithDropdown @update:modelValue="value => formData.price = value"
+				:placeholder="$t('my_order.input_price')" :label="$t('my_order.price')" :chooseTypename="chooseTypename"
+				:typeList="paytypelist" :selectedIndex="selectedIndex"
+				@change="(index, name) => selectedPriceType(index, name)" :showdown="showdown"
+				@toggle-showdown="toggleShowdown" />
+			<FormInput @update:modelValue="value => formData.contact = value" :placeholder="$t('my_order.c2c')"
+				:label="$t('my_order.payment')" type="text" disabled />
 			<div class="formitem">
 				<span class="formname">{{ $t("range") }}</span>
 				<div class="inputbox flex2">
-					<input v-model="formData.low_price" :placeholder="$t('my_order.input_min_amount')"
-						placeholder-style="color:#C8C8C8;font-size:26px" type="number">
+					<input v-model="formData.low_price" :placeholder="$t('my_order.input_min_amount')" type="number">
 					<span style="color: #7889A6;font-size: 10px;">——</span>
-					<input v-model="formData.high_price" :placeholder="$t('my_order.input_max_amount')"
-						placeholder-style="color:#C8C8C8;font-size:26px" type="number" style="padding-left: 30px;">
+					<input v-model="formData.high_price" :placeholder="$t('my_order.input_max_amount')" type="number"
+						style="padding-left: 30px;">
 				</div>
 			</div>
 			<div class="submit" @click="submit">
@@ -92,8 +44,14 @@
 </template>
 
 <script>
+import FormInput from '../../components/FormInput.vue'
+import FormInputWithDropdown from '../../components/FormInputWithDropdown.vue'
 let _this
 export default {
+	components: {
+		FormInput,
+		FormInputWithDropdown
+	},
 	data() {
 		return {
 			hobby: '',
@@ -114,33 +72,14 @@ export default {
 			chooseTypename: this.$t('my_order.select_currency'),
 			chooseCoinname: this.$t('my_order.select_token'),
 			selectedIndex: null,
-			selectedcoinIndex: null,
 			numtxt: 0,
 			showdown: false,
 			showcoindown: false,
-			cointypelist: [{
-				coin_id: 1,
-				name: 'BTC',
-			},
-			{
-				coin_id: 2,
-				name: 'ETH'
-			},
-			{
-				coin_id: 3,
-				name: 'EOS'
-			},
-			{
-				coin_id: 4,
-				name: 'USDT'
-			}
+			cointypelist: [],
+			paytypelist: [
+				{ name: 'CNY', },
+				{ name: 'USD', }
 			],
-			paytypelist: [{
-				name: 'CNY',
-			},
-			{
-				name: 'USD'
-			}]
 		}
 	},
 	mounted() {
@@ -172,25 +111,10 @@ export default {
 				}
 
 			})
-			// _this.$post('/api/user/account',{
-			// 	success: (res)=>{
-			// 		if(res.code==0){
-			// 			let data
-			// 			data=res.data.merchant
-			// 			this.formData.price_type=data.pay_type
-			// 			this.formData.name=data.name
-			// 			this.formData.contact=data.pay_type
-			// 		}
-			// 	},
-			// 	error:(err)=>{
-			// 		_this.$toast("err")
-			// 	},
-			// 	},
-			// )
 		},
 		selectedCoinType(index, name) {
-			this.selectedcoinIndex = index
-			this.chooseCoinname = ""
+			this.selectedIndex = index
+			this.chooseCoinname = name.toUpperCase()
 			this.showcoindown = false
 			this.formData.coin_name = name.toUpperCase()
 			// console.log(this.cointypelist[index],996)
@@ -202,34 +126,31 @@ export default {
 			this.showdown = false
 			this.formData.price_type = name
 		},
+		toggleShowdown(identifier) {
+			if (identifier == 1) {
+				this.showcoindown = !this.showcoindown
+				return
+			}
+			this.showdown = !this.showdown
+		},
 		sumfontnum(e) {
 			this.numtxt = e.detail.value.length
 		},
 		submit() {
-			if (this.formData.coin_name == '') {
-				_this.$toast(_this.$t('my_order.select_currency_name'))
-				return
-			}
+			const requiredFields = [
+				{ field: 'coin_name', message: 'my_order.select_currency_name' },
+				{ field: 'number', message: 'my_order.sell_amount' },
+				{ field: 'price_type', message: 'my_order.select_currency_type' },
+				{ field: 'price', message: 'my_order.input_price' },
+				{ field: 'low_price', message: 'my_order.input_min_price' },
+				{ field: 'high_price', message: 'my_order.input_max_price' },
+			];
 
-			if (this.formData.number == '') {
-				_this.$toast(_this.$t('my_order.input_buy_amount'))
-				return
-			}
-			if (this.formData.low_price == '') {
-				_this.$toast(_this.$t('my_order.input_price'))
-				return
-			}
-			if (this.formData.high_price == '') {
-				_this.$toast(_this.$t('my_order.input_max_price'))
-				return
-			}
-			if (this.formData.low_price == '') {
-				_this.$toast(_this.$t('my_order.input_min_price'))
-				return
-			}
-			if (this.formData.price_type == '') {
-				_this.$toast(_this.$t('my_order.select_currency_type'))
-				return
+			for (const { field, message } of requiredFields) {
+				if (this.formData[field] == '') {
+					_this.$toast(_this.$t(message));
+					return;
+				}
 			}
 			let data = this.formData
 			data.high_price = Number(data.high_price)
@@ -251,23 +172,7 @@ export default {
 				}
 
 			})
-			// _this.$post('/api/user/merchant/advertising/create',{
-			// 	data:_this.formData,
-			// 	success: (res)=>{
-			// 		if(res.code==0){
-			// 			this.$toast(_this.$t('my_order.publish_success'))
-			// 			setTimeout(()=>{
-			// 				uni.navigateTo({
-			// 					url:"/pages/myAd/myAd"
-			// 				})
-			// 			})
-			// 		}
-			// 	},
-			// 	error:(err)=>{
-			// 		_this.$toast(err.error)
-			// 	},
-			// 	},
-			// )
+
 		}
 	}
 }
@@ -309,56 +214,6 @@ export default {
 		font-size: 14px;
 		border-bottom: 1px solid #F0F4FA;
 		position: relative;
-
-		.downlist {
-			position: absolute;
-			width: 300px;
-			height: 68px;
-			border-radius: 10px;
-			background: #FFFFFF;
-			border: 1px solid #E6E6E6;
-			overflow: hidden;
-			right: 0;
-			bottom: -70px;
-			z-index: 999;
-
-			.boxboadssad {
-				width: 100%;
-				line-height: 34px;
-				text-align: center;
-				height: 34px;
-				font-size: 10px;
-			}
-
-			.bordermiddle {
-				border-top: 1px solid;
-			}
-		}
-
-		.downlistcoin {
-			position: absolute;
-			width: 300px;
-			height: 138px;
-			border-radius: 10px;
-			background: #FFFFFF;
-			border: 1px solid #E6E6E6;
-			overflow: scroll;
-			right: 0;
-			bottom: -140px;
-			z-index: 999;
-
-			.boxboadssad {
-				width: 100%;
-				line-height: 34px;
-				text-align: center;
-				height: 34px;
-				font-size: 10px;
-			}
-
-			.bordermiddle {
-				border-top: 1px solid;
-			}
-		}
 	}
 
 	.inputbox {
@@ -376,40 +231,6 @@ export default {
 			width: 120px;
 			background: #fff;
 		}
-	}
-}
-
-.inputboxeara {
-	margin-top: 13px;
-	background-color: #F7FAFF;
-	height: 298px;
-	padding: 15px;
-	box-sizing: border-box;
-	position: relative;
-	border-radius: 10px;
-	left: 0;
-	top: 0;
-
-	// display: flex;
-	.editiconimg {
-		width: 12px;
-		height: 15px;
-		position: absolute;
-
-		img {
-			width: 100%;
-			height: 100%;
-		}
-	}
-
-	.sear {
-		padding-left: 20px;
-		margin-top: -3px;
-		font-size: 7px;
-		box-sizing: border-box;
-		color: #C8C8C8;
-		width: 272px;
-		height: 240px;
 	}
 }
 

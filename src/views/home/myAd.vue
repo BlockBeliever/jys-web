@@ -1,8 +1,6 @@
 <template>
 	<div>
 		<div class="navbartitle">
-			<!-- <div class="status_bar"></div> -->
-			<!-- <uni-nav-bar leftIcon="back" @clickLeft="back" left-span="交易所" :border="false" statusBar="true" backgroundColor="transparent" color="#fff" :leftWidth="90"></uni-nav-bar> -->
 			<van-nav-bar :left-text="$t('back')" :safe-area-inset-top="true" :border="false" left-arrow
 				@click-left="onClickLeft" />
 		</div>
@@ -16,10 +14,11 @@
 					<img src="../../assets/img/maysale.png" alt="" v-if="item.type == 'sell'">
 				</div>
 				<div class="fontname">
-					<span>{{ $t("my_advertising.adv_number")}}{{ item.id }}</span>
-					<span style="color: #2E6BDB;font-size: 12px;font-weight: 600;"
-						v-if="item.status == 'enable'">{{ $t("my_advertising.on_shelf") }}</span>
-					<span style="color:rgba(209, 209, 209, 1);font-size: 12px;font-weight: 600;" v-else>{{ $t("my_advertising.off_shelf") }}</span>
+					<span>{{ $t("my_advertising.adv_number") }}{{ item.id }}</span>
+					<span style="color: #2E6BDB;font-size: 12px;font-weight: 600;" v-if="item.status == 'enable'">{{
+				$t("my_advertising.on_shelf") }}</span>
+					<span style="color:rgba(209, 209, 209, 1);font-size: 12px;font-weight: 600;" v-else>{{
+				$t("my_advertising.off_shelf") }}</span>
 				</div>
 				<div class="pricead">
 					<div>
@@ -48,53 +47,14 @@
 
 				</div>
 				<div class="btncaozuo">
-					<div class="downall" @click="downStatus(item.id, 'disable')" v-if="item.status == 'enable'">{{ $t("my_advertising.off") }}</div>
-					<div class="downall" @click="downStatus(item.id, 'enable')" v-else>{{ $t("my_advertising.on") }}</div>
+					<div class="downall" @click="downStatus(item.id, 'disable')" v-if="item.status == 'enable'">{{
+				$t("my_advertising.off") }}</div>
+					<div class="downall" @click="downStatus(item.id, 'enable')" v-else>{{ $t("my_advertising.on") }}
+					</div>
 					<div class="delall" @click="delAd(item.id)">{{ $t("my_advertising.delete") }}</div>
 				</div>
 			</div>
 		</van-list>
-		<!-- <div class="cardbox" v-for="(item,index) in list" :key="index">
-			<div class="biaoqian">
-				<img src="../../assets/img/mybuy.png" alt="" v-if="item.type=='buy'">
-				<img src="../../assets/img/maysale.png" alt="" v-if="item.type=='sell'">
-			</div>
-			<div class="fontname">
-				<span>广告号：{{item.id}}</span>
-				<span style="color: #2E6BDB;font-size: 12px;font-weight: 600;" v-if="item.status=='enable'">{{ $t("my_advertising.on_shelf") }}</span>
-				<span style="color:rgba(209, 209, 209, 1);font-size: 12px;font-weight: 600;" v-else>{{ $t("my_advertising.off_shelf") }}</span>
-			</div>
-			<div class="pricead">
-				<div>
-					<span>{{item.price}}</span>
-					<span style="font-size: 12px;" v-if="item.price_type=='CNY'">￥</span>
-					<span style="font-size: 12px;" v-else>$</span>
-				</div>
-				<div class="boxtype">
-					{{ item.en_name.toUpperCase() }}
-				</div>
-			</div>
-			<div class="detialcard">
-				<div class="addetail" style="color:rgba(120, 137, 166, 1)">
-					<span>{{ $t("quantity") }}</span>
-					<span style="padding-left: 8px;">{{item.number}} {{ item.en_name.toUpperCase() }}</span>
-				</div>
-				<div class="addetail">
-					<span style="color:rgba(120, 137, 166, 1)">{{ $t("range") }}    </span>
-					<span style="padding-left: 8px;color: #333333;">{{item.low_price}}-{{item.high_price}} {{item.price_type.toUpperCase()}}</span>
-				</div>
-				<div class="addetail">
-					<span style="color:rgba(120, 137, 166, 1)">{{ $t("payment_method") }}</span>
-					<span style="padding-left: 8px;color: #333333;">{{item.contact}}</span>
-				</div>
-				
-			</div>
-			<div class="btncaozuo">
-				<div class="downall" @click="downStatus(item.id,'disable')" v-if="item.status=='enable'">{{ $t("my_advertising.off") }}</div>
-				<div class="downall" @click="downStatus(item.id,'enable')" v-else>{{ $t("my_advertising.on") }}</div>
-				<div class="delall" @click="delAd(item.id)">{{ $t("my_advertising.delete") }}</div>
-			</div>
-		</div> -->
 		<div class="listnone" v-if="list.length == 0">
 			<div class="imgiconbox">
 				<img src="../../assets/img/indexnonw.png" alt="" srcset="">
@@ -138,19 +98,6 @@ export default {
 				}
 
 			})
-			// _this.$post('/api/user/merchant/advertising/delete',{
-			// 	data:{id:id},
-			// 	success: (res)=>{
-			// 		if(res.code==0){
-			// 			_this.$toast(_this.$t("my_advertising.delete_success"))
-			// 			this.getList()
-			// 		}
-			// 	},
-			// 	error:(err)=>{
-			// 		_this.$toast("err")
-			// 	},
-			// 	},
-			// )
 		},
 		downStatus(id, val) {
 			let data = {
@@ -170,24 +117,6 @@ export default {
 				}
 
 			})
-			// _this.$post('/api/user/merchant/advertising/update_status',{
-			// 	data:data,
-			// 	success: (res)=>{
-			// 		if(res.code==0){
-			// 			if(val=='enable'){
-			// 				_this.$toast(_this.$t("my_advertising.on_shelf_success"))
-			// 			}else{
-			// 				_this.$toast(_this.$t("my_advertising.off_shelf_success"))
-			// 			}
-
-			// 			this.getList()
-			// 		}
-			// 	},
-			// 	error:(err)=>{
-			// 		_this.$toast("err")
-			// 	},
-			// 	},
-			// )
 		},
 		getList() {
 			this.$api.adList(_this.filters).then((res) => {
@@ -202,7 +131,6 @@ export default {
 
 						})
 					} else if (all.length < 10 && !this.finished) {
-						// console.log(1111)
 						this.finished = true;
 						all.forEach(item => {
 							_this.list.push(item)
@@ -214,18 +142,6 @@ export default {
 				}
 
 			})
-			// _this.$post('/api/user/merchant/advertising/list',{
-			// 	data:_this.filters,
-			// 	success: (res)=>{
-			// 		if(res.code==0){
-			// 			_this.list=res.data.list
-			// 		}
-			// 	},
-			// 	error:(err)=>{
-			// 		_this.$toast("err")
-			// 	},
-			// 	},
-			// )
 		},
 	}
 }
