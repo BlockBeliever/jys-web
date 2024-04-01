@@ -86,7 +86,7 @@
           <div class="flex2 adsawq">
             <span>{{ $t("quantity") }}</span>
             <div class="flex">
-              <span>{{ info.number }} {{ coin.en_name.toUpperCase() }}</span>
+              <span>{{ info.number }} {{  coin.en_name ? coin.en_name.toUpperCase() : "" }}</span>
             </div>
           </div>
           <div class="flex2 adsawq">

@@ -129,7 +129,8 @@
 				merchant:{},
 				coin_name:'',
 				usdt_name:'',
-				flag:true
+				flag:true,
+				type: 'sell'
 			}
 		},
 		mounted() {

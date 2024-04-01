@@ -92,7 +92,9 @@ export default {
 			this.$api.delAd({ id: id }).then((res) => {
 				if (res.code == 0) {
 					_this.$toast(_this.$t("my_advertising.delete_success"))
-					this.getList()
+					_this.list = _this.list.filter(item => {
+						return item.id != id;
+					});
 				} else {
 					_this.$toast(this.$t(res.error))
 				}
@@ -103,15 +105,26 @@ export default {
 			let data = {
 				id: id,
 				status: val
-			}
+			}			
 			this.$api.upAd(data).then((res) => {
 				if (res.code == 0) {
 					if (val == 'enable') {
+						_this.list = _this.list.filter(item => {
+							if(item.id == data.id){
+								item.status = 'enable'
+							}
+							return item
+						});
 						_this.$toast(_this.$t("my_advertising.on_shelf_success"))
 					} else {
+						_this.list = _this.list.filter(item => {
+							if(item.id == data.id){
+								item.status = 'disable'
+							}
+							return item
+						});
 						_this.$toast(_this.$t("my_advertising.off_shelf_success"))
-					}
-					this.getList()
+					}					
 				} else {
 					_this.$toast(this.$t(res.error))
 				}

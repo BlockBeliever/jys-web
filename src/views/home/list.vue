@@ -183,6 +183,8 @@ export default {
           this.finished = true;
         }
 
+      }).catch((_) => {
+        this.finished = true;
       })
       this.$api.getAccount().then((res) => {
         this.merchantid = res.data.user.user_id
