@@ -161,6 +161,7 @@ export default {
   },
   mounted() {
     this.$IMGURL = process.env.VUE_APP_IMGURL
+    this.getMerchant()
   },
   methods: {
     moveGoodsDetail(id) {
@@ -186,6 +187,8 @@ export default {
       }).catch((_) => {
         this.finished = true;
       })
+    },
+    getMerchant(){
       this.$api.getAccount().then((res) => {
         this.merchantid = res.data.user.user_id
         localStorage.setItem('merchantid', this.merchantid)
@@ -196,10 +199,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// page {
-//   background: linear-gradient(180deg, rgba(247, 250, 255, 1) 0%, rgba(247, 250, 255, 1) 100%);
-// }
-
 .navbartitle {
   color: rgba(16, 16, 16, 1);
   width: 100%;
