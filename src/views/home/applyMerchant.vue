@@ -49,11 +49,11 @@
 		</div>
 
 		<div class="applycardall" v-if="status == 'again' || status == ''">
-			<FormInput @update:modelValue="value => formData.name = value" :placeholder="$t('my_order.identity')"
+			<FormInput :model-value="formData.name" @update:modelValue="value => formData.name = value" :placeholder="$t('my_order.identity')"
 				:label="$t('my_order.identity')" type="text" disabled />
-			<FormInput @update:modelValue="value => formData.merchant_name = value"
+			<FormInput :model-value="formData.merchant_name" @update:modelValue="value => formData.merchant_name = value"
 				:placeholder="$t('my_advertising.input_name')" :label="$t('my_order.business_name')" type="text" />
-			<FormInput @update:modelValue="value => formData.pay_type = value"
+			<FormInput :model-value="formData.pay_type" @update:modelValue="value => formData.pay_type = value"
 				:placeholder="$t('my_advertising.input_method')" :label="$t('my_order.payment')" type="text" />
 			<div class="formitem">
 				<span class="formname">{{ $t("advertising_detail.message") }}</span>

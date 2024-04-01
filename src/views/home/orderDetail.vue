@@ -106,7 +106,7 @@
           <div class="flex2 adsawq">
             <span>{{ $t("order_detail.time") }}</span>
             <div class="flex">
-              <span>{{ info.create_time | fomarTime }}</span>
+              <span>{{ info.create_time | dateFormat("yyyy-MM-dd hh:mm:ss") }}</span>
             </div>
           </div>
         </div>

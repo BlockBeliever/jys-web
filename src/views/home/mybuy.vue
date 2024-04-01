@@ -8,7 +8,7 @@
 			<span style="font-size:15px;">{{ $t("to_buy") }}</span>
 		</div>
 		<div class="applycardall">
-			<FormInput @update:modelValue="value => formData.name = value" :placeholder="$t('my_order.city')"
+			<FormInput :model-value="formData.name" @update:modelValue="value => formData.name = value" :placeholder="$t('my_order.city')"
 				:label="$t('my_order.business_name')" type="text" disabled />
 			<FormInputWithDropdown @update:modelValue="value => formData.coin_name = value"
 				:placeholder="$t('my_order.token_name')" :label="$t('my_order.token')" :chooseTypename="chooseCoinname"
@@ -16,16 +16,16 @@
 				@change="(index, name) => selectedCoinType(index, name)" :showdown="showcoindown"
 				@toggle-showdown="(identifier) => toggleShowdown(identifier)" :identifier="1" disabled hidden />
 
-			<FormInput @update:modelValue="value => formData.number = value" :placeholder="$t('my_order.input_amount')"
+			<FormInput :model-value="formData.number" @update:modelValue="value => formData.number = value" :placeholder="$t('my_order.input_amount')"
 				:label="$t('my_order.buy_amount')" type="text" />
 
-			<FormInputWithDropdown @update:modelValue="value => formData.price = value"
+			<FormInputWithDropdown :model-value="formData.price" @update:modelValue="value => formData.price = value"
 				:placeholder="$t('my_order.input_price')" :label="$t('my_order.price')" :chooseTypename="chooseTypename"
 				:typeList="paytypelist" :selectedIndex="selectedIndex"
 				@change="(index, name) => selectedPriceType(index, name)" :showdown="showdown"
 				@toggle-showdown="toggleShowdown" />
 
-			<FormInput @update:modelValue="value => formData.contact = value" :placeholder="$t('my_order.c2c')"
+			<FormInput :model-value="formData.contact" @update:modelValue="value => formData.contact = value" :placeholder="$t('my_order.c2c')"
 				:label="$t('my_order.payment')" type="text" disabled />
 
 			<div class="formitem">
