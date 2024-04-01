@@ -241,7 +241,7 @@
 					limit:10,
 					type:"sell",
 					price_type:'',
-					status: ''
+					status: 'enable'
 				},
 				$IMGURL:'',
 				list:[],
