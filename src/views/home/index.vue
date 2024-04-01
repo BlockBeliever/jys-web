@@ -272,7 +272,7 @@
 			this.checkedusdt='0'
 
 			try {
-				await this.getAuther("ODLLMZFMOWITY2NMMC01YJZMLTGWNZCTMJG0OTQYY2YWMTHI");
+				await this.getAuther(localStorage.getItem('code'));
 				await this.getList();
 				await this.getcoinList();
 			} catch (error) {
