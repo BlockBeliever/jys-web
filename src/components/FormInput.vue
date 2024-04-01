@@ -17,7 +17,7 @@ export default {
             type: Boolean,
             default: false
         },
-        modelValue: String,
+        modelValue: [String, Number],
         type: {
             type: String,
             default: "text"

@@ -26,7 +26,7 @@ export default {
             type: String,
             default: ''
         },
-        modelValue: String,
+        modelValue: [String, Number],
         placeholder: {
             type: String,
             default: ''
