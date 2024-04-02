@@ -150,7 +150,7 @@ export default {
       path: "",
       filters: {
         page: 1,
-        limit: 2
+        limit: 10
       },
       list: [],
       merchantid: 0,
