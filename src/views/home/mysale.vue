@@ -25,7 +25,7 @@
 				@change="(index, name) => selectedPriceType(index, name)" :showdown="showdown"
 				@toggle-showdown="toggleShowdown" />
 			<FormInput :model-value="formData.contact" @update:modelValue="value => formData.contact = value" :placeholder="$t('my_order.c2c')"
-				:label="$t('my_order.payment')" type="text" disabled />
+				:label="$t('my_order.payment')" type="text" />
 			<div class="formitem">
 				<span class="formname">{{ $t("range") }}</span>
 				<div class="inputbox flex2">
