@@ -252,6 +252,16 @@
 						if(res.code==0){
 							_this.$toast(this.$t('advertising_detail.order_submitted_success'))
 							
+							let data = { 
+								uid: res.data.order.user_id, 
+								contact_id: Number(res.data.order.merchant_id),
+								message: "You have one new order form exchange" 
+							}
+							console.log({data})
+							window.WebViewJavascriptBridge.callHandler('exchangeSendMessage', JSON.stringify(data), function (responseData) {
+								code = responseData
+								console.log("callNativeEcho res ", responseData);
+							});
 						setTimeout(()=>{
 							this.flag=true
 							this.$router.push({
@@ -272,6 +282,15 @@
 						this.$api.submitOrderSell(data).then((res)=>{
 						if(res.code==0){
 							_this.$toast(this.$t('advertising_detail.order_submitted_success'))
+							let data = { 
+								uid: res.data.order.user_id, 
+								contact_id: Number(res.data.order.merchant_id),
+								message: "You have one new order form exchange" 
+							}
+							window.WebViewJavascriptBridge.callHandler('exchangeSendMessage', JSON.stringify(data), function (responseData) {
+								code = responseData
+								console.log("callNativeEcho res ", responseData);
+							});
 						setTimeout(()=>{
 							this.flag=true
 							this.$router.push({

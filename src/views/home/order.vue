@@ -57,8 +57,8 @@
 			<div class="boxorderdetail">
 				<div class="flex1 saddwq">
 					<div class="usdtimg"><img src="../../assets/img/usdticon.png" alt=""></div>
-					<span class="butusdtt" v-if="order.type == 'buy'">{{$t("buy")}} {{ coin.en_name.toUpperCase() }}</span>
-					<span class="butusdtt" v-else>{{$t("sell")}} {{ coin.en_name.toUpperCase() }}</span>
+					<span class="butusdtt" v-if="order.type == 'buy'">{{$t("buy")}} {{ coin.en_name && coin.en_name.toUpperCase() }}</span>
+					<span class="butusdtt" v-else>{{$t("sell")}} {{  coin.en_name && coin.en_name.toUpperCase() }}</span>
 				</div>
 				<div class="boxdetailsa">
 					<div class="flex2 adsawq">
@@ -77,7 +77,7 @@
 					<div class="flex2 adsawq">
 						<span>{{ $t("quantity") }}</span>
 						<div class="flex">
-							<span>{{ order.number }} {{ coin.en_name.toUpperCase() }}</span>
+							<span>{{ order.number }} {{ coin.en_name && coin.en_name.toUpperCase() }}</span>
 						</div>
 					</div>
 					<div class="flex2 adsawq">
