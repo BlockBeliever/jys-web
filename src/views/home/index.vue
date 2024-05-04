@@ -55,7 +55,7 @@
 				<div  class="cardlist">
 					<div class="titlename flex1">
 					<div class="headbox" v-if="item.user_head==''"><img src="../../assets/img/head.png" alt=""></div>
-					<div class="headbox" v-else><img :src="$IMGURL+ item.user_head" alt=""></div>
+					<div class="headbox" v-else><img :src="$IMGURL+ item.user_img" alt=""></div>
 					<span class="namein">{{item.merchant_name}}</span>
 				</div>
 				<div class="flex4 xianshi">
@@ -218,6 +218,8 @@
 <script>
 	let _this
 	import loadcode from '../../utils/loadcode.js'
+	import { urlToBase64OfList } from '../../utils/EnAndDeFile'
+
 	export default {
 //   inject:['reload'],
 		data() {
@@ -396,7 +398,8 @@
 				if(res.code==0){
 					let all=res.data.list
 					this.loading = false;
-					all.forEach(item=>{
+					all.forEach(async (item)=>{
+						item.user_img = await urlToBase64OfList(item.user_head,'user_head')
 						_this.list.push(item)
 					})
 					if(_this.list.length < res.data.cnt){
