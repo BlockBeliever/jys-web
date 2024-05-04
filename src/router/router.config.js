@@ -16,38 +16,38 @@ export const constantRouterMap = [
         path: '/home',
         name: 'Home',
         component: () => import('@/views/home/index'),
-        meta: { title: '首页', keepAlive: false, reload:'' }
+        meta: { title: '首页', keepAlive: false, reload:'', showTab:true }
       },
       {
         path: '/list',
         name: 'List',
         component: () => import('@/views/home/list'),
-        meta: { title: '列表', keepAlive: false }
+        meta: { title: '列表', keepAlive: false ,showTab:true}
       },
       {
         path: '/mybuy',
         name: 'Mybuy',
         hidden: true,
         component: () => import('@/views/home/mybuy'),
-        meta: { title: '我的买入', keepAlive: false }
+        meta: { title: '我的买入', keepAlive: false ,showTab:false}
       },
       {
         path: '/mysale',
         name: 'Mysale',
         component: () => import('@/views/home/mysale'),
-        meta: { title: '我的卖出', keepAlive: false }
+        meta: { title: '我的卖出', keepAlive: false,showTab:false }
       },
       {
         path: '/myAd',
         name: 'MyAd',
         component: () => import('@/views/home/myAd'),
-        meta: { title: '我的广告', keepAlive: false }
+        meta: { title: '我的广告', keepAlive: false ,showTab:false}
       },
       {
         path: '/applyMerchant',
         name: 'ApplyMerchant',
         component: () => import('@/views/home/applyMerchant'),
-        meta: { title: '申请商家', keepAlive: false }
+        meta: { title: '申请商家', keepAlive: false,showTab:false }
       },
       {
         path: '/goodDetail',
@@ -71,7 +71,7 @@ export const constantRouterMap = [
         path: '/about',
         name: 'About',
         component: () => import('@/views/home/about'),
-        meta: { title: '关于我', keepAlive: false }
+        meta: { title: '关于我', keepAlive: false ,showTab:true}
       },
       // {
       //   path: '/list',

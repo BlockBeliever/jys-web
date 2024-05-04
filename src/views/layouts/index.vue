@@ -5,7 +5,7 @@
       </keep-alive>
       <router-view v-else></router-view>
       <!-- tabBar -->
-      <TabBar :data="tabbars" @change="handleChange" />
+      <TabBar :data="tabbars" @change="handleChange" v-if="$route.meta.showTab" />
 
   </div>
 </template>
