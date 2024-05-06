@@ -8,8 +8,8 @@
 		<div class="cardin">
 			<div class="flex1">
 				<div class="myheadbox" v-if="account.head">
-					<!-- <img src="../../assets/img/head.png" alt="" srcset="" v-if="!account.head"> -->
-					<img :src="$IMGURL + account.head" alt="" srcset="">
+					<span></span>
+					<img :src="account.base64head.startsWith('data:') || account.base64head.startsWith('https:') ? account.base64head : $IMGURL + account.head" alt="" srcset="">
 				</div>
 				<span style="font-size:16px;color: rgba(16, 16, 16, 1);padding-left: 7px;">{{ account.name }}</span>
 			</div>
@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import { urlToBase64OfList } from '../../utils/EnAndDeFile'
 
 export default {
 	data() {
@@ -75,7 +76,10 @@ export default {
 		getInfo() {
 			this.$api.getAccount().then((res) => {
 				if (res.code == 0) {
-					this.account = res.data.user
+					let data = res.data.user
+					data.base64head = ""
+					this.account = data
+					urlToBase64OfList([this.account], 'head');
 				}
 			})
 			this.$api.merchantInfo().then((res) => {
