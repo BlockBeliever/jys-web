@@ -37,6 +37,12 @@ Vue.prototype.$api = {
   // 订单详情
   orderDetail: id => { return http.post(`/api/user/advertising/order/detail`, { id }) },
 
+  // 取消订单
+  orderCancel: id => { return http.post(`/api/user/advertising/order/cancel`, { id }) },
+
+  // 接受订单
+  orderAccept: id => { return http.post(`/api/user/advertising/order/accept`, { id }) },
+
   // 完成订单
   orderEnd: id => { return http.post(`/api/user/advertising/order/end`, { id }) },
    // 获取TOKEN

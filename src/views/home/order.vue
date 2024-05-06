@@ -101,6 +101,9 @@
 							<span>{{ order.create_time | dateFormat("yyyy-MM-dd hh:mm:ss") }}</span>
 						</div>
 					</div>
+					<van-button v-if="order.type == 'buy' && order.status == 'wait'" type="danger" size="small"  @click="show = true">Cancel</van-button>
+					<van-dialog v-model:show="show" title="Order Cancellation" message="Are you sure you want to cancel the order?" show-cancel-button @confirm="cancelOrder(order.id)" @cancel="show = false" confirmButtonText="Confirm" cancelButtonText="Cancel">
+					</van-dialog>
 				</div>
 				<div class="contactkefy" @click="moveContact(serveId)">
 					<span>{{ $t("order_detail.problem") }}</span>
@@ -123,6 +126,7 @@ export default {
 			coin: {},
 			merchantid: 0,
 			serveId: 0,
+			show: false,
 			filters: {
 				"config_key": "CustomerService",
 				"config_value": "",
@@ -173,6 +177,20 @@ export default {
 				this.$toast(this.$t('copy_fail'))
 			})
 		},
+		cancelOrder(id) {
+			_this = this
+			_this.$api.orderCancel(id).then(res => {
+				if (res.code == 0) {
+				_this.$toast({
+					message: "Cancellation Successful",
+					duration: 1000,
+				})
+				_this.$router.push({ name: 'Home' })
+				} else {
+				_this.$toast(res.error)
+				}
+			})
+	    }
 	}
 }
 </script>
@@ -327,5 +345,8 @@ export default {
 	.adsawq {
 		padding-bottom: 10px;
 	}
+}
+.van-button {
+  float: right;
 }
 </style>

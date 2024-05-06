@@ -80,7 +80,9 @@ export default {
 			cointypelist: [],
 			paytypelist: [
 				{ name: 'CNY', },
-				{ name: 'USD', }
+				{ name: 'USD', },
+				{ name: 'USDT', },
+				{ name: 'CNYT', },
 			],
 		}
 	},

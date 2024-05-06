@@ -11,7 +11,7 @@ import * as filters from './filters'
 import './api/index'
 import loadcode from './utils/loadcode.js'
 import JsBridge from "./utils/JsBridge"
-import { Icon ,Toast, Loading, DropdownItem, DropdownMenu ,Tab, Tabs, Form, Col,List, Row, NavBar, Field, Button, Divider, Calendar, PasswordInput, NumberKeyboard, RadioGroup, Radio, Checkbox, CheckboxGroup, Rate, Slider, Switch, Uploader, ShareSheet, SwipeCell, Card, CountDown, Grid, GridItem, Swipe, SwipeItem, Popup, Picker, Area, Cell, CellGroup, ActionSheet } from 'vant'
+import { Icon ,Toast, Loading, DropdownItem, DropdownMenu ,Tab, Tabs, Form, Col,List, Row, NavBar, Field, Button, Divider, Calendar, PasswordInput, NumberKeyboard, RadioGroup, Radio, Checkbox, CheckboxGroup, Rate, Slider, Switch, Uploader, ShareSheet, SwipeCell, Card, CountDown, Grid, GridItem, Swipe, SwipeItem, Popup, Picker, Area, Cell, CellGroup, ActionSheet, Dialog } from 'vant'
 import { Locale } from 'vant';
 import zhCN from 'vant/es/locale/lang/zh-CN';
 import i18n from "./utils/i18n.js";
@@ -64,6 +64,7 @@ Vue.use(Picker)
 // Vue.use(Cell)
 // Vue.use(CellGroup)
 // Vue.use(ActionSheet)
+Vue.use(Dialog)
 Vue.use(List)
 
 

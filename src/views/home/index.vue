@@ -60,9 +60,9 @@
 				</div>
 				<div class="flex4 xianshi">
 					<div class="asdadwq ">
-						<span class="price">{{item.price}}</span>
-						<span style="font-weight: 600;font-size: 14px;" v-if="item.price_type=='CNY'">￥</span>
+						<span style="font-weight: 600;font-size: 14px;" v-if="item.price_type=='CNY' || item.price_type=='CNYT'">￥</span>
 						<span style="font-weight: 600;font-size: 14px;" v-else>$</span>
+						<span class="price">{{item.price}}</span>
 					</div>
 
 					<span class="neirong">{{$t('quantity')}} {{item.number}} {{ item.coin_en_name.toUpperCase()}}</span>
@@ -258,10 +258,19 @@
                     name:'CNY',
 					img:require("../../assets/img/cnypic.png")
                 },
+				{
+					name:'CNYT',
+					img:require("../../assets/img/cnypic.png")
+				},
                 {
                     name:'USD',
 					img:require("../../assets/img/usdpic.png")
-                }],
+                },
+				{
+					name:'USDT',
+					img:require("../../assets/img/usdpic.png")
+				}
+			],
 
 			}
 		},

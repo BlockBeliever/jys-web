@@ -109,13 +109,17 @@
               <span>{{ info.create_time | dateFormat("yyyy-MM-dd hh:mm:ss") }}</span>
             </div>
           </div>
+          <van-button v-if="merchantid == info.merchant_id && info.status == 'wait'" type="danger" size="small"  @click="orderAccept(info.id)">Accept</van-button>
+					<van-button v-if="info.status == 'wait' && merchantid != info.merchant_id" type="danger" size="small"  @click="show = true">Cancel</van-button>
+          <van-dialog v-model:show="show" title="Order Cancellation" message="Are you sure you want to cancel the order?" show-cancel-button @confirm="cancelOrder(info.id)" @cancel="show = false" confirmButtonText="Confirm" cancelButtonText="Cancel">
+          </van-dialog>
         </div>
         <div class="submit" @click="submit"
-          v-if="info.status == 'wait' && info.type == 'sell' && merchantid != info.merchant_id">
+          v-if="info.status != 'done' && info.type == 'sell' && merchantid != info.merchant_id">
           <span>{{ $t("order_detail.complete_order") }}</span>
         </div>
         <div class="submit" @click="submit"
-          v-if="info.status == 'wait' && info.type == 'buy' && merchantid == info.merchant_id">
+          v-if="info.status != 'done' && info.type == 'buy' && merchantid == info.merchant_id">
           <span>{{ $t("order_detail.complete_order") }}</span>
         </div>
         <div class="contactkefy" @click="moveContact(serveId)">
@@ -140,6 +144,7 @@ export default {
       coin: {},
       merchantid: 0,
       serveId: 0,
+      show: false,
       filters: {
         "config_key": "CustomerService",
         "config_value": "",
@@ -209,6 +214,33 @@ export default {
         .catch(err => {
           _this.$toast('err')
         })
+    },
+    cancelOrder(id) {
+      _this = this
+      _this.$api.orderCancel(id).then(res => {
+        if (res.code == 0) {
+          _this.$toast({
+            message: "Cancellation Successful",
+            duration: 1000,
+          })
+          _this.$router.push({ name: 'List' })
+        } else {
+          _this.$toast(res.error)
+        }
+      })
+    },
+    orderAccept(id) {
+      _this = this
+      _this.$api.orderAccept(id).then(res => {
+        if (res.code == 0) {
+          _this.$toast({
+            message: "Acceptance Successful",
+          })
+          _this.loadDetail()
+        } else {
+          _this.$toast(res.error)
+        }
+      })
     }
   }
 }
@@ -379,5 +411,8 @@ export default {
   margin: 0 auto;
   margin-top: 50px;
   margin-bottom: 30px;
+}
+.van-button {
+  float: right;
 }
 </style>

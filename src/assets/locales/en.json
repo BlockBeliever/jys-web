@@ -24,8 +24,8 @@
     "copy_success": "Copied",
     "copy_fail": "Copy failed",
     "home_page": {
-        "quick_purchase": "Purchase",
-        "sale": "Sell",
+        "quick_purchase": "To Buy",
+        "sale": "To Sell",
         "quick_purchase_label": "Efficient and fast payment",
         "sale_label": "Quick sell order",
         "to_buy": "To buy",
