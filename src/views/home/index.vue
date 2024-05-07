@@ -158,7 +158,7 @@
 			<div class="coinList" style="">
 				<div class="searchCpon">
 					<!-- <uni-icons type="search" size="20" color="#C7C7C7"></uni-icons> -->
-					<input type="text" :placeholder="$t('search')" placeholder-style="color:#C7C7C7">
+					<input type="text" :placeholder="$t('search')" v-model="searchRightCoin" placeholder-style="color:#C7C7C7" @input="searchRightCoinInput(searchRightCoin)">
 				</div>
 				<div style="padding: 25px 30px;">
 					<van-radio-group v-model="checkedusdt"  >
@@ -231,6 +231,7 @@
 				bookShowPicker: false,
 				fabishow:false,
 				searchCoin:'',
+				searchRightCoin:'',
 				checked:"",
 				tabList: [{
 					name: "购买"
@@ -248,6 +249,7 @@
 				$IMGURL:'',
 				list:[],
 				copyList:null,
+				copyList2:null,
 				chooseCoinname:'',
 				chooseusdtname:'',
 				checkedusdt:'',
@@ -281,7 +283,7 @@
 			this.filters.price_type=this.list2[0].name
 			this.chooseusdtname=this.list2[0].name
 			this.checkedusdt='0'
-
+			this.copyList2=this.list2
 			try {
 				await this.getAuther(localStorage.getItem('code'));
 				await this.getList();
@@ -324,6 +326,17 @@
 					});
 				}
 			},
+
+			searchRightCoinInput(val){
+				this.list2=this.copyList2
+				if(val != ""){
+					this.list2 = this.list2.filter(item => {
+						const name = item.name.toLowerCase();
+						const searchTerm = val.trim().toLowerCase();
+						return name.includes(searchTerm);
+					});
+				}
+			},	
 			
 			async getAuther(val){
 				try {
