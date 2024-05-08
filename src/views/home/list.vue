@@ -42,12 +42,12 @@
           <div class="flex2 nametime">
             <div class="flex1">
               <div class="headimgbox" v-if="merchantid !== item.user_id">
-                <img v-if="item.user_head === ''" src="../../../static/img/head.png" alt="" srcset="" />
-                <img :src="item.base64user_head.startsWith('data:') || item.base64user_head.startsWith('https:') ? item.base64user_head : $IMGURL + item.base64user_head" alt="" v-else />
+                <img v-if="item.user_head === '' && !item.base64user_head" src="../../../static/img/head.png" alt="" srcset="" />
+                <img :src="item.base64user_head.startsWith('data:') || item.base64user_head.startsWith('https:') ? item.base64user_head : $IMGURL + item.base64user_head" alt="" v-if="item.base64user_head" />
               </div>
               <div class="headimgbox" v-if="merchantid === item.user_id"> 
-                <img v-if="item.merchant_head === ''" src="../../../static/img/head.png" alt="" srcset="" />
-                <img :src="item.base64merchant_head.startsWith('data:') || item.base64merchant_head.startsWith('https:') ? item.base64merchant_head : $IMGURL + item.base64merchant_head" alt="" v-else />
+                <img v-if="item.merchant_head === '' && !item.base64merchant_head" src="../../../static/img/head.png" alt="" srcset="" />
+                <img :src="item.base64merchant_head.startsWith('data:') || item.base64merchant_head.startsWith('https:') ? item.base64merchant_head : $IMGURL + item.base64merchant_head" alt="" v-if="item.base64merchant_head" />
               </div>
               <span style="margin-left: 8.5px" v-if="merchantid == item.user_id">{{ item.merchant_name }}</span>
               <span style="margin-left: 8.5px" v-if="merchantid != item.user_id">{{ item.username }}</span>

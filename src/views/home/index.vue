@@ -54,8 +54,8 @@
 					<div  v-for="(item,index) in list" :key="index" >
 				<div  class="cardlist">
 					<div class="titlename flex1">
-					<div class="headbox" v-if="!item.base64user_head || item.base64user_head === ''"><img src="../../assets/img/head.png" alt=""></div>
-					<div class="headbox" v-else><img :src="item.base64user_head.startsWith('data:') || item.base64user_head.startsWith('https:') ? item.base64user_head : $IMGURL + item.base64user_head" alt=""></div>
+					<div class="headbox" v-if="!item.base64user_head && item.base64user_head === ''"><img src="../../assets/img/head.png" alt=""></div>
+					<div class="headbox" v-if="item.base64user_head"><img :src="item.base64user_head.startsWith('data:') || item.base64user_head.startsWith('https:') ? item.base64user_head : $IMGURL + item.base64user_head" alt=""></div>
 					<span class="namein">{{item.merchant_name}}</span>
 				</div>
 				<div class="flex4 xianshi">
@@ -425,7 +425,6 @@
 						_this.list.push(item)
 					})
 					urlToBase64OfList(data, 'user_head');
-
 					if(_this.list.length < res.data.cnt){
 						this.filters.page=Number(this.filters.page)+1
 					}else {

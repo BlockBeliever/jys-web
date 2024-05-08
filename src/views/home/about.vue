@@ -7,8 +7,7 @@
 		</div>
 		<div class="cardin">
 			<div class="flex1">
-				<div class="myheadbox" v-if="account.head">
-					<span></span>
+				<div class="myheadbox" v-if="account.head && account.base64head">
 					<img :src="account.base64head.startsWith('data:') || account.base64head.startsWith('https:') ? account.base64head : $IMGURL + account.head" alt="" srcset="">
 				</div>
 				<span style="font-size:16px;color: rgba(16, 16, 16, 1);padding-left: 7px;">{{ account.name }}</span>
