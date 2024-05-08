@@ -28,8 +28,8 @@
         "sale": "我要卖",
         "quick_purchase_label": "高效率 快支付",
         "sale_label": "快速挂单卖出",
-        "to_buy": "我要购买",
-        "to_sell": "我要出售"
+        "to_buy": "我要买",
+        "to_sell": "我要卖"
     },
     "advertising_detail": {
         "adv_label": "自由理财 每日收益 随买随卖",
