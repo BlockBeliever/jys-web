@@ -22,8 +22,8 @@ Locale.use('zh-CN', zhCN);
 // Vue.prototype.$cdn = $cdn
 
 // 引入vconsole控制台
-const vConsole = new Vconsole()
-Vue.use(vConsole)
+// const vConsole = new Vconsole()
+// Vue.use(vConsole)
 Vue.use(Tab)
 Vue.use(DropdownItem);
 Vue.use(DropdownMenu);
