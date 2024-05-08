@@ -63,6 +63,7 @@
 						<span style="font-weight: 600;font-size: 14px;" v-if="item.price_type=='CNY' || item.price_type=='CNYT'">￥</span>
 						<span style="font-weight: 600;font-size: 14px;" v-else>$</span>
 						<span class="price">{{item.price}}</span>
+						<span class="price cny">{{item.price_type}} / {{ item.coin_en_name.toUpperCase()}}</span>
 					</div>
 
 					<span class="neirong">{{$t('quantity')}} {{item.number}} {{ item.coin_en_name.toUpperCase()}}</span>
@@ -597,6 +598,9 @@
 
 				font-size: 23px;
 				font-weight: 600;
+				&.cny{
+					margin-left: 10px;
+				}
 			}
 
 			.neirong {
