@@ -77,28 +77,46 @@ const arrayBufferToBase64 = (buffer, contentType) => {
 
 // 根据url下载文件(file)并转成base64  url-> file -> base64
 // url转file文件
-const getFileFromUrl = (url, fileName) => {
-  return new Promise((resolve, reject) => {
-    let blob = null;
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET", url);
-    xhr.setRequestHeader('Accept', 'image/jpg');
-    xhr.responseType = "blob";
-    // 加载时处理
-    xhr.onload = () => {
-      // 获取返回结果
-      blob = xhr.response;
-      let file = new File([blob], fileName, { type: 'image/jpg' });
-      // 返回结果
-      resolve(file);
-    };
-    xhr.onerror = (e) => {
-      reject(e)
-    };
-    // 发送
-    xhr.send();
-  });
-}
+// const getFileFromUrl = (url, fileName) => {
+//   return new Promise((resolve, reject) => {
+//     let blob = null;
+//     let xhr = new XMLHttpRequest();
+//     xhr.open("GET", url);
+//     xhr.setRequestHeader('Accept', 'image/jpg');
+//     xhr.responseType = "blob";
+//     // 加载时处理
+//     xhr.onload = () => {
+//       // 获取返回结果
+//       blob = xhr.response;
+//       let file = new File([blob], fileName, { type: 'image/jpg' });
+//       // 返回结果
+//       resolve(file);
+//     };
+//     xhr.onerror = (e) => {
+//       reject(e)
+//     };
+//     // 发送
+//     xhr.send();
+//   }).catch((e) => {
+//     console.error('There was an error fetching the file:', e);
+//   })
+// }
+
+const getFileFromUrl = async (url, fileName) => {
+  try {
+    let response = await fetch(url, {
+      headers: {
+        Accept: 'image/jpg'
+      }
+    });
+    let blob = await response.blob();
+    let file = new File([blob], fileName, { type: 'image/jpg' });
+    return file;
+  } catch (error) {
+    console.error('There was an error fetching the file:', error);
+    throw error;
+  }
+};
 
 export const urlToBase64OfList = async (list, key) => {
   const type = Object.prototype.toString.call(list).slice(8, -1)
