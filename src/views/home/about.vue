@@ -89,27 +89,26 @@ export default {
 			})
 		},
 		fetchImage(account) {
-		if (!account.base64head) {
-			urlToBase64OfList([account], 'head')
-			.then((base64head) => {
-				if (base64head) {
-				account.base64head = base64head
-				} else {
-				// Retry fetching the image after a delay
-				setTimeout(() => {
+			if (!account.base64head) {
+				urlToBase64OfList([account], 'head')
+				.then((data) => {
+					if (data) {
+						account = data
+					} else {
+						// Retry fetching the image after a delay
+						setTimeout(() => {
+							this.fetchImage(account)
+						}, 5000)
+					}
+				})
+				.catch((error) => {
+					console.error('Error fetching image:', error)
+					// Retry fetching the image after a delay
+					setTimeout(() => {
 					this.fetchImage(account)
-				}, 5000)
-				}
-			})
-			.catch((error) => {
-				// Handle the error (e.g., log the error)
-				console.error('Error fetching image:', error)
-				// Retry fetching the image after a delay
-				setTimeout(() => {
-				this.fetchImage(account)
-				}, 5000)
-			})
-		}
+					}, 5000)
+				})
+			}
 		},
 		moveAd() {
 			this.$router.push({
