@@ -78,7 +78,8 @@ export default {
 					let data = res.data.user
 					data.base64head = ""
 					this.account = data
-					urlToBase64OfList([this.account], 'head');
+					// urlToBase64OfList([this.account], 'head');
+					this.fetchImage(this.account)
 				}
 			})
 			this.$api.merchantInfo().then((res) => {
@@ -86,6 +87,29 @@ export default {
 					this.status = res.data.info.status
 				}
 			})
+		},
+		fetchImage(account) {
+		if (!account.base64head) {
+			urlToBase64OfList([account], 'head')
+			.then((base64head) => {
+				if (base64head) {
+				account.base64head = base64head
+				} else {
+				// Retry fetching the image after a delay
+				setTimeout(() => {
+					this.fetchImage(account)
+				}, 5000)
+				}
+			})
+			.catch((error) => {
+				// Handle the error (e.g., log the error)
+				console.error('Error fetching image:', error)
+				// Retry fetching the image after a delay
+				setTimeout(() => {
+				this.fetchImage(account)
+				}, 5000)
+			})
+		}
 		},
 		moveAd() {
 			this.$router.push({

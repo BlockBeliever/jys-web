@@ -107,7 +107,8 @@ const getFileFromUrl = async (url, fileName) => {
     let response = await fetch(url, {
       headers: {
         Accept: 'image/jpg'
-      }
+      },
+      mode: 'cors'
     });
     let blob = await response.blob();
     let file = new File([blob], fileName, { type: 'image/jpg' });

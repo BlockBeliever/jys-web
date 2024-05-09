@@ -417,25 +417,29 @@
 					this.filters.type="buy"
 				}
 
-				await this.$api.homeList(this.filters).then((res)=>{
-				if(res.code==0){
-					let data=res.data.list
+				try {
+					const res = await this.$api.homeList(this.filters);
+					if (res.code == 0) {
+					let data = res.data.list;
 					this.loading = false;
-					data.forEach((item)=>{
-						item.base64user_head = '';
-						_this.list.push(item)
-					})
-					urlToBase64OfList(data, 'user_head');
-					if(_this.list.length < res.data.cnt){
-						this.filters.page=Number(this.filters.page)+1
-					}else {
+					data.forEach((item) => {
+						item.base64user_head = "";
+						_this.list.push(item);
+					});
+					await urlToBase64OfList(data, "user_head");
+					if (_this.list.length < res.data.cnt) {
+						this.filters.page = Number(this.filters.page) + 1;
+					} else {
 						this.finished = true;
 					}
-
-
+					}
+				} catch (error) {
+					console.error("Error fetching list:", error);
+					// Retry fetching the list after a delay
+					setTimeout(() => {
+					this.getList();
+					}, 5000);
 				}
-
-			})
 
 
 
