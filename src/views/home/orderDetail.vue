@@ -109,9 +109,9 @@
               <span>{{ info.create_time | dateFormat("yyyy-MM-dd hh:mm:ss") }}</span>
             </div>
           </div>
-          <van-button v-if="merchantid == info.merchant_id && info.status == 'wait'" type="danger" size="small"  @click="orderAccept(info.id)">Accept</van-button>
-					<van-button v-if="info.status == 'wait' && merchantid != info.merchant_id" type="danger" size="small"  @click="show = true">Cancel</van-button>
-          <van-dialog v-model:show="show" title="Order Cancellation" message="Are you sure you want to cancel the order?" show-cancel-button @confirm="cancelOrder(info.id)" @cancel="show = false" confirmButtonText="Confirm" cancelButtonText="Cancel">
+          <van-button v-if="merchantid == info.merchant_id && info.status == 'wait'" type="danger" size="small"  @click="orderAccept(info.id)">{{ $t("accept") }}</van-button>
+					<van-button v-if="info.status == 'wait' && merchantid != info.merchant_id" type="danger" size="small"  @click="show = true">{{ $t("cancel") }}</van-button>
+          <van-dialog v-model:show="show" :title="$t('order_detail.cancel_order_confirm_title')" :message="$t('order_detail.cancel_order_confirm_message')" show-cancel-button @confirm="cancelOrder(info.id)" @cancel="show = false" :confirmButtonText="$t('confirm')" :cancelButtonText="$t('cancel')">
           </van-dialog>
         </div>
         <div class="submit" @click="submit"
@@ -220,7 +220,7 @@ export default {
       _this.$api.orderCancel(id).then(res => {
         if (res.code == 0) {
           _this.$toast({
-            message: "Cancellation Successful",
+            message: this.$t("order_detail.cancel_order_success"),
             duration: 1000,
           })
           _this.$router.push({ name: 'List' })

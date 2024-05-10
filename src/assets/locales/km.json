@@ -23,6 +23,9 @@
     "loading": "កំពុងផ្ទុក...",
     "copy_success": "បានចម្លង",
     "copy_fail": "ចម្លងបរាជ័យ",
+    "cancel": "បោះបង់",
+    "confirm": "បញ្ជាក់",
+    "accept": "អនុញ្ញាតឱ្យទទួល",
     "home_page": {
         "quick_purchase": "ទិញរហ័ស",
         "sale": "បង្កាន់ដៃលក់",
@@ -77,7 +80,10 @@
         "problem": "ជួបប្រទះបញ្ហា?",
         "contact_service": "ទាក់ទងសេវាកម្មអតិថិជន",
         "contact_buyer": "ទាក់ទងអ្នកទិញ",
-        "complete_order": "បញ្ចប់បញ្ជាទិញ"
+        "complete_order": "បញ្ចប់បញ្ជាទិញ",
+        "cancel_order_success": "បានចោលការបញ្ចប់បញ្ជាទិញ",
+        "cancel_order_confirm_title": "ការចោលការបញ្ចប់បញ្ជាទិញ",
+        "cancel_order_confirm_message": "តើអ្នកប្រាកដជាចង់ការចោលការបញ្ចប់បញ្ជាទិញទេ?"
     },
     "profile_detail": {
         "to_sell": "ខ្ញុំចង់លក់",
@@ -161,7 +167,8 @@
         "application_not_submitted_yet": "អ្នកមិនទាន់បានដាក់ពាក្យសុំនៅឡើយទេ",
         "application_is_under_review": "ពាក្យស្នើសុំរបស់អ្នកនៅតែស្ថិតក្រោមការត្រួតពិនិត្យនៅឡើយ",
         "appication_already_approved": "ពាក្យសុំរបស់អ្នកត្រូវបានអនុម័ត",
-        "approval_status_is_abnormal": "ស្ថានភាពការអនុម័តគឺមិនធម្មតា"
+        "approval_status_is_abnormal": "ស្ថានភាពការអនុម័តគឺមិនធម្មតា",
+        "order_not_exist":"ការបញ្ជាទិញមិនត្រឹមត្រូវ"
     }
     
 }

@@ -23,6 +23,9 @@
     "loading": "Memuatkan...",
     "copy_success": "Berjaya disalin",
     "copy_fail": "Gagal disalin",
+    "cancel": "Batal",
+    "confirm": "Sahkan",
+    "accept": "Terima",
     "home_page": {
         "quick_purchase": "Pembelian Cepat",
         "sale": "Jualan Cepat",
@@ -76,7 +79,10 @@
         "problem": "Ada masalah?",
         "contact_service": "Hubungi Khidmat Pelanggan",
         "contact_buyer": "Hubungi Pembeli",
-        "complete_order": "Selesaikan Pesanan"
+        "complete_order": "Selesaikan Pesanan",
+        "cancel_order_success": "Pesanan Berjaya Dibatalkan",
+        "cancel_order_confirm_title": "Batalkan Pesanan",
+        "cancel_order_confirm_message": "Anda pasti ingin membatalkan pesanan ini?"
     },
     "profile_detail": {
         "to_sell": "Saya ingin menjual",
@@ -160,6 +166,7 @@
         "application_not_submitted_yet": "Anda belum menghantar permohonan",
         "application_is_under_review": "Permohonan anda sedang dalam semakan",
         "appication_already_approved": "Permohonan anda telah diluluskan",
-        "approval_status_is_abnormal": "Status kelulusan anda tidak normal"
+        "approval_status_is_abnormal": "Status kelulusan anda tidak normal",
+        "order_not_exist": "Pesanan tidak wujud"
     }
 }
