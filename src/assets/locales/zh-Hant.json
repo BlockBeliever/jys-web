@@ -23,6 +23,9 @@
     "loading": "加載中...",
     "copy_success": "複製成功",
     "copy_fail": "複製失敗",
+    "cancel": "取消",
+    "confirm": "確認",
+    "accept": "接受",
     "home_page": {
         "quick_purchase": "快捷購買",
         "sale": "掛單出售",
@@ -76,7 +79,10 @@
         "problem": "遇到問題？",
         "contact_service": "聯繫客服 ",
         "contact_buyer": "聯繫買家 ",
-        "complete_order": "完成訂單"
+        "complete_order": "完成訂單",
+        "cancel_order_success": "訂單取消成功",
+        "cancel_order_confirm_title": "訂單取消",
+        "cancel_order_confirm_message": "您確定要取消訂單嗎？"
     },
     "profile_detail": {
         "to_sell": "我要出售",
@@ -161,7 +167,8 @@
         "application_not_submitted_yet": "您還未提交過申請",
         "application_is_under_review": "您的申請還在審核中",
         "appication_already_approved": "您的申請已同意",
-        "approval_status_is_abnormal": "您的審批狀態異常"
+        "approval_status_is_abnormal": "您的審批狀態異常",
+        "order_not_exist": "訂單不存在"
     }    
     
 }

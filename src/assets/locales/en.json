@@ -23,6 +23,9 @@
     "loading": "Loading...",
     "copy_success": "Copied",
     "copy_fail": "Copy failed",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "accept": "Accept",
     "home_page": {
         "quick_purchase": "To Buy",
         "sale": "To Sell",
@@ -76,7 +79,10 @@
         "problem": "Have a problem?",
         "contact_service": "Contact Support",
         "contact_buyer": "Contact Buyer ",
-        "complete_order": "Complete Order"
+        "complete_order": "Complete Order",
+        "cancel_order_success": "Cancellation Successful",
+        "cancel_order_confirm_title": "Order Cancellation",
+        "cancel_order_confirm_message": "Are you sure you want to cancel the order?"
     },
     "profile_detail": {
         "to_sell": "I want to sell",
@@ -160,7 +166,8 @@
         "application_not_submitted_yet": "Your application have not been submitted yet",
         "application_is_under_review": "Your application is still under review",
         "appication_already_approved": "Your application was already approved",
-        "approval_status_is_abnormal": "Approval status is abnormal"
+        "approval_status_is_abnormal": "Approval status is abnormal",
+        "order_not_exist": "Order doesn't exist"
     }
    
 }

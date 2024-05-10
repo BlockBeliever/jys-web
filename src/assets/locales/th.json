@@ -23,6 +23,9 @@
     "loading": "กำลังโหลด...",
     "copy_success": "คัดลอกสำเร็จ",
     "copy_fail": "คัดลอกล้มเหลว",
+    "cancel": "ยกเลิก",
+    "confirm": "ยืนยัน",
+    "accept": "ยอมรับ",
     "home_page": {
         "quick_purchase": "การซื้ออย่างรวดเร็ว",
         "sale": "การขายอย่างรวดเร็ว",
@@ -76,7 +79,10 @@
         "problem": "มีปัญหา?",
         "contact_service": "ติดต่อฝ่ายบริการลูกค้า",
         "contact_buyer": "ติดต่อผู้ซื้อ",
-        "complete_order": "เสร็จสิ้นคำสั่งซื้อ"
+        "complete_order": "เสร็จสิ้นคำสั่งซื้อ",
+        "cancel_order_success": "ยกเลิกคำสั่งซื้อเรียบร้อยแล้ว",
+        "cancel_order_confirm_title": "ยกเลิกคำสั่งซื้อ",
+        "cancel_order_confirm_message": "คุณต้องการยกเลิกคำสั่งซื้อหรือไม่?"
     },
     "profile_detail": {
         "to_sell": "ฉันต้องการขาย",
@@ -160,7 +166,8 @@
         "application_not_submitted_yet": "คุณยังไม่ได้ส่งใบสมัคร",
         "application_is_under_review": "การสมัครของคุณอยู่ระหว่างการตรวจสอบ",
         "appication_already_approved": "การสมัครของคุณได้รับการอนุมัติแล้ว",
-        "approval_status_is_abnormal": "สถานะการอนุมัติของคุณผิดปกติ"
+        "approval_status_is_abnormal": "สถานะการอนุมัติของคุณผิดปกติ",
+        "order_not_exist": "คำสั่งซื้อไม่มีอยู่"
     }
 
 }

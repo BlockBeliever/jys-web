@@ -23,6 +23,9 @@
     "loading": "Đang tải...",
     "copy_success": "Sao chép thành công",
     "copy_fail": "Sao chép thất bại",
+    "cancel": "Huỷ",
+    "confirm": "Xác nhận",
+    "accept": "Xử lý",
     "home_page": {
         "quick_purchase": "Mua hàng nhanh",
         "sale": "Bán hàng nhanh",
@@ -76,7 +79,11 @@
         "problem": "Có vấn đề?",
         "contact_service": "Liên hệ dịch vụ khách hàng",
         "contact_buyer": "Liên hệ người mua",
-        "complete_order": "Hoàn thành đơn hàng"
+        "complete_order": "Hoàn thành đơn hàng",
+        "cancel_order_success": "Thành công trong việc hủy đơn",
+        "cancel_order_confirm_title": "Hủy đơn",
+        "cancel_order_confirm_message": "Bạn có chắc chắn muốn hủy đơn không?"
+
     },
     "profile_detail": {
         "to_sell": "Tôi muốn bán",
@@ -160,7 +167,8 @@
         "application_not_submitted_yet": "Bạn chưa gửi đơn",
         "application_is_under_review": "Đơn của bạn đang được xem xét",
         "appication_already_approved": "Đơn của bạn đã được chấp thuận",
-        "approval_status_is_abnormal": "Trạng thái duyệt của bạn bất thường"
+        "approval_status_is_abnormal": "Trạng thái duyệt của bạn bất thường",
+        "order_not_exist": "Đơn hơn chỉ"
     }
 }
 

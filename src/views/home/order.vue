@@ -102,7 +102,7 @@
 						</div>
 					</div>
 					<van-button v-if="order.type == 'buy' && order.status == 'wait'" type="danger" size="small"  @click="show = true">Cancel</van-button>
-					<van-dialog v-model:show="show" title="Order Cancellation" message="Are you sure you want to cancel the order?" show-cancel-button @confirm="cancelOrder(order.id)" @cancel="show = false" confirmButtonText="Confirm" cancelButtonText="Cancel">
+					<van-dialog v-model:show="show" :title="$t('order_detail.cancel_order_confirm_title')" :message="$t('order_detail.cancel_order_confirm_message')" show-cancel-button @confirm="cancelOrder(order.id)" @cancel="show = false" :confirmButtonText="$t('confirm')" :cancelButtonText="$t('cancel')">
 					</van-dialog>
 				</div>
 				<div class="contactkefy" @click="moveContact(serveId)">
@@ -182,7 +182,7 @@ export default {
 			_this.$api.orderCancel(id).then(res => {
 				if (res.code == 0) {
 				_this.$toast({
-					message: "Cancellation Successful",
+					message: this.$t("order_detail.cancel_order_success"),
 					duration: 1000,
 				})
 				_this.$router.push({ name: 'Home' })
