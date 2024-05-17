@@ -60,7 +60,6 @@
 				</div>
 				<div class="flex4 xianshi">
 					<div class="asdadwq ">
-						<span> user head: {{ item.user_head }}</span><br/>
 						<span style="font-weight: 600;font-size: 14px;" v-if="item.price_type=='CNY' || item.price_type=='CNYT'">￥</span>
 						<span style="font-weight: 600;font-size: 14px;" v-else>$</span>
 						<span class="price">{{item.price}}</span>
