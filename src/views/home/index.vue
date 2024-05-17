@@ -54,12 +54,13 @@
 					<div  v-for="(item,index) in list" :key="index" >
 				<div  class="cardlist">
 					<div class="titlename flex1">
-					<div class="headbox" v-if="!item.base64user_head && item.base64user_head === ''"><img src="../../assets/img/head.png" alt=""></div>
+					<div class="headbox" v-if="!item.base64user_head || item.base64user_head === ''"><img src="../../assets/img/head.png" alt=""></div>
 					<div class="headbox" v-if="item.base64user_head"><img :src="item.base64user_head.startsWith('data:') || item.base64user_head.startsWith('https:') ? item.base64user_head : $IMGURL + item.base64user_head" alt=""></div>
 					<span class="namein">{{item.merchant_name}}</span>
 				</div>
 				<div class="flex4 xianshi">
 					<div class="asdadwq ">
+						<span> user head: {{ item.user_head }}</span><br/>
 						<span style="font-weight: 600;font-size: 14px;" v-if="item.price_type=='CNY' || item.price_type=='CNYT'">￥</span>
 						<span style="font-weight: 600;font-size: 14px;" v-else>$</span>
 						<span class="price">{{item.price}}</span>
@@ -426,7 +427,7 @@
 						item.base64user_head = "";
 						_this.list.push(item);
 					});
-					await urlToBase64OfList(data, "user_head");
+					await urlToBase64OfList(_this.list, "user_head");
 					if (_this.list.length < res.data.cnt) {
 						this.filters.page = Number(this.filters.page) + 1;
 					} else {
