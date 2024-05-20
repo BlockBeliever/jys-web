@@ -41,7 +41,7 @@
 					</div>
 				</div>
 				<div class=" boxqie" @click="changecnyName()">
-					<div>{{chooseusdtname}}</div>
+					<div>{{ chooseusdtname == "" ? $t("all") : chooseusdtname}}</div>
 					<div class="imgqie"><img src="../../assets/img/qiehuan.png" alt="" srcset=""></div>
 				</div>
 			</div>
@@ -169,7 +169,7 @@
 												 <img :src="item.img" alt="" srcset="">
 											 </div>
 											 <div class="tista">
-												 <span>{{item.name}}</span>
+												 <span>{{ item.name == "" ? $t("all") : item.name }}</span>
 												  <span style="color: #B8B8B8;font-size: 12px;">{{item.ch_name}}</span>
 											 </div>
 										 </div>
@@ -257,7 +257,9 @@
 				themeColor:'#33CCCC',
                 val:'',
                 listall:[],
-                list2:[{
+                list2:[{ 
+                    name:''
+                },{
                     name:'CNY',
 					img:require("../../assets/img/cnypic.png")
                 },
