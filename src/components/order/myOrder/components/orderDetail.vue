@@ -172,8 +172,8 @@ const payClick = () => {
     order_id: detail.value.order_id_buyer,
     amount: divide(detail.value.order_num),
     price: detail.value.order_amount,
-    token_id: coinTypes[detail.value.goods_pay_coin],
-    symbol: detail.value.goods_pay_coin
+    token_id: coinTypes[detail.value.pay_coin],
+    symbol: detail.value.pay_coin
   }, function (responseData: any) {
   });
 }
