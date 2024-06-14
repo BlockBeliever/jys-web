@@ -85,7 +85,7 @@
         <div class="line"></div>
         <div class="message">
           <span>商家留言</span>
-          <div class="info">记录房间打扫了空间分厘卡立刻就法律的法律打卡机放大没办法看大势空间家乐福的卡上JFK老大</div>
+          <div class="info">{{ detailData.shop_comment }}</div>
         </div>
       </div>
       <div class="tip">

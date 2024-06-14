@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" v-if="!loading">
     <van-form v-if="status === 0" class="form" @submit="onSubmit">
       <van-cell-group inset>
         <van-field class="identity" v-model="identity" readonly label-align="top" name="商家身份" label="商家身份"/>
@@ -27,12 +27,15 @@ const message = ref('')
 onActivated(() => {
   name.value = ''
   message.value = ''
+  loading.value = true
   getBusinessInfo()
 })
+const loading = ref(true)
 const status = ref()
 const business = ref({} as any)
 const getBusinessInfo = async () => {
   const { data } = await businessInfo({})
+  loading.value = false
   business.value = data
   status.value = data.status
 }
