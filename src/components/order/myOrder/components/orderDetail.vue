@@ -171,7 +171,7 @@ const payClick = () => {
   (window as any).WebViewJavascriptBridge.callHandler('payDapp', {
     order_id: detail.value.order_id_buyer,
     amount: divide(detail.value.order_num),
-    price: detail.value.order_amount,
+    price: detail.value.pay_amount,
     token_id: coinTypes[detail.value.pay_coin],
     symbol: detail.value.pay_coin
   }, function (responseData: any) {
