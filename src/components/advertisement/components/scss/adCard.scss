@@ -1,0 +1,116 @@
+@import '@/assets/css/common.scss';
+
+.card {
+  position: relative;
+  margin: 10px auto;
+  width: 340px;
+  padding-bottom: 10px;
+  border-radius: 10px;
+  background: $color-FFF;
+  box-shadow: 0px 5px 8px #E6ECF7;
+  overflow-y: hidden;
+
+  .logo {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+  }
+
+  .top {
+    width: 290px;
+    margin: 0 auto;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .code {
+      color: $color-333;
+      font: $font12-400;
+    }
+
+    .online {
+      color: $color-2E6;
+      font: $font12-500;
+    }
+    .offline{
+      color: $color-D1D;
+      font: $font12-500;
+    }
+  }
+
+  .line {
+    margin: 9px auto;
+    width: 290px;
+    height: 1px;
+    background-color: $color-F0F;
+  }
+
+  .middle {
+    width: 290px;
+    margin: 15px auto;
+
+    .price-coin {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .price {
+        color: $color-101;
+        font: $font23-700;
+      }
+
+      .coin {
+        padding: 0px 5px;
+        border-radius: 20px;
+        background: rgba($color: $color-788, $alpha: 0.3);
+        color: $color-FFF;
+        font: $font15-500
+      }
+    }
+
+    .number {
+      margin-top: 5px;
+      color: $color-788;
+      font: $font12-500;
+
+      .num {
+        margin-left: 10px;
+      }
+
+      .text {
+        margin-left: 5px;
+        color: $color-333;
+      }
+    }
+  }
+
+  .bottom {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    .onOff {
+      margin-right: 15px;
+      width: 80px;
+      height: 35px;
+      border-radius: 18px;
+      color: $color-333;
+      border: 1px solid #D1D1D1;
+      text-align: center;
+      line-height: 35px;
+    }
+
+    .delete {
+      margin-right: 23px;
+      width: 80px;
+      height: 35px;
+      border-radius: 18px;
+      color: $color-FC4;
+      border: 1px solid $color-FC4;
+      text-align: center;
+      line-height: 35px;
+    }
+
+  }
+}

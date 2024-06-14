@@ -1,0 +1,205 @@
+@import '@/assets/css/common.scss';
+
+.container {
+  width: 100%;
+  height: calc(100vh - 45px);
+  background: $bg-color2;
+  overflow: hidden;
+  overflow-y: auto;
+
+  .status {
+    margin-top: 30px;
+    margin-left: 22px;
+    color: $color-F02;
+    font: $font16-500;
+  }
+
+  .head {
+    position: relative;
+    margin: 15px auto 0px auto;
+    width: 340px;
+    height: 126px;
+    background: url(@/assets/img/order/head.png);
+    background-size: 100%;
+    overflow: hidden;
+
+    .check {
+      position: absolute;
+      top: 65px;
+      right: 12px;
+      width: 67px;
+      height: 45px;
+    }
+
+    .top {
+      margin-top: 13px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .text {
+        margin-left: 15px;
+        color: $color-333;
+        font: $font15-400;
+      }
+
+      .contact {
+        margin-right: 10px;
+        width: 84px;
+        height: 27px;
+        background: url(@/assets/img/order/name-bg.png);
+        background-size: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .logo {
+          width: 18px;
+          height: 17px;
+        }
+
+        span {
+          margin-left: 5px;
+          color: $color-808;
+          font: $font10-400;
+        }
+      }
+    }
+
+    .desc {
+      position: relative;
+      margin-top: 18px;
+      display: flex;
+      align-items: center;
+
+      img {
+        margin-left: 15px;
+        width: 7px;
+        height: 7px;
+      }
+
+      span {
+        margin-left: 5px;
+        color: $color-A8A;
+        font: $font13-400;
+      }
+    }
+
+    .mt8 {
+      margin-top: 8px;
+    }
+  }
+
+  .order {
+    margin: 10px auto;
+    width: 340px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+    background: $color-FFF;
+
+    .top {
+      display: flex;
+      align-items: center;
+      padding: 15px;
+
+      img {
+        width: 22px;
+        height: 22px;
+      }
+
+      span {
+        margin-left: 10px;
+        color: $color-333;
+        font: $font14-500;
+      }
+    }
+
+    .item {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: $color-808;
+      font: $font12-400;
+
+      .left {
+        margin-left: 15px;
+      }
+
+      .right {
+        margin-right: 15px;
+        display: flex;
+        align-items: center;
+
+        .text2 {
+          color: $color-101;
+        }
+
+        .divider {
+          margin-right: 5px;
+          width: 1.5px;
+          height: 10px;
+          background-color: $color-66C;
+        }
+
+        .copy {
+          margin-left: 5px;
+          width: 12px;
+          height: 12px;
+        }
+
+        .voucher {
+          margin-left: 5px;
+          width: 30px;
+          height: 30px;
+        }
+      }
+    }
+
+    .btn-box{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .botton {
+        margin: 80px auto 0 auto;
+        width: 225px;
+        height: 45px;
+        border-radius: 23px;
+        background: $btn-color-blue;
+        color: $color-FFF;
+        text-align: center;
+        font: $font16-400;
+        line-height: 45px;
+      }
+      .cancel{
+        margin: 80px auto 0 auto;
+        width: 100px;
+        height: 45px;
+        border-radius: 23px;
+        background: $color-FFF;
+        border: 1px solid $color-498;
+        color: $color-498;
+        text-align: center;
+        font: $font16-400;
+        line-height: 45px;
+      }
+    }
+
+    .service {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font: $font13-400;
+
+      span:nth-child(1) {
+        color: $color-808;
+      }
+
+      span:nth-child(2) {
+        margin-left: 3px;
+        color: $color-619;
+      }
+    }
+  }
+}

@@ -1,0 +1,60 @@
+@import '@/assets/css/common.scss';
+
+.container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  img {
+    margin-top: 110px;
+    width: 150px;
+    height: 135px;
+  }
+
+  .tip {
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+
+    .text1 {
+      color: $color-788;
+      font: $font13-400;
+    }
+
+    .text2 {
+      color: $color-2E6;
+      font: $font13-400;
+    }
+
+    .text3 {
+      color: $color-F02;
+      font: $font13-400;
+    }
+
+  }
+  .apply{
+    margin-top: 100px;
+    width: 225px;
+    height: 40px;
+    border-radius: 20px;
+    background: $btn-color-blue;
+    color: $color-FFF;
+    font: $font16-400;
+    line-height: 40px;
+    text-align: center;
+  }
+  .button{
+    margin-top: 30px;
+    width: 225px;
+    height: 40px;
+    border-radius: 20px;
+    background: $color-FFF;
+    color: $color-498;
+    border: 1px solid $color-498;
+    font: $font16-400;
+    line-height: 40px;
+    text-align: center;
+  }
+}

@@ -1,0 +1,26 @@
+@import '@/assets/css/common.scss';
+.container {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 45px);
+  background: $bg-color2;
+  // overflow-y: auto;
+
+  :deep(.van-tabs__nav) {
+    background-color: transparent;
+  }
+
+  :deep(.van-tabs__wrap) {
+    height: 35px;
+  }
+
+  :deep(.van-tab) {
+    font: $font14-500;
+    color: $color-808;
+  }
+
+  :deep(.van-tab--active) {
+    font: $font16-500;
+    color: $color-333;
+  }
+}

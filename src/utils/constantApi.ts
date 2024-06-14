@@ -1,0 +1,28 @@
+export enum ApiEndPoint {
+    GET_HOME_DATA =  "/api/user/common/home_data",
+    SALE_CREATE = "/api/user/sale/create",
+    CHECK_SALE_ORDER = "/api/user/sale/check_sale_order",
+    SALE_HISTORY = "/api/user/sale/sale_history",
+    SALE_DETAIL = "/api/user/sale/sale_history_detail",
+    SALE_ORDER_BY_ADVERTISEMENT = "/api/user/sale/sale_order_by_advertisement",
+    ACTIVE_SALE_ADV =  "/api/user/sale/active_advertisement",
+    GET_USER =  "/api/user/get_user",
+    GET_USER_INFO = "api/user/get_user_info",
+    GET_AUTH_TOKEN =  "/api/user/auth/code_to_token",
+
+    SHARE_HISTORY = "/api/user/share/share_history",
+    ACTIVE_ADVERTISEMENT =  "/api/user/common/active_advertisement",
+    GET_ADVERTISEMENT = "/api/user/common/advertisement",
+    COIN_LIST =  "/api/user/coin/coin_list",
+    ORDER_CREATE =  "/api/user/order/create",
+    ORDER_LIST =  "/api/user/order/list",
+    ORDER_CANCEL =  "/api/user/order/cancel",
+    PURCHASE_CREATE =  "/api/user/purchase/create",
+    PURCHASE_DETAIL =  "/api/user/purchase/detail",
+    PURCHASE_UPDATE =  "/api/user/purchase/update",
+
+    MINING_MACHINE_LIST = "/api/user/mining/machine_list",
+    MINING_MACHINE_DETAIL = "/api/user/mining/detail",
+    MINING_ORDER_LIST = "/api/user/mining/order_list",
+    MINING_ORDER_CREATE = "/api/user/mining/order_create",
+  }

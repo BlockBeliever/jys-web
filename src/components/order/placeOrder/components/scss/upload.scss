@@ -1,0 +1,161 @@
+@import '@/assets/css/common.scss';
+
+.container {
+  width: 100%;
+  height: calc(100vh - 45px);
+  background: $bg-color2;
+  overflow: hidden;
+  overflow-y: auto;
+
+  .card {
+    width: 340px;
+    margin: 10px auto;
+    // height: 212px;
+    padding-bottom: 15px;
+    border-radius: 10px;
+    background: $color-FFF;
+
+    .head {
+      padding: 15px;
+      display: flex;
+      align-items: center;
+
+      img {
+        width: 22px;
+        height: 22px;
+      }
+
+      span {
+        margin-left: 10px;
+        color: $color-333;
+        font: $font14-500;
+      }
+    }
+
+    .item {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: $color-808;
+      font: $font12-400;
+
+      .left {
+        margin-left: 15px;
+      }
+
+      .right {
+        margin-right: 15px;
+        display: flex;
+        align-items: center;
+
+        .text2 {
+          color: $color-101;
+        }
+
+        .divider {
+          margin-right: 5px;
+          width: 1.5px;
+          height: 10px;
+          background-color: $color-66C;
+        }
+
+        .copy {
+          margin-left: 5px;
+          width: 12px;
+          height: 12px;
+        }
+
+        .voucher {
+          margin-left: 5px;
+          width: 30px;
+          height: 30px;
+          background-color: rebeccapurple;
+        }
+      }
+    }
+  }
+
+  .appael {
+    width: 340px;
+    margin: 0 auto;
+    background-color: $color-FFF;
+    border-radius: 10px;
+
+    .title {
+      padding: 10px;
+      color: $color-101;
+      font: $font16-400;
+    }
+    .textarea{
+      :deep(.van-field__body){
+        background-color: $color-F7F;
+        border-radius: 10px;
+        padding: 5px;
+      }
+      :deep(.van-field__control){
+        height: 100px !important;
+      }
+    }
+  }
+
+  .upload {
+    width: 340px;
+    margin: 10px auto;
+    background-color: $color-FFF;
+    border-radius: 10px;
+
+    .title {
+      padding: 10px;
+      color: $color-101;
+      font: $font16-400;
+    }
+
+    .uploader {
+      margin: 10px;
+    }
+  }
+
+  .btn-box {
+    width: 100%;
+    margin: 150px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .btn {
+      width: 225px;
+      height: 45px;
+      border-radius: 23px;
+      background: $btn-color-blue;
+      color: $color-FFF;
+      font: $font16-400;
+      line-height: 45px;
+      text-align: center;
+    }
+
+    .btn2 {
+      width: 170px;
+      height: 45px;
+      border-radius: 23px;
+      background: $btn-color-blue;
+      color: $color-FFF;
+      font: $font16-400;
+      line-height: 45px;
+      text-align: center;
+    }
+
+    .cancel {
+      margin-left: 10px;
+      width: 100px;
+      height: 45px;
+      border-radius: 23px;
+      color: $color-498;
+      border: 1px solid $color-498;
+      background-color: $color-FFF;
+      text-align: center;
+      font: $font16-400;
+      line-height: 45px;
+    }
+  }
+}

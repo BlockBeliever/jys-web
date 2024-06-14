@@ -1,0 +1,140 @@
+@import '@/assets/css/common.scss';
+
+.head-bg {
+  width: 100%;
+  height: 150px;
+  background: $bg-color;
+  font: $font11-400;
+  span{
+    display: inline-block;
+    margin-left: 16px;
+    margin-top: 50px;
+    color: $color-FFF;
+    font: $font18-500;
+  }
+}
+
+.tabs {
+  position: absolute;
+  top: 103px;
+  left: 17px;
+  width: 340px;
+  height: 88px;
+  background: url(@/assets/img/home/home-head.png);
+  background-size: 100% 100%;
+  display: flex;
+  align-items: center;
+  // justify-content: space-around;
+
+  .opacity{
+    opacity: 0.3;
+  }
+  .item {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    img {
+      margin-left: 16px;
+      width: 35px;
+      height: 30px;
+    }
+
+    .text-box {
+      margin-left: 10px;
+
+      div {
+        color: $color-101;
+        font: $font16-700;
+      }
+
+      span {
+        display: block;
+        margin-top: 2px;
+        color: $color-788;
+        font: $font12-500;
+      }
+    }
+  }
+
+  .line {
+    width: 1px;
+    height: 37px;
+    background-color: $color-C5D;
+  }
+}
+
+.container {
+  width: 100%;
+  height: calc(100vh - 205px);
+  background: $bg-color2;
+  overflow: hidden;
+
+  .list {
+    margin: 58px auto 0 auto;
+    width: 340px;
+    // height: 400px;
+    background-color: $color-FFF;
+    border-radius: 10px;
+    border: 0px solid #000000;
+    box-shadow: 0px 0px 3px 2px #EFF4FE;
+    
+
+    .header{
+      width: 100%;
+      height: 44px;
+      display: flex;
+      justify-content: space-between;
+      .left{
+        display: flex;
+        align-items: center;
+        .text{
+          margin-left: 27px;
+          color: $color-101;
+          font: $font14-500;
+        }
+        .currency{
+          display: flex;
+          align-items: center;
+          margin-left: 9px;
+          border-bottom: 1px solid $color-498;
+          .coin{
+            color: $color-498;
+            font: $font14-500;
+          }
+          img{
+            margin-left: 3px;
+            margin-top: -2px;
+            width: 11px;
+            height: 6px;
+          }
+        }
+      }
+      .right{
+        // margin: -1px -1px;
+        width: 94px;
+        height: 44px;
+        background: url(@/assets/img/home/right-bg.png);
+        background-size: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        span{
+          margin-right: 5px;
+          color: $color-498;
+          font: $font16-500;
+        }
+        img{
+          margin-right: 12px;
+          width: 10px;
+          height: 10px;
+        }
+      }
+    }
+    .scroll-box{
+      overflow-y: auto;
+      padding-bottom: 10px;
+      width: 100%;
+      height: calc(100vh - 300px);
+    }
+  }
+}

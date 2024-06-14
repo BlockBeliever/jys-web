@@ -1,0 +1,37 @@
+@import '@/assets/css/common.scss';
+.head-tab {
+  width: 100%;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  .select {
+    width: 63px;
+    height: 27px;
+    border-radius: 14px;
+    background: $btn-color-blue;
+    text-align: center;
+    color: $color-FFF;
+    font: $font12-400;
+    line-height: 27px;
+  }
+
+  .normal {
+    width: 63px;
+    height: 27px;
+    border-radius: 14px;
+    background: $color-FFF;
+    border: 1px solid #D8D9DA;
+    text-align: center;
+    color: $color-333;
+    font: $font12-400;
+    line-height: 27px;
+  }
+}
+.scroll-box{
+  margin-top: 10px;
+  width: 100%;
+  height: calc(100vh - 135px);
+  overflow-y: auto;
+}
