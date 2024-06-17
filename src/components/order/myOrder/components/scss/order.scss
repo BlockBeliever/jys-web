@@ -34,4 +34,8 @@
   width: 100%;
   height: calc(100vh - 123px);
   overflow-y: auto;
+  :deep(.van-pull-refresh){
+    height: 100%;
+    overflow-y: auto;
+  }
 }

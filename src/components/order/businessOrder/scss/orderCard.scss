@@ -53,7 +53,7 @@
     }
     .name{
       padding: 0 10px;
-      // width: 83px;
+      max-width: 100px;
       height: 27px;
       text-align: center;
       background: url(@/assets/img/order/name-bg.png);

@@ -4,7 +4,8 @@
       @click="changeActive(item.value)">{{ item.title }}</div>
   </div>
   <div class="scroll-box">
-    <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+    <Empty v-if="showEmpty" />
+    <van-pull-refresh v-else v-model="refreshing" @refresh="onRefresh">
       <van-list v-model:loading="loading" :immediate-check="true" :finished="finished" :finished-text="'没有更多了'"
         @load="onLoad">
         <OrderCard v-for="item in orders" :data="item" />
@@ -17,7 +18,7 @@
 import { showToast } from "vant";
 import OrderCard from "./orderCard.vue";
 import { orderList } from "@/api/order";
-
+import Empty from "@/components/empty/index.vue";
 onActivated(() => {
   onRefresh()
 })
@@ -36,6 +37,7 @@ let params = {
   // 0 全部 1待支付 2 完成 3 取消 4 待确认
   order_status: activeVal.value === 0 ? [] : activeVal.value === 4? [4,5,6] : [activeVal.value]
 }
+const showEmpty = ref(false)
 const onLoad = async () => {
   const { code, data } = await orderList(params)
   if (code !== 0) {
@@ -49,7 +51,7 @@ const onLoad = async () => {
   data.list && data.list.forEach((item: any) => {
     orders.value.push(item)
   });
-  // showEmpty.value = recordList.value.length ? false : true
+  showEmpty.value = orders.value.length ? false : true
   loading.value = false
   params.page_num++
   if (orders.value.length >= data.count) {

@@ -2,7 +2,7 @@
   <div class="container">
     <div class="card">
       <div class="head">
-        <img src="@/assets/img/order/logo.png" alt="">
+        <img :src="detail.goods_coin_icon" alt="">
         <span>{{ store.getUid === detail.order_seller  ? '售出' : '买入' }}{{ detail.goods_coin }}</span>
       </div>
       <div class="item">

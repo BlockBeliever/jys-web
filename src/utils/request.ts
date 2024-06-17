@@ -9,7 +9,7 @@ const baseURL = import.meta.env.VITE_BASE_API
 const store = useAppStore()
 const defaultConfig: AxiosRequestConfig = {
   baseURL: baseURL,
-  // 'http://43.138.161.115:5002',
+  // 'https://api.flct.site',
   timeout: 10000,
   // 数组格式参数序列化
   paramsSerializer: (params: any) => qs.stringify(params, { indices: false })

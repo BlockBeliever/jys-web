@@ -6,7 +6,7 @@
       <van-image class="avatar" v-if="avatar.startsWith('data:')" :src="avatar"></van-image>
       <van-image class="avatar" v-else :src="`${baseUrl}${avatar}`"></van-image>
       <div class="info">
-        <div class="name">{{ user.nickname }}</div>
+        <div class="name van-ellipsis">{{ user.nickname }}</div>
         <div class="middle">
           <span>授权日期：{{ moment(user.created_at * 1000).format('YYYY/MM/DD') }}</span>
         </div>

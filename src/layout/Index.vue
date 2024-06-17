@@ -32,7 +32,7 @@ const onClickLeft = () => {
 
 <style lang="scss" scoped>
 .t-layout{
-  --van-nav-bar-background: linear-gradient(180deg, #2E6BDB 0%, #5588DC 100%);;
+  --van-nav-bar-background: linear-gradient(180deg, #2E6BDB 0%, #5588DC 100%);
   --van-nav-bar-title-text-color: #FFFFFF !important;
   --van-nav-bar-icon-color: #FFFFFF !important;
 

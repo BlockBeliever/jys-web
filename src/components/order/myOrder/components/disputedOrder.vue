@@ -1,6 +1,7 @@
 <template>
   <div class="scroll-box">
-    <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+    <Empty v-if="showEmpty"/>
+    <van-pull-refresh v-else v-model="refreshing" @refresh="onRefresh">
       <van-list v-model:loading="loading" :immediate-check="true" :finished="finished" :finished-text="'没有更多了'"
         @load="onLoad">
         <OrderCard v-for="item in orders" :data="item"/>
@@ -13,7 +14,7 @@
 import { showToast } from "vant";
 import OrderCard from "./orderCard.vue";
 import { orderList } from "@/api/order";
-
+import Empty from "@/components/empty/index.vue";
 onActivated(() => {
   onRefresh()
 })
@@ -29,6 +30,7 @@ let params = {
   // 1线上订单 2线下 3 纠纷
   order_type: 3,
 }
+const showEmpty = ref(false)
 const onLoad = async () => {
   const { code, data } = await orderList(params)
   if (code !== 0) {
@@ -42,7 +44,7 @@ const onLoad = async () => {
   data.list && data.list.forEach((item: any) => {
     orders.value.push(item)
   });
-  // showEmpty.value = recordList.value.length ? false : true
+  showEmpty.value = orders.value.length ? false : true
   loading.value = false
   params.page_num++
   if (orders.value.length >= data.count) {

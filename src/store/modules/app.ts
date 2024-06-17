@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { changeLocale } from '@/plugins/i18n'
 import { getConfig, setConfig } from '@/config'
-import { stat } from 'fs/promises'
 const config = getConfig()
 type AppStateType = {
   token?: string

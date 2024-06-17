@@ -31,7 +31,7 @@
     </div>
     <div class="order">
       <div class="top">
-        <img src="@/assets/img/order/logo.png" alt="">
+        <img :src="detail.goods_coin_icon" alt="">
         <span>{{ detail.goods_type === 1 ? '买入' : '出售' }}{{ detail.goods_coin }}</span>
       </div>
       <section>
@@ -160,7 +160,7 @@ const getDetail = async () => {
   })
   loading.value = false
   detail.value = data
-  payWay.value = data.transaction_ways[0].name
+  payWay.value = data.transaction_ways.filter((item: any) => item.symbol === data.order_transaction_way)[0].name
 }
 
 // 卖家确认订单并支付
@@ -229,7 +229,8 @@ const copyCode = (val: string) => {
 }
 // 联系客服
 const contactService = () => {
-  contactIm(store.getUid, store.getServiceId)
+  // contactIm(store.getUid, store.getServiceId)
+  router.push('/service')
 }
 // 联系商家 、 买家
 const contactChat = () => {

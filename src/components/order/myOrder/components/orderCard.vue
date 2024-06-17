@@ -12,7 +12,7 @@
       <img class="status" src="@/assets/img/order/service.png" alt="">
     </div>
     <div class="top">
-      <img src="@/assets/img/order/logo.png" alt="">
+      <img :src="props.data.goods_coin_icon" alt="">
       <span>{{ props.data.goods_type === 1 ? '售出' : '买入' }}{{ props.data.goods_coin }}</span>
     </div>
     <div class="info">
@@ -28,7 +28,7 @@
       <span>{{ divide(props.data.order_amount) }} {{ props.data.goods_pay_coin }}</span>
     </div>
     <div class="bottom">
-      <div class="name">{{ props.data.shop_name }}</div>
+      <div class="name van-ellipsis">{{ props.data.shop_name }}</div>
       <span>{{ moment(props.data.created_at * 1000).format('YYYY-MM-DD HH:mm:ss') }}</span>
     </div>
   </div>

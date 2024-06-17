@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <van-pull-refresh  v-model="refreshing" @refresh="onRefresh">
+    <Empty v-if="showEmpty"/>
+    <van-pull-refresh v-else v-model="refreshing" @refresh="onRefresh">
       <van-list v-model:loading="loading" :immediate-check="false" :finished="finished" :finished-text="'没有更多了'"
         @load="onLoad">
         <AdCard v-for="item in adList" :data="item" @refresh="onRefresh"/>
@@ -13,6 +14,7 @@
 import { myAdvertisement } from "@/api/advertisement";
 import AdCard from "@/components/advertisement/components/adCard.vue";
 import { showToast } from "vant";
+import Empty from "@/components/empty/index.vue";
 onActivated(() => {
   onRefresh()
 })
@@ -25,6 +27,7 @@ const params = {
   page_num: 1,
   limit: 10,
 }
+const showEmpty = ref(false)
 const onLoad = async () => {
   const { code, data } = await myAdvertisement(params)
   if (code !== 0) {
@@ -38,7 +41,7 @@ const onLoad = async () => {
   data.list && data.list.forEach((item: any) => {
     adList.value.push(item)
   });
-  // showEmpty.value = recordList.value.length ? false : true
+  showEmpty.value = adList.value.length ? false : true
   loading.value = false
   params.page_num++
   if (adList.value.length >= data.count) {

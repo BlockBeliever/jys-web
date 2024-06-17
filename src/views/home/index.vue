@@ -16,7 +16,7 @@
     <div :class="type === 1 ? 'item' : 'item opacity'" @click="changeType(1)">
       <img src="@/assets/img/home/sale-icon.png" alt="">
       <div class="text-box">
-        <div>挂单出售</div>
+        <div>快捷出售</div>
         <span>快速挂单卖出</span>
       </div>
     </div>

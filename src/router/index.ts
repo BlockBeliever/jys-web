@@ -5,6 +5,7 @@ import { removeToken } from '@/utils/auth'
 import orderRoutes from './modules/order';
 import businessRoutes from './modules/business';
 import advertisementRoutes from './modules/advertisement';
+import serviceRoutes from './modules/service';
 // image
 import home from '@/assets/img/tabbar/home.png';
 import home_sel from '@/assets/img/tabbar/home-sel.png';
@@ -29,7 +30,7 @@ export const tabbar: Array<RouteRecordRaw> = [
     path: '/order',
     component: () => import('@/views/order/index.vue'),
     meta: {
-      title: '我的订单',
+      title: '商家订单',
       icon: order,
       active_icon: order_sel,
       isTab: true
@@ -52,7 +53,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/',
     component: () => import('@/layout/Index.vue'),
     redirect: '/home',
-    children: [...tabbar, ...orderRoutes, ...businessRoutes, ...advertisementRoutes],
+    children: [...tabbar, ...orderRoutes, ...businessRoutes, ...advertisementRoutes,...serviceRoutes],
   },
 ]
 
