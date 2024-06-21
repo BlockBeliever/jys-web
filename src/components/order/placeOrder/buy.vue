@@ -78,7 +78,7 @@
       <div class="business">
         <div class="text">商家信息</div>
         <div class="business-info">
-          <span>商家昵称</span>
+          <span>商家名称</span>
           <div class="right">
             <span>{{ detailData.shop_name }}</span>
           </div>

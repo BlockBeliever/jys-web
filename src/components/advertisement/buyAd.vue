@@ -196,7 +196,7 @@ const validatorQuantity = (val: any) => {
     return '请输入数量'
   }
   if (!regex.test(val + '')) {
-    return '请输入数字整数'
+    return '请输入数字'
   }
 };
 const regex2 = /^(0|([1-9][0-9]*))(\.[\d]+)?$/
@@ -230,11 +230,11 @@ const validatorLimitMin = (val: any) => {
     return '最小限额不能大于等于最大限额'
   }
   if (price.value * 1 && val && val < price.value * 1) {
-    return '最小不能小于单价'
+    return '不能小于单价'
   }
   if (price.value * 1 && quantity.value * 1 && val) {
     if (val > multiply(price.value * 1, quantity.value * 1)) {
-      return '最小不超过价格*数量'
+      return '不能超过价格*数量'
     }
   }
 };
@@ -248,7 +248,7 @@ const validatorLimitMax = (val: any) => {
   }
   if (price.value * 1 && quantity.value * 1 && val) {
     if (val > multiply(price.value * 1, quantity.value * 1)) {
-      return '最大不超错价格*数量'
+      return '不能超过价格*数量'
     }
   }
 };

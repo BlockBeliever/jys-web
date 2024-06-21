@@ -14,7 +14,7 @@ import order_sel from '@/assets/img/tabbar/order-sel.png';
 import my from '@/assets/img/tabbar/my.png';
 import my_sel from '@/assets/img/tabbar/my-sel.png';
 import { t } from '@/plugins/i18n'
-
+import { changeLocale } from "@/plugins/i18n";
 export const tabbar: Array<RouteRecordRaw> = [
   {
     path: '/home',
@@ -69,6 +69,10 @@ router.beforeEach((to, from, next) => {
   const store = useAppStore()
   const title = (to.meta.title as string) || 'App'
   document.title = title
+    
+  if (from.path === '/') {
+    changeLocale()
+  }
   // const token = getToken()
   // if (to.path === '/login' || whiteList.includes(to.path)) {
   //   if (token) {

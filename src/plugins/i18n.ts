@@ -30,11 +30,32 @@ export const t = (key: string) => i18n.global.t(key)
  * 设置语言
  * @param key string | undefined
  */
-export function changeLocale(key?: 'zh' | 'en') {
-  if (!key) {
-    key = i18n.global.locale.value === 'zh' ? 'en' : 'zh'
+export function changeLocale() {
+  const key = localStorage.getItem('lang')
+  switch (key) {
+    case 'en':
+      Locale.use('en-US', enLocale)
+      break;
+    case 'zh':
+      if (localStorage.getItem("country_code") === 'TW') {
+        // Locale.use('zh-TW', zhTwLocale)
+      } else {
+        Locale.use('zh-CN', zhLocale)
+      }
+      break;
+    case 'th':
+      // Locale.use('th-TH', thLocale)
+      break;
+    case 'vi':
+      // Locale.use('vi-VN', viLocale)
+      break;
+    case 'ms':
+      Locale.use('en-US', enLocale)
+      break;
+    case 'km':
+      // Locale.use('km-KH', kmLocale)
+      break;
+    default:
+      break;
   }
-  i18n.global.locale.value = key
-  key === 'zh' ? Locale.use('zh-CN', zhLocale) : Locale.use('en-US', enLocale)
-  return key
 }
