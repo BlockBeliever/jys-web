@@ -4,7 +4,7 @@ const businessRoutes = [
     path: '/business/apply',
     component: () => import('@/components/business/applyBusiness.vue'),
     meta: {
-      title: '申请商家',
+      title: t('business.applyMerchant'),
       isTab: false,
       isNav: true,
       backTo: '/center'

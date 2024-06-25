@@ -1,50 +1,62 @@
 <template>
   <div class="container">
-    <div class="head">
-    </div>
+    <div class="head"></div>
     <div class="user">
-      <van-image class="avatar" v-if="avatar.startsWith('data:')" :src="avatar"></van-image>
+      <van-image
+        class="avatar"
+        v-if="avatar.startsWith('data:')"
+        :src="avatar"
+      ></van-image>
       <van-image class="avatar" v-else :src="`${baseUrl}${avatar}`"></van-image>
       <div class="info">
         <div class="name van-ellipsis">{{ user.nickname }}</div>
         <div class="middle">
-          <span>授权日期：{{ moment(user.created_at * 1000).format('YYYY/MM/DD') }}</span>
+          <span
+            >{{ $t("my.authorizationDate") }}：{{
+              moment(user.created_at * 1000).format("YYYY/MM/DD")
+            }}</span
+          >
         </div>
         <div class="bottom">
           <div>
-            <img src="@/assets/img/center/id-card.png" alt="">
-            <span>身份认证</span>
+            <img src="@/assets/img/center/id-card.png" alt="" />
+            <span>{{ $t("my.authentication") }}</span>
           </div>
           <div>
-            <img src="@/assets/img/center/phone.png" alt="">
-            <span>手机</span>
+            <img src="@/assets/img/center/phone.png" alt="" />
+            <span>{{ $t("my.cellPhone") }}</span>
           </div>
           <div>
-            <img src="@/assets/img/center/email.png" alt="">
-            <span>电子邮件</span>
+            <img src="@/assets/img/center/email.png" alt="" />
+            <span>{{ $t("my.eMail") }}</span>
           </div>
         </div>
       </div>
     </div>
-    <img class="image" src="@/assets/img/center/bus.png" alt="" @click="pushToApply">
+    <img
+      class="image"
+      src="@/assets/img/center/bus.png"
+      alt=""
+      @click="pushToApply"
+    />
     <div class="items">
-      <div class="text">常用功能</div>
+      <div class="text">{{ $t("my.commonFunctions") }}</div>
       <div class="box">
         <div class="item" @click="pushToBuyAd">
-          <img src="@/assets/img/center/buy.png" alt="">
-          <span class="title">我要买入</span>
+          <img src="@/assets/img/center/buy.png" alt="" />
+          <span class="title">{{ $t("my.wantToBuy") }}</span>
         </div>
         <div class="item" @click="pushToSaleAd">
-          <img src="@/assets/img/center/sale.png" alt="">
-          <span class="title">我要卖出</span>
+          <img src="@/assets/img/center/sale.png" alt="" />
+          <span class="title">{{ $t("my.wantToSell") }}</span>
         </div>
         <div class="item" @click="pushToMyOrder">
-          <img src="@/assets/img/center/order.png" alt="">
-          <span class="title">我的订单</span>
+          <img src="@/assets/img/center/order.png" alt="" />
+          <span class="title">{{ $t("my.myOrder") }}</span>
         </div>
         <div class="item" @click="pushToMyAd">
-          <img src="@/assets/img/center/ad.png" alt="">
-          <span class="title">我的广告</span>
+          <img src="@/assets/img/center/ad.png" alt="" />
+          <span class="title">{{ $t("my.myAd") }}</span>
         </div>
       </div>
     </div>
@@ -52,52 +64,53 @@
 </template>
 
 <script setup lang="ts">
-import { urlToBase64OfList } from '@/utils/EnAndDeFile.js'
+import { urlToBase64OfList } from "@/utils/EnAndDeFile.js";
 import { userInfo } from "@/api/auth";
 import moment from "moment-timezone";
 moment.locale("zh-cn");
 import { showToast } from "vant";
+import { t } from "@/plugins/i18n";
 
-const baseUrl = import.meta.env.VITE_BASE_IMG || 'https://pic.flct.io'
+const baseUrl = "https://pic.flct.io";
 
-const router = useRouter()
+const router = useRouter();
 onActivated(() => {
-  getUserInfo()
-})
-const user = ref({} as any)
-const avatar = ref('')
+  getUserInfo();
+});
+const user = ref({} as any);
+const avatar = ref("");
 const getUserInfo = async () => {
-  const { data } = await userInfo({})
-  user.value = data
-  avatar.value = await urlToBase64OfList(user.value.avatar)
-}
+  const { data } = await userInfo({});
+  user.value = data;
+  avatar.value = await urlToBase64OfList(user.value.avatar);
+};
 const pushToApply = () => {
-  router.push('/business/apply')
-}
+  router.push("/business/apply");
+};
 const pushToBuyAd = () => {
   if (!user.value.have_shop) {
-    showToast('您还不是商家,请点击商家中心进行申请!')
-    return
+    showToast(t("my.notAMerchant")!);
+    return;
   }
-  router.push('/advertisement/buy')
-}
+  router.push("/advertisement/buy");
+};
 const pushToSaleAd = () => {
   if (!user.value.have_shop) {
-    showToast('您还不是商家,请点击商家中心进行申请!')
-    return
+    showToast(t("my.notAMerchant")!);
+    return;
   }
-  router.push('/advertisement/sale')
-}
+  router.push("/advertisement/sale");
+};
 const pushToMyAd = () => {
   if (!user.value.have_shop) {
-    showToast('您还不是商家,请点击商家中心进行申请!')
-    return
+    showToast(t("my.notAMerchant")!);
+    return;
   }
-  router.push('/advertisement/my')
-} 
+  router.push("/advertisement/my");
+};
 const pushToMyOrder = () => {
-  router.push('/order/myOrder')
-}
+  router.push("/order/myOrder");
+};
 </script>
 
 <style lang="scss" src="./scss/index.scss" scoped></style>

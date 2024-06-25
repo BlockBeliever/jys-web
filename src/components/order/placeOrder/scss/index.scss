@@ -1,4 +1,4 @@
-@import '@/assets/css/common.scss';
+@import "@/assets/css/common.scss";
 
 .container {
   position: relative;
@@ -16,7 +16,7 @@
       display: inline-block;
       margin-left: 17px;
       margin-top: 105px;
-      color: rgba($color: #FFFFFF, $alpha: .6);
+      color: rgba($color: #ffffff, $alpha: 0.6);
       font: $font12-400;
     }
   }
@@ -51,7 +51,7 @@
 
       span {
         margin-left: 7px;
-        color: rgba($color: $color-107, $alpha: .6);
+        color: rgba($color: $color-107, $alpha: 0.6);
         font: $font15-500;
       }
     }
@@ -95,7 +95,8 @@
       margin-top: 10px;
       margin-left: 10px;
 
-      :deep(.van-tabs__line) {}
+      :deep(.van-tabs__line) {
+      }
 
       :deep(.van-tabs__wrap) {
         height: 28px;
@@ -245,8 +246,8 @@
         margin-left: 5px;
         padding: 1px 5px;
         border-radius: 4px;
-        background: rgba($color: #1DDE84, $alpha: .15);
-        color: #1DDE84;
+        background: rgba($color: #1dde84, $alpha: 0.15);
+        color: #1dde84;
         font: $font10-400;
       }
     }
@@ -304,12 +305,14 @@
         margin-top: 10px;
       }
     }
-
   }
 
   .tip {
-    width: max-content;
+    width: 340px;
     margin: 15px auto;
+    word-wrap: break-word;
+    word-break: keep-all;
+    text-align: center;
 
     span:nth-child(1) {
       color: $color-808;

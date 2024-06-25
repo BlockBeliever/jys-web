@@ -4,7 +4,7 @@ const advertisementRoutes = [
     path: '/advertisement/buy',
     component: () => import('@/components/advertisement/buyAd.vue'),
     meta: {
-      title: '我要买入',
+      title: t('my.wantToBuy'),
       isTab: false,
       isNav: true
     }
@@ -13,7 +13,7 @@ const advertisementRoutes = [
     path: '/advertisement/sale',
     component: () => import('@/components/advertisement/saleAd.vue'),
     meta: {
-      title: '我要卖出',
+      title: t('my.wantToSell'),
       isTab: false,
       isNav: true
     }
@@ -22,7 +22,7 @@ const advertisementRoutes = [
     path: '/advertisement/my',
     component: () => import('@/components/advertisement/myAd.vue'),
     meta: {
-      title: '我的广告',
+      title: t('my.myAd'),
       isTab: false,
       isNav: true
     }

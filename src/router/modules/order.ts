@@ -1,95 +1,101 @@
-import { t } from '@/plugins/i18n'
+import { t } from "@/plugins/i18n";
 const orderRoutes = [
   {
-    path: '/order/placeOrder/buy',
-    component: () => import('@/components/order/placeOrder/buy.vue'),
+    path: "/order/placeOrder/buy",
+    component: () => import("@/components/order/placeOrder/buy.vue"),
     meta: {
-      title: '',
+      title: "",
       isTab: false,
-      isNav: false
-    }
+      isNav: false,
+    },
   },
   {
-    path: '/order/placeOrder/sale',
-    component: () => import('@/components/order/placeOrder/sale.vue'),
+    path: "/order/placeOrder/sale",
+    component: () => import("@/components/order/placeOrder/sale.vue"),
     meta: {
-      title: '',
+      title: "",
       isTab: false,
-      isNav: false
-    }
+      isNav: false,
+    },
   },
   {
-    path: '/order/myOrder',
-    component: () => import('@/components/order/myOrder/index.vue'),
+    path: "/order/myOrder",
+    component: () => import("@/components/order/myOrder/index.vue"),
     meta: {
-      title: '我的订单',
+      title: t("my.myOrder"),
       isTab: false,
       isNav: true,
-      backTo: '/center'
-    }
+      backTo: "/center",
+    },
   },
   {
-    path: '/order/myOrder/detail',
-    component: () => import('@/components/order/myOrder/components/orderDetail.vue'),
+    path: "/order/myOrder/detail",
+    component: () =>
+      import("@/components/order/myOrder/components/orderDetail.vue"),
     meta: {
-      title: '订单详情',
+      title: t("myOrder.orderDetails"),
       isTab: false,
-      isNav: true
-    }
+      isNav: true,
+    },
   },
   {
-    path: '/order/businessOrder/detail',
-    component: () => import('@/components/order/businessOrder/orderDetail.vue'),
+    path: "/order/businessOrder/detail",
+    component: () => import("@/components/order/businessOrder/orderDetail.vue"),
     meta: {
-      title: '订单详情',
+      title: t("myOrder.orderDetails"),
       isTab: false,
-      isNav: true
-    }
+      isNav: true,
+    },
   },
   {
-    path: '/order/paySuccess',
-    component: () => import('@/components/order/placeOrder/components/paySuccess.vue'),
+    path: "/order/paySuccess",
+    component: () =>
+      import("@/components/order/placeOrder/components/paySuccess.vue"),
     meta: {
-      title: '支付成功',
+      title: t("placeOrder.paymentSuccessful"),
       isTab: false,
-      isNav: false
-    }
+      isNav: false,
+    },
   },
   {
-    path: '/order/authSuccess',
-    component: () => import('@/components/order/placeOrder/components/authSuccess.vue'),
+    path: "/order/authSuccess",
+    component: () =>
+      import("@/components/order/placeOrder/components/authSuccess.vue"),
     meta: {
-      title: '授权成功',
+      title: t("placeOrder.authorizationSuccessful"),
       isTab: false,
-      isNav: false
-    }
+      isNav: false,
+    },
   },
   {
-    path: '/order/buySuccess',
-    component: () => import('@/components/order/placeOrder/components/buySuccess.vue'),
+    path: "/order/buySuccess",
+    component: () =>
+      import("@/components/order/placeOrder/components/buySuccess.vue"),
     meta: {
-      title: '下单成功',
+      title: t("placeOrder.successfullyOrdered"),
       isTab: false,
-      isNav: false
-    }
+      isNav: false,
+    },
   },
   {
-    path: '/order/upload',
-    component: () => import('@/components/order/placeOrder/components/upload.vue'),
+    path: "/order/upload",
+    component: () =>
+      import("@/components/order/placeOrder/components/upload.vue"),
     meta: {
-      title: '上传支付截图',
+      title: t("myOrder.uploadPaymentImage"),
       isTab: false,
-      isNav: true
-    }
+      isNav: true,
+    },
   },
   {
-    path: '/order/appeal',
-    component: () => import('@/components/order/placeOrder/components/appeal.vue'),
+    path: "/order/appeal",
+    component: () =>
+      import("@/components/order/placeOrder/components/appeal.vue"),
     meta: {
-      title: '订单申诉',
+      title: t("myOrder.orderComplaint"),
       isTab: false,
-      isNav: true
-    }
-  }
+      isNav: true,
+    },
+  },
 ];
 export default orderRoutes;

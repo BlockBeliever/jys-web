@@ -15,6 +15,7 @@ import Offline from "@/components/order/businessOrder/offlineOrder.vue";
 import Disputed from "@/components/order/businessOrder/disputedOrder.vue";
 import Apply2 from "@/components/business/apply2.vue";
 import { userInfo } from "@/api/auth";
+import { t } from "@/plugins/i18n";
 const isShop = ref(false)
 const loading = ref(true)
 onActivated(async() => {
@@ -26,15 +27,15 @@ onActivated(async() => {
 const activeTab = ref(0)
 const tabs = [
   {
-    title: '线上订单',
+    title: t('merchantOrder.onlineOrder'),
     component: Online
   },
   {
-    title: '线下订单',
+    title: t('merchantOrder.offlineOrder'),
     component: Offline
   },
   {
-    title: '纠纷订单',
+    title: t('merchantOrder.disputeOrder'),
     component: Disputed
   }
 ]

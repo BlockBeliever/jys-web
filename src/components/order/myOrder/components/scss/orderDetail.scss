@@ -18,9 +18,9 @@
     position: relative;
     margin: 15px auto 0px auto;
     width: 340px;
-    height: 126px;
+    height: 135px;
     background: url(@/assets/img/order/head.png);
-    background-size: 100%;
+    background-size: 100% 100%;
     overflow: hidden;
 
     .check {
@@ -46,6 +46,7 @@
       .contact {
         margin-right: 10px;
         width: 84px;
+        padding: 10px;
         height: 27px;
         background: url(@/assets/img/order/name-bg.png);
         background-size: 100%;
@@ -174,7 +175,8 @@
 
       .cancel {
         margin: 80px auto 0 auto;
-        width: 100px;
+        // width: 100px;
+        padding: 0 10px;
         height: 45px;
         border-radius: 23px;
         background: $color-FFF;

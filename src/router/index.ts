@@ -1,97 +1,103 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
-import { useAppStore } from '@/store'
-import { removeToken } from '@/utils/auth'
+import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
+import { useAppStore } from "@/store";
+import { removeToken } from "@/utils/auth";
 // routes
-import orderRoutes from './modules/order';
-import businessRoutes from './modules/business';
-import advertisementRoutes from './modules/advertisement';
-import serviceRoutes from './modules/service';
+import orderRoutes from "./modules/order";
+import businessRoutes from "./modules/business";
+import advertisementRoutes from "./modules/advertisement";
+import serviceRoutes from "./modules/service";
 // image
-import home from '@/assets/img/tabbar/home.png';
-import home_sel from '@/assets/img/tabbar/home-sel.png';
-import order from '@/assets/img/tabbar/order.png';
-import order_sel from '@/assets/img/tabbar/order-sel.png';
-import my from '@/assets/img/tabbar/my.png';
-import my_sel from '@/assets/img/tabbar/my-sel.png';
-import { t } from '@/plugins/i18n'
+import home from "@/assets/img/tabbar/home.png";
+import home_sel from "@/assets/img/tabbar/home-sel.png";
+import order from "@/assets/img/tabbar/order.png";
+import order_sel from "@/assets/img/tabbar/order-sel.png";
+import my from "@/assets/img/tabbar/my.png";
+import my_sel from "@/assets/img/tabbar/my-sel.png";
+import { t } from "@/plugins/i18n";
 import { changeLocale } from "@/plugins/i18n";
+import { getToken, setToken } from "@/utils/auth";
+import { codeToToken } from "@/api/auth";
+import { showToast } from 'vant';
+
 export const tabbar: Array<RouteRecordRaw> = [
   {
-    path: '/home',
-    component: () => import('@/views/home/index.vue'),
+    path: "/home",
+    component: () => import("@/views/home/index.vue"),
     meta: {
-      title: '首页',
+      title: t("myOrder.home"),
       icon: home,
       active_icon: home_sel,
-      isTab: true
-    }
+      isTab: true,
+    },
   },
   {
-    path: '/order',
-    component: () => import('@/views/order/index.vue'),
+    path: "/order",
+    component: () => import("@/views/order/index.vue"),
     meta: {
-      title: '商家订单',
+      title: t("myOrder.merchantOrder"),
       icon: order,
       active_icon: order_sel,
-      isTab: true
-    }
+      isTab: true,
+    },
   },
   {
-    path: '/center',
-    component: () => import('@/views/center/index.vue'),
+    path: "/center",
+    component: () => import("@/views/center/index.vue"),
     meta: {
-      title: '我的',
+      title: t("myOrder.myAccount"),
       icon: my,
       active_icon: my_sel,
-      isTab: true
-    }
-  }
-]
+      isTab: true,
+    },
+  },
+];
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/',
-    component: () => import('@/layout/Index.vue'),
-    redirect: '/home',
-    children: [...tabbar, ...orderRoutes, ...businessRoutes, ...advertisementRoutes,...serviceRoutes],
+    path: "/",
+    component: () => import("@/layout/Index.vue"),
+    redirect: "/home",
+    children: [
+      ...tabbar,
+      ...orderRoutes,
+      ...businessRoutes,
+      ...advertisementRoutes,
+      ...serviceRoutes,
+    ],
   },
-]
+];
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes
-})
+  routes,
+});
 
 // 路由白名单
-const whiteList = ['']
+const whiteList = [""];
 
 router.beforeEach((to, from, next) => {
   const store = useAppStore()
   const title = (to.meta.title as string) || 'App'
   document.title = title
-    
-  if (from.path === '/') {
-    changeLocale()
-  }
-  // const token = getToken()
-  // if (to.path === '/login' || whiteList.includes(to.path)) {
-  //   if (token) {
-  //     next('/')
-  //   } else {
-  //     next()
-  //   }
-  // } else {
-  //   const store = useAppStore()
-  //   if (!token) {
-  //     store.setState({ title })
-  //     return next('/login')
-  //   }
-
-  //   store.setState({ title, token })
-  //   next()
-  // }
   store.setState({ title })
-  next()
+  const token = getToken()
+  if (token) {
+    next()
+  } else {
+    userAuth()
+    next()
+  }
 })
+const userAuth = async (): Promise<void> => {
+  let code: string = localStorage.getItem('code') ?? 'MZIXODQXZWYTY2VMYI0ZOTI4LTLMZWQTY2YYNJRKOTAZNMQX'
+  const { code: mCode, data, message, error } = await codeToToken({ code })
+  if (mCode === 0) {
+    setToken(data.auth.access)
 
-export default router
+  } else {
+    showToast(error)
+  }
+}
+
+
+export default router;

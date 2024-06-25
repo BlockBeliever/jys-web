@@ -12,26 +12,27 @@
 import Online from "./components/onlineOrder.vue";
 import Offline from "./components/offlineOrder.vue";
 import Disputed from "./components/disputedOrder.vue";
+import { t } from "@/plugins/i18n";
 
 // tabs
-const activeTab = ref(0)
+const activeTab = ref(0);
 const tabs = [
   {
-    title: '线上订单',
-    component: Online
+    title: t("myOrder.onlineOrder"),
+    component: Online,
   },
   {
-    title: '线下订单',
-    component: Offline
+    title: t("myOrder.offlineOrder"),
+    component: Offline,
   },
   {
-    title: '纠纷订单',
-    component: Disputed
-  }
-]
-const changeTab = () => { }
+    title: t("myOrder.disputeOrder"),
+    component: Disputed,
+  },
+];
+const changeTab = () => {};
 </script>
 
 <style lang="scss" scoped>
-@import './scss/index.scss';
+@import "./scss/index.scss";
 </style>

@@ -1,14 +1,12 @@
 import axios, { AxiosRequestConfig, AxiosInstance } from 'axios'
 import qs from 'qs'
-import { useAppStore } from '@/store/modules/app'
 import { showToast } from 'vant'
 import { getToken } from "@/utils/auth";
 import { error, log } from 'console';
 
 const baseURL = import.meta.env.VITE_BASE_API
-const store = useAppStore()
 const defaultConfig: AxiosRequestConfig = {
-  baseURL: baseURL,
+  baseURL: 'https://api.flct.site',
   // 'https://api.flct.site',
   timeout: 10000,
   // 数组格式参数序列化
