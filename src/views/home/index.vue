@@ -42,13 +42,8 @@
       <!-- card -->
       <div class="scroll-box">
         <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-          <van-list
-            v-model:loading="loading"
-            :immediate-check="false"
-            :finished="finished"
-            :finished-text="'没有更多了'"
-            @load="onLoad"
-          >
+          <van-list v-model:loading="loading" :immediate-check="false" :finished="finished" :finished-text="'没有更多了'"
+            @load="onLoad">
             <ListCard v-for="item in adList" :item="item" />
           </van-list>
         </van-pull-refresh>
@@ -56,18 +51,9 @@
     </div>
   </div>
   <!-- 货币选择 购买 -->
-  <van-popup
-    v-model:show="showPopup"
-    position="bottom"
-    round
-    @close="changeChecked"
-  >
+  <van-popup v-model:show="showPopup" position="bottom" round @close="changeChecked">
     <div class="search">
-      <van-search
-        v-model="key"
-        shape="round"
-        :placeholder="$t('home.search')"
-      />
+      <van-search v-model="key" shape="round" :placeholder="$t('home.search')" />
     </div>
     <div class="currency-list">
       <van-radio-group v-model="checked">
@@ -75,12 +61,7 @@
           <van-cell v-for="item in coinList">
             <template #title>
               <div class="left">
-                <van-image
-                  v-if="item.symbol !== $t('myOrder.all')"
-                  class="icon"
-                  :src="item.icon"
-                  alt=""
-                ></van-image>
+                <van-image v-if="item.symbol !== $t('myOrder.all')" class="icon" :src="item.icon" alt=""></van-image>
                 <div class="name">
                   <div>{{ item.symbol }}</div>
                   <div>{{ item.name }}</div>
@@ -96,18 +77,9 @@
     </div>
   </van-popup>
   <!-- 货币选择 付款 -->
-  <van-popup
-    v-model:show="showPopup2"
-    position="bottom"
-    round
-    @close="changeChecked2"
-  >
+  <van-popup v-model:show="showPopup2" position="bottom" round @close="changeChecked2">
     <div class="search">
-      <van-search
-        v-model="key2"
-        shape="round"
-        :placeholder="$t('home.search')"
-      />
+      <van-search v-model="key2" shape="round" :placeholder="$t('home.search')" />
     </div>
     <div class="currency-list">
       <van-radio-group v-model="checked2">
@@ -115,12 +87,7 @@
           <van-cell v-for="item in coinList2">
             <template #title>
               <div class="left">
-                <van-image
-                  v-if="item.symbol !== $t('myOrder.all')"
-                  class="icon"
-                  :src="item.icon"
-                  alt=""
-                ></van-image>
+                <van-image v-if="item.symbol !== $t('myOrder.all')" class="icon" :src="item.icon" alt=""></van-image>
                 <div class="name">
                   <div>{{ item.symbol }}</div>
                   <div>{{ item.name }}</div>
@@ -148,34 +115,12 @@ import { useAppStore } from "@/store";
 import { t } from "@/plugins/i18n";
 const store = useAppStore();
 onMounted(() => {
-  const token = getToken();
-  if (token) {
-    getCoinData(1);
-    getCoinData(2);
-    getService();
-    getUid();
-  } else {
-    // User auth
-    userAuth();
-  }
+  getCoinData(1);
+  getCoinData(2);
+  getService();
+  getUid();
 });
-onActivated(() => {});
-// 授权
-const userAuth = async (): Promise<void> => {
-  let code: string =
-    localStorage.getItem("code") ??
-    "MZIXODQXZWYTY2VMYI0ZOTI4LTLMZWQTY2YYNJRKOTAZNMQX";
-  const { code: mCode, data, message, error } = await codeToToken({ code });
-  if (mCode === 0) {
-    setToken(data.auth.access);
-    getCoinData(1);
-    getCoinData(2);
-    getService();
-    getUid();
-  } else {
-    showToast(error);
-  }
-};
+onActivated(() => { });
 // 获取客服信息
 const getService = async () => {
   const { data } = await getCustomerService({});
