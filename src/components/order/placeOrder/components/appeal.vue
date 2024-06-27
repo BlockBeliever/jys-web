@@ -5,9 +5,9 @@
         <img :src="detail.goods_coin_icon" alt="" />
         <span
           >{{
-            store.getUid === detail.order_seller
-              ? $t("myOrder.sell")
-              : $t("myOrder.buy")
+            detail.goods_type === 1 
+              ? $t("myOrder.buy")
+              : $t("myOrder.sell")
           }}{{ detail.goods_coin }}</span
         >
       </div>

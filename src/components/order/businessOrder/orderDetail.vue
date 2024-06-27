@@ -20,15 +20,15 @@
     <div class="head">
       <img class="check" src="@/assets/img/order/check.png" alt="" />
       <div class="top">
-        <span class="text">买家信息</span>
+        <span class="text">{{ detail.goods_type === 1 ? '卖家信息' : '买家信息' }}</span>
         <div class="contact" @click="contactChat">
           <img class="logo" src="@/assets/img/order/chat.png" alt="" />
-          <span>联系买家</span>
+          <span>{{ detail.goods_type === 1 ? '联系卖家' : '联系买家' }}</span>
         </div>
       </div>
       <div class="desc">
         <img src="@/assets/img/order/star.png" alt="" />
-        <span>买家已通过平台实名及视频认证</span>
+        <span>{{ detail.goods_type === 1 ? '卖家' : '买家' }}已通过平台实名及视频认证</span>
       </div>
       <div class="desc mt8">
         <img src="@/assets/img/order/star.png" alt="" />

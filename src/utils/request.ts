@@ -6,7 +6,7 @@ import { error, log } from 'console';
 
 const baseURL = import.meta.env.VITE_BASE_API
 const defaultConfig: AxiosRequestConfig = {
-  baseURL: 'https://api.flct.site',
+  baseURL: baseURL,
   // 'https://api.flct.site',
   timeout: 10000,
   // 数组格式参数序列化
