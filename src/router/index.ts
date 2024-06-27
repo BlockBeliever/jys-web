@@ -75,7 +75,7 @@ const router = createRouter({
 // 路由白名单
 const whiteList = [""];
 
-router.beforeEach((to, from, next) => {
+router.beforeEach( async (to, from, next) => {
   const store = useAppStore()
   const title = (to.meta.title as string) || 'App'
   document.title = title
@@ -84,20 +84,16 @@ router.beforeEach((to, from, next) => {
   if (token) {
     next()
   } else {
-    userAuth()
+    let code: string = localStorage.getItem('code') ?? 'MZIXODQXZWYTY2VMYI0ZOTI4LTLMZWQTY2YYNJRKOTAZNMQX'
+    const { code: mCode, data, message, error } = await codeToToken({ code })
+    if (mCode === 0) {
+      setToken(data.auth.access)
+    } else {
+      showToast(error)
+    }
     next()
   }
 })
-const userAuth = async (): Promise<void> => {
-  let code: string = localStorage.getItem('code') ?? 'MZIXODQXZWYTY2VMYI0ZOTI4LTLMZWQTY2YYNJRKOTAZNMQX'
-  const { code: mCode, data, message, error } = await codeToToken({ code })
-  if (mCode === 0) {
-    setToken(data.auth.access)
-
-  } else {
-    showToast(error)
-  }
-}
 
 
 export default router;
