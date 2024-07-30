@@ -40,7 +40,6 @@ declare module '@vue/runtime-core' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Service: typeof import('./src/components/service/index.vue')['default']
-    ServiceService: typeof import('./src/components/service/service.vue')['default']
     SvgIcon: typeof import('./src/components/SvgIcon.vue')['default']
     Tabbar: typeof import('./src/components/Tabbar.vue')['default']
     VanActionSheet: typeof import('vant/es')['ActionSheet']

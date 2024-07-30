@@ -101,7 +101,7 @@ const items = [
     value: 4,
   },
   {
-    title: t("myOrder.confirmed"),
+    title: t("myOrder.completed"),
     value: 2,
   },
   // {

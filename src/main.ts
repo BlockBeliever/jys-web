@@ -25,7 +25,7 @@ app.use(Lazyload, {
 app.config.globalProperties.$t = i18n.global.t;
 app.use(i18n)
 import vConsole from 'vconsole'
-const vconsole = new vConsole()
+// const vconsole = new vConsole()
 setupVant(app)
 setupStore(app)
 app.use(router)
