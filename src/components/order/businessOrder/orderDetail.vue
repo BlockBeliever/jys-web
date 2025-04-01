@@ -155,7 +155,7 @@
         <div
           v-if="detail.order_status === 5 && detail.dispute_symbol !== 2"
           class="botton"
-          @click="sureOrder"
+          @click="releaseToken"
         >
           {{ $t("myOrder.confirmOrder") }}
         </div>
@@ -230,8 +230,14 @@ onActivated(() => {
       // 关闭支付窗口回调
       router.push("/order/authSuccess");
       await refreshOrder({ order_id_seller: detail.value.order_id_seller });
+      locked.value = false;
     }
     bridge.registerHandler("responsePayDapp", responsePayDapp);
+    async function responseReleaseToken(data: any) {
+      await sureOrder()
+      locked.value = false
+    }
+    bridge.registerHandler("responseReleaseToken", responseReleaseToken);
   });
   payWay.value = "";
   loading.value = true;
@@ -249,27 +255,42 @@ const getDetail = async () => {
     (item: any) => item.symbol === data.order_transaction_way
   )[0].name;
 };
-
-// 卖家确认订单并支付
-// const payOrder = async () => {
-//   const { code, data, error } = await confirmOrder({
-//     id: detail.value.id
-//   })
-//   if (code === 0) {
-//     handlePayMent(data)
-//   } else {
-//     showToast(error)
-//   }
-// }
-const handlePayMent = (order: any) => {
+const locked = ref<boolean>(false)
+const releaseToken = () => {
+  if (locked.value) return
+  locked.value = true;
   (window as any).WebViewJavascriptBridge.callHandler(
-    "payDapp",
+    "releaseTokenDapp",
     {
       order_id: detail.value.order_id_seller,
       amount: divide(detail.value.order_num),
       price: detail.value.pay_amount,
       token_id: coinTypes[detail.value.pay_coin],
       symbol: detail.value.pay_coin,
+      buyer_wallet_address: detail.value.buyer_wallet_address,
+      buyer_wallet_name: detail.value.buyer_wallet_name,
+      seller_wallet_address: detail.value.seller_wallet_address,
+      seller_wallet_name: detail.value.seller_wallet_name
+    },
+    function (responseData: any) {}
+  );
+}
+
+const handlePayMent = (order: any) => {
+  if (locked.value) return
+  locked.value = true;
+  (window as any).WebViewJavascriptBridge.callHandler(
+    "transferDapp",
+    {
+      order_id: detail.value.order_id_seller,
+      amount: divide(detail.value.order_num),
+      price: detail.value.pay_amount,
+      token_id: coinTypes[detail.value.pay_coin],
+      symbol: detail.value.pay_coin,
+      buyer_wallet_address: detail.value.buyer_wallet_address,
+      buyer_wallet_name: detail.value.buyer_wallet_name,
+      seller_wallet_address: detail.value.seller_wallet_address,
+      seller_wallet_name: detail.value.seller_wallet_name
     },
     function (responseData: any) {}
   );

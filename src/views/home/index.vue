@@ -120,7 +120,8 @@ onMounted(() => {
   getService();
   getUid();
 });
-onActivated(() => { });
+onActivated(() => {
+});
 // 获取客服信息
 const getService = async () => {
   const { data } = await getCustomerService({});

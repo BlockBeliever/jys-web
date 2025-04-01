@@ -172,7 +172,7 @@
         <div
           class="botton"
           v-if="detail.order_status === 6 && detail.dispute_symbol !== 2"
-          @click="sureClick"
+          @click="releaseToken"
         >
           {{ $t("myOrder.confirmOrder") }}
         </div>
@@ -250,6 +250,11 @@ onActivated(() => {
       getDetail();
     }
     bridge.registerHandler("responsePayDapp", responsePayDapp);
+    async function responseReleaseToken(data: any) {
+      await sureClick()
+      locked.value = false
+    }
+    bridge.registerHandler("responseReleaseToken", responseReleaseToken);
   });
   payWay.value = "";
   loading.value = true;
@@ -325,6 +330,27 @@ const appealClick = () => {
 const sceneImg = (images: any, index: number) => {
   imagePreview(images, index);
 };
+
+const locked = ref<boolean>(false)
+const releaseToken = () => {
+  // if (locked.value) return
+  locked.value = true;
+  (window as any).WebViewJavascriptBridge.callHandler(
+    "releaseTokenDapp",
+    {
+      order_id: detail.value.order_id_buyer,
+      amount: divide(detail.value.order_num),
+      price: detail.value.pay_amount,
+      token_id: coinTypes[detail.value.pay_coin],
+      symbol: detail.value.pay_coin,
+      buyer_wallet_address: detail.value.buyer_wallet_address,
+      buyer_wallet_name: detail.value.buyer_wallet_name,
+      seller_wallet_address: detail.value.seller_wallet_address,
+      seller_wallet_name: detail.value.seller_wallet_name
+    },
+    function (responseData: any) {}
+  );
+}
 
 // 确认订单
 const sureClick = async () => {

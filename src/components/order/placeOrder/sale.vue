@@ -14,9 +14,9 @@
       </van-nav-bar>
       <div class="head">
         <!-- <span>自由理财 每日收益 随买随卖</span> -->
-        <span>{{
-          `${$t("placeOrder.dailyIncome")} ${$t("placeOrder.buyAndSell")}`
-        }}</span>
+        <span>
+          {{`${$t("placeOrder.dailyIncome")} ${$t("placeOrder.buyAndSell")}`}}
+        </span>
       </div>
       <img class="circle" src="@/assets/img/order/circle.png" alt="" />
       <div class="opacity-bg">
@@ -67,11 +67,10 @@
         <div class="limit">
           <img src="@/assets/img/order/x.png" alt="" />
           <span class="text">{{ $t("placeOrder.limit") }}</span>
-          <span class="number"
-            >{{
-              `${divide(detailData.goods_min)}-${divide(detailData.goods_max)}`
-            }}{{ detailData.goods_pay_coin }}</span
-          >
+          <span class="number">
+            {{`${divide(detailData.goods_min)}-${divide(detailData.goods_max)}`}}
+            {{ detailData.goods_pay_coin }}
+          </span>
         </div>
         <!-- 可得 -->
         <div class="obtainable">
@@ -100,6 +99,21 @@
           <span class="pay-type">{{ paymentName }}</span>
           <!-- <div class="tag">及时付款</div> -->
         </div>
+      </div>
+      <!------------- wallet address ---------------->
+      <div class="payment">
+        <van-field
+          style="border-radius: 12px;"
+          v-model="checkedWalletAddress"
+          label-align="top"
+          is-link
+          readonly
+          name="picker"
+          :label="$t('ad.walletAddress')"
+          :placeholder="$t('ad.pleaseSelectAddress')"
+          @click="showAddressPopupClick"
+        >
+        </van-field>
       </div>
       <!-- 商家信息 -->
       <div class="business">
@@ -133,6 +147,27 @@
     :description="$t('placeOrder.paymentMethod')"
     close-on-click-action
   />
+  <van-popup v-model:show="showAddressPopup" position="bottom" round>
+    <div class="currency-list">
+      <van-radio-group v-model="showAddressChecked" @change="changeAddressChecked">
+        <van-cell-group inset>
+          <van-cell v-for="item in wallets">
+            <template #title>
+              <div class="left">
+                <div class="name">
+                  <div>{{ item.wallet_name }}</div>
+                  <div>{{ item.wallet_address }}</div>
+                </div>
+              </div>
+            </template>
+            <template #right-icon>
+              <van-radio :name="item.id + ''" />
+            </template>
+          </van-cell>
+        </van-cell-group>
+      </van-radio-group>
+    </div>
+  </van-popup>
 </template>
 
 <script setup lang="ts">
@@ -147,7 +182,10 @@ const route = useRoute();
 const router = useRouter();
 
 const form = ref();
+const wallets = ref<any[]>([])
 onActivated(() => {
+  const walletData = localStorage.getItem("pnc_wallets") ?? '[]';
+  wallets.value = JSON.parse(walletData);
   // flutter交互
   setupWebViewJavascriptBridge(function (bridge: any) {
     async function defaultHandler(message: any) {
@@ -163,6 +201,7 @@ onActivated(() => {
       // 关闭支付窗口回调
       router.push("/order/paySuccess");
       await refreshOrder({ order_id_buyer: saleOrder.value.order_id_buyer });
+      locked.value = false;
     }
     bridge.registerHandler("responsePayDapp", responsePayDapp);
   });
@@ -219,7 +258,7 @@ const maximumAction = () => {
 };
 // 校验输入框
 const regex = /^(0|([1-9][0-9]*))(\.[\d]+)?$/;
-const validatorMessage = (val: number) => {
+const validatorMessage = (val: number) : any => {
   if (!regex.test(val + "")) {
     return t("placeOrder.pleaseEnterNumber");
   }
@@ -265,6 +304,14 @@ const submitOrder = async () => {
     goods_id: detailData.value.id,
     pay_way_id: paymentId.value,
     number: active.value ? multiply(inputNum.value) : multiply(resultNum.value),
+    seller_wallet_name: wallets.value.filter(
+      (item: any) => Number(showAddressChecked.value) === item.id
+    )[0]?.wallet_name,
+    seller_wallet_address: wallets.value.filter(
+      (item: any) => Number(showAddressChecked.value) === item.id
+    )[0]?.wallet_address,
+    buyer_wallet_name: detailData.value.wallet_name,
+    buyer_wallet_address: detailData.value.wallet_address,
   });
   if (code === 0) {
     saleOrder.value = data;
@@ -276,15 +323,36 @@ const submitOrder = async () => {
     showToast(error);
   }
 };
+// const handlePayMent = (order: any) => {
+//   (window as any).WebViewJavascriptBridge.callHandler(
+//     "payDapp",
+//     {
+//       order_id: order.order_id_buyer,
+//       amount: divide(order.order_num),
+//       price: order.order_num,
+//       token_id: coinTypes[order.pay_coin],
+//       symbol: order.pay_coin,
+//     },
+//     function (responseData: any) {}
+//   );
+// };
+
+const locked = ref<boolean>(false)
 const handlePayMent = (order: any) => {
+  if (locked.value) return
+  locked.value = true;
   (window as any).WebViewJavascriptBridge.callHandler(
-    "payDapp",
+    "transferDapp",
     {
       order_id: order.order_id_buyer,
       amount: divide(order.order_num),
       price: order.order_num,
       token_id: coinTypes[order.pay_coin],
       symbol: order.pay_coin,
+      buyer_wallet_address: order.buyer_wallet_address,
+      buyer_wallet_name: order.buyer_wallet_name,
+      seller_wallet_address: order.seller_wallet_address,
+      seller_wallet_name: order.seller_wallet_name
     },
     function (responseData: any) {}
   );
@@ -296,6 +364,19 @@ const onClickLeft = () => {
     history.go(-1);
   }
 };
+
+const showAddressPopup = ref<boolean>(false)
+const showAddressChecked = ref<any>(null)
+const checkedWalletAddress = ref<string>("")
+const showAddressPopupClick = () => {
+  showAddressPopup.value = true;
+  showAddressChecked.value = null;
+};
+const changeAddressChecked = () => {
+  checkedWalletAddress.value = wallets.value.filter(
+    (item: any) => Number(showAddressChecked.value) === item.id
+  )[0]?.wallet_name;
+}
 </script>
 
 <style lang="scss" scoped>
@@ -303,5 +384,38 @@ const onClickLeft = () => {
 
 .navBar {
   --van-nav-bar-background: transparent;
+}
+
+.currency-list {
+  width: 100%;
+  margin-bottom: 50px;
+  max-height: 400px;
+  overflow-y: auto;
+
+  .left {
+    height: 50px;
+    display: flex;
+    align-items: center;
+
+    .icon {
+      width: 28px;
+      height: 28px;
+    }
+
+    .name {
+      margin-left: 10px;
+
+      div:nth-child(1) {
+        color: $color-101;
+        font: $font15-500;
+      }
+
+      div:nth-child(2) {
+        margin-top: 2px;
+        color: $color-B8B;
+        font: $font12-400;
+      }
+    }
+  }
 }
 </style>

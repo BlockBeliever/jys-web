@@ -3,84 +3,43 @@
     <!-- form validatorTraType-->
     <van-form class="form" ref="form" @submit="onSubmit">
       <van-cell-group inset>
-        <van-field
-          class="field"
-          v-model="businessName"
-          readonly
-          label-align="top"
-          name="商家名称"
-          :label="$t('ad.merchant')"
-        />
-        <van-field
-          v-model="checkedText"
-          label-align="top"
-          is-link
-          readonly
-          name="picker"
-          :label="$t('ad.currency')"
-          :placeholder="$t('ad.pleaseSelectCurrency')"
-          @click="showPopupClick(1)"
-          :rules="[{ validator: validatorCoin }]"
-        />
-        <van-field
-          v-model="quantity"
-          label-align="top"
-          name="买入数量"
-          :label="$t('ad.buyQuantity')"
-          :placeholder="$t('ad.pleaseEnterQuantity')"
-          :rules="[{ validator: validatorQuantity }]"
-        />
-        <van-field
-          v-model="price"
-          label-align="top"
-          name="价格"
-          :label="$t('ad.price')"
-          :placeholder="$t('ad.pleaseEnterPrice')"
-          :rules="[{ validator: validatorPrice }]"
-        >
+        <van-field class="field" v-model="businessName" readonly label-align="top" name="商家名称"
+          :label="$t('ad.merchant')" />
+        <van-field v-model="checkedText" label-align="top" is-link readonly name="picker" :label="$t('ad.currency')"
+          :placeholder="$t('ad.pleaseSelectCurrency')" @click="showPopupClick(1)"
+          :rules="[{ validator: validatorCoin }]" />
+        <van-field v-model="quantity" label-align="top" name="买入数量" :label="$t('ad.buyQuantity')"
+          :placeholder="$t('ad.pleaseEnterQuantity')" :rules="[{ validator: validatorQuantity }]">
+          <template #extra></template>
+        </van-field>
+        <van-field v-model="price" label-align="top" name="价格" :label="$t('ad.price')"
+          :placeholder="$t('ad.pleaseEnterPrice')" :rules="[{ validator: validatorPrice }]">
           <template #extra>
             <div class="field-right" @click="showPopupClick(2)">
               <span class="coin">{{ checkedText2 }}</span>
-              <span class="text">{{
-                $t("ad.pleaseSelectThePaymentCurrency")
-              }}</span>
+              <span class="text">
+                {{ $t("ad.pleaseSelectThePaymentCurrency") }}
+              </span>
               <img src="@/assets/img/home/top.png" alt="" />
             </div>
           </template>
         </van-field>
-        <van-field
-          class="field"
-          v-model="tradeType"
-          readonly
-          label-align="top"
-          name="交易方式"
-          :label="$t('ad.transactionMethod')"
-          :rules="[{ validator: validatorTraType }]"
-        />
-        <van-field
-          v-model="limitMin"
-          label-align="top"
-          name="限额"
-          :label="$t('ad.minimumLimit')"
-          :placeholder="$t('ad.pleaseEnterMinimumLimit')"
-          :rules="[{ validator: validatorLimitMin }]"
-          @focus="onfocus"
-        >
+        <van-field v-model="checkedWalletAddress" label-align="top" is-link readonly name="picker"
+          :label="$t('ad.walletAddress')" :placeholder="$t('ad.pleaseSelectAddress')" @click="showAddressPopupClick">
+          <template #right-icon></template>
+        </van-field>
+        <van-field class="field" v-model="tradeType" readonly label-align="top" name="交易方式"
+          :label="$t('ad.transactionMethod')" :rules="[{ validator: validatorTraType }]" />
+        <van-field v-model="limitMin" label-align="top" name="限额" :label="$t('ad.minimumLimit')"
+          :placeholder="$t('ad.pleaseEnterMinimumLimit')" :rules="[{ validator: validatorLimitMin }]" @focus="onfocus">
           <template #extra>
             <div class="field-right">
               <!-- <span class="tip">最大不超过 价格*数量</span> -->
             </div>
           </template>
         </van-field>
-        <van-field
-          v-model="limitMax"
-          label-align="top"
-          name="限额"
-          :label="$t('ad.maximumLimit')"
-          :placeholder="$t('ad.pleaseEnterMaximumLimit')"
-          :rules="[{ validator: validatorLimitMax }]"
-          @focus="onfocus"
-        >
+        <van-field v-model="limitMax" label-align="top" name="限额" :label="$t('ad.maximumLimit')"
+          :placeholder="$t('ad.pleaseEnterMaximumLimit')" :rules="[{ validator: validatorLimitMax }]" @focus="onfocus">
           <template #extra>
             <div class="field-right">
               <span class="tip">{{ $t("ad.maximumLimitCondition") }}</span>
@@ -145,6 +104,27 @@
       </van-radio-group>
     </div>
   </van-popup>
+  <van-popup v-model:show="showAddressPopup" position="bottom" round>
+    <div class="currency-list">
+      <van-radio-group v-model="showAddressChecked" @change="changeAddressChecked">
+        <van-cell-group inset>
+          <van-cell v-for="item in wallets">
+            <template #title>
+              <div class="left">
+                <div class="name">
+                  <div>{{ item.wallet_name }}</div>
+                  <div>{{ item.wallet_address }}</div>
+                </div>
+              </div>
+            </template>
+            <template #right-icon>
+              <van-radio :name="item.id + ''" />
+            </template>
+          </van-cell>
+        </van-cell-group>
+      </van-radio-group>
+    </div>
+  </van-popup>
 </template>
 <script setup lang="ts">
 import { coinGet } from "@/api/home";
@@ -155,7 +135,17 @@ import { multiply, divide } from "@/utils/formart";
 import { judgeInput } from "@/utils/judgeInput";
 import { t } from "@/plugins/i18n";
 const form = ref();
+const wallets = ref<any[]>([])
+const value1 = ref(0);
+const value2 = ref('a');
+const option1 = [
+  { text: 'Option1', value: 0 },
+  { text: 'Option2', value: 1 },
+  { text: 'Option3', value: 2 },
+];
 onActivated(() => {
+  const walletData = localStorage.getItem("pnc_wallets") ?? '[]';
+  wallets.value = JSON.parse(walletData);
   // 初始化数据
   getMyShopInfo();
   getCoinData(1);
@@ -208,6 +198,18 @@ const showPopupClick = (val: number) => {
   showPopup2.value = true;
   checked2.value = null; // 重置勾选
 };
+const showAddressPopup = ref<boolean>(false)
+const showAddressChecked = ref<any>(null)
+const checkedWalletAddress = ref<string>("")
+const showAddressPopupClick = () => {
+  showAddressPopup.value = true;
+  showAddressChecked.value = null;
+};
+const changeAddressChecked = () => {
+  checkedWalletAddress.value = wallets.value.filter(
+    (item: any) => Number(showAddressChecked.value) === item.id
+  )[0]?.wallet_name;
+}
 const getCoinData = async (val: number) => {
   const { data } = await coinGet({
     kind: val,
@@ -239,7 +241,7 @@ const changeChecked2 = () => {
 };
 // 校验输入框
 const regex = /^[1-9]\d*$/;
-const validatorCoin = (val: any) => {
+const validatorCoin = (val: any): any => {
   if (val === "") {
     return t("ad.pleaseSelectCurrency");
   }
@@ -249,7 +251,7 @@ const validatorCoin = (val: any) => {
     }
   }
 };
-const validatorQuantity = (val: any) => {
+const validatorQuantity = (val: any): any => {
   if (val === "") {
     return t("ad.pleaseEnterQuantity");
   }
@@ -258,7 +260,7 @@ const validatorQuantity = (val: any) => {
   }
 };
 const regex2 = /^(0|([1-9][0-9]*))(\.[\d]+)?$/;
-const validatorPrice = (val: any) => {
+const validatorPrice = (val: any): any => {
   if (val === "") {
     return t("ad.pleaseEnterPrice");
   }
@@ -266,7 +268,7 @@ const validatorPrice = (val: any) => {
     return t("ad.pleaseEnterNumber");
   }
 };
-const validatorTraType = (val: any) => {
+const validatorTraType = (val: any): any => {
   if (val === "") {
     return t("ad.transactionMethodCondition");
   }
@@ -276,7 +278,7 @@ const validatorTraType = (val: any) => {
     }
   }
 };
-const validatorLimitMin = (val: any) => {
+const validatorLimitMin = (val: any): any => {
   if (val === "") {
     return t("ad.pleaseEnterMinimumLimit");
   }
@@ -296,7 +298,7 @@ const validatorLimitMin = (val: any) => {
     }
   }
 };
-const validatorLimitMax = (val: any) => {
+const validatorLimitMax = (val: any): any => {
   if (val === "") {
     return t("ad.pleaseEnterMaximumLimit");
   }
@@ -319,6 +321,12 @@ const onSubmit = async () => {
     goods_pay_coin: checked2.value * 1,
     goods_min: multiply(limitMin.value),
     goods_max: multiply(limitMax.value),
+    wallet_name: wallets.value.filter(
+      (item: any) => Number(showAddressChecked.value) === item.id
+    )[0]?.wallet_name,
+    wallet_address: wallets.value.filter(
+      (item: any) => Number(showAddressChecked.value) === item.id
+    )[0]?.wallet_address
   });
   if (code === 0) {
     showToast(t("ad.postSucceed"));

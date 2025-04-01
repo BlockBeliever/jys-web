@@ -24,7 +24,7 @@ export default ({ mode }) => defineConfig({
   plugins: [
     vue(),
     AutoImport({
-      imports: ['vue','vue-router'],
+      imports: ['vue', 'vue-router'],
       dirs: [],
       dts: './src/auto-import.d.ts'
     }),
@@ -37,9 +37,9 @@ export default ({ mode }) => defineConfig({
           resolveStyle: (name) => {
             if (['show-toast', 'show-loading-toast', 'close-toast', 'show-success-toast', 'show-fail-toast'].includes(name)) {
               return '../es/toast/style'
-            } else if(name === 'show-image-preview'){
+            } else if (name === 'show-image-preview') {
               return '..//es/image-preview/style'
-            } else if(name === 'show-confirm-dialog'){
+            } else if (name === 'show-confirm-dialog') {
               return '../es/dialog/style'
             }
             return `../es/${name}/style`
