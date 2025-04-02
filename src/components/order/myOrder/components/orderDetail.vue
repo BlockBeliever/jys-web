@@ -40,30 +40,21 @@
     <div class="order">
       <div class="top">
         <img :src="detail.goods_coin_icon" alt="" />
-        <span
-          >{{ detail.goods_type === 1 ? $t("myOrder.sell") : $t("myOrder.buy")
-          }}{{ detail.goods_coin }}</span
-        >
+        <span>{{ detail.goods_type === 1 ? $t("myOrder.sell") : $t("myOrder.buy")
+        }}{{ detail.goods_coin }}</span>
       </div>
       <section>
         <div class="item">
           <span class="left">{{ $t("myOrder.orderNumber") }}</span>
           <div class="right">
             <span class="text">{{ detail.order_id }}</span>
-            <img
-              class="copy"
-              src="@/assets/img/order/copy.png"
-              alt=""
-              @click="copyCode(detail.order_id)"
-            />
+            <img class="copy" src="@/assets/img/order/copy.png" alt="" @click="copyCode(detail.order_id)" />
           </div>
         </div>
         <div class="item">
           <span class="left">{{ $t("myOrder.unitPrice") }}</span>
           <div class="right">
-            <span class="text"
-              >{{ detail.goods_price }} {{ detail.goods_pay_coin }}/个</span
-            >
+            <span class="text">{{ detail.goods_price }} {{ detail.goods_pay_coin }}/个</span>
           </div>
         </div>
         <div class="item">
@@ -75,10 +66,10 @@
         <div class="item">
           <span class="left">{{ $t("myOrder.totalAmount") }}</span>
           <div class="right">
-            <span class="text2"
-              >{{ divide(detail.order_amount) }}
-              {{ detail.goods_pay_coin }}</span
-            >
+            <span class="text2">
+              {{ divide(detail.order_amount) }}
+              {{ detail.goods_pay_coin }}
+            </span>
           </div>
         </div>
         <div class="item">
@@ -99,30 +90,22 @@
         <div class="item" v-if="detail.order_status === 2">
           <span class="left">{{ $t("myOrder.finishTime") }}</span>
           <div class="right">
-            <span class="text">{{
-              moment(detail.updated_at * 1000).format("YYYY-MM-DD HH:mm:ss")
-            }}</span>
+            <span class="text">
+              {{ moment(detail.updated_at * 1000).format("YYYY-MM-DD HH:mm:ss") }}
+            </span>
           </div>
         </div>
-        <div
-          class="item"
-          v-if="
-            detail.order_type === 2 && [2, 5, 6].includes(detail.order_status)
-          "
-        >
+        <div class="item" v-if="
+          detail.order_type === 2 && [2, 5, 6].includes(detail.order_status)
+        ">
           <span class="left">{{ $t("myOrder.paymentImage") }}</span>
           <div class="right">
-            <img
-              class="voucher"
-              v-for="(img, index) in detail.order_picture"
-              :src="img"
-              alt=""
-              @click="sceneImg(detail.order_picture, index)"
-            />
+            <img class="voucher" v-for="(img, index) in detail.order_picture" :src="img" alt=""
+              @click="sceneImg(detail.order_picture, index)" />
           </div>
         </div>
       </section>
-      <div class="btn-box" v-if="detail.order_type === 1">
+      <!-- <div class="btn-box" v-if="detail.order_type === 1">
         <div class="botton" v-if="detail.order_status === 1" @click="payClick">
           {{ $t("myOrder.payment") }}
         </div>
@@ -133,76 +116,63 @@
         >
           {{ $t("myOrder.cancelOrder") }}
         </div>
-      </div>
-      <div class="btn-box" v-else>
-        <div
-          class="botton"
-          v-if="
-            detail.order_status === 1 &&
-            detail.goods_type === 1 &&
-            detail.dispute_symbol !== 2
-          "
-          @click="payClick"
-        >
+      </div> -->
+      <div class="btn-box">
+        <div class="botton" v-if="
+          detail.order_status === 1 &&
+          detail.goods_type === 1 &&
+          detail.dispute_symbol !== 2
+        " @click="handlePayMent">
           {{ $t("myOrder.payment") }}
         </div>
-        <div
-          class="botton"
-          v-if="
+        <template v-if="detail.order_type === 1">
+          <div class="botton" v-if="
             detail.order_status === 1 &&
             detail.goods_type === 2 &&
             detail.dispute_symbol !== 2
-          "
-          @click="uploadClick"
-        >
-          {{ $t("myOrder.uploadPaymentImage") }}
-        </div>
-        <div
-          class="cancel"
-          v-if="
-            (detail.order_status === 4 && detail.goods_type === 2) ||
-            (detail.order_status === 1 &&
-              detail.goods_type === 1 &&
-              detail.dispute_symbol !== 2)
-          "
-          @click="cancelClick"
-        >
+          " @click="payClick">
+            {{ $t("myOrder.payment") }}
+          </div>
+        </template>
+        <template v-else>
+          <div class="botton" v-if="
+            detail.order_status === 1 &&
+            detail.goods_type === 2 &&
+            detail.dispute_symbol !== 2
+          " @click="uploadClick">
+            {{ $t("myOrder.uploadPaymentImage") }}
+          </div>
+        </template>
+        <div class="cancel" v-if="
+          (detail.order_status === 4 && detail.goods_type === 2) ||
+          (detail.order_status === 1 &&
+            detail.goods_type === 1 &&
+            detail.dispute_symbol !== 2)
+        " @click="cancelClick">
           {{ $t("myOrder.cancelOrder") }}
         </div>
-        <div
-          class="botton"
-          v-if="detail.order_status === 6 && detail.dispute_symbol !== 2"
-          @click="releaseToken"
-        >
+        <div class="botton" v-if="detail.order_status === 6 && detail.dispute_symbol !== 2" @click="releaseToken">
           {{ $t("myOrder.confirmOrder") }}
         </div>
-        <div
-          class="cancel"
-          v-if="
-            ((detail.order_status !== 4 && detail.goods_type === 2) ||
-              (detail.order_status !== 1 && detail.goods_type === 1)) &&
-            detail.dispute_symbol !== 2 &&
-            ![2, 3].includes(detail.order_status)
-          "
-          @click="appealClick"
-        >
+        <div class="cancel" v-if="
+          ((detail.order_status !== 4 && detail.goods_type === 2) ||
+            (detail.order_status !== 1 && detail.goods_type === 1)) &&
+          detail.dispute_symbol !== 2 &&
+          ![2, 3].includes(detail.order_status)
+        " @click="appealClick">
           {{ $t("myOrder.orderComplaint") }}
         </div>
-        <div
-          class="botton"
-          v-if="
-            detail.dispute_symbol === 2 && store.getUid === detail.dispute_user
-          "
-          @click="appealCancelClick"
-        >
+        <div class="botton" v-if="
+          detail.dispute_symbol === 2 && store.getUid === detail.dispute_user
+        " @click="appealCancelClick">
           {{ $t("myOrder.cancelComplaint") }}
         </div>
       </div>
       <div class="service">
         <span>{{ $t("myOrder.anyProblems") }}</span>
-        <span @click="contactService">{{
-          $t("myOrder.contactHelpCenter")
-        }}</span>
+        <span @click="contactService">
+          {{ $t("myOrder.contactHelpCenter") }}
+        </span>
       </div>
     </div>
   </div>
@@ -245,11 +215,24 @@ onActivated(() => {
     }
     bridge.init(defaultHandler);
     async function responsePayDapp(data: any) {
+      const { code, error } = await confirmOrder({
+        id: detail.value.id,
+        pictures: [],
+      });
+      if (code === 0) {
+        showToast(t("myOrder.orderConfirmedSuccessfully"));
+        getDetail();
+      } else {
+        showToast(error);
+      }
+    }
+    bridge.registerHandler("responsePayDapp", responsePayDapp);
+    async function responseTransferDapp(data: any) {
       // 关闭支付窗口回调
       await refreshOrder({ order_id_buyer: detail.value.order_id_buyer });
       getDetail();
     }
-    bridge.registerHandler("responsePayDapp", responsePayDapp);
+    bridge.registerHandler("responseTransferDapp", responseTransferDapp);
     async function responseReleaseToken(data: any) {
       await sureClick()
       locked.value = false
@@ -273,18 +256,42 @@ const getDetail = async () => {
   )[0].name;
 };
 
+const handlePayMent = () => {
+  if (locked.value) return
+  locked.value = true;
+  (window as any).WebViewJavascriptBridge.callHandler(
+    "transferDapp",
+    {
+      order_id: detail.value.order_id_buyer,
+      amount: divide(detail.value.order_num),
+      price: detail.value.order_num,
+      token_id: coinTypes[detail.value.goods_coin],
+      symbol: detail.value.goods_coin,
+      buyer_wallet_address: detail.value.buyer_wallet_address,
+      buyer_wallet_name: detail.value.buyer_wallet_name,
+      seller_wallet_address: detail.value.seller_wallet_address,
+      seller_wallet_name: detail.value.seller_wallet_name
+    },
+    function (responseData: any) { }
+  );
+};
+
 // 支付
 const payClick = () => {
   (window as any).WebViewJavascriptBridge.callHandler(
     "payDapp",
     {
       order_id: detail.value.order_id_buyer,
-      amount: divide(detail.value.order_num),
+      amount: divide(detail.value.order_amount),
       price: detail.value.pay_amount,
-      token_id: coinTypes[detail.value.pay_coin],
-      symbol: detail.value.pay_coin,
+      token_id: coinTypes[detail.value.goods_pay_coin],
+      symbol: detail.value.goods_pay_coin,
+      buyer_wallet_address: detail.value.seller_wallet_address,
+      buyer_wallet_name: detail.value.seller_wallet_name,
+      seller_wallet_address: detail.value.buyer_wallet_address,
+      seller_wallet_name: detail.value.buyer_wallet_name
     },
-    function (responseData: any) {}
+    function (responseData: any) { }
   );
 };
 // 取消订单
@@ -333,7 +340,7 @@ const sceneImg = (images: any, index: number) => {
 
 const locked = ref<boolean>(false)
 const releaseToken = () => {
-  // if (locked.value) return
+  if (locked.value) return
   locked.value = true;
   (window as any).WebViewJavascriptBridge.callHandler(
     "releaseTokenDapp",
@@ -341,14 +348,14 @@ const releaseToken = () => {
       order_id: detail.value.order_id_buyer,
       amount: divide(detail.value.order_num),
       price: detail.value.pay_amount,
-      token_id: coinTypes[detail.value.pay_coin],
-      symbol: detail.value.pay_coin,
+      token_id: coinTypes[detail.value.goods_coin],
+      symbol: detail.value.goods_coin,
       buyer_wallet_address: detail.value.buyer_wallet_address,
       buyer_wallet_name: detail.value.buyer_wallet_name,
       seller_wallet_address: detail.value.seller_wallet_address,
       seller_wallet_name: detail.value.seller_wallet_name
     },
-    function (responseData: any) {}
+    function (responseData: any) { }
   );
 }
 

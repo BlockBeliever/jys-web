@@ -1,13 +1,8 @@
 <template>
   <van-form @submit="submitOrder" ref="form">
     <div class="container">
-      <van-nav-bar
-        class="navBar"
-        :fixed="true"
-        :title="$t('placeOrder.placeOrder')"
-        :border="false"
-        @click-left="onClickLeft"
-      >
+      <van-nav-bar class="navBar" :fixed="true" :title="$t('placeOrder.placeOrder')" :border="false"
+        @click-left="onClickLeft">
         <template #left>
           <van-icon name="arrow-left" size="18" color="black" />
         </template>
@@ -15,7 +10,7 @@
       <div class="head">
         <!-- <span>自由理财 每日收益 随买随卖</span> -->
         <span>
-          {{`${$t("placeOrder.dailyIncome")} ${$t("placeOrder.buyAndSell")}`}}
+          {{ `${$t("placeOrder.dailyIncome")} ${$t("placeOrder.buyAndSell")}` }}
         </span>
       </div>
       <img class="circle" src="@/assets/img/order/circle.png" alt="" />
@@ -41,14 +36,8 @@
         <!-- 输入框 -->
         <div class="field">
           <div class="field-left">
-            <van-field
-              v-model="inputNum"
-              center
-              clearable
-              label=""
-              placeholder="0.00"
-              :rules="[{ validator: validatorMessage }]"
-            >
+            <van-field v-model="inputNum" center clearable label="" placeholder="0.00"
+              :rules="[{ validator: validatorMessage }]">
               <template #extra> </template>
             </van-field>
           </div>
@@ -68,7 +57,7 @@
           <img src="@/assets/img/order/x.png" alt="" />
           <span class="text">{{ $t("placeOrder.limit") }}</span>
           <span class="number">
-            {{`${divide(detailData.goods_min)}-${divide(detailData.goods_max)}`}}
+            {{ `${divide(detailData.goods_min)}-${divide(detailData.goods_max)}` }}
             {{ detailData.goods_pay_coin }}
           </span>
         </div>
@@ -79,12 +68,10 @@
               ? $t("placeOrder.available")
               : $t("placeOrder.actualPay")
           }}</span>
-          <span class="number" v-if="inputNum"
-            >{{ resultNum }}
+          <span class="number" v-if="inputNum">{{ resultNum }}
             {{
               active !== 0 ? detailData.goods_pay_coin : detailData.goods_coin
-            }}</span
-          >
+            }}</span>
         </div>
       </div>
       <img class="tip-logo" src="@/assets/img/order/tip-logo.png" alt="" />
@@ -102,17 +89,9 @@
       </div>
       <!------------- wallet address ---------------->
       <div class="payment">
-        <van-field
-          style="border-radius: 12px;"
-          v-model="checkedWalletAddress"
-          label-align="top"
-          is-link
-          readonly
-          name="picker"
-          :label="$t('ad.walletAddress')"
-          :placeholder="$t('ad.pleaseSelectAddress')"
-          @click="showAddressPopupClick"
-        >
+        <van-field style="border-radius: 12px;" v-model="checkedWalletAddress" label-align="top" is-link readonly
+          name="picker" :label="$t('ad.walletAddress')" :placeholder="$t('ad.pleaseSelectAddress')"
+          @click="showAddressPopupClick">
         </van-field>
       </div>
       <!-- 商家信息 -->
@@ -139,14 +118,8 @@
       </van-button>
     </div>
   </van-form>
-  <van-action-sheet
-    @select="selectPay"
-    v-model:show="showSheet"
-    :actions="actions"
-    :cancel-text="$t('placeOrder.cancel')"
-    :description="$t('placeOrder.paymentMethod')"
-    close-on-click-action
-  />
+  <van-action-sheet @select="selectPay" v-model:show="showSheet" :actions="actions"
+    :cancel-text="$t('placeOrder.cancel')" :description="$t('placeOrder.paymentMethod')" close-on-click-action />
   <van-popup v-model:show="showAddressPopup" position="bottom" round>
     <div class="currency-list">
       <van-radio-group v-model="showAddressChecked" @change="changeAddressChecked">
@@ -197,13 +170,13 @@ onActivated(() => {
       });
     }
     bridge.init(defaultHandler);
-    async function responsePayDapp(data: any) {
+    async function responseTransferDapp(data: any) {
       // 关闭支付窗口回调
+      locked.value = false;
       router.push("/order/paySuccess");
       await refreshOrder({ order_id_buyer: saleOrder.value.order_id_buyer });
-      locked.value = false;
     }
-    bridge.registerHandler("responsePayDapp", responsePayDapp);
+    bridge.registerHandler("responseTransferDapp", responseTransferDapp);
   });
   getAdDetail();
   nextTick(() => {
@@ -253,12 +226,12 @@ const maximumAction = () => {
     active.value === 0
       ? divide(detailData.value.goods_max)
       : Math.floor(
-          divide(detailData.value.goods_max / detailData.value.goods_price)
-        );
+        divide(detailData.value.goods_max / detailData.value.goods_price)
+      );
 };
 // 校验输入框
 const regex = /^(0|([1-9][0-9]*))(\.[\d]+)?$/;
-const validatorMessage = (val: number) : any => {
+const validatorMessage = (val: number): any => {
   if (!regex.test(val + "")) {
     return t("placeOrder.pleaseEnterNumber");
   }
@@ -267,9 +240,6 @@ const validatorMessage = (val: number) : any => {
       return t("placeOrder.limitExceeded");
     }
     if (val < divide(detailData.value.goods_min)) {
-      // return `${divide(detailData.value.goods_min)}${
-      //   detailData.value.goods_pay_coin
-      // }起买`;
       return `${t("placeOrder.minimumAmount")}${divide(
         detailData.value.goods_min
       )}${detailData.value.goods_pay_coin}`;
@@ -285,9 +255,6 @@ const validatorMessage = (val: number) : any => {
       val * detailData.value.goods_price <
       divide(detailData.value.goods_min)
     ) {
-      // return `${divide(detailData.value.goods_min)}${
-      //   detailData.value.goods_pay_coin
-      // }起买`;
       return `${t("placeOrder.minimumAmount")}${divide(
         detailData.value.goods_min
       )}${detailData.value.goods_pay_coin}`;
@@ -298,6 +265,10 @@ const saleOrder = ref({} as any);
 const submitOrder = async () => {
   if (!paymentId.value) {
     showToast(t("placeOrder.pleaseSelectPaymentMethod"));
+    return;
+  }
+  if (!showAddressChecked.value) {
+    showToast(t("placeOrder.pleaseSelectWalletAddress"));
     return;
   }
   const { code, data, error } = await createOrder({
@@ -315,27 +286,11 @@ const submitOrder = async () => {
   });
   if (code === 0) {
     saleOrder.value = data;
-    // 调起键盘支付 order_type 1线上 2线下
-    // if (data.order_type === 1) {
     handlePayMent(data);
-    // }
   } else {
     showToast(error);
   }
 };
-// const handlePayMent = (order: any) => {
-//   (window as any).WebViewJavascriptBridge.callHandler(
-//     "payDapp",
-//     {
-//       order_id: order.order_id_buyer,
-//       amount: divide(order.order_num),
-//       price: order.order_num,
-//       token_id: coinTypes[order.pay_coin],
-//       symbol: order.pay_coin,
-//     },
-//     function (responseData: any) {}
-//   );
-// };
 
 const locked = ref<boolean>(false)
 const handlePayMent = (order: any) => {
@@ -347,14 +302,14 @@ const handlePayMent = (order: any) => {
       order_id: order.order_id_buyer,
       amount: divide(order.order_num),
       price: order.order_num,
-      token_id: coinTypes[order.pay_coin],
-      symbol: order.pay_coin,
+      token_id: coinTypes[order.goods_coin],
+      symbol: order.goods_coin,
       buyer_wallet_address: order.buyer_wallet_address,
       buyer_wallet_name: order.buyer_wallet_name,
       seller_wallet_address: order.seller_wallet_address,
       seller_wallet_name: order.seller_wallet_name
     },
-    function (responseData: any) {}
+    function (responseData: any) { }
   );
 };
 const onClickLeft = () => {

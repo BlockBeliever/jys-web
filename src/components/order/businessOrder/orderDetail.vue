@@ -97,9 +97,11 @@
         <div class="item" v-if="detail.order_status === 2">
           <span class="left">{{ $t("myOrder.finishTime") }}</span>
           <div class="right">
-            <span class="text">{{
-              moment(detail.updated_at * 1000).format("YYYY-MM-DD HH:mm:ss")
-            }}</span>
+            <span class="text">
+              {{
+                moment(detail.updated_at * 1000).format("YYYY-MM-DD HH:mm:ss")
+              }}
+            </span>
           </div>
         </div>
         <div
@@ -122,11 +124,54 @@
       </section>
       <div class="btn-box" v-if="detail.order_type === 1">
         <div
-          v-if="detail.order_status === 4"
+          v-if="
+            detail.order_status === 4 &&
+            detail.goods_type === 2 &&
+            detail.dispute_symbol !== 2
+          "
           class="botton"
           @click="handlePayMent"
         >
           {{ $t("myOrder.authorize") }}
+        </div>
+        <div
+          v-if="
+            detail.order_status === 4 &&
+            detail.goods_type === 1 &&
+            detail.dispute_symbol !== 2
+          "
+          class="botton"
+          @click="payClick"
+        >
+          {{ $t("myOrder.payment") }}
+        </div>
+        <div
+          v-if="detail.order_status === 5 && detail.goods_type === 2 && detail.dispute_symbol !== 2"
+          class="botton"
+          @click="releaseToken"
+        >
+          {{ $t("myOrder.confirmOrder") }}
+        </div>
+        <div
+          class="cancel"
+          v-if="
+            ((detail.order_status !== 4 && detail.goods_type === 2) ||
+              (detail.order_status !== 1 && detail.goods_type === 1)) &&
+            detail.dispute_symbol !== 2 &&
+            ![2, 3].includes(detail.order_status)
+          "
+          @click="appealClick"
+        >
+          {{ $t("myOrder.orderComplaint") }}
+        </div>
+        <div
+          class="botton"
+          v-if="
+            detail.dispute_symbol === 2 && store.getUid === detail.dispute_user
+          "
+          @click="appealCancelClick"
+        >
+          {{ $t("myOrder.cancelComplaint") }}
         </div>
       </div>
       <div v-else class="btn-box">
@@ -153,7 +198,7 @@
           {{ $t("myOrder.uploadPaymentImage") }}
         </div>
         <div
-          v-if="detail.order_status === 5 && detail.dispute_symbol !== 2"
+          v-if="detail.order_status === 5 && detail.goods_type === 2 && detail.dispute_symbol !== 2"
           class="botton"
           @click="releaseToken"
         >
@@ -183,9 +228,11 @@
       </div>
       <div class="service">
         <span>{{ $t("myOrder.anyProblems") }}</span>
-        <span @click="contactService">{{
-          $t("myOrder.contactHelpCenter")
-        }}</span>
+        <span @click="contactService">
+          {{
+            $t("myOrder.contactHelpCenter")
+          }}
+        </span>
       </div>
     </div>
   </div>
@@ -227,15 +274,28 @@ onActivated(() => {
     }
     bridge.init(defaultHandler);
     async function responsePayDapp(data: any) {
-      // 关闭支付窗口回调
-      router.push("/order/authSuccess");
-      await refreshOrder({ order_id_seller: detail.value.order_id_seller });
-      locked.value = false;
+      const { code, error } = await confirmOrder({
+        id: detail.value.id,
+        pictures: [],
+      });
+      if (code === 0) {
+        showToast(t("myOrder.orderConfirmedSuccessfully"));
+        getDetail();
+      } else {
+        showToast(error);
+      }
     }
     bridge.registerHandler("responsePayDapp", responsePayDapp);
+    async function responseTransferDapp(data: any) {
+      // 关闭支付窗口回调
+      locked.value = false;
+      router.push("/order/authSuccess");
+      await refreshOrder({ order_id_seller: detail.value.order_id_seller });
+    }
+    bridge.registerHandler("responseTransferDapp", responseTransferDapp);
     async function responseReleaseToken(data: any) {
-      await sureOrder()
       locked.value = false
+      await sureOrder()
     }
     bridge.registerHandler("responseReleaseToken", responseReleaseToken);
   });
@@ -265,8 +325,8 @@ const releaseToken = () => {
       order_id: detail.value.order_id_seller,
       amount: divide(detail.value.order_num),
       price: detail.value.pay_amount,
-      token_id: coinTypes[detail.value.pay_coin],
-      symbol: detail.value.pay_coin,
+      token_id: coinTypes[detail.value.goods_coin],
+      symbol: detail.value.goods_coin,
       buyer_wallet_address: detail.value.buyer_wallet_address,
       buyer_wallet_name: detail.value.buyer_wallet_name,
       seller_wallet_address: detail.value.seller_wallet_address,
@@ -275,6 +335,25 @@ const releaseToken = () => {
     function (responseData: any) {}
   );
 }
+
+// 支付
+const payClick = () => {
+  (window as any).WebViewJavascriptBridge.callHandler(
+    "payDapp",
+    {
+      order_id: detail.value.order_id_buyer,
+      amount: divide(detail.value.order_amount),
+      price: detail.value.pay_amount,
+      token_id: coinTypes[detail.value.goods_pay_coin],
+      symbol: detail.value.goods_pay_coin,
+      buyer_wallet_address: detail.value.seller_wallet_address,
+      buyer_wallet_name: detail.value.seller_wallet_name,
+      seller_wallet_address: detail.value.buyer_wallet_address,
+      seller_wallet_name: detail.value.buyer_wallet_name
+    },
+    function (responseData: any) { }
+  );
+};
 
 const handlePayMent = (order: any) => {
   if (locked.value) return
@@ -285,8 +364,8 @@ const handlePayMent = (order: any) => {
       order_id: detail.value.order_id_seller,
       amount: divide(detail.value.order_num),
       price: detail.value.pay_amount,
-      token_id: coinTypes[detail.value.pay_coin],
-      symbol: detail.value.pay_coin,
+      token_id: coinTypes[detail.value.goods_coin],
+      symbol: detail.value.goods_coin,
       buyer_wallet_address: detail.value.buyer_wallet_address,
       buyer_wallet_name: detail.value.buyer_wallet_name,
       seller_wallet_address: detail.value.seller_wallet_address,

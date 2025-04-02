@@ -118,6 +118,7 @@ export default {
     limitExceeded: "已超过限额",
     minimumAmount: "最少购买",
     pleaseSelectPaymentMethod: "请选择支付方式",
+    pleaseSelectWalletAddress: "请选择钱包地址",
     cancel: "取消",
     placeOrderSuccessfully: "下单成功，请等待确认",
     done: "完成",

@@ -128,6 +128,7 @@ export default {
     limitExceeded: "Limit exceeded",
     minimumAmount: "Minimum amount is ",
     pleaseSelectPaymentMethod: "Please select payment method",
+    pleaseSelectWalletAddress: "Please select wallet address",
     cancel: "cancel",
     placeOrderSuccessfully:
       "Order placed successfully, please wait for confirmation",

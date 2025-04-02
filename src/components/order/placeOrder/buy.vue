@@ -295,6 +295,10 @@ const submitOrder = async () => {
     showToast(t("placeOrder.pleaseSelectPaymentMethod"));
     return;
   }
+  if (!showAddressChecked.value) {
+    showToast(t("placeOrder.pleaseSelectWalletAddress"));
+    return;
+  }
   const { code, message, data, error } = await createOrder({
     goods_id: detailData.value.id,
     pay_way_id: paymentId.value,
@@ -311,11 +315,11 @@ const submitOrder = async () => {
   if (code === 0) {
     buyOrder.value = data;
     // 调起键盘支付 order_type 1线上 2线下
-    if (data.order_type === 1) {
-      handlePayMent(data);
-    } else {
+    // if (data.order_type === 1) {
+    //   handlePayMent(data);
+    // } else {
       router.push("/order/buySuccess");
-    }
+    // }
   } else {
     showToast(error);
   }

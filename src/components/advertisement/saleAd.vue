@@ -355,6 +355,10 @@ const validatorLimitMax = (val: any) : any => {
   }
 };
 const onSubmit = async () => {
+  if (!showAddressChecked.value) {
+    showToast(t("placeOrder.pleaseSelectWalletAddress"));
+    return;
+  }
   const { code, error } = await addAdvertisement({
     goods_type: 2,
     goods_num: multiply(quantity.value),
