@@ -356,7 +356,7 @@ const payClick = () => {
 };
 
 const handlePayMent = (order: any) => {
-  if (locked.value) return
+  // if (locked.value) return
   locked.value = true;
   (window as any).WebViewJavascriptBridge.callHandler(
     "transferDapp",
