@@ -237,8 +237,15 @@ const checkedWalletAddress = ref<string>("")
 const selectedAccountName = ref<string>("");
 const checkedWalletName = ref<string>("")
 const showAddressPopupClick = () => {
-  showAddressPopup.value = true;
-  showAddressChecked.value = null;
+  if (wallets.value.length == 0) {
+    (window as any).WebViewJavascriptBridge.callHandler(
+      "goToCreateWalletAccountPage", {},
+      function (responseData: any) { }
+    );
+  } else {
+    showAddressPopup.value = true;
+    showAddressChecked.value = null;
+  }
 };
 const changeAddressChecked = (name: string) => {
   checkedWalletAddress.value = showAddressChecked.value
