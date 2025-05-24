@@ -277,12 +277,13 @@ const submitOrder = async () => {
     showToast(t("placeOrder.pleaseSelectWalletAddress"));
     return;
   }
+  console.log(detailData.value);
   const { code, data, error } = await createOrder({
     goods_id: detailData.value.id,
     pay_way_id: paymentId.value,
     number: active.value ? multiply(inputNum.value) : multiply(resultNum.value),
-    seller_wallet_name: checkedWalletName,
-    seller_wallet_address: checkedWalletAddress,
+    seller_wallet_name: checkedWalletName.value,
+    seller_wallet_address: checkedWalletAddress.value,
     buyer_wallet_name: detailData.value.wallet_name,
     buyer_wallet_address: detailData.value.wallet_address,
   });

@@ -339,8 +339,8 @@ const onSubmit = async () => {
     goods_pay_coin: checked2.value * 1,
     goods_min: multiply(limitMin.value),
     goods_max: multiply(limitMax.value),
-    wallet_name: checkedWalletName,
-    wallet_address: checkedWalletAddress,
+    wallet_name: checkedWalletName.value,
+    wallet_address: checkedWalletAddress.value,
   });
   if (code === 0) {
     showToast(t("ad.postSucceed"));
