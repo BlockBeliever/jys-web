@@ -37,7 +37,7 @@ export default {
     currency: "货币",
     pleaseSelectCurrency: "选择货币",
     buyQuantity: "买入数量",
-    walletAddress: "Wallet Address",
+    walletAddress: "选择钱包",
     pleaseEnterQuantity: "请输入数量",
     price: "价格",
     pleaseEnterPrice: "请输入价格",

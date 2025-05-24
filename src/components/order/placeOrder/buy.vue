@@ -130,25 +130,29 @@
   <van-action-sheet @select="selectPay" v-model:show="showSheet" :actions="actions"
     :cancel-text="$t('placeOrder.cancel')" :description="$t('placeOrder.paymentMethod')" close-on-click-action />
   <van-popup v-model:show="showAddressPopup" position="bottom" round>
-    <div class="currency-list">
-      <van-radio-group v-model="showAddressChecked" @change="changeAddressChecked">
-        <van-cell-group inset>
-          <van-cell v-for="item in wallets">
-            <template #title>
-              <div class="left">
-                <div class="name">
-                  <div>{{ item.wallet_name }}</div>
-                  <div>{{ item.wallet_address }}</div>
-                </div>
-              </div>
-            </template>
-            <template #right-icon>
-              <van-radio :name="item.id + ''" />
-            </template>
-          </van-cell>
-        </van-cell-group>
-      </van-radio-group>
-    </div>
+    <van-collapse v-model="activeNames"  style="padding: 0 !important; margin: 0 !important">
+      <van-collapse-item :title="item.name" :name="item.name" v-for="item in wallets" style="padding: 0 !important; margin: 0 !important">
+        <div class="currency-list">
+          <van-radio-group v-model="showAddressChecked" @change="changeAddressChecked">
+            <van-cell-group inset>
+              <van-cell v-for="accountItem in item.accounts">
+                <template #title>
+                  <div class="left">
+                    <div class="name">
+                      <div>{{ accountItem.name }}</div>
+                      <div>{{ accountItem.address }}</div>
+                    </div>
+                  </div>
+                </template>
+                <template #right-icon>
+                  <van-radio :name="accountItem.address" />
+                </template>
+              </van-cell>
+            </van-cell-group>
+          </van-radio-group>
+        </div>
+      </van-collapse-item>
+    </van-collapse>
   </van-popup>
 </template>
 
@@ -165,9 +169,11 @@ const router = useRouter();
 
 const form = ref();
 const wallets = ref<any[]>([])
+const activeNames  = ref<string[]>([])
 onActivated(() => {
   const walletData = localStorage.getItem("pnc_wallets") ?? '[]';
   wallets.value = JSON.parse(walletData);
+  activeNames.value = wallets.value.map(item => item.name)
   // flutter交互
   setupWebViewJavascriptBridge(function (bridge: any) {
     async function defaultHandler(message: any) {
@@ -214,9 +220,7 @@ const showAddressPopupClick = () => {
   showAddressChecked.value = null;
 };
 const changeAddressChecked = () => {
-  checkedWalletAddress.value = wallets.value.filter(
-    (item: any) => Number(showAddressChecked.value) === item.id
-  )[0]?.wallet_name;
+  checkedWalletAddress.value = showAddressChecked.value
 }
 
 // 获取当前广告详情
@@ -354,11 +358,22 @@ const onClickLeft = () => {
   --van-nav-bar-background: transparent;
 }
 
+:deep(.van-cell__title) {
+  color: #4987F9 !important;
+}
+
 .currency-list {
   width: 100%;
-  margin-bottom: 50px;
+  margin-bottom: 0px;
   max-height: 400px;
   overflow-y: auto;
+
+  .van-cell-group {
+    margin: 0 !important;
+    .van-cell {
+      padding: 0 !important;
+    }
+  }
 
   .left {
     height: 50px;

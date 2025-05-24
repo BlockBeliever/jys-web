@@ -39,7 +39,7 @@ export default {
     pleaseSelectCurrency: "Please select currency",
     buyQuantity: "Buy quantity",
     soldQuantity: "Sold quantity",
-    walletAddress: "Wallet Address",
+    walletAddress: "Choose a wallet",
     pleaseSelectAddress: "Please select address",
     pleaseEnterQuantity: "Please enter quantity",
     price: "Price",
