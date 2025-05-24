@@ -30,6 +30,7 @@ export default {
   ad: {
     merchant: "商家名称",
     currency: "货币",
+    pleaseSelectAddress: "请选择地址",
     pleaseSelectCurrency: "选择货币",
     buyQuantity: "买入数量",
     walletAddress: "选择钱包",
