@@ -105,25 +105,29 @@
     </div>
   </van-popup>
   <van-popup v-model:show="showAddressPopup" position="bottom" round>
-    <div class="currency-list">
-      <van-radio-group v-model="showAddressChecked" @change="changeAddressChecked">
-        <van-cell-group inset>
-          <van-cell v-for="item in wallets">
-            <template #title>
-              <div class="left">
-                <div class="name">
-                  <div>{{ item.wallet_name }}</div>
-                  <div>{{ item.wallet_address }}</div>
-                </div>
-              </div>
-            </template>
-            <template #right-icon>
-              <van-radio :name="item.id + ''" />
-            </template>
-          </van-cell>
-        </van-cell-group>
-      </van-radio-group>
-    </div>
+    <van-collapse v-model="activeNames"  style="padding: 0 !important; margin: 0 !important">
+      <van-collapse-item :title="item.name" :name="item.name" v-for="item in wallets" style="padding: 0 !important; margin: 0 !important">
+        <div class="wallet-currency-list">
+          <van-radio-group v-model="showAddressChecked" @change="changeAddressChecked(item.name)">
+            <van-cell-group inset>
+              <van-cell v-for="accountItem in item.accounts">
+                <template #title>
+                  <div class="left">
+                    <div class="name">
+                      <div>{{ accountItem.name }}</div>
+                      <div>{{ accountItem.address }}</div>
+                    </div>
+                  </div>
+                </template>
+                <template #right-icon>
+                  <van-radio :name="accountItem.address" />
+                </template>
+              </van-cell>
+            </van-cell-group>
+          </van-radio-group>
+        </div>
+      </van-collapse-item>
+    </van-collapse>
   </van-popup>
 </template>
 <script setup lang="ts">
@@ -143,6 +147,7 @@ const option1 = [
   { text: 'Option2', value: 1 },
   { text: 'Option3', value: 2 },
 ];
+const activeNames  = ref<string[]>([])
 onActivated(() => {
   const walletData = localStorage.getItem("pnc_wallets") ?? '[]';
   wallets.value = JSON.parse(walletData);
@@ -201,14 +206,23 @@ const showPopupClick = (val: number) => {
 const showAddressPopup = ref<boolean>(false)
 const showAddressChecked = ref<any>(null)
 const checkedWalletAddress = ref<string>("")
+const selectedAccountName = ref<string>("");
+const checkedWalletName = ref<string>("")
 const showAddressPopupClick = () => {
   showAddressPopup.value = true;
   showAddressChecked.value = null;
 };
-const changeAddressChecked = () => {
-  checkedWalletAddress.value = wallets.value.filter(
-    (item: any) => Number(showAddressChecked.value) === item.id
-  )[0]?.wallet_name;
+const changeAddressChecked = (name: string) => {
+  checkedWalletAddress.value = showAddressChecked.value
+  wallets.value.map((item: any) => {
+    console.log(item.accounts)
+    if (item.accounts) {
+      var accounts = item.accounts.filter((item: any) => item.address == checkedWalletAddress.value)
+      if (accounts.length > 0) {
+        checkedWalletName.value = accounts[0].name
+      }
+    }
+  })
 }
 const getCoinData = async (val: number) => {
   const { data } = await coinGet({
@@ -325,12 +339,8 @@ const onSubmit = async () => {
     goods_pay_coin: checked2.value * 1,
     goods_min: multiply(limitMin.value),
     goods_max: multiply(limitMax.value),
-    wallet_name: wallets.value.filter(
-      (item: any) => Number(showAddressChecked.value) === item.id
-    )[0]?.wallet_name,
-    wallet_address: wallets.value.filter(
-      (item: any) => Number(showAddressChecked.value) === item.id
-    )[0]?.wallet_address
+    wallet_name: checkedWalletName,
+    wallet_address: checkedWalletAddress,
   });
   if (code === 0) {
     showToast(t("ad.postSucceed"));
@@ -349,11 +359,55 @@ const onSubmit = async () => {
   margin: 0 auto;
 }
 
+:deep(.van-cell__title) {
+  color: #4987F9 !important;
+}
+
 .currency-list {
   width: 100%;
   margin-bottom: 50px;
   max-height: 400px;
   overflow-y: auto;
+
+  .left {
+    height: 50px;
+    display: flex;
+    align-items: center;
+
+    .icon {
+      width: 28px;
+      height: 28px;
+    }
+
+    .name {
+      margin-left: 10px;
+
+      div:nth-child(1) {
+        color: $color-101;
+        font: $font15-500;
+      }
+
+      div:nth-child(2) {
+        margin-top: 2px;
+        color: $color-B8B;
+        font: $font12-400;
+      }
+    }
+  }
+}
+
+.wallet-currency-list {
+  width: 100%;
+  margin-bottom: 0px;
+  max-height: 400px;
+  overflow-y: auto;
+
+  .van-cell-group {
+    margin: 0 !important;
+    .van-cell {
+      padding: 0 !important;
+    }
+  }
 
   .left {
     height: 50px;

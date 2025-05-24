@@ -124,7 +124,7 @@
       <van-collapse v-model="activeNames"  style="padding: 0 !important; margin: 0 !important">
         <van-collapse-item :title="item.name" :name="item.name" v-for="item in wallets" style="padding: 0 !important; margin: 0 !important">
           <div class="currency-list">
-            <van-radio-group v-model="showAddressChecked" @change="changeAddressChecked">
+            <van-radio-group v-model="showAddressChecked" @change="changeAddressChecked(item.name)">
               <van-cell-group inset>
                 <van-cell v-for="accountItem in item.accounts">
                   <template #title>
@@ -281,12 +281,8 @@ const submitOrder = async () => {
     goods_id: detailData.value.id,
     pay_way_id: paymentId.value,
     number: active.value ? multiply(inputNum.value) : multiply(resultNum.value),
-    seller_wallet_name: wallets.value.filter(
-      (item: any) => Number(showAddressChecked.value) === item.id
-    )[0]?.wallet_name,
-    seller_wallet_address: wallets.value.filter(
-      (item: any) => Number(showAddressChecked.value) === item.id
-    )[0]?.wallet_address,
+    seller_wallet_name: checkedWalletName,
+    seller_wallet_address: checkedWalletAddress,
     buyer_wallet_name: detailData.value.wallet_name,
     buyer_wallet_address: detailData.value.wallet_address,
   });
@@ -329,12 +325,23 @@ const onClickLeft = () => {
 const showAddressPopup = ref<boolean>(false)
 const showAddressChecked = ref<any>(null)
 const checkedWalletAddress = ref<string>("")
+const checkedWalletName = ref<string>("")
+const selectedAccountName = ref<string>("");
 const showAddressPopupClick = () => {
   showAddressPopup.value = true;
   showAddressChecked.value = null;
 };
-const changeAddressChecked = () => {
+const changeAddressChecked = (name: string) => {
   checkedWalletAddress.value = showAddressChecked.value
+  wallets.value.map((item: any) => {
+    console.log(item.accounts)
+    if (item.accounts) {
+      var accounts = item.accounts.filter((item: any) => item.address == checkedWalletAddress.value)
+      if (accounts.length > 0) {
+        checkedWalletName.value = accounts[0].name
+      }
+    }
+  })
 }
 </script>
 
