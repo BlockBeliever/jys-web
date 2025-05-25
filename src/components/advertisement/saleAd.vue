@@ -440,4 +440,44 @@ const onSubmit = async () => {
     }
   }
 }
+
+.wallet-currency-list {
+  width: 100%;
+  margin-bottom: 0px;
+  max-height: 400px;
+  overflow-y: auto;
+
+  .van-cell-group {
+    margin: 0 !important;
+    .van-cell {
+      padding: 0 !important;
+    }
+  }
+
+  .left {
+    height: 50px;
+    display: flex;
+    align-items: center;
+
+    .icon {
+      width: 28px;
+      height: 28px;
+    }
+
+    .name {
+      margin-left: 10px;
+
+      div:nth-child(1) {
+        color: $color-101;
+        font: $font15-500;
+      }
+
+      div:nth-child(2) {
+        margin-top: 2px;
+        color: $color-B8B;
+        font: $font12-400;
+      }
+    }
+  }
+}
 </style>
