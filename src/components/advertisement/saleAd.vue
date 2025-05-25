@@ -197,6 +197,7 @@ const activeNames  = ref<string[]>([])
 onActivated(() => {
   const walletData = localStorage.getItem("pnc_wallets") ?? '[]';
   wallets.value = JSON.parse(walletData);
+  activeNames.value = wallets.value.map(item => item.name)
   // 初始化数据
   getMyShopInfo();
   getCoinData(1);
