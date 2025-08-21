@@ -21,6 +21,12 @@ const alias: Record<string, string> = {
 // https://vitejs.dev/config/
 export default ({ mode }) => defineConfig({
   resolve: { alias },
+  // Add the define section here to fix Vue hydration mismatch error
+  define: {
+    __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false,
+    __VUE_OPTIONS_API__: true,
+    __VUE_PROD_DEVTOOLS__: false
+  },
   plugins: [
     vue(),
     AutoImport({
