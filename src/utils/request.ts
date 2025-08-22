@@ -38,11 +38,20 @@ instance.interceptors.request.use(
 // 响应拦截器
 instance.interceptors.response.use(
   (response: any) => {
-   if (response.data.message === 'USER_BAN_ERROR') {
-    showToast(response.data.error)
-    return
-   }
-    return response.data
+    let { config, data } = response
+    return new Promise((resolve, reject) => {
+      if (response.data.message === 'USER_BAN_ERROR') {
+       showToast(response.data.error)
+       reject(data)
+       return
+      }
+      if (response.data.code !== 0) {
+       showToast(response.data.error)
+       reject(data)
+       return
+      }
+      resolve(data)
+    })
   },
   (error: any) => {
     if (error && error.response) {
