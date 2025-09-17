@@ -104,7 +104,7 @@
       </van-radio-group>
     </div>
   </van-popup>
-  <van-popup v-model:show="showAddressPopup" position="bottom" round>
+  <van-popup v-model:show="showAddressPopup" position="bottom" round style="max-height: 350px;">
     <van-collapse v-model="activeNames"  style="padding: 0 !important; margin: 0 !important">
       <van-collapse-item :title="item.name" :name="item.name" v-for="item in wallets" style="padding: 0 !important; margin: 0 !important">
         <div class="wallet-currency-list">
