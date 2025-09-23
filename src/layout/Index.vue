@@ -17,17 +17,17 @@
 </template>
 
 <script setup lang="ts">
-
 import router from '@/router'
 
 const route = useRoute()
+
 const onClickLeft = () => {
   console.log("onClickLeft ===============================> ")
   if (route.meta.backTo) {
-    console.log("onClickLeft 111111111111111111111 ===============================> ")
+    console.log("onClickLeft ===============================> router.push(route.meta.backTo)")
     router.push(route.meta.backTo)
   } else{
-    console.log("onClickLeft 222222222222222222222 ===============================> ")
+    console.log("onClickLeft ===============================> history.go(-1)")
     history.go(-1)
   }
 }
