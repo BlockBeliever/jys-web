@@ -49,6 +49,7 @@
 </template>
 
 <script setup lang="ts">
+// @ts-ignore
 import { urlToBase64OfList } from "@/utils/EnAndDeFile.js";
 import { multiply, divide } from "@/utils/formart";
 

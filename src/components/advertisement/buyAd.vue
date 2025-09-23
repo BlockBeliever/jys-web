@@ -3,8 +3,7 @@
     <!-- form validatorTraType-->
     <van-form class="form" ref="form" @submit="onSubmit">
       <van-cell-group inset>
-        <van-field class="field" v-model="businessName" readonly label-align="top" name="商家名称"
-          :label="$t('ad.merchant')" />
+        <van-field class="field" v-model="businessName" readonly label-align="top" name="商家名称" :label="$t('ad.merchant')" />
         <van-field v-model="checkedText" label-align="top" is-link readonly name="picker" :label="$t('ad.currency')"
           :placeholder="$t('ad.pleaseSelectCurrency')" @click="showPopupClick(1)"
           :rules="[{ validator: validatorCoin }]" />

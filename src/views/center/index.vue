@@ -64,6 +64,7 @@
 </template>
 
 <script setup lang="ts">
+// @ts-ignore
 import { urlToBase64OfList } from "@/utils/EnAndDeFile.js";
 import { userInfo } from "@/api/auth";
 import moment from "moment-timezone";

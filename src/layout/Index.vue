@@ -22,9 +22,12 @@ import router from '@/router'
 
 const route = useRoute()
 const onClickLeft = () => {
+  console.log("onClickLeft ===============================> ")
   if (route.meta.backTo) {
+    console.log("onClickLeft 111111111111111111111 ===============================> ")
     router.push(route.meta.backTo)
-  }else{
+  } else{
+    console.log("onClickLeft 222222222222222222222 ===============================> ")
     history.go(-1)
   }
 }
