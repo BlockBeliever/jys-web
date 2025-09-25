@@ -15,9 +15,9 @@
           :placeholder="$t('ad.pleaseEnterPrice')" :rules="[{ validator: validatorPrice }]">
           <template #extra>
             <div class="field-right" @click="showPopupClick(2)">
-              <span class="coin">{{ checkedText2 }}</span>
+              <!-- <span class="coin">{{ checkedText2 }}</span> -->
               <span class="text">
-                {{ $t("ad.pleaseSelectThePaymentCurrency") }}
+                {{ checkedText2 || $t("ad.pleaseSelectThePaymentCurrency") }}
               </span>
               <img src="@/assets/img/home/top.png" alt="" />
             </div>
