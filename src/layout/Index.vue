@@ -1,18 +1,18 @@
 <template>
   <div class="t-layout">
-    <van-nav-bar :fixed="true" v-show="$route.meta.isNav" :title="$route.meta.title" :border="false" @click-left="onClickLeft">
+    <van-nav-bar :fixed="true" v-show="route.meta.isNav" :title="(route.meta.title as string)" :border="false" @click-left="onClickLeft">
       <template #left>
         <van-icon  name="arrow-left" size="18" color="black" />
       </template>
     </van-nav-bar>
-    <div :class="(!$route.meta.isTab && $route.meta.isNav) ? 'mt50' : ''">
+    <div :class="(!route.meta.isTab && route.meta.isNav) ? 'mt50' : ''">
       <router-view v-slot="{ Component }">
         <keep-alive>
           <component :is="Component" />
         </keep-alive>
       </router-view>
     </div>
-    <tabbar v-show="$route.meta.isTab" class="footer" />
+    <tabbar v-show="route.meta.isTab" class="footer" />
   </div>
 </template>
 
