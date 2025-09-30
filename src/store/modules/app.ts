@@ -50,7 +50,7 @@ export const useAppStore = defineStore({
     setCode(state: any) {
       this.code = state
     },
-    setServiceId(state: any){
+    setServiceId(state: any) {
       this.serviceId = state
     },
     setUid(state: any){

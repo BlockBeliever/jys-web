@@ -417,8 +417,8 @@ const copyCode = (val: string) => {
 };
 // 联系客服
 const contactService = () => {
-  // contactIm(store.getUid, store.getServiceId)
-  router.push("/service");
+  contactIm(store.getUid, store.getServiceId)
+  // router.push("/service");
 };
 // 联系商家 、 买家
 const contactChat = () => {
