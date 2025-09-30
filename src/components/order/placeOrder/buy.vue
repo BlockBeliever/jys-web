@@ -358,9 +358,15 @@ const handlePayMent = (order: any) => {
 };
 const onClickLeft = () => {
   if (route.meta.backTo) {
-    router.push(route.meta.backTo);
+    console.log("onClickLeft ===============================> router.push(route.meta.backTo)")
+    router.push(route.meta.backTo)
+  } else if (window.history.length > 1) {
+    console.log("onClickLeft ===============================> history.go(-1)")
+    // history.go(-1)
+    router.back();
   } else {
-    history.go(-1);
+    console.log("onClickLeft ===============================> fallback to home")
+    router.push('/')
   }
 };
 </script>

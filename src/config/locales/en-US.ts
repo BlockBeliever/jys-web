@@ -120,8 +120,8 @@ export default {
     merchant: "Merchant",
     merchantMessage: "Merchant message",
     agreePhoenix:
-      "If you agree to conduct C2C transactions with Phoenix, it means that you accept",
-    legalDisclaimer: "Phoenix C2C Transaction Legal Disclaimer.",
+      "If you agree to conduct C2C transactions with Pndao, it means that you accept",
+    legalDisclaimer: "Pndao C2C Transaction Legal Disclaimer.",
     buy: "Buy ",
     sell: "Sell ",
     pleaseEnterNumber: "Please enter the number",

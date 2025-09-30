@@ -18,7 +18,6 @@ onActivated(() => {
   if (element) {
     element.style.display = "block";
   }
-
   init();
 });
 const parse = (query) => {
@@ -116,7 +115,8 @@ const init = () => {
 const onClickLeft = () => {
   const element = document.getElementById("meiqia-container");
   element.style.display = "none";
-  history.back();
+  // history.back();
+  router.back();
 };
 </script>
 

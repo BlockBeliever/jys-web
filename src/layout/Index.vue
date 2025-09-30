@@ -27,7 +27,8 @@ const onClickLeft = () => {
     router.push(route.meta.backTo)
   } else if (window.history.length > 1) {
     console.log("onClickLeft ===============================> history.go(-1)")
-    history.go(-1)
+    // history.go(-1)
+    router.back();
   } else {
     console.log("onClickLeft ===============================> fallback to home")
     router.push('/')
