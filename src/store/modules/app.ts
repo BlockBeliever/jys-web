@@ -28,10 +28,15 @@ export const useAppStore = defineStore({
     getUid: state => state.uid
   },
   actions: {
+    // setState(state: AppStateType) {
+    //   const keys: any = Object.keys(state)
+    //   keys.forEach((key: keyof AppStateType) => {
+    //     this[key] = state[key]
+    //   })
+    // },
     setState(state: AppStateType) {
-      const keys: any = Object.keys(state)
-      keys.forEach((key: keyof AppStateType) => {
-        this[key] = state[key]
+      Object.entries(state).forEach(([key, value]) => {
+        (this as any)[key] = value
       })
     },
     changeTheme(theme?: string) {
@@ -44,7 +49,7 @@ export const useAppStore = defineStore({
     },
     changeLocale(locale?: 'zh' | 'en') {
       const key = changeLocale(locale)
-      this.locale = key
+      // this.locale = key
       setConfig({ locale: key })
     },
     setCode(state: any) {

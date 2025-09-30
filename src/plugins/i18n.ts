@@ -43,7 +43,7 @@ export const t = (key: string) => i18n.global.t(key)
  * 设置语言
  * @param key string | undefined
  */
-export function changeLocale() {
+export function changeLocale(localeKey?: 'zh' | 'en') {
   const key = localStorage.getItem('lang')
   switch (key) {
     case 'en':
