@@ -8,23 +8,16 @@ import { setupVant } from './plugins/vant'
 import router from './router'
 import App from './App.vue'
 import 'vant/lib/index.css';
-import { Lazyload, showToast } from 'vant';
-// import * as filters from './filters/index'
+import { Lazyload } from 'vant';
+import vConsole from 'vconsole'
+
 const app = createApp(App)
 app.use(Lazyload, {
   lazyComponent: true,
 });
-// app.use(showToast)
-  
-// app.config.globalProperties.$filters = {};
-// Object.keys(filters).forEach((key: string) => {
-//   app.config.globalProperties.$filters[key] = (filters as Record<string, Function>)[key];
-// });
-
 
 app.config.globalProperties.$t = i18n.global.t;
 app.use(i18n)
-import vConsole from 'vconsole'
 // const vconsole = new vConsole()
 setupVant(app)
 setupStore(app)
