@@ -40,8 +40,9 @@
     <div class="order">
       <div class="top">
         <img :src="detail.goods_coin_icon" alt="" />
-        <span>{{ detail.goods_type === 1 ? $t("myOrder.sell") : $t("myOrder.buy")
-        }}{{ detail.goods_coin }}</span>
+        <span>
+          {{ detail.goods_type === 1 ? $t("myOrder.sell") : $t("myOrder.buy")}}{{ detail.goods_coin }}
+        </span>
       </div>
       <section>
         <div class="item">
@@ -121,8 +122,8 @@
         <div class="botton" v-if="
           detail.order_status === 1 &&
           detail.goods_type === 1 &&
-          detail.dispute_symbol !== 2
-        " @click="handlePayMent">
+          detail.dispute_symbol !== 2"
+          @click="handlePayMent">
           {{ $t("myOrder.payment") }}
         </div>
         <template v-if="detail.order_type === 1">
@@ -257,8 +258,8 @@ const getDetail = async () => {
 };
 
 const handlePayMent = () => {
-  if (locked.value) return
-  locked.value = true;
+  // if (locked.value) return
+  // locked.value = true;
   (window as any).WebViewJavascriptBridge.callHandler(
     "transferDapp",
     {
