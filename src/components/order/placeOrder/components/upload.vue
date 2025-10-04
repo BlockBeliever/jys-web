@@ -152,7 +152,7 @@ const afterRead = async (file: any) => {
     // 直接调用 cos sdk 的方法
     cos.uploadFile(
       {
-        Bucket: "jys-1319989102",
+        Bucket: "jys-1327669833",
         Region: "ap-singapore",
         Key: `/screenshot/jysWeb/${new Date().toLocaleDateString()}/${Md5.hashStr(
           file.file.name.substring(0, index + 1)
