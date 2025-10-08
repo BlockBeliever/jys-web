@@ -183,7 +183,7 @@ const coinList = ref([] as any);
 
 const key2 = ref("");
 const showPopup2 = ref(false);
-const checked2 = ref("");
+const checked2 = ref("支付货币");
 const coinList2 = ref([] as any);
 
 const key3 = ref("");
@@ -223,11 +223,11 @@ const getCoinData = async (val: number) => {
       symbol: t("myOrder.all"),
     });
     coinList2.value = data.list || [];
-    checked2.value = coinList2.value.length ? coinList2.value[0].symbol : null;
+    // checked2.value = coinList2.value.length ? coinList2.value[0].symbol : null;
   }
   if (checked.value && checked2.value) {
     params.goods_coin = checked.value === t("myOrder.all") ? "" : checked.value;
-    params.goods_pay_coin = checked2.value === t("myOrder.all") ? "" : checked2.value;
+    params.goods_pay_coin = checked2.value === t("myOrder.all") || checked2.value === "支付货币" ? "" : checked2.value;
     onLoad();
   }
 };
@@ -237,7 +237,7 @@ const changeChecked = () => {
   onRefresh();
 };
 const changeChecked2 = () => {
-  params.goods_pay_coin = checked2.value === t("myOrder.all") ? "" : checked2.value;
+  params.goods_pay_coin = checked2.value === t("myOrder.all") || checked2.value === "支付货币" ? "" : checked2.value;
   adList.value = [];
   onRefresh();
 };
