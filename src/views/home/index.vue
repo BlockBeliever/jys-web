@@ -190,11 +190,11 @@ const key3 = ref("");
 const showPopup3 = ref(false);
 const checked3 = ref("支付方式");
 const coinList3 = ref<Array<any>>([
-  {
-    icon: "",
-    name: "支付方式",
-    symbol: "",
-  },
+  // {
+  //   icon: "",
+  //   name: "支付方式",
+  //   symbol: "",
+  // },
   {
     icon: "",
     name: "线上订单",
@@ -233,12 +233,18 @@ const getCoinData = async (val: number) => {
 };
 const changeChecked = () => {
   params.goods_coin = checked.value === t("myOrder.all") ? "" : checked.value;
+  adList.value = [];
+  onRefresh();
 };
 const changeChecked2 = () => {
   params.goods_pay_coin = checked2.value === "支付币种" ? "" : checked2.value;
+  adList.value = [];
+  onRefresh();
 };
 const changeChecked3 = () => {
   params.transaction_way = checked3.value === "支付方式" ? "" : coinList3.value.filter(item => item.name == checked3.value)[0].symbol;
+  adList.value = [];
+  onRefresh();
 };
 const handleSearch = () => {
   adList.value = [];
@@ -254,7 +260,7 @@ let params = {
   limit: 10,
   goods_pay_coin: "", // 支付币种
   goods_coin: "", // 交易币
-  transaction_way: "", // 支付方式
+  transaction_way: "支付方式", // 支付方式
   goods_type: type.value,
 };
 const onLoad = async () => {
