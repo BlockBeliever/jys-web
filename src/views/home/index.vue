@@ -219,15 +219,15 @@ const getCoinData = async (val: number) => {
   } else {
     data.list.length && data.list.unshift({
       icon: "",
-      name: "支付币种",
-      symbol: "支付币种",
+      name: t("myOrder.all"),
+      symbol: t("myOrder.all"),
     });
     coinList2.value = data.list || [];
     checked2.value = coinList2.value.length ? coinList2.value[0].symbol : null;
   }
   if (checked.value && checked2.value) {
     params.goods_coin = checked.value === t("myOrder.all") ? "" : checked.value;
-    params.goods_pay_coin = checked2.value === "支付币种" ? "" : checked2.value;
+    params.goods_pay_coin = checked2.value === t("myOrder.all") ? "" : checked2.value;
     onLoad();
   }
 };
@@ -237,7 +237,7 @@ const changeChecked = () => {
   onRefresh();
 };
 const changeChecked2 = () => {
-  params.goods_pay_coin = checked2.value === "支付币种" ? "" : checked2.value;
+  params.goods_pay_coin = checked2.value === t("myOrder.all") ? "" : checked2.value;
   adList.value = [];
   onRefresh();
 };
@@ -260,7 +260,7 @@ let params = {
   limit: 10,
   goods_pay_coin: "", // 支付币种
   goods_coin: "", // 交易币
-  transaction_way: "支付方式", // 支付方式
+  transaction_way: "", // 支付方式
   goods_type: type.value,
 };
 const onLoad = async () => {
