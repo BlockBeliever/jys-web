@@ -42,6 +42,7 @@ declare module '@vue/runtime-core' {
     Service: typeof import('./src/components/service/index.vue')['default']
     SvgIcon: typeof import('./src/components/SvgIcon.vue')['default']
     Tabbar: typeof import('./src/components/Tabbar.vue')['default']
+    VanActionSheet: typeof import('vant/es')['ActionSheet']
     VanButton: typeof import('vant/es')['Button']
     VanCell: typeof import('vant/es')['Cell']
     VanCellGroup: typeof import('vant/es')['CellGroup']

@@ -197,12 +197,12 @@ const coinList3 = ref<Array<any>>([
   // },
   {
     icon: "",
-    name: "线上订单",
+    name: "在线支付",
     symbol: "[1]",
   },
   {
     icon: "",
-    name: "线下订单",
+    name: "线下支付",
     symbol: "[2,3,4,5,6,7]",
   }
 ]);
