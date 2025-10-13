@@ -48,6 +48,8 @@ import { showToast } from "vant";
 import { addAddress } from '@/api/address';
 import Loading from "@/components/loading/index.vue";
 
+const router = useRouter()
+
 const cryptoOptions = [
   {
     label: "ERC20",
@@ -76,17 +78,26 @@ const handleConfirm = async () => {
 
   isLoading.value = true
 
-  const { code } = await addAddress({
-    currencyType: selectedCrypto.value,
-    paymentAccount: cryptoAddress.value,
-  })
+  try {
 
-  isLoading.value = false
+    const { code } = await addAddress({
+      currencyType: selectedCrypto.value,
+      paymentAccount: cryptoAddress.value,
+    })
 
-  if (!code) {
-    showToast("成功！")
-  } else {
-    showToast("失败！")
+    isLoading.value = false
+
+    if (!code) {
+      showToast("成功！")
+      router.back();
+    } else {
+      showToast("失败！")
+    }
+
+  } catch (e) {
+    console.log("addChainAddress Error ===============> ", e)
+  } finally {
+    isLoading.value = false
   }
 }
 </script>

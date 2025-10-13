@@ -128,6 +128,8 @@ import { Md5 } from "ts-md5";
 import { addAddress } from "@/api/address";
 import Loading from "@/components/loading/index.vue";
 
+const router = useRouter()
+
 const currencyOptions : Array<any> = [
   {
     label: "CNY",
@@ -255,22 +257,28 @@ const handleConfirm = async () => {
 
   isLoading.value = true
 
-  const { code } = await addAddress({
-    currencyType: selectedCurrency.value,
-    paymentMethod: selectedPaymentMethod.value,
-    accountName: accountName.value,
-    paymentAccount: paymentAccount.value,
-    paymentCode: pictureList.value.length > 0 ? pictureList.value[0].url : "",
-    bankAccount: bankAccount.value,
-    branchAccount: branchAccount.value
-  })  
+  try {
+    const { code } = await addAddress({
+      currencyType: selectedCurrency.value,
+      paymentMethod: selectedPaymentMethod.value,
+      accountName: accountName.value,
+      paymentAccount: paymentAccount.value,
+      paymentCode: pictureList.value.length > 0 ? pictureList.value[0].url : "",
+      bankAccount: bankAccount.value,
+      branchAccount: branchAccount.value
+    })
 
-  isLoading.value = false
+    if (!code) {
+      showToast("成功！")
+      router.back();
+    } else {
+      showToast("失败！")
+    }
 
-  if (!code) {
-    showToast("成功！")
-  } else {
-    showToast("失败！")
+  } catch (e) {
+    console.log("addCurrencyAddress Error ===============> ", e)
+  } finally {
+    isLoading.value = false
   }
 }
 

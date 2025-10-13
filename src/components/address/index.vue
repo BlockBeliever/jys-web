@@ -8,9 +8,10 @@
       @click-left="onClickLeft"
     >
       <template #right>
-        <van-popover v-model:show="showPopover" :actions="addActions" @select="onSelect" placement="left-start">
+        <van-popover v-model:show="showPopover" :actions="addActions" @select="onSelect" actions-direction="vertical" class="action-right">
           <template #reference>
             <van-icon name="plus" size="20" />
+            <!-- <img src="@/assets/img/address/add.png" width="20"/> -->
           </template>
         </van-popover>
       </template>
@@ -40,13 +41,10 @@
             <div class="payment-header">
               <div style="display: flex; align-items: center; flex: 1;">
                 <div :class="['payment-icon']">
-                  <img :src="paymentIcons[item.paymentMethod]" width="30"/>
+                  <img :src="paymentIcons[item.paymentMethod]" width="28"/>
                 </div>
                 <div class="payment-name">
                   <span style="font-size: 14px; font-weight: bold;">{{ item.paymentMethod }}</span>
-                  <span :class="item.isCertified ? 'badge-verified' : 'badge-unverified'">
-                    {{ item.isCertified ? '已验证' : '未认证' }}
-                  </span>
                 </div>
               </div>
               <van-icon name="arrow" color="#c8c9cc" />
@@ -54,20 +52,24 @@
 
             <!-- Currency -->
             <div class="payment-detail">
-              <span class="detail-label">币种</span>
-              <span class="detail-content">{{ item.currencyType }}</span>
+              <span class="currency-label">{{ item.currencyType }}</span>
+              <span class="badge-content">
+                <span :class="item.isCertified ? 'badge-verified' : 'badge-unverified'">
+                  {{ item.isCertified ? '已验证' : '未认证' }}
+                </span>
+              </span>
             </div>
 
             <!-- Account Details -->
+            <div class="detail-label">详情</div>
+
+            <!-- Account Details -->
             <div class="payment-detail">
-              <span class="detail-label">详情</span>
               <div class="account-section">
-                <div class="account-info">
-                  <div class="account-label">{{ item.accountName }}</div>
-                  <div class="account-number">{{ item.paymentAccount }}</div>
-                </div>
+                <span class="account-label">{{ item.accountName }}</span>
+                <span class="account-number">{{ item.paymentAccount }}</span>
               </div>
-              <img src="@/assets/img/address/delete.png" alt="" @click="onDelete(item.id)" width="18"/>
+              <img src="@/assets/img/address/delete.png" alt="" @click="onDelete(item.id)" width="16"/>
             </div>
           </div>
         </div>
@@ -99,8 +101,8 @@
 
             <!-- Account Details -->
             <div class="account-detail">
-              <div class="detail-label">{{ item.paymentAccount }}</div>
-              <img src="@/assets/img/address/delete.png" alt="" @click="onDelete(item.id)" width="18"/>
+              <div class="chain-label">{{ item.paymentAccount }}</div>
+              <img src="@/assets/img/address/delete.png" alt="" @click="onDelete(item.id)" width="16"/>
             </div>
           </div>
         </div>
@@ -190,35 +192,46 @@ const onDelete = async (id: number) => {
 watch(activeTab, async (val) => {
   currencyType.value = val == "fiat_currency" ? 0 : 1
   isLoading.value = true
-  const {code, data, error} = await addressList({
-    type: currencyType.value
-  })
-  isLoading.value = false
-  if (!code) {
-    if (val == "fiat_currency") {
-      currencyAddressList.value = data.list
+  try {
+    const {code, data, error} = await addressList({
+      type: currencyType.value
+    })
+    isLoading.value = false
+    if (!code) {
+      if (val == "fiat_currency") {
+        currencyAddressList.value = data.list
+      } else {
+        chainAddressList.value = data.list
+      }
     } else {
-      chainAddressList.value = data.list
+      showToast(error)
     }
-  } else {
-    showToast(error)
+  } catch (e) {
+    console.log("addressList Error ==========================> ", e)
+  } finally {
+    isLoading.value = false
   }
 })
 
 onActivated(async () => {
   isLoading.value = true
-  const {code, data, error} = await addressList({
-    type: currencyType.value
-  })
-  isLoading.value = false
-  if (!code) {
-    if (currencyType.value == 0) {
-      currencyAddressList.value = data.list
+  try {
+    const {code, data, error} = await addressList({
+      type: currencyType.value
+    })
+    if (!code) {
+      if (currencyType.value == 0) {
+        currencyAddressList.value = data.list
+      } else {
+        chainAddressList.value = data.list
+      }
     } else {
-      chainAddressList.value = data.list
+      showToast(error)
     }
-  } else {
-    showToast(error)
+  } catch (e) {
+    console.log("addressList Error ==========================> ", e)
+  } finally {
+    isLoading.value = false
   }
 })
 </script>
@@ -228,8 +241,16 @@ onActivated(async () => {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #f7f8fa;
   overflow: hidden;
+}
+
+.action-right {
+  left: unset !important;
+  right: 12px !important;
+
+  :deep(.van-popover__arrow) {
+    display: none !important;
+  }
 }
 
 :deep(.van-tabs) {
@@ -242,6 +263,16 @@ onActivated(async () => {
 
 :deep(.van-tabs__wrap) {
   flex-shrink: 0;
+  margin: 0px 12px;
+}
+
+:deep(.van-tabs__nav) {
+  background: unset !important;
+}
+
+:deep(.van-tab) {
+  flex: unset !important;
+  margin-right: 20px;
 }
 
 :deep(.van-tabs__content) {
@@ -269,10 +300,8 @@ onActivated(async () => {
 }
 
 .payment-item {
-  background: white;
-  margin-bottom: 8px;
-  padding: 16px;
-  border-radius: 8px;
+  padding: 4px;
+  border-bottom: 1px solid #DEDEDE;
 }
 
 .payment-header {
@@ -301,7 +330,7 @@ onActivated(async () => {
 }
 
 .badge-verified {
-  padding: 2px 8px;
+  padding: 4px 8px;
   background-color: #e8f4ff;
   color: #1989fa;
   border-radius: 4px;
@@ -309,7 +338,7 @@ onActivated(async () => {
 }
 
 .badge-unverified {
-  padding: 2px 8px;
+  padding: 4px 8px;
   background-color: #f7f8fa;
   color: #969799;
   border-radius: 4px;
@@ -325,26 +354,34 @@ onActivated(async () => {
     margin-bottom: 0;
   }
 
-  .detail-label {
-    width: 60px;
+  .currency-label {
+    padding: 4px 8px;
+    background-color: #F5F5F5;
+    border-radius: 4px;
     font-size: 12px;
-    color: #969799;
+    font-weight: 500;
+    margin-right: 8px;
   }
 
-  .detail-content {
+  .badge-content {
     flex: 1;
     font-size: 14px;
     color: #323233;
   }
 }
 
+.detail-label {
+  color: #969799;
+  font-size: 11px;
+  margin-bottom: 8px;
+}
+
 .account-detail {
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
   gap: 12px;
 
-  .detail-label {
+  .chain-label {
     flex: 1;
     font-size: 14px;
     color: #323233;
@@ -362,23 +399,18 @@ onActivated(async () => {
 
 .account-section {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   flex: 1;
-}
-
-.account-info {
-  flex: 1;
-}
-
-.account-label {
-  font-size: 11px;
-  color: #c8c9cc;
-  margin-bottom: 4px;
-}
-
-.account-number {
   font-size: 14px;
-  color: #323233;
+  font-weight: 500;
+
+  .account-label {
+    color: #999999;
+    margin-right: 4px;
+  }
+
+  .account-number {
+    color: #333333;
+  }
 }
 </style>
