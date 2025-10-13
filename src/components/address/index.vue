@@ -302,6 +302,8 @@ onActivated(async () => {
 .payment-item {
   padding: 4px;
   border-bottom: 1px solid #DEDEDE;
+  margin-bottom: 8px;
+  padding-bottom: 10px;
 }
 
 .payment-header {

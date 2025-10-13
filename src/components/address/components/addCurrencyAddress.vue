@@ -45,18 +45,18 @@
       </div>
       <div class="input-form">
         <div class="input-label">
-          {{ selected1.includes(selectedPaymentMethod) ? '支付宝账号' :  '银行账号'}}
+          {{ `${selectedPaymentMethod}账号` }}
         </div>
         <el-input 
           v-model="paymentAccount" 
-          :placeholder="selected1.includes(selectedPaymentMethod) ? '请输入支付宝账号' : '请输入银行账号'" 
+          :placeholder="`请输入${selectedPaymentMethod}账号`" 
           size="large"
           class="full-width"
         />
       </div>
       <template v-if="selected1.includes(selectedPaymentMethod)">
         <div class="input-form">
-          <div class="input-label">支付宝二维码</div>
+          <div class="input-label">{{ `${selectedPaymentMethod}二维码` }}</div>
           <div class="upload">
             <van-uploader
               v-if="!androidAttrs"
