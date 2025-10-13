@@ -112,11 +112,11 @@
   .items {
     margin: 11px auto;
     width: 340px;
-    height: 152px;
     border-radius: 10px;
     background: $color-FFF;
     box-shadow: 0px 0px 3px 2px #EFF4FE;
     overflow-y: hidden;
+    padding-bottom: 12px;
 
     .text{
       margin-left: 23px;

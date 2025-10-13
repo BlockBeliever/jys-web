@@ -6,16 +6,14 @@
         class="avatar"
         v-if="avatar.startsWith('data:')"
         :src="avatar"
-      ></van-image>
-      <van-image class="avatar" v-else :src="`${baseUrl}${avatar}`"></van-image>
+      />
+      <van-image class="avatar" v-else :src="`${baseUrl}${avatar}`"/>
       <div class="info">
         <div class="name van-ellipsis">{{ user.nickname }}</div>
         <div class="middle">
-          <span
-            >{{ $t("my.authorizationDate") }}：{{
-              moment(user.created_at * 1000).format("YYYY/MM/DD")
-            }}</span
-          >
+          <span>
+            {{ $t("my.authorizationDate") }}：{{moment(user.created_at * 1000).format("YYYY/MM/DD")}}
+          </span>
         </div>
         <div class="bottom">
           <div>
@@ -57,6 +55,24 @@
         <div class="item" @click="pushToMyAd">
           <img src="@/assets/img/center/ad.png" alt="" />
           <span class="title">{{ $t("my.myAd") }}</span>
+        </div>
+      </div>
+      <div class="box">
+        <div class="item" @click="pushToAddressManagement">
+          <img src="@/assets/img/center/address.png" alt="" />
+          <span class="title">{{ $t("my.address") }}</span>
+        </div>
+        <div class="item" style="visibility: hidden;">
+          <img src="@/assets/img/center/address.png" alt="" />
+          <span class="title">{{ $t("my.address") }}</span>
+        </div>
+        <div class="item" style="visibility: hidden;">
+          <img src="@/assets/img/center/address.png" alt="" />
+          <span class="title">{{ $t("my.address") }}</span>
+        </div>
+        <div class="item" style="visibility: hidden;">
+          <img src="@/assets/img/center/address.png" alt="" />
+          <span class="title">{{ $t("my.address") }}</span>
         </div>
       </div>
     </div>
@@ -111,6 +127,9 @@ const pushToMyAd = () => {
 };
 const pushToMyOrder = () => {
   router.push("/order/myOrder");
+};
+const pushToAddressManagement = () => {
+  router.push("/address/management");
 };
 </script>
 

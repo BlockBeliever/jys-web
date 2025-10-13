@@ -30,8 +30,8 @@ export default {
     wantToSell: "I want to Sell",
     myOrder: "My Order",
     myAd: "My Ad",
-    notAMerchant:
-      "You are not a Merchant yet, please click Merchant Center to apply",
+    notAMerchant: "You are not a Merchant yet, please click Merchant Center to apply",
+    address: "Address",
   },
   ad: {
     merchant: "Merchant",

@@ -6,6 +6,7 @@ import orderRoutes from "./modules/order";
 import businessRoutes from "./modules/business";
 import advertisementRoutes from "./modules/advertisement";
 import serviceRoutes from "./modules/service";
+import addressRoutes from "./modules/address";
 // image
 import home from "@/assets/img/tabbar/home.png";
 import home_sel from "@/assets/img/tabbar/home-sel.png";
@@ -63,6 +64,7 @@ const routes: Array<RouteRecordRaw> = [
       ...businessRoutes,
       ...advertisementRoutes,
       ...serviceRoutes,
+      ...addressRoutes,
     ],
   },
 ];

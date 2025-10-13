@@ -26,6 +26,7 @@ export default {
     myOrder: "我的订单",
     myAd: "我的广告",
     notAMerchant: "您还不是商家,请点击商家中心进行申请!",
+    address: "地址管理",
   },
   ad: {
     merchant: "商家名称",

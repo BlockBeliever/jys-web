@@ -79,7 +79,6 @@
           accept="image/*"
         >
         </van-uploader>
-        <!-- <van-uploader v-model="fileList" :before-read="beforeRead" :after-read="afterRead" multiple /> -->
       </div>
     </div>
     <div class="btn-box">

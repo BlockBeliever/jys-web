@@ -9,6 +9,10 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    Address: typeof import('./src/components/address/index.vue')['default']
+    AddressComponentsAdCard: typeof import('./src/components/address/components/adCard.vue')['default']
+    AddressComponentsAddChainAddress: typeof import('./src/components/address/components/addChainAddress.vue')['default']
+    AddressComponentsAddCurrencyAddress: typeof import('./src/components/address/components/addCurrencyAddress.vue')['default']
     AdvertisementBuyAd: typeof import('./src/components/advertisement/buyAd.vue')['default']
     AdvertisementComponentsAdCard: typeof import('./src/components/advertisement/components/adCard.vue')['default']
     AdvertisementMyAd: typeof import('./src/components/advertisement/myAd.vue')['default']
@@ -17,8 +21,10 @@ declare module '@vue/runtime-core' {
     BusinessApply2: typeof import('./src/components/business/apply2.vue')['default']
     BusinessApplyBusiness: typeof import('./src/components/business/applyBusiness.vue')['default']
     BusinessBusinessInfo: typeof import('./src/components/business/businessInfo.vue')['default']
+    copy: typeof import('./src/components/address/components/addChainAddress copy.vue')['default']
     Empty: typeof import('./src/components/empty/index.vue')['default']
     HomeListCard: typeof import('./src/components/home/listCard/index.vue')['default']
+    Loading: typeof import('./src/components/loading/index.vue')['default']
     OrderBusinessOrderDisputedOrder: typeof import('./src/components/order/businessOrder/disputedOrder.vue')['default']
     OrderBusinessOrderOfflineOrder: typeof import('./src/components/order/businessOrder/offlineOrder.vue')['default']
     OrderBusinessOrderOnlineOrder: typeof import('./src/components/order/businessOrder/onlineOrder.vue')['default']
@@ -53,7 +59,10 @@ declare module '@vue/runtime-core' {
     VanIcon: typeof import('vant/es')['Icon']
     VanImage: typeof import('vant/es')['Image']
     VanList: typeof import('vant/es')['List']
+    VanLoading: typeof import('vant/es')['Loading']
     VanNavBar: typeof import('vant/es')['NavBar']
+    VanOverlay: typeof import('vant/es')['Overlay']
+    VanPopover: typeof import('vant/es')['Popover']
     VanPopup: typeof import('vant/es')['Popup']
     VanPullRefresh: typeof import('vant/es')['PullRefresh']
     VanRadio: typeof import('vant/es')['Radio']
@@ -63,5 +72,6 @@ declare module '@vue/runtime-core' {
     VanTabbar: typeof import('vant/es')['Tabbar']
     VanTabbarItem: typeof import('vant/es')['TabbarItem']
     VanTabs: typeof import('vant/es')['Tabs']
+    VanUploader: typeof import('vant/es')['Uploader']
   }
 }
