@@ -253,6 +253,7 @@ const handleConfirm = async () => {
   }
   if (selected1.includes(addressDetailItem.value.paymentMethod)) {
     addressDetailItem.value.paymentCode = pictureList.value.length > 0 ? pictureList.value[0].url : addressDetailItem.value.paymentCode
+    console.log(addressDetailItem.value.paymentCode)
   } else {
     if (!addressDetailItem.value.bankAccount) {
       showToast("请选择开户银行");
