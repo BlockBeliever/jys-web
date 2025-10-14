@@ -13,6 +13,8 @@ declare module '@vue/runtime-core' {
     AddressComponentsAdCard: typeof import('./src/components/address/components/adCard.vue')['default']
     AddressComponentsAddChainAddress: typeof import('./src/components/address/components/addChainAddress.vue')['default']
     AddressComponentsAddCurrencyAddress: typeof import('./src/components/address/components/addCurrencyAddress.vue')['default']
+    AddressComponentsUpdateChainAddress: typeof import('./src/components/address/components/updateChainAddress.vue')['default']
+    AddressComponentsUpdateCurrencyAddress: typeof import('./src/components/address/components/updateCurrencyAddress.vue')['default']
     AdvertisementBuyAd: typeof import('./src/components/advertisement/buyAd.vue')['default']
     AdvertisementComponentsAdCard: typeof import('./src/components/advertisement/components/adCard.vue')['default']
     AdvertisementMyAd: typeof import('./src/components/advertisement/myAd.vue')['default']

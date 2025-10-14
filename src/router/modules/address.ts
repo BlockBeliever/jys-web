@@ -19,10 +19,28 @@ const addressRoutes = [
     }
   },
   {
+    path: '/address/crypto/detail/:id',
+    component: () => import('@/components/address/components/updateChainAddress.vue'),
+    meta: {
+      title: '更新链地址',
+      isTab: false,
+      isNav: true
+    }
+  },
+  {
     path: '/address/currency/add',
     component: () => import('@/components/address/components/addCurrencyAddress.vue'),
     meta: {
       title: '添加账户',
+      isTab: false,
+      isNav: true
+    }
+  },
+  {
+    path: '/address/currency/detail/:id',
+    component: () => import('@/components/address/components/updateCurrencyAddress.vue'),
+    meta: {
+      title: '更新帐户',
       isTab: false,
       isNav: true
     }

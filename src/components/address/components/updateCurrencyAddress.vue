@@ -5,10 +5,11 @@
       <div class="input-form">
         <div class="input-label">选择货币</div>
         <el-select 
-          v-model="selectedCurrency" 
+          v-model="addressDetailItem.currencyType" 
           placeholder="请选择货币种类" 
           size="large"
           class="full-width"
+          disabled
         >
           <el-option
             v-for="item in currencyOptions"
@@ -21,10 +22,11 @@
       <div class="input-form">
         <div class="input-label">收款方式</div>
         <el-select 
-          v-model="selectedPaymentMethod" 
+          v-model="addressDetailItem.paymentMethod" 
           placeholder="请选择收款方式" 
           size="large"
           class="full-width"
+          disabled
         >
           <el-option
             v-for="item in paymentMethodOptios"
@@ -37,7 +39,7 @@
       <div class="input-form">
         <div class="input-label">姓名</div>
         <el-input 
-          v-model="accountName" 
+          v-model="addressDetailItem.accountName" 
           placeholder="请输入姓名" 
           size="large"
           class="full-width"
@@ -45,18 +47,18 @@
       </div>
       <div class="input-form">
         <div class="input-label">
-          {{ `${selectedPaymentMethod}账号` }}
+          {{ `${addressDetailItem.paymentMethod}账号` }}
         </div>
         <el-input 
-          v-model="paymentAccount" 
-          :placeholder="`请输入${selectedPaymentMethod}账号`" 
+          v-model="addressDetailItem.paymentAccount" 
+          :placeholder="`请输入${addressDetailItem.paymentMethod}账号`" 
           size="large"
           class="full-width"
         />
       </div>
-      <template v-if="selected1.includes(selectedPaymentMethod)">
+      <template v-if="selected1.includes(addressDetailItem.paymentMethod)">
         <div class="input-form">
-          <div class="input-label">{{ `${selectedPaymentMethod}二维码` }}</div>
+          <div class="input-label">{{ `${addressDetailItem.paymentMethod}二维码` }}</div>
           <div class="upload">
             <van-uploader
               v-if="!androidAttrs"
@@ -88,7 +90,7 @@
         <div class="input-form">
           <div class="input-label">开户银行</div>
           <el-input 
-            v-model="bankAccount" 
+            v-model="addressDetailItem.bankAccount" 
             placeholder="请选择开户银行" 
             size="large"
             class="full-width"
@@ -97,7 +99,7 @@
         <div class="input-form">
           <div class="input-label">开户支行</div>
           <el-input 
-            v-model="branchAccount" 
+            v-model="addressDetailItem.branchAccount" 
             placeholder="请输入开户支行" 
             size="large"
             class="full-width"
@@ -125,10 +127,11 @@ import { showToast } from "vant";
 import { t } from "@/plugins/i18n";
 import cos from "@/utils/cos";
 import { Md5 } from "ts-md5";
-import { addAddress } from "@/api/address";
+import { addressDetail, updateAddress } from "@/api/address";
 import Loading from "@/components/loading/index.vue";
 
 const router = useRouter()
+const route = useRoute()
 
 const currencyOptions : Array<any> = [
   {
@@ -146,21 +149,34 @@ const selected2 = ["银行卡", "VISA"]
 
 const paymentMethodOptios = ref<any[]>([])
 
-const selectedCurrency = ref<string>("")
-const selectedPaymentMethod = ref<string>("");
-const accountName = ref<string>("")
-const paymentAccount = ref<string>("")
-const bankAccount = ref<string>("")
-const branchAccount = ref<string>("")
 const androidAttrs = ref<boolean>(true);
 const fileList = ref<any[]>([]);
 const pictureList = ref<any[]>([]);
 const isLoading = ref<boolean>(false)
 
-onActivated(() => {
+const addressDetailItem = ref<any>({})
+
+onActivated(async () => {
   const model = navigator.userAgent;
   androidAttrs.value = model.indexOf("Android") > -1;
   fileList.value = [];
+  console.log(route.params.id)
+  isLoading.value = true
+  try {
+    const {code, data, error} = await addressDetail({id : Number(route.params.id)})
+    if (!code) {
+      addressDetailItem.value = data.item
+      fileList.value = [
+        { url: addressDetailItem.value.paymentCode },
+      ]
+    } else {
+      showToast(error)
+    }
+  } catch (e) {
+    console.log("address detail error =======================> ", e)
+  } finally {
+    isLoading.value = false
+  }
 });
 
 const beforeRead = (file: any) => {
@@ -219,33 +235,30 @@ const deleteImg = (file: any) => {
 };
 
 const handleConfirm = async () => {
-  if (!selectedCurrency.value) {
+  if (!addressDetailItem.value.currencyType) {
     showToast("请选择货币种类");
     return
   }
-  if (!selectedPaymentMethod.value) {
+  if (!addressDetailItem.value.paymentMethod) {
     showToast("请选择收款方式");
     return
   }
-  if (!accountName.value) {
+  if (!addressDetailItem.value.accountName) {
     showToast("请输入姓名");
     return
   }
-  if (!paymentAccount.value) {
-    showToast(`请输入${selectedPaymentMethod.value}账号`)
+  if (!addressDetailItem.value.paymentAccount) {
+    showToast(`请输入${addressDetailItem.value.paymentMethod}账号`)
     return
   }
-  if (selected1.includes(selectedPaymentMethod.value)) {
-    if (pictureList.value.length == 0) {
-      showToast("请上传支付宝二维码")
-      return
-    }
+  if (selected1.includes(addressDetailItem.value.paymentMethod)) {
+    addressDetailItem.value.paymentCode = pictureList.value.length > 0 ? pictureList.value[0].url : addressDetailItem.value.paymentCode
   } else {
-    if (!bankAccount.value) {
+    if (!addressDetailItem.value.bankAccount) {
       showToast("请选择开户银行");
       return
     }
-    if (!branchAccount.value) {
+    if (!addressDetailItem.value.branchAccount) {
       showToast("请输入开户支行");
       return
     }
@@ -254,15 +267,7 @@ const handleConfirm = async () => {
   isLoading.value = true
 
   try {
-    const { code } = await addAddress({
-      currencyType: selectedCurrency.value,
-      paymentMethod: selectedPaymentMethod.value,
-      accountName: accountName.value,
-      paymentAccount: paymentAccount.value,
-      paymentCode: pictureList.value.length > 0 ? pictureList.value[0].url : "",
-      bankAccount: bankAccount.value,
-      branchAccount: branchAccount.value
-    })
+    const { code } = await updateAddress(addressDetailItem.value)
 
     if (!code) {
       showToast("成功！")
@@ -277,41 +282,6 @@ const handleConfirm = async () => {
     isLoading.value = false
   }
 }
-
-watch(selectedCurrency, (val) => {
-  selectedPaymentMethod.value = ""
-  if (val == "CNY") {
-    paymentMethodOptios.value = [
-      {
-        label: "支付宝",
-        value: "支付宝"
-      },
-      {
-        label: "微信",
-        value: "微信"
-      },
-      {
-        label: "银行卡",
-        value: "银行卡"
-      },
-    ]
-  } else {
-    paymentMethodOptios.value = [
-      {
-        label: "汇旺",
-        value: "汇旺"
-      },
-      {
-        label: "VISA",
-        value: "VISA"
-      },
-      {
-        label: "ABA",
-        value: "ABA"
-      },
-    ]
-  }
-})
 </script>
 
 <style lang="scss" scoped>

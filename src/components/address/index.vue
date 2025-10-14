@@ -47,7 +47,7 @@
                   <span style="font-size: 14px; font-weight: bold;">{{ item.paymentMethod }}</span>
                 </div>
               </div>
-              <van-icon name="arrow" color="#c8c9cc" />
+              <van-icon name="arrow" color="#c8c9cc" @click="goToCurrencyDetail(item.id)"/>
             </div>
 
             <!-- Currency -->
@@ -87,16 +87,16 @@
           <div
             v-for="item in chainAddressList"
             :key="item.id"
-            class="payment-item"
+            class="chain-item"
           >
             <!-- Header -->
-            <div class="payment-header">
+            <div class="chain-header">
               <div style="display: flex; align-items: center; flex: 1;">
-                <div class="payment-name">
+                <div class="chain-name">
                   <span style="font-size: 14px; font-weight: bold;">{{ item.currencyType }}</span>
                 </div>
               </div>
-              <van-icon name="arrow" color="#c8c9cc" />
+              <van-icon name="arrow" color="#c8c9cc" @click="goToCryptoDetail(item.id)"/>
             </div>
 
             <!-- Account Details -->
@@ -189,6 +189,14 @@ const onDelete = async (id: number) => {
   isLoading.value = false
 }
 
+const goToCurrencyDetail = (id: number) => {
+  router.push(`/address/currency/detail/${id}`)
+}
+
+const goToCryptoDetail = (id: number) => {
+  router.push(`/address/crypto/detail/${id}`)
+}
+
 watch(activeTab, async (val) => {
   currencyType.value = val == "fiat_currency" ? 0 : 1
   isLoading.value = true
@@ -264,6 +272,7 @@ onActivated(async () => {
 :deep(.van-tabs__wrap) {
   flex-shrink: 0;
   margin: 0px 12px;
+  height: 34px;
 }
 
 :deep(.van-tabs__nav) {
@@ -273,6 +282,12 @@ onActivated(async () => {
 :deep(.van-tab) {
   flex: unset !important;
   margin-right: 20px;
+  font-size: 16px;
+}
+
+:deep(.van-tabs__line) {
+  width: 16px;
+  height: 4px;
 }
 
 :deep(.van-tabs__content) {
@@ -310,7 +325,7 @@ onActivated(async () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 12px;
+  margin-bottom: 4px;
 }
 
 .payment-icon {
@@ -321,7 +336,7 @@ onActivated(async () => {
   align-items: center;
   justify-content: center;
   font-size: 18px;
-  margin-right: 12px;
+  margin-right: 4px;
 }
 
 .payment-name {
@@ -332,32 +347,32 @@ onActivated(async () => {
 }
 
 .badge-verified {
-  padding: 4px 8px;
+  padding: 2px 8px;
   background-color: #e8f4ff;
   color: #1989fa;
   border-radius: 4px;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .badge-unverified {
-  padding: 4px 8px;
+  padding: 2px 8px;
   background-color: #f7f8fa;
   color: #969799;
   border-radius: 4px;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .payment-detail {
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   
   &:last-child {
     margin-bottom: 0;
   }
 
   .currency-label {
-    padding: 4px 8px;
+    padding: 2px 8px;
     background-color: #F5F5F5;
     border-radius: 4px;
     font-size: 12px;
@@ -367,7 +382,7 @@ onActivated(async () => {
 
   .badge-content {
     flex: 1;
-    font-size: 14px;
+    font-size: 12px;
     color: #323233;
   }
 }
@@ -375,7 +390,7 @@ onActivated(async () => {
 .detail-label {
   color: #969799;
   font-size: 11px;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .account-detail {
@@ -404,15 +419,38 @@ onActivated(async () => {
   align-items: center;
   flex: 1;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
 
   .account-label {
     color: #999999;
-    margin-right: 4px;
+    margin-right: 8px;
   }
 
   .account-number {
     color: #333333;
+  }
+}
+
+.chain-item {
+  padding: 4px;
+  border-bottom: 1px solid #DEDEDE;
+  margin-bottom: 8px;
+  padding-bottom: 10px;
+
+  .chain-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .chain-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    color: #333333;
+    font-size: 16px;
   }
 }
 </style>
