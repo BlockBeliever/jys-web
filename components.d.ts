@@ -23,7 +23,7 @@ declare module '@vue/runtime-core' {
     BusinessApply2: typeof import('./src/components/business/apply2.vue')['default']
     BusinessApplyBusiness: typeof import('./src/components/business/applyBusiness.vue')['default']
     BusinessBusinessInfo: typeof import('./src/components/business/businessInfo.vue')['default']
-    copy: typeof import('./src/components/address/components/addChainAddress copy.vue')['default']
+    copy: typeof import('./src/components/order/myOrder/components/orderDetail copy.vue')['default']
     Empty: typeof import('./src/components/empty/index.vue')['default']
     HomeListCard: typeof import('./src/components/home/listCard/index.vue')['default']
     Loading: typeof import('./src/components/loading/index.vue')['default']

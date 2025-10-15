@@ -1,40 +1,62 @@
 <template>
   <div class="container" v-if="!loading">
-    <!-- // 0 全部 1待支付 2 完成 3 取消 4 待确认 5 确认转账 6 买家待确认 order_type 1线上 2线下-->
-    <div v-if="detail.dispute_symbol === 1">
-      <div v-if="detail.order_status === 1" class="status">
-        {{ $t("myOrder.unpaid") }}
-      </div>
-      <div v-if="detail.order_status === 2" class="status">{{ $t("myOrder.completed") }}</div>
-      <div v-if="detail.order_status === 3" class="status">
-        {{ $t("myOrder.cancelled") }}
-      </div>
-      <div v-if="[4, 5].includes(detail.order_status)" class="status">
-        {{ $t("myOrder.toBeConfirmedByMerchant") }}
-      </div>
-      <div v-if="detail.order_status === 6" class="status">
-        {{ $t("myOrder.toBeconfirmed") }}
-      </div>
+    <!-- Notice -->
+    <div class="notice-box">
+      <p style="margin: 0 0 8px 0;">
+        请认真核对付款人信息，若付款人信息与商家信息不匹配请停止付款并联系客服
+      </p>
+      <p style="margin: 0;">
+        买家已通过平台实名及视频认证平台7*24小时客服在线保证您的交易安全
+      </p>
     </div>
-    <div v-else>
-      <div class="status">{{ $t("myOrder.orderComplaintInProgress") }}</div>
-    </div>
-    <div class="head">
-      <img class="check" src="@/assets/img/order/check.png" alt="" />
-      <div class="top">
-        <span class="text">{{ $t("myOrder.merchantInformation") }}</span>
-        <div class="contact" @click="contactChat">
-          <img class="logo" src="@/assets/img/order/chat.png" alt="" />
-          <span>{{ $t("myOrder.contactMerchant") }}</span>
+    <!-- Order Status -->
+    <div class="order-status">
+      <div>订单状态</div>
+      <!-- // 0 全部 1待支付 2 完成 3 取消 4 待确认 5 确认转账 6 买家待确认 order_type 1线上 2线下-->
+      <div v-if="detail.dispute_symbol === 1">
+        <div v-if="detail.order_status === 1" class="status">
+          {{ $t("myOrder.unpaid") }}
+        </div>
+        <div v-if="detail.order_status === 2" class="status">{{ $t("myOrder.completed") }}</div>
+        <div v-if="detail.order_status === 3" class="status">
+          {{ $t("myOrder.cancelled") }}
+        </div>
+        <div v-if="[4, 5].includes(detail.order_status)" class="status">
+          {{ $t("myOrder.toBeConfirmedByMerchant") }}
+        </div>
+        <div v-if="detail.order_status === 6" class="status">
+          {{ $t("myOrder.toBeconfirmed") }}
         </div>
       </div>
-      <div class="desc">
-        <img src="@/assets/img/order/star.png" alt="" />
-        <span>{{ $t("myOrder.merchantHasPassedAuthentication") }}</span>
+      <div v-else>
+        <div class="status">{{ $t("myOrder.orderComplaintInProgress") }}</div>
       </div>
-      <div class="desc mt8">
-        <img src="@/assets/img/order/star.png" alt="" />
-        <span>{{ $t("myOrder.customerServiceOnline") }}</span>
+    </div>
+    <!-- Buyer/Seller Information -->
+    <div class="info-card">
+      <div class="info-header">
+        <div class="info-title">
+          <div class="check-icon">
+            <img src="@/assets/img/order/order.png" width="18"/>
+          </div>
+          <span>{{ $t("myOrder.merchantInformation") }}</span>
+        </div>
+        <button class="contact-btn" @click="contactChat">
+          {{ $t("myOrder.contactMerchant") }}
+        </button>
+      </div>
+
+      <div class="info-item">
+        <span class="info-label">{{ $t("myOrder.recipient") }}</span>
+        <span class="info-value">收款人姓名</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">{{ $t("myOrder.recipientAccount") }}</span>
+        <span class="info-value">1234567890</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">{{ $t("myOrder.openingBank") }}</span>
+        <span class="info-value">中国农业银行</span>
       </div>
     </div>
     <div class="order">
@@ -380,7 +402,6 @@ const copyCode = (val: string) => {
 // 联系客服
 const contactService = () => {
   contactIm(store.getUid, store.getServiceId)
-  // router.push("/service");
 };
 // 联系商家 、 买家
 const contactChat = () => {

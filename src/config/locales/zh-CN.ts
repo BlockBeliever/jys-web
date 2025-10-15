@@ -186,5 +186,8 @@ export default {
     piece: "个",
     noMore: "没有更多了",
     copied: "复制成功！",
+    recipient: "收款人",
+    recipientAccount: "收款账号",
+    openingBank: "开户行"
   },
 };
