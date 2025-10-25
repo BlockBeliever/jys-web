@@ -69,7 +69,7 @@
         color: white;
         border: none;
         border-radius: 4px;
-        padding: 6px 12px;
+        padding: 3px 12px;
         cursor: pointer;
         font: $font14-500;
         
@@ -84,7 +84,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 8px 0;
-      font: $font14-500;
+      font: $font13-500;
       border-bottom: 1px solid #eeeeee;
       
       .info-label {
@@ -97,134 +97,28 @@
     }
   }
 
-  .head {
-    position: relative;
-    margin: 15px auto 0px auto;
-    width: 340px;
-    height: 135px;
-    background: url(@/assets/img/order/head.png);
-    background-size: 100% 100%;
-    overflow: hidden;
-
-    .check {
-      position: absolute;
-      top: 65px;
-      right: 12px;
-      width: 67px;
-      height: 45px;
-    }
-
-    .top {
-      margin-top: 13px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      .text {
-        margin-left: 15px;
-        color: $color-333;
-        font: $font15-400;
-      }
-
-      .contact {
-        margin-right: 10px;
-        width: 84px;
-        padding: 10px;
-        height: 27px;
-        background: url(@/assets/img/order/name-bg.png);
-        background-size: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        .logo {
-          width: 18px;
-          height: 17px;
-        }
-
-        span {
-          margin-left: 5px;
-          color: $color-808;
-          font: $font10-400;
-        }
-      }
-    }
-
-    .desc {
-      position: relative;
-      margin-top: 18px;
-      display: flex;
-      align-items: center;
-
-      img {
-        margin-left: 15px;
-        width: 7px;
-        height: 7px;
-      }
-
-      span {
-        margin-left: 5px;
-        color: $color-A8A;
-        font: $font13-400;
-      }
-    }
-
-    .mt8 {
-      margin-top: 8px;
-    }
-  }
-
-  .order {
-    margin: 10px auto;
-    width: 340px;
-    padding-bottom: 10px;
+  .order-card {
+    margin-top: 10px;
+    padding: 16px;
+    background: #FFFFFF;
     border-radius: 10px;
-    background: $color-FFF;
-
-    .top {
+    
+    .order-item {
       display: flex;
-      align-items: center;
-      padding: 15px;
-
-      img {
-        width: 22px;
-        height: 22px;
-      }
-
-      span {
-        margin-left: 10px;
-        color: $color-333;
-        font: $font14-500;
-      }
-    }
-
-    .item {
-      margin-top: 10px;
-      display: flex;
-      align-items: center;
       justify-content: space-between;
-      color: $color-808;
-      font: $font12-400;
-
-      .left {
-        margin-left: 15px;
+      align-items: center;
+      padding: 8px 0;
+      font: $font13-500;
+      border-bottom: 1px solid #eeeeee;
+      
+      .order-label {
+        color: #666;
       }
-
-      .right {
-        margin-right: 15px;
+      
+      .order-value {
+        color: #666;
         display: flex;
         align-items: center;
-
-        .text2 {
-          color: $color-101;
-        }
-
-        .divider {
-          margin-right: 5px;
-          width: 1.5px;
-          height: 10px;
-          background-color: $color-66C;
-        }
 
         .copy {
           margin-left: 5px;
@@ -239,35 +133,41 @@
         }
       }
     }
+  }
+
+  .bottom {
+    margin: 10px auto;
+    width: 340px;
+    padding-bottom: 10px;
+    border-radius: 10px;
 
     .btn-box {
       display: flex;
       align-items: center;
       justify-content: center;
       .botton {
-        margin: 80px auto 0 auto;
+        margin: 20px auto 0 auto;
         width: 225px;
-        height: 45px;
+        height: 40px;
         border-radius: 23px;
         background: $btn-color-blue;
         color: $color-FFF;
         text-align: center;
         font: $font16-400;
-        line-height: 45px;
+        line-height: 40px;
       }
 
       .cancel {
-        margin: 80px auto 0 auto;
-        // width: 100px;
+        margin: 20px auto 0 auto;
         padding: 0 10px;
-        height: 45px;
+        height: 40px;
         border-radius: 23px;
         background: $color-FFF;
         border: 1px solid $color-498;
         color: $color-498;
         text-align: center;
         font: $font16-400;
-        line-height: 45px;
+        line-height: 40px;
       }
     }
 

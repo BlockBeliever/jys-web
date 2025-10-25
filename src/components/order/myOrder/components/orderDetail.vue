@@ -6,7 +6,7 @@
         请认真核对付款人信息，若付款人信息与商家信息不匹配请停止付款并联系客服
       </p>
       <p style="margin: 0;">
-        买家已通过平台实名及视频认证平台7*24小时客服在线保证您的交易安全
+        商家已通过平台实名及视频认证平台7*24小时客服在线保证您的交易安全
       </p>
     </div>
     <!-- Order Status -->
@@ -17,7 +17,9 @@
         <div v-if="detail.order_status === 1" class="status">
           {{ $t("myOrder.unpaid") }}
         </div>
-        <div v-if="detail.order_status === 2" class="status">{{ $t("myOrder.completed") }}</div>
+        <div v-if="detail.order_status === 2" class="status">
+          {{ $t("myOrder.completed") }}
+        </div>
         <div v-if="detail.order_status === 3" class="status">
           {{ $t("myOrder.cancelled") }}
         </div>
@@ -33,11 +35,11 @@
       </div>
     </div>
     <!-- Buyer/Seller Information -->
-    <div class="info-card">
+    <div class="info-card" v-if="detail.order_type === 2">
       <div class="info-header">
         <div class="info-title">
           <div class="check-icon">
-            <img src="@/assets/img/order/order.png" width="18"/>
+            <img src="@/assets/img/order/order.png" width="18" />
           </div>
           <span>{{ $t("myOrder.merchantInformation") }}</span>
         </div>
@@ -46,106 +48,103 @@
         </button>
       </div>
 
-      <div class="info-item">
-        <span class="info-label">{{ $t("myOrder.recipient") }}</span>
-        <span class="info-value">收款人姓名</span>
+      <template v-if="detail.goods_type == 2">
+        <div class="info-item">
+          <span class="info-label">{{ $t("myOrder.recipient") }}</span>
+          <span class="info-value">收款人姓名</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">{{ $t("myOrder.recipientAccount") }}</span>
+          <span class="info-value">1234567890</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">{{ $t("myOrder.openingBank") }}</span>
+          <span class="info-value">中国农业银行</span>
+        </div>
+      </template>
+      <template v-else>
+        <div class="info-item">
+          <span class="info-label">商家名称</span>
+          <span class="info-value">{{ detail.shop_name }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">付款人</span>
+          <span class="info-value">{{ detail.seller_address.accountName }}</span>
+        </div>
+      </template>
+    </div>    
+    <!-- Order Information -->
+    <div class="order-card">
+      <div class="order-item">
+        <div class="order-label">订单类型</div>
+        <div class="order-value">
+          <img :src="detail.goods_coin_icon" alt="" width="22" height="22" />
+          <span style="color: #FD412BFF; margin-left: 4px;">
+            {{ detail.goods_type === 1 ? $t("myOrder.sell") : $t("myOrder.buy") }}{{ detail.goods_coin }}
+          </span>
+        </div>
       </div>
-      <div class="info-item">
-        <span class="info-label">{{ $t("myOrder.recipientAccount") }}</span>
-        <span class="info-value">1234567890</span>
+      <div class="order-item">
+        <div class="order-label">{{ $t("myOrder.orderNumber") }}</div>
+        <div class="order-value">
+          <span>{{ detail.order_id }}</span>
+          <img class="copy" src="@/assets/img/order/copy.png" alt="" @click="copyCode(detail.order_id)" width="14"
+            height="14" />
+        </div>
       </div>
-      <div class="info-item">
-        <span class="info-label">{{ $t("myOrder.openingBank") }}</span>
-        <span class="info-value">中国农业银行</span>
+      <div class="order-item">
+        <div class="order-label">{{ $t("myOrder.unitPrice") }}</div>
+        <div class="order-value">
+          <span>{{ detail.goods_price }} {{ detail.goods_pay_coin }}/个</span>
+        </div>
+      </div>
+      <div class="order-item">
+        <div class="order-label">{{ $t("myOrder.quantity") }}</div>
+        <div class="order-value">
+          <span>{{ divide(detail.order_num) }}</span>
+        </div>
+      </div>
+      <div class="order-item">
+        <div class="order-label">{{ $t("myOrder.totalAmount") }}</div>
+        <div class="order-value">
+          <span>
+            {{ divide(detail.order_amount) }}
+            {{ detail.goods_pay_coin }}
+          </span>
+        </div>
+      </div>
+      <div class="order-item">
+        <div class="order-label">{{ $t("myOrder.paymentMethod") }}</div>
+        <div class="order-value">
+          <span>{{ payWay }}</span>
+        </div>
+      </div>
+      <div class="order-item">
+        <div class="order-label">{{ $t("myOrder.orderTime") }}</div>
+        <div class="order-value">
+          <span>{{ moment(detail.created_at * 1000).format("YYYY-MM-DD HH:mm:ss") }}</span>
+        </div>
+      </div>
+      <div class="order-item" v-if="detail.order_status === 2">
+        <div class="order-label">{{ $t("myOrder.finishTime") }}</div>
+        <div class="order-value">
+          <span>{{ moment(detail.updated_at * 1000).format("YYYY-MM-DD HH:mm:ss") }}</span>
+        </div>
+      </div>
+      <div class="order-item" v-if="detail.order_type === 2 && [2, 5, 6].includes(detail.order_status)">
+        <div class="order-label">{{ $t("myOrder.paymentImage") }}</div>
+        <div class="order-value">
+          <img class="voucher" v-for="(img, index) in detail.order_picture" :src="img"
+            @click="sceneImg(detail.order_picture, index)" />
+        </div>
       </div>
     </div>
-    <div class="order">
-      <div class="top">
-        <img :src="detail.goods_coin_icon" alt="" />
-        <span>
-          {{ detail.goods_type === 1 ? $t("myOrder.sell") : $t("myOrder.buy")}}{{ detail.goods_coin }}
-        </span>
-      </div>
-      <section>
-        <div class="item">
-          <span class="left">{{ $t("myOrder.orderNumber") }}</span>
-          <div class="right">
-            <span class="text">{{ detail.order_id }}</span>
-            <img class="copy" src="@/assets/img/order/copy.png" alt="" @click="copyCode(detail.order_id)" />
-          </div>
-        </div>
-        <div class="item">
-          <span class="left">{{ $t("myOrder.unitPrice") }}</span>
-          <div class="right">
-            <span class="text">{{ detail.goods_price }} {{ detail.goods_pay_coin }}/个</span>
-          </div>
-        </div>
-        <div class="item">
-          <span class="left">{{ $t("myOrder.quantity") }}</span>
-          <div class="right">
-            <span class="text">{{ divide(detail.order_num) }}</span>
-          </div>
-        </div>
-        <div class="item">
-          <span class="left">{{ $t("myOrder.totalAmount") }}</span>
-          <div class="right">
-            <span class="text2">
-              {{ divide(detail.order_amount) }}
-              {{ detail.goods_pay_coin }}
-            </span>
-          </div>
-        </div>
-        <div class="item">
-          <span class="left">{{ $t("myOrder.paymentMethod") }}</span>
-          <div class="right">
-            <div class="divider"></div>
-            <span class="text2">{{ payWay }}</span>
-          </div>
-        </div>
-        <div class="item">
-          <span class="left">{{ $t("myOrder.orderTime") }}</span>
-          <div class="right">
-            <span class="text">{{
-              moment(detail.created_at * 1000).format("YYYY-MM-DD HH:mm:ss")
-            }}</span>
-          </div>
-        </div>
-        <div class="item" v-if="detail.order_status === 2">
-          <span class="left">{{ $t("myOrder.finishTime") }}</span>
-          <div class="right">
-            <span class="text">
-              {{ moment(detail.updated_at * 1000).format("YYYY-MM-DD HH:mm:ss") }}
-            </span>
-          </div>
-        </div>
-        <div class="item" v-if="
-          detail.order_type === 2 && [2, 5, 6].includes(detail.order_status)
-        ">
-          <span class="left">{{ $t("myOrder.paymentImage") }}</span>
-          <div class="right">
-            <img class="voucher" v-for="(img, index) in detail.order_picture" :src="img" alt=""
-              @click="sceneImg(detail.order_picture, index)" />
-          </div>
-        </div>
-      </section>
-      <!-- <div class="btn-box" v-if="detail.order_type === 1">
-        <div class="botton" v-if="detail.order_status === 1" @click="payClick">
-          {{ $t("myOrder.payment") }}
-        </div>
-        <div
-          class="cancel"
-          v-if="detail.order_status === 1"
-          @click="cancelClick"
-        >
-          {{ $t("myOrder.cancelOrder") }}
-        </div>
-      </div> -->
+    <div class="bottom">
       <div class="btn-box">
         <div class="botton" v-if="
           detail.order_status === 1 &&
           detail.goods_type === 1 &&
-          detail.dispute_symbol !== 2"
-          @click="handlePayMent">
+          detail.dispute_symbol !== 2" @click="handlePayMent">
           {{ $t("myOrder.payment") }}
         </div>
         <template v-if="detail.order_type === 1">

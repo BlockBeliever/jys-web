@@ -54,7 +54,7 @@
           class="full-width"
         />
       </div>
-      <template v-if="selected1.includes(selectedPaymentMethod)">
+      <template v-if="paymentMethods.includes(selectedPaymentMethod)">
         <div class="input-form">
           <div class="input-label">{{ `${selectedPaymentMethod}二维码` }}</div>
           <div class="upload">
@@ -141,8 +141,8 @@ const currencyOptions : Array<any> = [
   },
 ]
 
-const selected1 = ["支付宝", "微信", "汇旺", "ABA"]
-const selected2 = ["银行卡", "VISA"]
+const paymentMethods = ["支付宝", "微信", "汇旺", "ABA"]
+const otherPaymentMethods = ["银行卡", "VISA"]
 
 const paymentMethodOptios = ref<any[]>([])
 
@@ -235,7 +235,7 @@ const handleConfirm = async () => {
     showToast(`请输入${selectedPaymentMethod.value}账号`)
     return
   }
-  if (selected1.includes(selectedPaymentMethod.value)) {
+  if (paymentMethods.includes(selectedPaymentMethod.value)) {
     if (pictureList.value.length == 0) {
       showToast("请上传支付宝二维码")
       return
