@@ -49,18 +49,47 @@
       </div>
 
       <template v-if="detail.goods_type == 2">
-        <div class="info-item">
-          <span class="info-label">{{ $t("myOrder.recipient") }}</span>
-          <span class="info-value">收款人姓名</span>
-        </div>
-        <div class="info-item">
-          <span class="info-label">{{ $t("myOrder.recipientAccount") }}</span>
-          <span class="info-value">1234567890</span>
-        </div>
-        <div class="info-item">
-          <span class="info-label">{{ $t("myOrder.openingBank") }}</span>
-          <span class="info-value">中国农业银行</span>
-        </div>
+        <template v-if="otherPaymentMethods.includes(detail.buyer_address.paymentMethod)">
+          <div class="info-item">
+            <span class="info-label">{{ $t("myOrder.recipient") }}</span>
+            <span class="info-value">{{ detail.buyer_address.accountName }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">{{ $t("myOrder.recipientAccount") }}</span>
+            <span class="info-value">{{ detail.buyer_address.paymentAccount }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">{{ $t("myOrder.openingBank") }}</span>
+            <span class="info-value">{{ detail.buyer_address.bankAccount }}</span>
+          </div>
+        </template>
+        <template v-else-if="paymentMethods.includes(detail.buyer_address.paymentMethod)">
+          <div class="info-item">
+            <span class="info-label">{{ $t("myOrder.recipient") }}</span>
+            <span class="info-value">{{ detail.buyer_address.accountName }}</span>
+          </div>
+          <div class="info-item" style="border: none;">
+            <span class="info-label">{{ $t("myOrder.recipientAccount") }}</span>
+            <span class="info-value">{{ detail.buyer_address.paymentAccount }}</span>
+          </div>
+          <div style="text-align: center; margin-top: 20px">
+            <img :src="detail.buyer_address.paymentCode" width="180"/>
+            <div style="margin-top: 10px; color: #666;">收款二维码</div>
+          </div>
+        </template>
+        <template v-else>
+          <div class="info-item">
+            <span class="info-label">收款网络</span>
+            <span class="info-value">{{ detail.buyer_address.currencyType }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">收款地址</span>
+            <span class="info-value">
+              {{ detail.buyer_address.paymentAccount }}
+              <img class="copy" src="@/assets/img/order/blue_copy.png" alt="" @click="copyCode(detail.buyer_address.paymentAccount)" width="14" height="14" />
+            </span>
+          </div>
+        </template>
       </template>
       <template v-else>
         <div class="info-item">
@@ -88,8 +117,7 @@
         <div class="order-label">{{ $t("myOrder.orderNumber") }}</div>
         <div class="order-value">
           <span>{{ detail.order_id }}</span>
-          <img class="copy" src="@/assets/img/order/copy.png" alt="" @click="copyCode(detail.order_id)" width="14"
-            height="14" />
+          <img class="copy" src="@/assets/img/order/red_copy.png" alt="" @click="copyCode(detail.order_id)" width="14" height="14" />
         </div>
       </div>
       <div class="order-item">
@@ -220,6 +248,9 @@ import contactIm from "@/utils/contactIm";
 import router from "@/router";
 import { useAppStore } from "@/store";
 import { t } from "@/plugins/i18n";
+
+const paymentMethods = ["支付宝", "微信", "汇旺", "ABA"]
+const otherPaymentMethods = ["银行卡", "VISA"]
 
 const store = useAppStore();
 const route = useRoute();

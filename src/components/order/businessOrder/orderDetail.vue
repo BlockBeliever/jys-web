@@ -79,6 +79,17 @@
           </div>
         </template>
         <template v-else>
+          <div class="info-item">
+            <span class="info-label">收款网络</span>
+            <span class="info-value">{{ detail.buyer_address.currencyType }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">收款地址</span>
+            <span class="info-value">
+              {{ detail.buyer_address.paymentAccount }}
+              <img class="copy" src="@/assets/img/order/blue_copy.png" alt="" @click="copyCode(detail.buyer_address.paymentAccount)" width="14" height="14" />
+            </span>
+          </div>
         </template>
       </template>
       <template v-else>
@@ -107,7 +118,7 @@
         <div class="order-label">{{ $t("myOrder.orderNumber") }}</div>
         <div class="order-value">
           <span>{{ detail.order_id }}</span>
-          <img class="copy" src="@/assets/img/order/copy.png" alt="" @click="copyCode(detail.order_id)" width="14"
+          <img class="copy" src="@/assets/img/order/red_copy.png" alt="" @click="copyCode(detail.order_id)" width="14"
             height="14" />
         </div>
       </div>
