@@ -236,10 +236,10 @@ const handleConfirm = async () => {
     return
   }
   if (paymentMethods.includes(selectedPaymentMethod.value)) {
-    if (pictureList.value.length == 0) {
-      showToast("请上传支付宝二维码")
-      return
-    }
+    // if (pictureList.value.length == 0) {
+    //   showToast("请上传支付宝二维码")
+    //   return
+    // }
   } else {
     if (!bankAccount.value) {
       showToast("请选择开户银行");
