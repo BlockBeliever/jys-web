@@ -86,7 +86,7 @@
             <span class="info-label">收款地址</span>
             <span class="info-value">
               {{ detail.seller_address.paymentAccount }}
-              <img class="copy" src="@/assets/img/order/blue_copy.png" alt="" @click="copyCode(detail.buyer_address.paymentAccount)" width="14" height="14" />
+              <img class="copy" src="@/assets/img/order/blue_copy.png" alt="" @click="copyCode(detail.seller_address.paymentAccount)" width="14" height="14" />
             </span>
           </div>
         </template>

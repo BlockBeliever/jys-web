@@ -50,44 +50,44 @@
       </div>
 
       <template v-if="detail.goods_type == 1">
-        <template v-if="otherPaymentMethods.includes(detail.buyer_address.paymentMethod)">
+        <template v-if="otherPaymentMethods.includes(detail.seller_address.paymentMethod)">
           <div class="info-item">
             <span class="info-label">{{ $t("myOrder.recipient") }}</span>
-            <span class="info-value">{{ detail.buyer_address.accountName }}</span>
+            <span class="info-value">{{ detail.seller_address.accountName }}</span>
           </div>
           <div class="info-item">
             <span class="info-label">{{ $t("myOrder.recipientAccount") }}</span>
-            <span class="info-value">{{ detail.buyer_address.paymentAccount }}</span>
+            <span class="info-value">{{ detail.seller_address.paymentAccount }}</span>
           </div>
           <div class="info-item">
             <span class="info-label">{{ $t("myOrder.openingBank") }}</span>
-            <span class="info-value">{{ detail.buyer_address.bankAccount }}</span>
+            <span class="info-value">{{ detail.seller_address.bankAccount }}</span>
           </div>
         </template>
-        <template v-else-if="paymentMethods.includes(detail.buyer_address.paymentMethod)">
+        <template v-else-if="paymentMethods.includes(detail.seller_address.paymentMethod)">
           <div class="info-item">
             <span class="info-label">{{ $t("myOrder.recipient") }}</span>
-            <span class="info-value">{{ detail.buyer_address.accountName }}</span>
+            <span class="info-value">{{ detail.seller_address.accountName }}</span>
           </div>
           <div class="info-item" style="border: none;">
             <span class="info-label">{{ $t("myOrder.recipientAccount") }}</span>
-            <span class="info-value">{{ detail.buyer_address.paymentAccount }}</span>
+            <span class="info-value">{{ detail.seller_address.paymentAccount }}</span>
           </div>
-          <div style="text-align: center; margin-top: 20px" v-if="detail.buyer_address.paymentCode">
-            <img :src="detail.buyer_address.paymentCode" width="180"/>
+          <div style="text-align: center; margin-top: 20px" v-if="detail.seller_address.paymentCode">
+            <img :src="detail.seller_address.paymentCode" width="180"/>
             <div style="margin-top: 10px; color: #666;">收款二维码</div>
           </div>
         </template>
         <template v-else>
           <div class="info-item">
             <span class="info-label">收款网络</span>
-            <span class="info-value">{{ detail.buyer_address.currencyType }}</span>
+            <span class="info-value">{{ detail.seller_address.currencyType }}</span>
           </div>
           <div class="info-item">
             <span class="info-label">收款地址</span>
             <span class="info-value">
-              {{ detail.buyer_address.paymentAccount }}
-              <img class="copy" src="@/assets/img/order/blue_copy.png" alt="" @click="copyCode(detail.buyer_address.paymentAccount)" width="14" height="14" />
+              {{ detail.seller_address.paymentAccount }}
+              <img class="copy" src="@/assets/img/order/blue_copy.png" alt="" @click="copyCode(detail.seller_address.paymentAccount)" width="14" height="14" />
             </span>
           </div>
         </template>
@@ -95,11 +95,11 @@
       <template v-else>
         <div class="info-item">
           <span class="info-label">用户昵称</span>
-          <span class="info-value">{{ detail.seller_address.nickname }}</span>
+          <span class="info-value">{{ detail.buyer_address.nickname }}</span>
         </div>
         <div class="info-item">
           <span class="info-label">付款人</span>
-          <span class="info-value">{{ detail.seller_address.accountName }}</span>
+          <span class="info-value">{{ detail.buyer_address.accountName }}</span>
         </div>
       </template>
     </div>    
