@@ -41,7 +41,9 @@
           <div class="check-icon">
             <img src="@/assets/img/order/order.png" width="18" />
           </div>
-          <span>{{ $t("myOrder.merchantInformation") }}</span>
+          <span>
+            {{ $t("myOrder.merchantInformation") }}
+          </span>
         </div>
         <button class="contact-btn" @click="contactChat">
           {{ $t("myOrder.contactMerchant") }}

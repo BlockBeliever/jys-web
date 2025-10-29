@@ -42,10 +42,10 @@
           <div class="check-icon">
             <img src="@/assets/img/order/order.png" width="18" />
           </div>
-          <span>{{ detail.goods_type === 2 ? '卖家信息' : '买家信息' }}</span>
+          <span>{{ detail.goods_type === 1 ? '卖家信息' : '买家信息' }}</span>
         </div>
         <button class="contact-btn" @click="contactChat">
-          {{ detail.goods_type === 2 ? '联系卖家' : '联系买家' }}
+          {{ detail.goods_type === 1 ? '联系卖家' : '联系买家' }}
         </button>
       </div>
 
