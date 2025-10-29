@@ -94,8 +94,8 @@
       </template>
       <template v-else>
         <div class="info-item">
-          <span class="info-label">商家名称</span>
-          <span class="info-value">{{ detail.shop_name }}</span>
+          <span class="info-label">用户昵称</span>
+          <span class="info-value">{{ detail.seller_address.nickname }}</span>
         </div>
         <div class="info-item">
           <span class="info-label">付款人</span>
