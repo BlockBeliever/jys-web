@@ -110,7 +110,7 @@
         <div class="order-value">
           <img :src="detail.goods_coin_icon" alt="" width="22" height="22" />
           <span style="color: #FD412BFF; margin-left: 4px;">
-            {{ detail.goods_type === 1 ? $t("myOrder.sell") : $t("myOrder.buy") }}{{ detail.goods_coin }}
+            {{ detail.goods_type === 2 ? $t("myOrder.sell") : $t("myOrder.buy") }}{{ detail.goods_coin }}
           </span>
         </div>
       </div>
