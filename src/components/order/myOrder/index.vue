@@ -9,7 +9,6 @@
 </template>
 
 <script setup lang="ts">
-import Online from "./components/onlineOrder.vue";
 import Offline from "./components/offlineOrder.vue";
 import Disputed from "./components/disputedOrder.vue";
 import { t } from "@/plugins/i18n";
@@ -17,10 +16,6 @@ import { t } from "@/plugins/i18n";
 // tabs
 const activeTab = ref(0);
 const tabs = [
-  {
-    title: t("myOrder.onlineOrder"),
-    component: Online,
-  },
   {
     title: t("myOrder.offlineOrder"),
     component: Offline,

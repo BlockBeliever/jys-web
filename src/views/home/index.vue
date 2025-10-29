@@ -37,12 +37,12 @@
             <span class="coin">{{ checked }}</span>
             <img src="@/assets/img/home/bottom.png" alt="" />
           </div>
-          <div class="currency" @click="showPopup3 = true">
-            <span class="coin">{{ checked3 }}</span>
-            <img src="@/assets/img/home/bottom.png" alt="" />
-          </div>
           <div class="currency" @click="showPopup2 = true">
             <span class="coin">{{ checked2 }}</span>
+            <img src="@/assets/img/home/bottom.png" alt="" />
+          </div>
+          <div class="currency" @click="showPopup3 = true">
+            <span class="coin">{{ checked3 }}</span>
             <img src="@/assets/img/home/bottom.png" alt="" />
           </div>
         </div>
@@ -189,23 +189,7 @@ const coinList2 = ref([] as any);
 const key3 = ref("");
 const showPopup3 = ref(false);
 const checked3 = ref("支付方式");
-const coinList3 = ref<Array<any>>([
-  // {
-  //   icon: "",
-  //   name: "支付方式",
-  //   symbol: "",
-  // },
-  {
-    icon: "",
-    name: "在线支付",
-    symbol: "[1]",
-  },
-  {
-    icon: "",
-    name: "线下支付",
-    symbol: "[2,3,4,5,6,7]",
-  }
-]);
+const coinList3 = ref<Array<any>>([]);
 
 const getCoinData = async (val: number) => {
   const { data } = await coinGet({
@@ -223,7 +207,6 @@ const getCoinData = async (val: number) => {
       symbol: t("myOrder.all"),
     });
     coinList2.value = data.list || [];
-    // checked2.value = coinList2.value.length ? coinList2.value[0].symbol : null;
   }
   if (checked.value && checked2.value) {
     params.goods_coin = checked.value === t("myOrder.all") ? "" : checked.value;
@@ -238,11 +221,12 @@ const changeChecked = () => {
 };
 const changeChecked2 = () => {
   params.goods_pay_coin = checked2.value === t("myOrder.all") || checked2.value === "支付货币" ? "" : checked2.value;
+  coinList3.value = coinList2.value.filter((item: any) => item.symbol == checked2.value)[0].transaction_way
   adList.value = [];
   onRefresh();
 };
 const changeChecked3 = () => {
-  params.transaction_way = checked3.value === "支付方式" ? "" : coinList3.value.filter(item => item.name == checked3.value)[0].symbol;
+  params.payment_method = checked3.value === "支付方式" ? "" : checked3.value;
   adList.value = [];
   onRefresh();
 };
@@ -260,7 +244,7 @@ let params = {
   limit: 10,
   goods_pay_coin: "", // 支付币种
   goods_coin: "", // 交易币
-  transaction_way: "", // 支付方式
+  payment_method: "", // 支付方式
   goods_type: type.value,
 };
 const onLoad = async () => {
