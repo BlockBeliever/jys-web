@@ -60,12 +60,14 @@
         >
         </van-field>
         <van-field
-          class="field"
           v-model="tradeType"
           readonly
           label-align="top"
           name="交易方式"
+          is-link
           :label="$t('ad.transactionMethod')"
+          :placeholder="$t('ad.transactionMethod')"
+          @click="showPopupClick(3)"
           :rules="[{ validator: validatorTraType }]"
         >
           <template #right-icon></template>
@@ -154,6 +156,29 @@
           </van-cell>
         </van-cell-group>
       </van-radio-group>
+    </div>
+  </van-popup>
+  <van-popup v-model:show="showPopup3" position="bottom" round>
+    <div class="currency-list">
+      <van-checkbox-group v-model="checked3" @change="checkedResultChange">
+        <van-cell-group inset>
+          <van-cell
+            v-for="(item, index) in transactionWays"
+            clickable
+            :key="item.id"
+            :title="item.name"
+            @click="toggle(index)"
+          >
+            <template #right-icon>
+              <van-checkbox
+                :name="item.id"
+                :ref="el => checkboxRefs[index] = el"
+                @click.stop
+              />
+            </template>
+          </van-cell>
+        </van-cell-group>
+      </van-checkbox-group>
     </div>
   </van-popup>
   <van-popup v-model:show="showAddressPopup" position="bottom" round style="max-height: 350px;">
@@ -265,14 +290,30 @@ const key2 = ref("");
 const showPopup2 = ref(false);
 const checked2 = ref();
 const coinList2 = ref([] as any);
+
+const checkboxRefs = ref<Array<any>>([]);
+const checked3 = ref<Array<any>>([]);
+const showPopup3 = ref(false);
+const transactionWays = ref<Array<any>>([])
+
+const toggle = (index: any) => {
+  checkboxRefs.value[index].toggle();
+};
+
+onBeforeUpdate(() => {
+  checkboxRefs.value = [];
+});
+
 const showPopupClick = (val: number) => {
   if (val === 1) {
     showPopup.value = true;
     checked.value = null; // 重置勾选
-    return;
+  } else if (val === 2) {
+    showPopup2.value = true;
+    checked2.value = null; // 重置勾选
+  } else {
+    showPopup3.value = true;
   }
-  showPopup2.value = true;
-  checked2.value = null; // 重置勾选
 };
 const getCoinData = async (val: number) => {
   const { data } = await coinGet({
@@ -299,10 +340,21 @@ const changeChecked2 = () => {
     (item: any) => Number(checked2.value) === item.id
   )[0];
   checkedText2.value = obj?.symbol;
-  tradeType.value = obj?.transaction_way
+  transactionWays.value = obj?.transaction_way
+};
+
+const checkedResultChange = (value: string[]) => {
+  console.log(value);
+  
+  // Convert value array to numbers for comparison
+  const valueIds = value.map(v => parseInt(v));
+  
+  tradeType.value = transactionWays.value
+    .filter((item: any) => valueIds.includes(item.id))
     .map((item: any) => item.name)
     .join(" | ");
-};
+}
+
 // 校验输入框
 const regex = /^[1-9]\d*$/;
 const validatorCoin = (val: any) : any => {
@@ -381,6 +433,10 @@ const onSubmit = async () => {
     showToast(t("placeOrder.pleaseSelectWalletAddress"));
     return;
   }
+  if (!tradeType.value) {
+    showToast(t("ad.transactionMethod"));
+    return;
+  }
   const { code, error } = await addAdvertisement({
     goods_type: 2,
     goods_num: multiply(quantity.value),
@@ -389,6 +445,8 @@ const onSubmit = async () => {
     goods_pay_coin: checked2.value * 1,
     goods_min: multiply(limitMin.value),
     goods_max: multiply(limitMax.value),
+    payment_method: tradeType.value,
+    transaction_way: checked3.value,
     wallet_name: checkedWalletName.value,
     wallet_address: checkedWalletAddress.value
   });

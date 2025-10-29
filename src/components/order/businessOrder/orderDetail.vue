@@ -73,7 +73,7 @@
             <span class="info-label">{{ $t("myOrder.recipientAccount") }}</span>
             <span class="info-value">{{ detail.buyer_address.paymentAccount }}</span>
           </div>
-          <div style="text-align: center; margin-top: 20px">
+          <div style="text-align: center; margin-top: 20px" v-if="detail.buyer_address.paymentCode">
             <img :src="detail.buyer_address.paymentCode" width="180"/>
             <div style="margin-top: 10px; color: #666;">收款二维码</div>
           </div>

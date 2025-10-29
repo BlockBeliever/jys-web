@@ -15,7 +15,6 @@
           :placeholder="$t('ad.pleaseEnterPrice')" :rules="[{ validator: validatorPrice }]">
           <template #extra>
             <div class="field-right" @click="showPopupClick(2)">
-              <!-- <span class="coin">{{ checkedText2 }}</span> -->
               <span class="text">
                 {{ checkedText2 || $t("ad.pleaseSelectThePaymentCurrency") }}
               </span>
@@ -27,8 +26,10 @@
           :label="$t('ad.walletAddress')" :placeholder="$t('ad.pleaseSelectAddress')" @click="showAddressPopupClick">
           <template #right-icon></template>
         </van-field>
-        <van-field class="field" v-model="tradeType" readonly label-align="top" name="交易方式"
-          :label="$t('ad.transactionMethod')" :rules="[{ validator: validatorTraType }]" />
+        <van-field v-model="tradeType" readonly label-align="top" is-link name="交易方式"  @click="showPopupClick(3)"
+          :label="$t('ad.transactionMethod')"  :placeholder="$t('ad.transactionMethod')" :rules="[{ validator: validatorTraType }]">
+          <template #right-icon />
+        </van-field>
         <van-field v-model="limitMin" label-align="top" name="限额" :label="$t('ad.minimumLimit')"
           :placeholder="$t('ad.pleaseEnterMinimumLimit')" :rules="[{ validator: validatorLimitMin }]" @focus="onfocus">
           <template #extra>
@@ -103,6 +104,29 @@
       </van-radio-group>
     </div>
   </van-popup>
+  <van-popup v-model:show="showPopup3" position="bottom" round>
+    <div class="currency-list">
+      <van-checkbox-group v-model="checked3" @change="checkedResultChange">
+        <van-cell-group inset>
+          <van-cell
+            v-for="(item, index) in transactionWays"
+            clickable
+            :key="item.id"
+            :title="item.name"
+            @click="toggle(index)"
+          >
+            <template #right-icon>
+              <van-checkbox
+                :name="item.id"
+                :ref="el => checkboxRefs[index] = el"
+                @click.stop
+              />
+            </template>
+          </van-cell>
+        </van-cell-group>
+      </van-checkbox-group>
+    </div>
+  </van-popup>
   <van-popup v-model:show="showAddressPopup" position="bottom" round style="max-height: 350px;">
     <van-collapse v-model="activeNames"  style="padding: 0 !important; margin: 0 !important">
       <van-collapse-item :title="item.name" :name="item.name" v-for="item in wallets" style="padding: 0 !important; margin: 0 !important">
@@ -135,17 +159,9 @@ import { addAdvertisement } from "@/api/advertisement";
 import { myShop } from "@/api/business";
 import { showToast } from "vant";
 import { multiply, divide } from "@/utils/formart";
-import { judgeInput } from "@/utils/judgeInput";
 import { t } from "@/plugins/i18n";
 const form = ref();
 const wallets = ref<any[]>([])
-const value1 = ref(0);
-const value2 = ref('a');
-const option1 = [
-  { text: 'Option1', value: 0 },
-  { text: 'Option2', value: 1 },
-  { text: 'Option3', value: 2 },
-];
 const activeNames  = ref<string[]>([])
 onActivated(() => {
   const walletData = localStorage.getItem("pnc_wallets") ?? '[]';
@@ -194,19 +210,34 @@ const key2 = ref("");
 const showPopup2 = ref(false);
 const checked2 = ref();
 const coinList2 = ref([] as any);
+
+const checkboxRefs = ref<Array<any>>([]);
+const checked3 = ref<Array<any>>([]);
+const showPopup3 = ref(false);
+const transactionWays = ref<Array<any>>([])
+
+const toggle = (index: any) => {
+  checkboxRefs.value[index].toggle();
+};
+
+onBeforeUpdate(() => {
+  checkboxRefs.value = [];
+});
+
 const showPopupClick = (val: number) => {
   if (val === 1) {
     showPopup.value = true;
     checked.value = null; // 重置勾选
-    return;
+  } else if (val === 2) {
+    showPopup2.value = true;
+    checked2.value = null; // 重置勾选
+  } else {
+    showPopup3.value = true;
   }
-  showPopup2.value = true;
-  checked2.value = null; // 重置勾选
 };
 const showAddressPopup = ref<boolean>(false)
 const showAddressChecked = ref<any>(null)
 const checkedWalletAddress = ref<string>("")
-const selectedAccountName = ref<string>("");
 const checkedWalletName = ref<string>("")
 const showAddressPopupClick = () => {
   if (wallets.value.length == 0) {
@@ -256,10 +287,21 @@ const changeChecked2 = () => {
     (item: any) => Number(checked2.value) === item.id
   )[0];
   checkedText2.value = obj?.symbol;
-  tradeType.value = obj?.transaction_way
+  transactionWays.value = obj?.transaction_way
+};
+
+const checkedResultChange = (value: string[]) => {
+  console.log(value);
+  
+  // Convert value array to numbers for comparison
+  const valueIds = value.map(v => parseInt(v));
+  
+  tradeType.value = transactionWays.value
+    .filter((item: any) => valueIds.includes(item.id))
     .map((item: any) => item.name)
     .join(" | ");
-};
+}
+
 // 校验输入框
 const regex = /^[1-9]\d*$/;
 const validatorCoin = (val: any): any => {
@@ -338,6 +380,10 @@ const onSubmit = async () => {
     showToast(t("placeOrder.pleaseSelectWalletAddress"));
     return;
   }
+  if (!tradeType.value) {
+    showToast(t("ad.transactionMethod"));
+    return;
+  }
   const { code, message, error } = await addAdvertisement({
     goods_type: 1,
     goods_num: multiply(quantity.value),
@@ -346,6 +392,8 @@ const onSubmit = async () => {
     goods_pay_coin: checked2.value * 1,
     goods_min: multiply(limitMin.value),
     goods_max: multiply(limitMax.value),
+    payment_method: tradeType.value,
+    transaction_way: checked3.value,
     wallet_name: checkedWalletName.value,
     wallet_address: checkedWalletAddress.value,
   });
