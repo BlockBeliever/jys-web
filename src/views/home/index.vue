@@ -222,6 +222,8 @@ const changeChecked = () => {
 const changeChecked2 = () => {
   params.goods_pay_coin = checked2.value === t("myOrder.all") || checked2.value === "支付货币" ? "" : checked2.value;
   coinList3.value = coinList2.value.filter((item: any) => item.symbol == checked2.value)[0].transaction_way
+  checked3.value = "支付方式"
+  params.payment_method = "";
   adList.value = [];
   onRefresh();
 };
