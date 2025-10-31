@@ -46,9 +46,9 @@
               {{ active === 0 ? detailData.goods_pay_coin : detailData.goods_coin }}
             </span>
             <div class="divider"></div>
-            <span class="all" @click="maximumAction">{{
-              $t("placeOrder.maximum")
-            }}</span>
+            <span class="all" @click="maximumAction">
+              {{ $t("placeOrder.maximum") }}
+            </span>
           </div>
         </div>
         <div class="line"></div>
@@ -65,7 +65,7 @@
             <img src="@/assets/img/order/x.png" alt="" />
             <span class="text">手续费</span>
             <span class="number">
-              {{ divide(detailData.goods_fee) }}{{ detailData.goods_pay_coin }}
+              {{ divide(detailData.goods_fee) }}{{ detailData.goods_coin }}
             </span>
           </div>
         </div>
@@ -308,8 +308,8 @@ const handlePayMent = (order: any) => {
     "transferDapp",
     {
       order_id: order.order_id_buyer,
-      amount: divide(order.order_num),
-      price: order.order_num,
+      amount: divide(order.order_num + order.goods_num),
+      price: order.order_num + order.goods_num,
       token_id: coinTypes[order.goods_coin],
       symbol: order.goods_coin,
       buyer_wallet_address: order.buyer_wallet_address,

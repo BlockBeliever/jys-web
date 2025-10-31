@@ -65,7 +65,7 @@
             <img src="@/assets/img/order/x.png" alt="" />
             <span class="text">手续费</span>
             <span class="number">
-              {{ divide(detailData.goods_fee) }}{{ detailData.goods_pay_coin }}
+              {{ divide(detailData.goods_fee) }}{{ detailData.goods_coin }}
             </span>
           </div>
         </div>
