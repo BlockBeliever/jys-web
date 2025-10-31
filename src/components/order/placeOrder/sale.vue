@@ -308,8 +308,8 @@ const handlePayMent = (order: any) => {
     "transferDapp",
     {
       order_id: order.order_id_buyer,
-      amount: divide(order.order_num + order.goods_num),
-      price: order.order_num + order.goods_num,
+      amount: divide(order.order_num + order.goods_fee),
+      price: order.order_num + order.goods_fee,
       token_id: coinTypes[order.goods_coin],
       symbol: order.goods_coin,
       buyer_wallet_address: order.buyer_wallet_address,

@@ -156,7 +156,7 @@
         <div class="order-value">
           <span>
             {{ divide(detail.goods_fee) | 0 }}            
-            {{ detail.goods_pay_coin }}
+            {{ detail.goods_coin }}
           </span>
         </div>
       </div>
