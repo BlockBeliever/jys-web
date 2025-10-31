@@ -189,7 +189,44 @@ const coinList2 = ref([] as any);
 const key3 = ref("");
 const showPopup3 = ref(false);
 const checked3 = ref("支付方式");
-const coinList3 = ref<Array<any>>([]);
+const coinList3 = ref<Array<any>>([
+  {
+    name: "微信",
+    symbol: "wechat",
+  },
+  {
+    name: "支付宝",
+    symbol: "alipay",
+  },
+  {
+    name: "银行卡",
+    symbol: "bankcard",
+  },
+  {
+    name: "现金",
+    symbol: "cash",
+  },
+  {
+    name: "汇旺",
+    symbol: "huiwang",
+  },
+  {
+    name: "ABA",
+    symbol: "aba",
+  },
+  {
+    name: "VISA",
+    symbol: "visa",
+  },
+  {
+    name: "ERC20",
+    symbol: "erc20",
+  },
+  {
+    name: "TRC20",
+    symbol: "trc20",
+  }
+]);
 
 const getCoinData = async (val: number) => {
   const { data } = await coinGet({
@@ -221,7 +258,48 @@ const changeChecked = () => {
 };
 const changeChecked2 = () => {
   params.goods_pay_coin = checked2.value === t("myOrder.all") || checked2.value === "支付货币" ? "" : checked2.value;
-  coinList3.value = coinList2.value.filter((item: any) => item.symbol == checked2.value)[0].transaction_way
+  if (checked2.value === t("myOrder.all") || checked2.value === "支付货币") {
+    coinList3.value = [
+      {
+        name: "微信",
+        symbol: "wechat",
+      },
+      {
+        name: "支付宝",
+        symbol: "alipay",
+      },
+      {
+        name: "银行卡",
+        symbol: "bankcard",
+      },
+      {
+        name: "现金",
+        symbol: "cash",
+      },
+      {
+        name: "汇旺",
+        symbol: "huiwang",
+      },
+      {
+        name: "ABA",
+        symbol: "aba",
+      },
+      {
+        name: "VISA",
+        symbol: "visa",
+      },
+      {
+        name: "ERC20",
+        symbol: "erc20",
+      },
+      {
+        name: "TRC20",
+        symbol: "trc20",
+      }
+    ];
+  } else {
+    coinList3.value = coinList2.value.filter((item: any) => item.symbol == checked2.value)[0].transaction_way
+  }
   checked3.value = "支付方式"
   params.payment_method = "";
   adList.value = [];

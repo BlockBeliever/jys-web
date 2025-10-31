@@ -48,6 +48,21 @@
             </div>
           </template>
         </van-field>
+        <van-field name="switch" label-align="top" v-model="fee" :placeholder="feeChecked ? '输入手续费' : ''" :readonly="!feeChecked" :rules="[{ validator: validatorFee }]">
+          <template #label>
+            <div style="display: flex; align-items: center; font-weight: 700;">
+              <span style="margin-right: 4px;">手续费</span>
+              <van-switch v-model="feeChecked" size="medium"/>
+            </div>
+          </template>
+          <template #extra v-if="feeChecked">
+            <div class="field-right">
+              <span class="text">
+                {{ checkedText }}
+              </span>
+            </div>
+          </template>
+        </van-field>
         <van-field
           v-model="checkedWalletAddress"
           label-align="top"
@@ -286,6 +301,9 @@ const changeAddressChecked = (name: string) => {
   })
 }
 
+const feeChecked = ref<boolean>(false)
+const fee = ref<string | number>("")
+
 const key2 = ref("");
 const showPopup2 = ref(false);
 const checked2 = ref();
@@ -448,7 +466,8 @@ const onSubmit = async () => {
     payment_method: tradeType.value,
     transaction_way: checked3.value,
     wallet_name: checkedWalletName.value,
-    wallet_address: checkedWalletAddress.value
+    wallet_address: checkedWalletAddress.value,
+    goods_fee: multiply(fee.value)
   });
   if (code === 0) {
     showToast(t("ad.postSucceed"));
