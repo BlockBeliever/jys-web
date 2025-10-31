@@ -412,6 +412,11 @@ const validatorTraType = (val: any) : any => {
     }
   }
 };
+const validatorFee = (val: any): any => {
+  if (!regex2.test(val + "")) {
+    return t("ad.pleaseEnterNumber");
+  }
+};
 const validatorLimitMin = (val: any) : any => {
   if (val === "") {
     return t("ad.pleaseEnterMinimumLimit");
@@ -453,6 +458,10 @@ const onSubmit = async () => {
   }
   if (!tradeType.value) {
     showToast(t("ad.transactionMethod"));
+    return;
+  }
+  if (feeChecked.value && !fee.value) {
+    showToast("请输入手续费");
     return;
   }
   const { code, error } = await addAdvertisement({
