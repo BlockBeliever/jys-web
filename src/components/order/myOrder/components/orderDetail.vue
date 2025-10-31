@@ -74,7 +74,7 @@
             <span class="info-label">{{ $t("myOrder.recipientAccount") }}</span>
             <span class="info-value">{{ detail.seller_address.paymentAccount }}</span>
           </div>
-          <div style="text-align: center; margin-top: 20px">
+          <div style="text-align: center; margin-top: 20px" v-if="detail.seller_address.paymentCode">
             <img :src="detail.seller_address.paymentCode" width="180"/>
             <div style="margin-top: 10px; color: #666;">收款二维码</div>
           </div>
@@ -152,6 +152,15 @@
         </div>
       </div>
       <div class="order-item">
+        <div class="order-label">手续费</div>
+        <div class="order-value">
+          <span>
+            {{ divide(detail.goods_fee) | 0 }}            
+            {{ detail.goods_pay_coin }}
+          </span>
+        </div>
+      </div>
+      <div class="order-item">
         <div class="order-label">{{ $t("myOrder.orderTime") }}</div>
         <div class="order-value">
           <span>{{ moment(detail.created_at * 1000).format("YYYY-MM-DD HH:mm:ss") }}</span>
@@ -166,8 +175,7 @@
       <div class="order-item" v-if="detail.order_type === 2 && [2, 5, 6].includes(detail.order_status)">
         <div class="order-label">{{ $t("myOrder.paymentImage") }}</div>
         <div class="order-value">
-          <img class="voucher" v-for="(img, index) in detail.order_picture" :src="img"
-            @click="sceneImg(detail.order_picture, index)" />
+          <img class="voucher" v-for="(img, index) in detail.order_picture" :src="img" @click="sceneImg(detail.order_picture, index)" />
         </div>
       </div>
     </div>

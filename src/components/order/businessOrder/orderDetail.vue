@@ -152,6 +152,15 @@
         </div>
       </div>
       <div class="order-item">
+        <div class="order-label">手续费</div>
+        <div class="order-value">
+          <span>
+            {{ divide(detail.goods_fee) | 0 }}            
+            {{ detail.goods_pay_coin }}
+          </span>
+        </div>
+      </div>
+      <div class="order-item">
         <div class="order-label">{{ $t("myOrder.orderTime") }}</div>
         <div class="order-value">
           <span>{{ moment(detail.created_at * 1000).format("YYYY-MM-DD HH:mm:ss") }}</span>

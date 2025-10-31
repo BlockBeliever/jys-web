@@ -162,10 +162,10 @@
     }
 
     .limit {
-      margin-left: 17px;
-      margin-top: 8px;
+      margin: 8px 17px;
       display: flex;
       align-items: center;
+      justify-content: space-between;
 
       img {
         width: 4px;
