@@ -120,8 +120,7 @@
         <div class="order-label">{{ $t("myOrder.orderNumber") }}</div>
         <div class="order-value">
           <span>{{ detail.order_id }}</span>
-          <img class="copy" src="@/assets/img/order/red_copy.png" alt="" @click="copyCode(detail.order_id)" width="14"
-            height="14" />
+          <img class="copy" src="@/assets/img/order/red_copy.png" alt="" @click="copyCode(detail.order_id)" width="14" height="14" />
         </div>
       </div>
       <div class="order-item">
