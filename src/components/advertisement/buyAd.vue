@@ -318,6 +318,9 @@ const changeChecked2 = () => {
   )[0];
   checkedText2.value = obj?.symbol;
   transactionWays.value = obj?.transaction_way
+  if (!transactionWays.value || transactionWays.value.length == 0) {
+    showToast("请添加收款地址")
+  }
 };
 
 const checkedResultChange = (value: string[]) => {
