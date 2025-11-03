@@ -320,11 +320,7 @@ const changeChecked2 = () => {
   transactionWays.value = obj?.transaction_way
 };
 
-const checkedResultChange = (value: string[]) => {
-  if (!transactionWays.value || transactionWays.value.length == 0) {
-    showToast("请添加收款地址")
-  }
-  
+const checkedResultChange = (value: string[]) => {  
   // Convert value array to numbers for comparison
   const valueIds = value.map(v => parseInt(v));
   
@@ -449,6 +445,13 @@ const onSubmit = async () => {
 watch(feeChecked, (val) => {
   console.log(val)
   if (!val) fee.value = ""
+})
+watch(showPopup3, (val) => {
+  if (val) {    
+    if (!transactionWays.value || transactionWays.value.length == 0) {
+      showToast("请添加收款地址")
+    }
+  }
 })
 </script>
 
