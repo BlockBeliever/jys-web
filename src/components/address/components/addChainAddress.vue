@@ -79,7 +79,6 @@ const handleConfirm = async () => {
   isLoading.value = true
 
   try {
-
     const { code } = await addAddress({
       currencyType: selectedCrypto.value,
       paymentAccount: cryptoAddress.value,
