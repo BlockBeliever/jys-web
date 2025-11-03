@@ -451,6 +451,7 @@ watch(showPopup3, (val) => {
     if (!transactionWays.value || transactionWays.value.length == 0) {
       showToast("请添加收款地址")
     }
+    showPopup3.value = false
   }
 })
 </script>
