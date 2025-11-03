@@ -1,5 +1,6 @@
 <template>
-  <div class="container" v-if="!loading">
+  <loading :loading-show="loading" />
+  <div class="container">
     <!-- Notice -->
     <div class="notice-box">
       <p style="margin: 0 0 8px 0;">
@@ -260,13 +261,14 @@ import contactIm from "@/utils/contactIm";
 import router from "@/router";
 import { useAppStore } from "@/store";
 import { t } from "@/plugins/i18n";
+import Loading from "@/components/loading/index.vue";
 
 const paymentMethods = ["支付宝", "微信", "汇旺", "ABA"]
 const otherPaymentMethods = ["银行卡", "VISA"]
 
 const store = useAppStore();
 const route = useRoute();
-const loading = ref(true);
+const loading = ref<boolean>(false);
 onActivated(() => {
   // flutter交互
   setupWebViewJavascriptBridge(function (bridge: any) {
@@ -305,20 +307,25 @@ onActivated(() => {
     bridge.registerHandler("responseReleaseToken", responseReleaseToken);
   });
   payWay.value = "";
-  loading.value = true;
   getDetail();
 });
 const detail = ref({} as any);
 const payWay = ref("");
 const getDetail = async () => {
-  const { data } = await orderDetail({
-    id: Number(route.query.id),
-  });
-  loading.value = false;
-  detail.value = data;
-  payWay.value = data.transaction_ways.filter(
-    (item: any) => item.symbol === data.order_transaction_way
-  )[0].name;
+  loading.value = true;
+  try {
+    const { data } = await orderDetail({
+      id: Number(route.query.id),
+    });
+    detail.value = data;
+    payWay.value = data.transaction_ways.filter(
+      (item: any) => item.symbol === data.order_transaction_way
+    )[0].name;
+  } catch (e) {
+    console.log("order detail error: ", e)
+  } finally {
+    loading.value = false;
+  }
 };
 
 const handlePayMent = () => {

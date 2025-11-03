@@ -1,4 +1,5 @@
 <template>
+  <loading :loading-show="loading" />
   <div class="container" ref="container">
     <!-- form validatorTraType-->
     <van-form class="form" ref="form" @submit="onSubmit">
@@ -176,17 +177,27 @@ import { myShop } from "@/api/business";
 import { showToast } from "vant";
 import { multiply, divide } from "@/utils/formart";
 import { t } from "@/plugins/i18n";
+import Loading from "@/components/loading/index.vue";
+
 const form = ref();
 const wallets = ref<any[]>([])
 const activeNames  = ref<string[]>([])
-onActivated(() => {
+const loading = ref<boolean>(false);
+onActivated(async () => {
   const walletData = localStorage.getItem("pnc_wallets") ?? '[]';
   wallets.value = JSON.parse(walletData);
   activeNames.value = wallets.value.map(item => item.name)
   // 初始化数据
-  getMyShopInfo();
-  getCoinData(1);
-  getCoinData(2);
+  loading.value = true
+  try {
+    await getMyShopInfo();
+    await getCoinData(1);
+    await getCoinData(2);
+  } catch (e) {
+    console.log("buy advertisement init data get error: ", e)
+  } finally {
+    loading.value = false
+  }
   nextTick(() => {
     checkedText.value = "";
     checkedText2.value = "";
