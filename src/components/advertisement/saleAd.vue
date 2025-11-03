@@ -340,7 +340,11 @@ const showPopupClick = (val: number) => {
     showPopup2.value = true;
     checked2.value = null; // 重置勾选
   } else {
-    showPopup3.value = true;
+    if (!transactionWays.value || transactionWays.value.length == 0) {
+      showToast("请添加收款地址")
+    } else {
+      showPopup3.value = true;
+    }
   }
 };
 const getCoinData = async (val: number) => {
@@ -369,11 +373,10 @@ const changeChecked2 = () => {
   )[0];
   checkedText2.value = obj?.symbol;
   transactionWays.value = obj?.transaction_way
+  tradeType.value = ""
 };
 
-const checkedResultChange = (value: string[]) => {
-  console.log(value);
-  
+const checkedResultChange = (value: string[]) => {  
   // Convert value array to numbers for comparison
   const valueIds = value.map(v => parseInt(v));
   

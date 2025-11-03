@@ -262,7 +262,11 @@ const showPopupClick = (val: number) => {
     showPopup2.value = true;
     checked2.value = null; // 重置勾选
   } else {
-    showPopup3.value = true;
+    if (!transactionWays.value || transactionWays.value.length == 0) {
+      showToast("请添加收款地址")
+    } else {
+      showPopup3.value = true;
+    }
   }
 };
 const showAddressPopup = ref<boolean>(false)
@@ -318,6 +322,7 @@ const changeChecked2 = () => {
   )[0];
   checkedText2.value = obj?.symbol;
   transactionWays.value = obj?.transaction_way
+  tradeType.value = ""
 };
 
 const checkedResultChange = (value: string[]) => {  
@@ -445,14 +450,6 @@ const onSubmit = async () => {
 watch(feeChecked, (val) => {
   console.log(val)
   if (!val) fee.value = ""
-})
-watch(showPopup3, (val) => {
-  if (val) {    
-    if (!transactionWays.value || transactionWays.value.length == 0) {
-      showToast("请添加收款地址")
-    }
-    showPopup3.value = false
-  }
 })
 </script>
 
