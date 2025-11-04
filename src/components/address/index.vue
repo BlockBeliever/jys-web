@@ -120,8 +120,10 @@
 <script setup lang="ts">
 import VisaIcon from "@/assets/img/address/visa.png"
 import AlipayIcon from "@/assets/img/address/alipay.png"
+import AbaIcon from "@/assets/img/address/aba.png"
 import BankIcon from "@/assets/img/address/bank.png"
 import WechatIcon from "@/assets/img/address/wechat.png"
+import HuiwangIcon from "@/assets/img/address/huiwang.png"
 import CurrencyIcon from "@/assets/img/address/currency.png"
 import ChainIcon from "@/assets/img/address/chain.png"
 import { addressList, deleteAddress } from "@/api/address"
@@ -133,8 +135,8 @@ const paymentIcons = {
   "支付宝" : AlipayIcon,
   "微信" : WechatIcon,
   "VISA" : VisaIcon,
-  "汇旺" : AlipayIcon,
-  "ABA" : AlipayIcon,
+  "汇旺" : HuiwangIcon,
+  "ABA" : AbaIcon,
 } as any
 
 const router = useRouter()
