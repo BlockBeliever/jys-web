@@ -126,6 +126,9 @@ import WechatIcon from "@/assets/img/address/wechat.png"
 import HuiwangIcon from "@/assets/img/address/huiwang.png"
 import CurrencyIcon from "@/assets/img/address/currency.png"
 import ChainIcon from "@/assets/img/address/chain.png"
+import EthIcon from "@/assets/img/address/eth.png"
+import TrxIcon from "@/assets/img/address/trx.png"
+import USDTIcon from "@/assets/img/address/USDT.png"
 import { addressList, deleteAddress } from "@/api/address"
 import Loading from "@/components/loading/index.vue";
 import { showToast } from "vant"
@@ -137,6 +140,12 @@ const paymentIcons = {
   "VISA" : VisaIcon,
   "汇旺" : HuiwangIcon,
   "ABA" : AbaIcon,
+} as any
+
+const chainIcons = {
+  "ERC20" : EthIcon,
+  "TRC20" : TrxIcon,
+  "USDT" : USDTIcon,
 } as any
 
 const router = useRouter()
@@ -330,6 +339,17 @@ onActivated(async () => {
 }
 
 .payment-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  margin-right: 4px;
+}
+
+.chain-icon {
   width: 32px;
   height: 32px;
   border-radius: 6px;
