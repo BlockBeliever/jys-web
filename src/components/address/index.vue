@@ -92,6 +92,9 @@
             <!-- Header -->
             <div class="chain-header">
               <div style="display: flex; align-items: center; flex: 1;">
+                <div :class="['chain-icon']">
+                  <img :src="chainIcons[item.paymentMethod]" width="28"/>
+                </div>
                 <div class="chain-name">
                   <span style="font-size: 14px; font-weight: bold;">{{ item.currencyType }}</span>
                 </div>

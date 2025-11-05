@@ -161,6 +161,7 @@ onActivated(() => {
   const model = navigator.userAgent;
   androidAttrs.value = model.indexOf("Android") > -1;
   fileList.value = [];
+  isLoading.value = false
 });
 
 const beforeRead = (file: any) => {
