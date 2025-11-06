@@ -179,7 +179,7 @@ export default {
     paymentImage: "payment image",
     payment: "payment",
     cancelOrder: "Cancel order",
-    orderComplaint: "Order Complaint",
+    orderComplaint: "Complaint",
     anyProblems: "Any Problems?",
     contactHelpCenter: "Contact Help Center",
     cancelThisOrder: "Cancel this order?",
