@@ -1,15 +1,12 @@
 <template>
+  <loading :loading-show="loading" />
   <div class="container">
     <div class="card">
       <div class="head">
         <img :src="detail.goods_coin_icon" alt="" />
-        <span
-          >{{
-            detail.goods_type === 1 
-              ? $t("myOrder.buy")
-              : $t("myOrder.sell")
-          }}{{ detail.goods_coin }}</span
-        >
+        <span>
+          {{ detail.goods_type === 1 ? $t("myOrder.buy") : $t("myOrder.sell") }}{{ detail.goods_coin }}
+        </span>
       </div>
       <div class="item">
         <span class="left">{{ $t("myOrder.orderNumber") }}</span>
@@ -26,9 +23,9 @@
       <div class="item">
         <span class="left">{{ $t("myOrder.unitPrice") }}</span>
         <div class="right">
-          <span class="text"
-            >{{ detail.goods_price }} {{ detail.goods_pay_coin }}/个</span
-          >
+          <span class="text">
+            {{ detail.goods_price }} {{ detail.goods_pay_coin }}/个
+          </span>
         </div>
       </div>
       <div class="item">
@@ -40,9 +37,9 @@
       <div class="item">
         <span class="left">{{ $t("myOrder.totalAmount") }}</span>
         <div class="right">
-          <span class="text2"
-            >{{ divide(detail.order_amount) }} {{ detail.goods_pay_coin }}</span
-          >
+          <span class="text2">
+            {{ divide(detail.order_amount) }} {{ detail.goods_pay_coin }}
+          </span>
         </div>
       </div>
       <div class="item">
@@ -118,10 +115,12 @@ import { copyText } from "@/utils/copy";
 import router from "@/router";
 import { useAppStore } from "@/store";
 import { t } from "@/plugins/i18n";
+import Loading from "@/components/loading/index.vue";
 
 const store = useAppStore();
 const route = useRoute();
 const androidAttrs = ref(true);
+const loading = ref<boolean>(false);
 onActivated(() => {
   const model = navigator.userAgent;
   androidAttrs.value = model.indexOf("Android") > -1;
@@ -133,9 +132,11 @@ onActivated(() => {
 const detail = ref({} as any);
 const payWay = ref("");
 const getDetail = async () => {
+  loading.value = true
   const { data } = await orderDetail({
     id: Number(route.query.id),
   });
+  loading.value = false
   detail.value = data;
   payWay.value = data.transaction_ways[0].name;
 };
@@ -158,6 +159,7 @@ const confirmClick = async () => {
     id: detail.value.id,
     appeal_reason: message.value,
     pictures: pictureList.value.map((item: any) => item.url),
+    matched_address: route.query.matched_address
   });
   if (code === 0) {
     showToast(t("myOrder.orderComplaintSuccessful"));

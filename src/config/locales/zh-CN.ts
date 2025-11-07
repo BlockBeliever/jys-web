@@ -173,6 +173,7 @@ export default {
     anyProblems: "遇到问题?",
     contactHelpCenter: "联系客服",
     cancelThisOrder: "您是否取消该订单?",
+    confirmPaymentAddress: "付款人姓名是否和地址信息一致",
     cancelSuccess: "取消成功",
     confirmSuccess: "确认成功",
     authorize: "授权",

@@ -183,6 +183,7 @@ export default {
     anyProblems: "Any Problems?",
     contactHelpCenter: "Contact Help Center",
     cancelThisOrder: "Cancel this order?",
+    confirmPaymentAddress: "Does the payer's name match the address information?",
     cancelSuccess: "Cancel success",
     confirmSuccess: "Confirm success",
     authorize: "Authorize",

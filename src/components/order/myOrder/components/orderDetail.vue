@@ -182,52 +182,46 @@
     </div>
     <div class="bottom">
       <div class="btn-box">
-        <div class="botton" v-if="
-          detail.order_status === 1 &&
-          detail.goods_type === 1 &&
-          detail.dispute_symbol !== 2" @click="handlePayMent">
+        <div class="botton" v-if="detail.order_status === 1 && detail.goods_type === 1 && detail.dispute_symbol !== 2" @click="handlePayMent">
           {{ $t("myOrder.payment") }}
         </div>
         <template v-if="detail.order_type === 1">
-          <div class="botton" v-if="
-            detail.order_status === 1 &&
-            detail.goods_type === 2 &&
-            detail.dispute_symbol !== 2
-          " @click="payClick">
+          <div class="botton" v-if="detail.order_status === 1 && detail.goods_type === 2 && detail.dispute_symbol !== 2" @click="payClick">
             {{ $t("myOrder.payment") }}
           </div>
         </template>
         <template v-else>
-          <div class="botton" v-if="
-            detail.order_status === 1 &&
-            detail.goods_type === 2 &&
-            detail.dispute_symbol !== 2
-          " @click="uploadClick">
+          <div class="botton" v-if="detail.order_status === 1 && detail.goods_type === 2 && detail.dispute_symbol !== 2" @click="uploadClick">
             {{ $t("myOrder.uploadPaymentImage") }}
           </div>
+          <div
+            v-if="detail.order_status === 1 && detail.goods_type === 2 && detail.dispute_symbol !== 2"
+            class="cancel"
+            @click="handleOrderCancel"
+          >
+            {{ $t("myOrder.cancelOrder") }}
+          </div>
         </template>
-        <div class="cancel" v-if="
-          (detail.order_status === 4 && detail.goods_type === 2) ||
-          (detail.order_status === 1 &&
-            detail.goods_type === 1 &&
-            detail.dispute_symbol !== 2)
-        " @click="cancelClick">
+        <div class="cancel" v-if="(detail.order_status === 4 && detail.goods_type === 2) || (detail.order_status === 1 && detail.goods_type === 1 && detail.dispute_symbol !== 2)" @click="cancelClick">
           {{ $t("myOrder.cancelOrder") }}
         </div>
         <div class="botton" v-if="detail.order_status === 6 && detail.dispute_symbol !== 2" @click="releaseToken">
           {{ $t("myOrder.confirmOrder") }}
         </div>
-        <div class="cancel" v-if="
-          ((detail.order_status !== 4 && detail.goods_type === 2) ||
-            (detail.order_status !== 1 && detail.goods_type === 1)) &&
-          detail.dispute_symbol !== 2 &&
-          ![2, 3].includes(detail.order_status)
-        " @click="appealClick">
-          {{ $t("myOrder.orderComplaint") }}
-        </div>
-        <div class="botton" v-if="
-          detail.dispute_symbol === 2 && store.getUid === detail.dispute_user
-        " @click="appealCancelClick">
+        <template v-if="((detail.order_status !== 4 && detail.goods_type === 2) || (detail.order_status !== 1 && detail.goods_type === 1)) && detail.dispute_symbol !== 2 && ![2, 3].includes(detail.order_status)">
+          <div class="cancel" style="background: none; border: none;" v-if="detail.order_status === 1 && detail.goods_type === 2">
+            <el-tooltip placement="top-end" effect="light">
+              <template #content>
+                <div @click="appealClick" style="padding: 2px 10px; color: #666; font: 400 14px PingFang SC-Bold, PingFang SC;">{{ $t("myOrder.orderComplaint") }}</div>
+              </template>
+              <img src="@/assets/img/order/dot.png" width="42"/>
+            </el-tooltip>
+          </div>
+          <div v-else class="cancel" @click="appealClick">
+            {{ $t("myOrder.orderComplaint") }}
+          </div>          
+        </template>
+        <div class="botton" v-if="detail.dispute_symbol === 2 && store.getUid === detail.dispute_user" @click="appealCancelClick">
           {{ $t("myOrder.cancelComplaint") }}
         </div>
       </div>
@@ -239,6 +233,32 @@
       </div>
     </div>
   </div>
+  <van-popup v-model:show="showCancelPopup" position="bottom" round @close="changeCancelChecked">
+    <div style="margin: 20px; text-align: center; font-weight: bold;">
+      选择取消原因
+    </div>
+    <div>
+      <van-radio-group v-model="cancelChecked">
+        <van-cell-group inset>
+          <van-cell v-for="item in cancelReasonList">
+            <template #title>
+              <div class="left">
+                <div class="name">
+                  <div>{{ item.name }}</div>
+                </div>
+              </div>
+            </template>
+            <template #right-icon>
+              <van-radio :name="item.name" />
+            </template>
+          </van-cell>
+        </van-cell-group>
+      </van-radio-group>
+    </div>
+    <div style="margin: 20px; text-align: center;">
+      <el-button type="primary" @click="confirmCancel">确认取消</el-button>
+    </div>
+  </van-popup>
 </template>
 
 <script setup lang="ts">
@@ -309,6 +329,26 @@ onActivated(() => {
   payWay.value = "";
   getDetail();
 });
+const cancelReasonList = ref<Array<any>>([
+  {
+    id: 1,
+    name: "不想买/不想卖了",
+  },
+  {
+    id: 2,
+    name: "支付限制了",
+  },
+  {
+    id: 3,
+    name: "与买家/卖家协商取消",
+  },
+  {
+    id: 4,
+    name: "选择其他币种",
+  },
+]);
+const showCancelPopup = ref<boolean>(false);
+const cancelChecked = ref<string>("");
 const detail = ref({} as any);
 const payWay = ref("");
 const getDetail = async () => {
@@ -370,21 +410,17 @@ const payClick = () => {
 const cancelClick = async () => {
   showConfirmDialog({
     message: t("myOrder.cancelThisOrder"),
-  })
-    .then(async () => {
-      const { code, error } = await cancelOrder({
-        id: detail.value.id,
-      });
-      if (code === 0) {
-        showToast(t("myOrder.cancelSuccess"));
-        getDetail();
-      } else {
-        showToast(error);
-      }
-    })
-    .catch(() => {
-      // on cancel
+  }).then(async () => {
+    const { code, error } = await cancelOrder({
+      id: detail.value.id,
     });
+    if (code === 0) {
+      showToast(t("myOrder.cancelSuccess"));
+      getDetail();
+    } else {
+      showToast(error);
+    }
+  }).catch(() => {});
 };
 // 上传支付截图
 const uploadClick = () => {
@@ -395,13 +431,28 @@ const uploadClick = () => {
     },
   });
 };
-
+const changeCancelChecked = () => {};
+const confirmCancel = async () => {
+  loading.value = true
+  const { code, error } = await cancelOrder({
+    id: detail.value.id,
+    cancelReason: cancelChecked.value
+  });
+  loading.value = false
+  if (code === 0) {
+    showToast(t("myOrder.cancelSuccess"));
+    getDetail();
+  } else {
+    showToast(error);
+  }
+}
 // 申诉订单
 const appealClick = () => {
   router.push({
     path: "/order/appeal",
     query: {
       id: detail.value.id,
+      matched_address: 0
     },
   });
 };
@@ -409,26 +460,46 @@ const appealClick = () => {
 const sceneImg = (images: any, index: number) => {
   imagePreview(images, index);
 };
-
+// 取消订单
+const handleOrderCancel = async () => {
+  if (detail.value.order_type == 2) {
+    console.log(cancelChecked.value)
+    showCancelPopup.value = true
+  }
+};
 const locked = ref<boolean>(false)
 const releaseToken = () => {
   if (locked.value) return
-  locked.value = true;
-  (window as any).WebViewJavascriptBridge.callHandler(
-    "releaseTokenDapp",
-    {
-      order_id: detail.value.order_id_buyer,
-      amount: divide(detail.value.order_num + detail.value.goods_fee),
-      price: detail.value.pay_amount + detail.value.goods_fee,
-      token_id: coinTypes[detail.value.goods_coin],
-      symbol: detail.value.goods_coin,
-      buyer_wallet_address: detail.value.buyer_wallet_address,
-      buyer_wallet_name: detail.value.buyer_wallet_name,
-      seller_wallet_address: detail.value.seller_wallet_address,
-      seller_wallet_name: detail.value.seller_wallet_name
-    },
-    function (responseData: any) { }
-  );
+  showConfirmDialog({
+    message: t("myOrder.confirmPaymentAddress"),
+    confirmButtonText: "是",
+    cancelButtonText: "否"
+  }).then(async () => {
+    locked.value = true;
+    (window as any).WebViewJavascriptBridge.callHandler(
+      "releaseTokenDapp",
+      {
+        order_id: detail.value.order_id_buyer,
+        amount: divide(detail.value.order_num + detail.value.goods_fee),
+        price: detail.value.pay_amount + detail.value.goods_fee,
+        token_id: coinTypes[detail.value.goods_coin],
+        symbol: detail.value.goods_coin,
+        buyer_wallet_address: detail.value.buyer_wallet_address,
+        buyer_wallet_name: detail.value.buyer_wallet_name,
+        seller_wallet_address: detail.value.seller_wallet_address,
+        seller_wallet_name: detail.value.seller_wallet_name
+      },
+      function (responseData: any) { }
+    );
+  }).catch(() => {    
+    router.push({
+      path: "/order/appeal",
+      query: {
+        id: detail.value.id,
+        matched_address: 1
+      },
+    });
+  });
 }
 
 // 确认订单
