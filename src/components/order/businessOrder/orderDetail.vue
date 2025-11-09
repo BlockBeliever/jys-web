@@ -545,6 +545,7 @@ const handleOrderCancel = async () => {
 const changeCancelChecked = () => {};
 const confirmCancel = async () => {
   try {
+    showCancelPopup.value = false
     loading.value = true
     const { code, error } = await cancelOrder({
       id: detail.value.id,
