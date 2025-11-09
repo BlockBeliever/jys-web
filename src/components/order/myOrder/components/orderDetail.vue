@@ -433,17 +433,22 @@ const uploadClick = () => {
 };
 const changeCancelChecked = () => {};
 const confirmCancel = async () => {
-  loading.value = true
-  const { code, error } = await cancelOrder({
-    id: detail.value.id,
-    cancelReason: cancelChecked.value
-  });
-  loading.value = false
-  if (code === 0) {
-    showToast(t("myOrder.cancelSuccess"));
-    getDetail();
-  } else {
-    showToast(error);
+  try {
+    loading.value = true
+    const { code, error } = await cancelOrder({
+      id: detail.value.id,
+      cancelReason: cancelChecked.value
+    });
+    if (code === 0) {
+      showToast(t("myOrder.cancelSuccess"));
+      getDetail();
+    } else {
+      showToast(error);
+    }
+  } catch (e) {
+    console.log("order cancel error: ", e)
+  } finally {
+    loading.value = false
   }
 }
 // 申诉订单
