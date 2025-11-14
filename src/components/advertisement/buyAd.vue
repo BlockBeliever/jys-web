@@ -262,6 +262,7 @@ const showPopupClick = (val: number) => {
     showPopup2.value = true;
     checked2.value = null; // 重置勾选
   } else {
+    checked3.value = [];
     if (!transactionWays.value || transactionWays.value.length == 0) {
       showToast("请添加收款地址")
     } else {
