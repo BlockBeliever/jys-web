@@ -23,7 +23,7 @@
             </div>
           </template>
         </van-field>
-        <van-field name="switch" label-align="top" v-model="fee" :placeholder="feeChecked ? '输入手续费' : ''" :readonly="!feeChecked" :rules="[{ validator: validatorFee }]">
+        <van-field name="switch" label-align="top" v-model="fee" :placeholder="feeChecked ? '输入手续费' : ''" :readonly="!feeChecked">
           <template #label>
             <div style="display: flex; align-items: center; font-weight: 700;">
               <span style="margin-right: 4px;">手续费</span>
@@ -426,6 +426,9 @@ const onSubmit = async () => {
   if (feeChecked.value && !fee.value) {
     showToast("请输入手续费");
     return;
+  }
+  if (feeChecked.value && !regex2.test(fee.value + "")) {
+    return showToast(t("ad.pleaseEnterNumber"));
   }
   const { code, message, error } = await addAdvertisement({
     goods_type: 1,
