@@ -427,7 +427,7 @@ const getDetail = async () => {
     payWay.value = data.transaction_ways.filter(
       (item: any) => item.symbol === data.order_transaction_way
     )[0].name;
-    if (!detail.value.is_abnormal && !detail.value.is_notification) {
+    if (detail.value.is_abnormal && !detail.value.is_notification) {
       const { data } = await orderNotificationUpdate({
         id: Number(route.query.id),
       });
