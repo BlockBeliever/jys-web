@@ -214,7 +214,7 @@
               <template #content>
                 <div @click="appealClick" style="padding: 2px 10px; color: #666; font: 400 14px PingFang SC-Bold, PingFang SC;">{{ $t("myOrder.orderComplaint") }}</div>
               </template>
-              <img src="@/assets/img/order/dot.png" width="42"/>
+              <img src="@/assets/img/order/dot.png" width="38"/>
             </el-tooltip>
           </div>
           <div v-else class="cancel" @click="appealClick">
