@@ -23,3 +23,6 @@ export const appealOrder = (data: any) => request.post('/front/order/dispute', d
 
 // 取消申诉 
 export const appealCancel = (data: any) => request.post('/front/order/dispute_cancel', data)
+
+// is_notification update
+export const orderNotificationUpdate = (data: any) => request.post('/front/order/notification_update', data)

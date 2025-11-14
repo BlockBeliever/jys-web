@@ -39,18 +39,16 @@
     <div class="info-card" v-if="detail.order_type === 2">
       <div class="info-header">
         <div class="info-title">
-          <div class="check-icon">
-            <img src="@/assets/img/order/order.png" width="18" />
-          </div>
+          <img src="@/assets/img/order/order.png" width="18" />
           <span>
             {{ detail.goods_type === 1 ? '卖家信息' : '买家信息' }}
           </span>
+          <img src="@/assets/img/order/abnormal.png" width="18" v-if="detail.is_abnormal"/>
         </div>
         <button class="contact-btn" @click="contactChat">
           {{ detail.goods_type === 1 ? '联系卖家' : '联系买家' }}
         </button>
       </div>
-
       <template v-if="detail.goods_type == 1">
         <template v-if="otherPaymentMethods.includes(detail.buyer_address.paymentMethod)">
           <div class="info-item">
@@ -104,7 +102,7 @@
           <span class="info-value">{{ detail.buyer_address.accountName }}</span>
         </div>
       </template>
-    </div>    
+    </div>
     <!-- Order Information -->
     <div class="order-card">
       <div class="order-item">
@@ -316,6 +314,15 @@
       <el-button type="primary" @click="confirmCancel">确认取消</el-button>
     </div>
   </van-popup>
+  <van-popup v-model:show="abnormalShowPopup" class="abnormal-popup">
+    <img src="@/assets/img/order/abnormal.png" width="80"/>
+    <div class="abnormal-title">
+      此账号为地址异常账号! 请谨慎交易!
+    </div>
+    <div class="abnormal-btn" @click="abnormalShowPopup = false">
+      我已知晓! 继续交易
+    </div>
+  </van-popup>
 </template>
 
 <script setup lang="ts">
@@ -326,6 +333,7 @@ import {
   cancelOrder,
   confirmOrder,
   appealCancel,
+  orderNotificationUpdate,
 } from "@/api/order";
 import { setupWebViewJavascriptBridge } from "@/utils/bridge";
 import { coinTypes } from "@/enum";
@@ -345,6 +353,7 @@ const otherPaymentMethods = ["银行卡", "VISA"]
 const store = useAppStore();
 const route = useRoute();
 const loading = ref<boolean>(false);
+const abnormalShowPopup = ref<boolean>(false)
 onActivated(() => {
   // flutter交互
   setupWebViewJavascriptBridge(function (bridge: any) {
@@ -418,6 +427,12 @@ const getDetail = async () => {
     payWay.value = data.transaction_ways.filter(
       (item: any) => item.symbol === data.order_transaction_way
     )[0].name;
+    if (!detail.value.is_abnormal && !detail.value.is_notification) {
+      const { data } = await orderNotificationUpdate({
+        id: Number(route.query.id),
+      });
+      abnormalShowPopup.value = true
+    }
   } catch (e) {
     console.log("business order detail error: ", e)
   } finally {
@@ -592,4 +607,29 @@ const appealCancelClick = async () => {
 
 <style lang="scss" scoped>
 @import "./scss/orderDetail.scss";
+
+.abnormal-popup {
+  padding: 16px;
+  border-radius: 12px;
+  width: 90%;
+  text-align: center;
+}
+
+.abnormal-title {
+  font: $font16-400;
+  color: #666;
+  margin-top: 8px;
+}
+
+.abnormal-btn {
+  margin: 30px auto 0 auto;
+  width: 160px;
+  height: 40px;
+  border-radius: 8px;
+  background: $btn-color-blue;
+  color: $color-FFF;
+  text-align: center;
+  font: $font16-400;
+  line-height: 40px;
+}
 </style>
