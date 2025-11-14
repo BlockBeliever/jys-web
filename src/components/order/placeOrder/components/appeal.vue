@@ -159,7 +159,7 @@ const confirmClick = async () => {
     id: detail.value.id,
     appeal_reason: message.value,
     pictures: pictureList.value.map((item: any) => item.url),
-    matched_address: route.query.matched_address
+    matched_address: Number(route.query.matched_address)
   });
   if (code === 0) {
     showToast(t("myOrder.orderComplaintSuccessful"));
