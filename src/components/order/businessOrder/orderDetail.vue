@@ -323,6 +323,18 @@
       我已知晓! 继续交易
     </div>
   </van-popup>
+  <van-popup v-model:show="showConfirmOrderPopup" class="confirm-popup">
+    <div class="confirm-title">
+      提示
+    </div>
+    <div class="confirm-content">
+      付款人姓名是否和地址信息一致
+    </div>
+    <div class="confirm-btn">
+      <img src="@/assets/img/order/yes.png" width="100" @click="confirmOrderPopup"/>
+      <img src="@/assets/img/order/no.png" width="100" @click="appealOrderPopup"/>
+    </div>
+  </van-popup>
 </template>
 
 <script setup lang="ts">
@@ -354,6 +366,7 @@ const store = useAppStore();
 const route = useRoute();
 const loading = ref<boolean>(false);
 const abnormalShowPopup = ref<boolean>(false)
+const showConfirmOrderPopup= ref<boolean>(false)
 onActivated(() => {
   // flutter交互
   setupWebViewJavascriptBridge(function (bridge: any) {
@@ -439,31 +452,37 @@ const getDetail = async () => {
     loading.value = false;
   }
 };
+
 const locked = ref<boolean>(false)
+
 const releaseToken = () => {
+  showConfirmOrderPopup.value = true
+}
+
+const confirmOrderPopup = () => {
+  showConfirmOrderPopup.value = false
   if (locked.value) return
-  showConfirmDialog({
-    message: t("myOrder.confirmPaymentAddress"),
-    confirmButtonText: "是",
-    cancelButtonText: "否"
-  }).then(async () => {
-    locked.value = true;
-    (window as any).WebViewJavascriptBridge.callHandler(
-      "releaseTokenDapp",
-      {
-        order_id: detail.value.order_id_seller,
-        amount: divide(detail.value.order_num - detail.value.goods_fee),
-        price: detail.value.pay_amount - detail.value.goods_fee,
-        token_id: coinTypes[detail.value.goods_coin],
-        symbol: detail.value.goods_coin,
-        buyer_wallet_address: detail.value.buyer_wallet_address,
-        buyer_wallet_name: detail.value.buyer_wallet_name,
-        seller_wallet_address: detail.value.seller_wallet_address,
-        seller_wallet_name: detail.value.seller_wallet_name
-      },
-      function (responseData: any) {}
-    );
-  }).catch(() => {    
+  locked.value = true;
+  (window as any).WebViewJavascriptBridge.callHandler(
+    "releaseTokenDapp",
+    {
+      order_id: detail.value.order_id_seller,
+      amount: divide(detail.value.order_num - detail.value.goods_fee),
+      price: detail.value.pay_amount - detail.value.goods_fee,
+      token_id: coinTypes[detail.value.goods_coin],
+      symbol: detail.value.goods_coin,
+      buyer_wallet_address: detail.value.buyer_wallet_address,
+      buyer_wallet_name: detail.value.buyer_wallet_name,
+      seller_wallet_address: detail.value.seller_wallet_address,
+      seller_wallet_name: detail.value.seller_wallet_name
+    },
+    function (responseData: any) {}
+  );
+}
+
+const appealOrderPopup = () => {
+  showConfirmOrderPopup.value = false 
+  setTimeout(() => {
     router.push({
       path: "/order/appeal",
       query: {
@@ -471,7 +490,7 @@ const releaseToken = () => {
         matched_address: 1
       },
     });
-  });
+  }, 1000)
 }
 
 // 支付
@@ -613,23 +632,48 @@ const appealCancelClick = async () => {
   border-radius: 12px;
   width: 90%;
   text-align: center;
+
+  .abnormal-title {
+    font: $font16-400;
+    color: #666;
+    margin-top: 8px;
+  }
+
+  .abnormal-btn {
+    margin: 30px auto 0 auto;
+    width: 160px;
+    height: 40px;
+    border-radius: 8px;
+    background: $btn-color-blue;
+    color: $color-FFF;
+    text-align: center;
+    font: $font16-400;
+    line-height: 40px;
+  }
 }
 
-.abnormal-title {
-  font: $font16-400;
-  color: #666;
-  margin-top: 8px;
-}
-
-.abnormal-btn {
-  margin: 30px auto 0 auto;
-  width: 160px;
-  height: 40px;
-  border-radius: 8px;
-  background: $btn-color-blue;
-  color: $color-FFF;
+.confirm-popup {
+  padding: 16px;
+  border-radius: 12px;
+  width: 90%;
   text-align: center;
-  font: $font16-400;
-  line-height: 40px;
+
+  .confirm-title {
+    font: $font16-400;
+    margin-top: 8px;  
+  }
+
+  .confirm-content {
+    font: $font14-400;
+    color: #666;
+    margin-top: 8px;  
+  }
+
+  .confirm-btn {
+    margin-top: 30px;  
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
 }
 </style>

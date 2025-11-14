@@ -259,6 +259,18 @@
       <el-button type="primary" @click="confirmCancel">确认取消</el-button>
     </div>
   </van-popup>
+  <van-popup v-model:show="showConfirmOrderPopup" class="confirm-popup">
+    <div class="confirm-title">
+      提示
+    </div>
+    <div class="confirm-content">
+      付款人姓名是否和地址信息一致
+    </div>
+    <div class="confirm-btn">
+      <img src="@/assets/img/order/yes.png" width="100" @click="confirmOrderPopup"/>
+      <img src="@/assets/img/order/no.png" width="100" @click="appealOrderPopup"/>
+    </div>
+  </van-popup>
 </template>
 
 <script setup lang="ts">
@@ -289,6 +301,7 @@ const otherPaymentMethods = ["银行卡", "VISA"]
 const store = useAppStore();
 const route = useRoute();
 const loading = ref<boolean>(false);
+const showConfirmOrderPopup= ref<boolean>(false)
 onActivated(() => {
   // flutter交互
   setupWebViewJavascriptBridge(function (bridge: any) {
@@ -473,31 +486,37 @@ const handleOrderCancel = async () => {
     showCancelPopup.value = true
   }
 };
+
 const locked = ref<boolean>(false)
+
 const releaseToken = () => {
+  showConfirmOrderPopup.value = true
+}
+
+const confirmOrderPopup = () => {
+  showConfirmOrderPopup.value = false
   if (locked.value) return
-  showConfirmDialog({
-    message: t("myOrder.confirmPaymentAddress"),
-    confirmButtonText: "是",
-    cancelButtonText: "否"
-  }).then(async () => {
-    locked.value = true;
-    (window as any).WebViewJavascriptBridge.callHandler(
-      "releaseTokenDapp",
-      {
-        order_id: detail.value.order_id_buyer,
-        amount: divide(detail.value.order_num + detail.value.goods_fee),
-        price: detail.value.pay_amount + detail.value.goods_fee,
-        token_id: coinTypes[detail.value.goods_coin],
-        symbol: detail.value.goods_coin,
-        buyer_wallet_address: detail.value.buyer_wallet_address,
-        buyer_wallet_name: detail.value.buyer_wallet_name,
-        seller_wallet_address: detail.value.seller_wallet_address,
-        seller_wallet_name: detail.value.seller_wallet_name
-      },
-      function (responseData: any) { }
-    );
-  }).catch(() => {    
+  locked.value = true;
+  (window as any).WebViewJavascriptBridge.callHandler(
+    "releaseTokenDapp",
+    {
+      order_id: detail.value.order_id_buyer,
+      amount: divide(detail.value.order_num + detail.value.goods_fee),
+      price: detail.value.pay_amount + detail.value.goods_fee,
+      token_id: coinTypes[detail.value.goods_coin],
+      symbol: detail.value.goods_coin,
+      buyer_wallet_address: detail.value.buyer_wallet_address,
+      buyer_wallet_name: detail.value.buyer_wallet_name,
+      seller_wallet_address: detail.value.seller_wallet_address,
+      seller_wallet_name: detail.value.seller_wallet_name
+    },
+    function (responseData: any) { }
+  );  
+}
+
+const appealOrderPopup = () => {
+  showConfirmOrderPopup.value = false
+  setTimeout(() => {
     router.push({
       path: "/order/appeal",
       query: {
@@ -505,7 +524,7 @@ const releaseToken = () => {
         matched_address: 1
       },
     });
-  });
+  }, 1000)
 }
 
 // 确认订单
@@ -549,4 +568,29 @@ const appealCancelClick = async () => {
 
 <style lang="scss" scoped>
 @import "./scss/orderDetail.scss";
+
+.confirm-popup {
+  padding: 16px;
+  border-radius: 12px;
+  width: 90%;
+  text-align: center;
+
+  .confirm-title {
+    font: $font16-400;
+    margin-top: 8px;  
+  }
+
+  .confirm-content {
+    font: $font14-400;
+    color: #666;
+    margin-top: 8px;  
+  }
+
+  .confirm-btn {
+    margin-top: 30px;  
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+}
 </style>
