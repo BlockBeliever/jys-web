@@ -209,12 +209,12 @@
           {{ $t("myOrder.confirmOrder") }}
         </div>
         <template v-if="((detail.order_status !== 4 && detail.goods_type === 2) || (detail.order_status !== 1 && detail.goods_type === 1)) && detail.dispute_symbol !== 2 && ![2, 3].includes(detail.order_status)">
-          <div class="cancel" style="background: none; border: none;" v-if="detail.order_status === 1 && detail.goods_type === 2">
+          <div class="cancel" style="background: none; border: none; display: flex; align-items: center;" v-if="detail.order_status === 1 && detail.goods_type === 2">
             <el-tooltip placement="top-end" effect="light">
               <template #content>
                 <div @click="appealClick" style="padding: 2px 10px; color: #666; font: 400 14px PingFang SC-Bold, PingFang SC;">{{ $t("myOrder.orderComplaint") }}</div>
               </template>
-              <img src="@/assets/img/order/dot.png" width="38"/>
+              <img src="@/assets/img/order/dot.png" width="32"/>
             </el-tooltip>
           </div>
           <div v-else class="cancel" @click="appealClick">
