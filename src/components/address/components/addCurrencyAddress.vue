@@ -27,10 +27,11 @@
           class="full-width"
         >
           <el-option
-            v-for="item in paymentMethodOptios"
+            v-for="item in paymentMethodOptions"
             :key="item.value"
             :label="item.label"
             :value="item.value"
+            :disabled="item.disabled"
           />
         </el-select>
       </div>
@@ -125,7 +126,7 @@ import { showToast } from "vant";
 import { t } from "@/plugins/i18n";
 import cos from "@/utils/cos";
 import { Md5 } from "ts-md5";
-import { addAddress } from "@/api/address";
+import { addressList, addAddress } from "@/api/address";
 import Loading from "@/components/loading/index.vue";
 
 const router = useRouter()
@@ -144,7 +145,7 @@ const currencyOptions : Array<any> = [
 const paymentMethods = ["支付宝", "微信", "汇旺", "ABA"]
 const otherPaymentMethods = ["银行卡", "VISA"]
 
-const paymentMethodOptios = ref<any[]>([])
+const paymentMethodOptions = ref<any[]>([])
 
 const selectedCurrency = ref<string>("")
 const selectedPaymentMethod = ref<string>("");
@@ -156,12 +157,27 @@ const androidAttrs = ref<boolean>(true);
 const fileList = ref<any[]>([]);
 const pictureList = ref<any[]>([]);
 const isLoading = ref<boolean>(false)
+const currencyAddressList = ref<Array<any>>([])
 
-onActivated(() => {
+onActivated(async () => {
   const model = navigator.userAgent;
   androidAttrs.value = model.indexOf("Android") > -1;
   fileList.value = [];
-  isLoading.value = false
+  try {
+    isLoading.value = true
+    const {code, data, error} = await addressList({
+      type: 0
+    })
+    if (!code) {
+      currencyAddressList.value = data.list
+    } else {
+      showToast(error)
+    }
+  } catch (e) {
+    console.log("addressList Error ==========================> ", e)
+  } finally {
+    isLoading.value = false
+  }
 });
 
 const beforeRead = (file: any) => {
@@ -279,10 +295,10 @@ const handleConfirm = async () => {
   }
 }
 
-watch(selectedCurrency, (val) => {
+watch(selectedCurrency, async (val) => {
   selectedPaymentMethod.value = ""
   if (val == "CNY") {
-    paymentMethodOptios.value = [
+    paymentMethodOptions.value = [
       {
         label: "支付宝",
         value: "支付宝"
@@ -297,7 +313,7 @@ watch(selectedCurrency, (val) => {
       },
     ]
   } else {
-    paymentMethodOptios.value = [
+    paymentMethodOptions.value = [
       {
         label: "汇旺",
         value: "汇旺"
@@ -312,6 +328,14 @@ watch(selectedCurrency, (val) => {
       },
     ]
   }
+  paymentMethodOptions.value.map(item => {
+    let index = currencyAddressList.value.findIndex(filterItem => filterItem.paymentMethod == item.label)
+    if (index == -1) {
+      item.disabled = false
+    } else {
+      item.disabled = true
+    }
+  })
 })
 </script>
 
