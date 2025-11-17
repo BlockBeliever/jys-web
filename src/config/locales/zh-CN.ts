@@ -105,6 +105,8 @@ export default {
     buyAndSell: "随买随卖",
     amountPurchase: "按金额购买",
     quantityPurchase: "按数量购买",
+    amountSold: "按金额出售",
+    quantitySold: "按数量出售",
     maximum: "最大",
     limit: "限额",
     available: "可得",

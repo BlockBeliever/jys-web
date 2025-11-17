@@ -29,8 +29,8 @@
         <!-- 切换 -->
         <div class="top">
           <van-tabs v-model:active="active" @change="inputNum = null">
-            <van-tab :title="$t('placeOrder.amountPurchase')"></van-tab>
-            <van-tab :title="$t('placeOrder.quantityPurchase')"></van-tab>
+            <van-tab :title="$t('placeOrder.amountSold')"></van-tab>
+            <van-tab :title="$t('placeOrder.quantitySold')"></van-tab>
           </van-tabs>
         </div>
         <!-- 输入框 -->
