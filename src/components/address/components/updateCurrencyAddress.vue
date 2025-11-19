@@ -56,7 +56,7 @@
           class="full-width"
         />
       </div>
-      <template v-if="selected1.includes(addressDetailItem.paymentMethod)">
+      <template v-if="paymentMethods.includes(addressDetailItem.paymentMethod)">
         <div class="input-form">
           <div class="input-label">{{ `${addressDetailItem.paymentMethod}二维码` }}</div>
           <div class="upload">
@@ -144,8 +144,8 @@ const currencyOptions : Array<any> = [
   },
 ]
 
-const selected1 = ["支付宝", "微信", "汇旺", "ABA"]
-const selected2 = ["银行卡", "VISA"]
+const paymentMethods = ["支付宝", "微信", "汇旺", "ABA"]
+const otherPaymentMethods = ["银行卡", "VISA"]
 
 const paymentMethodOptios = ref<any[]>([])
 
@@ -251,8 +251,10 @@ const handleConfirm = async () => {
     showToast(`请输入${addressDetailItem.value.paymentMethod}账号`)
     return
   }
-  if (selected1.includes(addressDetailItem.value.paymentMethod)) {
+  if (paymentMethods.includes(addressDetailItem.value.paymentMethod)) {
     addressDetailItem.value.paymentCode = pictureList.value.length > 0 ? pictureList.value[0].url : addressDetailItem.value.paymentCode
+    console.log(pictureList.value.length)
+    console.log(addressDetailItem.value.paymentCode)
   } else {
     if (!addressDetailItem.value.bankAccount) {
       showToast("请选择开户银行");

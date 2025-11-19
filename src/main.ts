@@ -20,7 +20,7 @@ app.use(Lazyload, {
 
 app.config.globalProperties.$t = i18n.global.t;
 app.use(i18n)
-if (import.meta.env.MODE) {
+if (import.meta.env.MODE == "development") {
   const vconsole = new vConsole()
 }
 setupVant(app)

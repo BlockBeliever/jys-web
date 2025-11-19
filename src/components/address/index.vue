@@ -92,6 +92,9 @@
             <!-- Header -->
             <div class="chain-header">
               <div style="display: flex; align-items: center; flex: 1;">
+                <div :class="['chain-icon']">
+                  <img :src="chainIcons[item.paymentMethod]" width="28"/>
+                </div>
                 <div class="chain-name">
                   <span style="font-size: 14px; font-weight: bold;">{{ item.currencyType }}</span>
                 </div>
@@ -120,10 +123,15 @@
 <script setup lang="ts">
 import VisaIcon from "@/assets/img/address/visa.png"
 import AlipayIcon from "@/assets/img/address/alipay.png"
+import AbaIcon from "@/assets/img/address/aba.png"
 import BankIcon from "@/assets/img/address/bank.png"
 import WechatIcon from "@/assets/img/address/wechat.png"
+import HuiwangIcon from "@/assets/img/address/huiwang.png"
 import CurrencyIcon from "@/assets/img/address/currency.png"
 import ChainIcon from "@/assets/img/address/chain.png"
+import EthIcon from "@/assets/img/address/eth.png"
+import TrxIcon from "@/assets/img/address/trx.png"
+import USDTIcon from "@/assets/img/address/USDT.png"
 import { addressList, deleteAddress } from "@/api/address"
 import Loading from "@/components/loading/index.vue";
 import { showToast } from "vant"
@@ -133,8 +141,14 @@ const paymentIcons = {
   "支付宝" : AlipayIcon,
   "微信" : WechatIcon,
   "VISA" : VisaIcon,
-  "汇旺" : AlipayIcon,
-  "ABA" : AlipayIcon,
+  "汇旺" : HuiwangIcon,
+  "ABA" : AbaIcon,
+} as any
+
+const chainIcons = {
+  "ERC20" : EthIcon,
+  "TRC20" : TrxIcon,
+  "USDT" : USDTIcon,
 } as any
 
 const router = useRouter()
@@ -304,7 +318,6 @@ onActivated(async () => {
 .notice-box {
   margin: 12px;
   padding: 12px;
-  border: 1px solid #b3d8ff;
   border-radius: 8px;
   font-size: 12px;
   line-height: 1.6;
@@ -329,6 +342,17 @@ onActivated(async () => {
 }
 
 .payment-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  margin-right: 4px;
+}
+
+.chain-icon {
   width: 32px;
   height: 32px;
   border-radius: 6px;

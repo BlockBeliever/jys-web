@@ -10,9 +10,7 @@
       <div class="head">
         <!-- <span>自由理财 每日收益 随买随卖</span> -->
         <span>
-          {{
-            `${$t("placeOrder.dailyIncome")} ${$t("placeOrder.buyAndSell")}`
-          }}
+          {{ `${$t("placeOrder.dailyIncome")} ${$t("placeOrder.buyAndSell")}` }}
         </span>
       </div>
       <img class="circle" src="@/assets/img/order/circle.png" alt="" />
@@ -44,9 +42,9 @@
             </van-field>
           </div>
           <div class="field-right">
-            <span class="coin">{{
-              active === 0 ? detailData.goods_pay_coin : detailData.goods_coin
-            }}</span>
+            <span class="coin">
+              {{ active === 0 ? detailData.goods_pay_coin : detailData.goods_coin}}
+            </span>
             <div class="divider"></div>
             <span class="all" @click="maximumAction">
               {{ $t("placeOrder.maximum") }}
@@ -56,23 +54,29 @@
         <div class="line"></div>
         <!-- 限额 -->
         <div class="limit">
-          <img src="@/assets/img/order/x.png" alt="" />
-          <span class="text">{{ $t("placeOrder.limit") }}</span>
-          <span class="number">{{
-            `${divide(detailData.goods_min)}-${divide(detailData.goods_max)}`
-          }}{{ detailData.goods_pay_coin }}</span>
+          <div style="display: flex; align-items: center;">
+            <img src="@/assets/img/order/x.png" alt="" />
+            <span class="text">{{ $t("placeOrder.limit") }}</span>
+            <span class="number">
+              {{ `${divide(detailData.goods_min)}-${divide(detailData.goods_max)}` }}{{ detailData.goods_pay_coin }}
+            </span>
+          </div>
+          <div style="display: flex; align-items: center;" v-if="detailData.goods_fee">
+            <img src="@/assets/img/order/x.png" alt="" />
+            <span class="text">手续费</span>
+            <span class="number">
+              {{ divide(detailData.goods_fee) }}{{ detailData.goods_coin }}
+            </span>
+          </div>
         </div>
         <!-- 可得 -->
         <div class="obtainable">
-          <span class="text">{{
-            active === 0
-              ? $t("placeOrder.available")
-              : $t("placeOrder.actualPay")
-          }}</span>
-          <span class="number" v-if="inputNum">{{ resultNum }}
-            {{
-              active !== 0 ? detailData.goods_pay_coin : detailData.goods_coin
-            }}</span>
+          <span class="text">
+            {{ active === 0 ? $t("placeOrder.available") : $t("placeOrder.actualPay") }}
+          </span>
+          <span class="number" v-if="inputNum">
+            {{ resultNum }} {{ active !== 0 ? detailData.goods_pay_coin : detailData.goods_coin }}
+          </span>
         </div>
       </div>
       <img class="tip-logo" src="@/assets/img/order/tip-logo.png" alt="" />

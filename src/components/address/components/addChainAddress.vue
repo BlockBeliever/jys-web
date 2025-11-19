@@ -15,6 +15,7 @@
             :key="item.value"
             :label="item.label"
             :value="item.value"
+            :disabled="item.disabled"
           />
         </el-select>
       </div>
@@ -31,7 +32,7 @@
 
     <div class="button-container">
       <el-button 
-        type="primary" 
+        type="primary"
         size="large" 
         class="confirm-button"
         @click="handleConfirm"
@@ -45,12 +46,15 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { showToast } from "vant";
-import { addAddress } from '@/api/address';
+import { addAddress, addressList } from '@/api/address';
 import Loading from "@/components/loading/index.vue";
 
 const router = useRouter()
-
-const cryptoOptions = [
+const selectedCrypto = ref<string>("")
+const cryptoAddress = ref<string>("")
+const isLoading = ref<boolean>(false)
+const chainAddressList = ref<Array<any>>([])
+const cryptoOptions = ref<Array<any>>([
   {
     label: "ERC20",
     value: "ERC20"
@@ -59,11 +63,35 @@ const cryptoOptions = [
     label: "TRC20",
     value: "TRC20"
   },
-]
+])
 
-const selectedCrypto = ref<string>("")
-const cryptoAddress = ref<string>("")
-const isLoading = ref<boolean>(false)
+onActivated(async () => {
+  selectedCrypto.value = ""
+  cryptoAddress.value = ""
+  try {
+    isLoading.value = true
+    const {code, data, error} = await addressList({
+      type: 1
+    })
+    if (!code) {
+      chainAddressList.value = data.list
+    } else {
+      showToast(error)
+    }
+    cryptoOptions.value.map(item => {
+      let index = chainAddressList.value.findIndex(filterItem => filterItem.currencyType == item.label)
+      if (index == -1) {
+        item.disabled = false
+      } else {
+        item.disabled = true
+      }
+    })
+  } catch (e) {
+    console.log("addressList Error ==========================> ", e)
+  } finally {
+    isLoading.value = false
+  }
+});
 
 const handleConfirm = async () => {
   if (!selectedCrypto.value) {
@@ -79,10 +107,10 @@ const handleConfirm = async () => {
   isLoading.value = true
 
   try {
-
     const { code } = await addAddress({
       currencyType: selectedCrypto.value,
       paymentAccount: cryptoAddress.value,
+      paymentMethod: selectedCrypto.value,
     })
 
     isLoading.value = false

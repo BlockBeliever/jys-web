@@ -1,171 +1,227 @@
 <template>
-  <div class="container" v-if="!loading">
-    <!-- // 0 全部 1待支付 2 完成 3 取消 4 待确认 5 确认转账 6 买家待确认 order_type 1线上 2线下-->
-    <div v-if="detail.dispute_symbol === 1">
-      <div v-if="detail.order_status === 1" class="status">
-        {{ $t("myOrder.unpaid") }}
+  <loading :loading-show="loading" />
+  <div class="container">
+    <!-- Notice -->
+    <div class="notice-box">
+      <p style="margin: 0 0 8px 0;">
+        请认真核对付款人信息，若付款人信息与商家信息不匹配请停止付款并联系客服
+      </p>
+      <p style="margin: 0;">
+        商家已通过平台实名及视频认证平台7*24小时客服在线保证您的交易安全
+      </p>
+    </div>
+    <!-- Order Status -->
+    <div class="order-status">
+      <div>订单状态</div>
+      <!-- // 0 全部 1待支付 2 完成 3 取消 4 待确认 5 确认转账 6 买家待确认 order_type 1线上 2线下-->
+      <div v-if="detail.dispute_symbol === 1">
+        <div v-if="detail.order_status === 1" class="status">
+          {{ $t("myOrder.unpaid") }}
+        </div>
+        <div v-if="detail.order_status === 2" class="status">
+          {{ $t("myOrder.completed") }}
+        </div>
+        <div v-if="detail.order_status === 3" class="status">
+          {{ $t("myOrder.cancelled") }}
+        </div>
+        <div v-if="[4, 5].includes(detail.order_status)" class="status">
+          {{ $t("myOrder.toBeConfirmedByMerchant") }}
+        </div>
+        <div v-if="detail.order_status === 6" class="status">
+          {{ $t("myOrder.toBeconfirmed") }}
+        </div>
       </div>
-      <div v-if="detail.order_status === 2" class="status">{{ $t("myOrder.completed") }}</div>
-      <div v-if="detail.order_status === 3" class="status">
-        {{ $t("myOrder.cancelled") }}
-      </div>
-      <div v-if="[4, 5].includes(detail.order_status)" class="status">
-        {{ $t("myOrder.toBeConfirmedByMerchant") }}
-      </div>
-      <div v-if="detail.order_status === 6" class="status">
-        {{ $t("myOrder.toBeconfirmed") }}
+      <div v-else>
+        <div class="status">{{ $t("myOrder.orderComplaintInProgress") }}</div>
       </div>
     </div>
-    <div v-else>
-      <div class="status">{{ $t("myOrder.orderComplaintInProgress") }}</div>
-    </div>
-    <div class="head">
-      <img class="check" src="@/assets/img/order/check.png" alt="" />
-      <div class="top">
-        <span class="text">{{ $t("myOrder.merchantInformation") }}</span>
-        <div class="contact" @click="contactChat">
-          <img class="logo" src="@/assets/img/order/chat.png" alt="" />
-          <span>{{ $t("myOrder.contactMerchant") }}</span>
-        </div>
-      </div>
-      <div class="desc">
-        <img src="@/assets/img/order/star.png" alt="" />
-        <span>{{ $t("myOrder.merchantHasPassedAuthentication") }}</span>
-      </div>
-      <div class="desc mt8">
-        <img src="@/assets/img/order/star.png" alt="" />
-        <span>{{ $t("myOrder.customerServiceOnline") }}</span>
-      </div>
-    </div>
-    <div class="order">
-      <div class="top">
-        <img :src="detail.goods_coin_icon" alt="" />
-        <span>
-          {{ detail.goods_type === 1 ? $t("myOrder.sell") : $t("myOrder.buy")}}{{ detail.goods_coin }}
-        </span>
-      </div>
-      <section>
-        <div class="item">
-          <span class="left">{{ $t("myOrder.orderNumber") }}</span>
-          <div class="right">
-            <span class="text">{{ detail.order_id }}</span>
-            <img class="copy" src="@/assets/img/order/copy.png" alt="" @click="copyCode(detail.order_id)" />
+    <!-- Buyer/Seller Information -->
+    <div class="info-card" v-if="detail.order_type === 2">
+      <div class="info-header">
+        <div class="info-title">
+          <div class="check-icon">
+            <img src="@/assets/img/order/order.png" width="18" />
           </div>
+          <span>
+            {{ detail.goods_type === 2 ? '卖家信息' : '买家信息' }}
+          </span>
         </div>
-        <div class="item">
-          <span class="left">{{ $t("myOrder.unitPrice") }}</span>
-          <div class="right">
-            <span class="text">{{ detail.goods_price }} {{ detail.goods_pay_coin }}/个</span>
+        <button class="contact-btn" @click="contactChat">
+          {{ detail.goods_type === 2 ? '联系卖家' : '联系买家' }}
+        </button>
+      </div>
+
+      <template v-if="detail.goods_type == 2">
+        <template v-if="otherPaymentMethods.includes(detail.seller_address.paymentMethod)">
+          <div class="info-item">
+            <span class="info-label">{{ $t("myOrder.recipient") }}</span>
+            <span class="info-value">{{ detail.seller_address.accountName }}</span>
           </div>
-        </div>
-        <div class="item">
-          <span class="left">{{ $t("myOrder.quantity") }}</span>
-          <div class="right">
-            <span class="text">{{ divide(detail.order_num) }}</span>
+          <div class="info-item">
+            <span class="info-label">{{ $t("myOrder.recipientAccount") }}</span>
+            <span class="info-value">{{ detail.seller_address.paymentAccount }}</span>
           </div>
-        </div>
-        <div class="item">
-          <span class="left">{{ $t("myOrder.totalAmount") }}</span>
-          <div class="right">
-            <span class="text2">
-              {{ divide(detail.order_amount) }}
-              {{ detail.goods_pay_coin }}
+          <div class="info-item">
+            <span class="info-label">{{ $t("myOrder.openingBank") }}</span>
+            <span class="info-value">{{ detail.seller_address.bankAccount }}</span>
+          </div>
+        </template>
+        <template v-else-if="paymentMethods.includes(detail.seller_address.paymentMethod)">
+          <div class="info-item">
+            <span class="info-label">{{ $t("myOrder.recipient") }}</span>
+            <span class="info-value">{{ detail.seller_address.accountName }}</span>
+          </div>
+          <div class="info-item" style="border: none;">
+            <span class="info-label">{{ $t("myOrder.recipientAccount") }}</span>
+            <span class="info-value">{{ detail.seller_address.paymentAccount }}</span>
+          </div>
+          <div style="text-align: center; margin-top: 20px" v-if="detail.seller_address.paymentCode">
+            <img :src="detail.seller_address.paymentCode" width="180"/>
+            <div style="margin-top: 10px; color: #666;">收款二维码</div>
+          </div>
+        </template>
+        <template v-else>
+          <div class="info-item">
+            <span class="info-label">收款网络</span>
+            <span class="info-value">{{ detail.seller_address.currencyType }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">收款地址</span>
+            <span class="info-value">
+              {{ detail.seller_address.paymentAccount }}
+              <img class="copy" src="@/assets/img/order/blue_copy.png" alt="" @click="copyCode(detail.seller_address.paymentAccount)" width="14" height="14" />
             </span>
           </div>
+        </template>
+      </template>
+      <template v-else>
+        <div class="info-item">
+          <!-- <span class="info-label">商家名称</span>
+          <span class="info-value">{{ detail.shop_name }}</span> -->
+          <span class="info-label">用户昵称</span>
+          <span class="info-value">{{ detail.seller_address.nickname }}</span>          
         </div>
-        <div class="item">
-          <span class="left">{{ $t("myOrder.paymentMethod") }}</span>
-          <div class="right">
-            <div class="divider"></div>
-            <span class="text2">{{ payWay }}</span>
-          </div>
+        <div class="info-item">
+          <span class="info-label">付款人</span>
+          <span class="info-value">{{ detail.seller_address.accountName }}</span>
         </div>
-        <div class="item">
-          <span class="left">{{ $t("myOrder.orderTime") }}</span>
-          <div class="right">
-            <span class="text">{{
-              moment(detail.created_at * 1000).format("YYYY-MM-DD HH:mm:ss")
-            }}</span>
-          </div>
+      </template>
+    </div>    
+    <!-- Order Information -->
+    <div class="order-card">
+      <div class="order-item">
+        <div class="order-label">订单类型</div>
+        <div class="order-value">
+          <img :src="detail.goods_coin_icon" alt="" width="22" height="22" />
+          <span style="color: #FD412BFF; margin-left: 4px;">
+            {{ detail.goods_type === 1 ? $t("myOrder.sell") : $t("myOrder.buy") }}{{ detail.goods_coin }}
+          </span>
         </div>
-        <div class="item" v-if="detail.order_status === 2">
-          <span class="left">{{ $t("myOrder.finishTime") }}</span>
-          <div class="right">
-            <span class="text">
-              {{ moment(detail.updated_at * 1000).format("YYYY-MM-DD HH:mm:ss") }}
-            </span>
-          </div>
+      </div>
+      <div class="order-item">
+        <div class="order-label">{{ $t("myOrder.orderNumber") }}</div>
+        <div class="order-value">
+          <span>{{ detail.order_id }}</span>
+          <img class="copy" src="@/assets/img/order/red_copy.png" alt="" @click="copyCode(detail.order_id)" width="14" height="14" />
         </div>
-        <div class="item" v-if="
-          detail.order_type === 2 && [2, 5, 6].includes(detail.order_status)
-        ">
-          <span class="left">{{ $t("myOrder.paymentImage") }}</span>
-          <div class="right">
-            <img class="voucher" v-for="(img, index) in detail.order_picture" :src="img" alt=""
-              @click="sceneImg(detail.order_picture, index)" />
-          </div>
+      </div>
+      <div class="order-item">
+        <div class="order-label">{{ $t("myOrder.unitPrice") }}</div>
+        <div class="order-value">
+          <span>{{ detail.goods_price }} {{ detail.goods_pay_coin }}/个</span>
         </div>
-      </section>
-      <!-- <div class="btn-box" v-if="detail.order_type === 1">
-        <div class="botton" v-if="detail.order_status === 1" @click="payClick">
-          {{ $t("myOrder.payment") }}
+      </div>
+      <div class="order-item">
+        <div class="order-label">{{ $t("myOrder.quantity") }}</div>
+        <div class="order-value">
+          <span>{{ divide(detail.order_num) }}</span>
         </div>
-        <div
-          class="cancel"
-          v-if="detail.order_status === 1"
-          @click="cancelClick"
-        >
-          {{ $t("myOrder.cancelOrder") }}
+      </div>
+      <div class="order-item">
+        <div class="order-label">{{ $t("myOrder.totalAmount") }}</div>
+        <div class="order-value">
+          <span>
+            {{ divide(detail.order_amount) }}
+            {{ detail.goods_pay_coin }}
+          </span>
         </div>
-      </div> -->
+      </div>
+      <div class="order-item">
+        <div class="order-label">{{ $t("myOrder.paymentMethod") }}</div>
+        <div class="order-value">
+          <span>{{ payWay }}</span>
+        </div>
+      </div>
+      <div class="order-item">
+        <div class="order-label">手续费</div>
+        <div class="order-value">
+          <span>
+            {{ divide(detail.goods_fee) | 0 }}            
+            {{ detail.goods_coin }}
+          </span>
+        </div>
+      </div>
+      <div class="order-item">
+        <div class="order-label">{{ $t("myOrder.orderTime") }}</div>
+        <div class="order-value">
+          <span>{{ moment(detail.created_at * 1000).format("YYYY-MM-DD HH:mm:ss") }}</span>
+        </div>
+      </div>
+      <div class="order-item" v-if="detail.order_status === 2">
+        <div class="order-label">{{ $t("myOrder.finishTime") }}</div>
+        <div class="order-value">
+          <span>{{ moment(detail.updated_at * 1000).format("YYYY-MM-DD HH:mm:ss") }}</span>
+        </div>
+      </div>
+      <div class="order-item" v-if="detail.order_type === 2 && [2, 5, 6].includes(detail.order_status)">
+        <div class="order-label">{{ $t("myOrder.paymentImage") }}</div>
+        <div class="order-value">
+          <img class="voucher" v-for="(img, index) in detail.order_picture" :src="img" @click="sceneImg(detail.order_picture, index)" />
+        </div>
+      </div>
+    </div>
+    <div class="bottom">
       <div class="btn-box">
-        <div class="botton" v-if="
-          detail.order_status === 1 &&
-          detail.goods_type === 1 &&
-          detail.dispute_symbol !== 2"
-          @click="handlePayMent">
+        <div class="botton" v-if="detail.order_status === 1 && detail.goods_type === 1 && detail.dispute_symbol !== 2" @click="handlePayMent">
           {{ $t("myOrder.payment") }}
         </div>
         <template v-if="detail.order_type === 1">
-          <div class="botton" v-if="
-            detail.order_status === 1 &&
-            detail.goods_type === 2 &&
-            detail.dispute_symbol !== 2
-          " @click="payClick">
+          <div class="botton" v-if="detail.order_status === 1 && detail.goods_type === 2 && detail.dispute_symbol !== 2" @click="payClick">
             {{ $t("myOrder.payment") }}
           </div>
         </template>
         <template v-else>
-          <div class="botton" v-if="
-            detail.order_status === 1 &&
-            detail.goods_type === 2 &&
-            detail.dispute_symbol !== 2
-          " @click="uploadClick">
+          <div class="botton" v-if="detail.order_status === 1 && detail.goods_type === 2 && detail.dispute_symbol !== 2" @click="uploadClick">
             {{ $t("myOrder.uploadPaymentImage") }}
           </div>
+          <div
+            v-if="detail.order_status === 1 && detail.goods_type === 2 && detail.dispute_symbol !== 2"
+            class="cancel"
+            @click="handleOrderCancel"
+          >
+            {{ $t("myOrder.cancelOrder") }}
+          </div>
         </template>
-        <div class="cancel" v-if="
-          (detail.order_status === 4 && detail.goods_type === 2) ||
-          (detail.order_status === 1 &&
-            detail.goods_type === 1 &&
-            detail.dispute_symbol !== 2)
-        " @click="cancelClick">
+        <div class="cancel" v-if="(detail.order_status === 4 && detail.goods_type === 2) || (detail.order_status === 1 && detail.goods_type === 1 && detail.dispute_symbol !== 2)" @click="cancelClick">
           {{ $t("myOrder.cancelOrder") }}
         </div>
         <div class="botton" v-if="detail.order_status === 6 && detail.dispute_symbol !== 2" @click="releaseToken">
           {{ $t("myOrder.confirmOrder") }}
         </div>
-        <div class="cancel" v-if="
-          ((detail.order_status !== 4 && detail.goods_type === 2) ||
-            (detail.order_status !== 1 && detail.goods_type === 1)) &&
-          detail.dispute_symbol !== 2 &&
-          ![2, 3].includes(detail.order_status)
-        " @click="appealClick">
-          {{ $t("myOrder.orderComplaint") }}
-        </div>
-        <div class="botton" v-if="
-          detail.dispute_symbol === 2 && store.getUid === detail.dispute_user
-        " @click="appealCancelClick">
+        <template v-if="((detail.order_status !== 4 && detail.goods_type === 2) || (detail.order_status !== 1 && detail.goods_type === 1)) && detail.dispute_symbol !== 2 && ![2, 3].includes(detail.order_status)">
+          <div class="cancel" style="background: none; border: none; display: flex; align-items: center;" v-if="detail.order_status === 1 && detail.goods_type === 2">
+            <el-tooltip placement="top-end" effect="light">
+              <template #content>
+                <div @click="appealClick" style="padding: 2px 10px; color: #666; font: 400 14px PingFang SC-Bold, PingFang SC;">{{ $t("myOrder.orderComplaint") }}</div>
+              </template>
+              <img src="@/assets/img/order/dot.png" width="32"/>
+            </el-tooltip>
+          </div>
+          <div v-else class="cancel" @click="appealClick">
+            {{ $t("myOrder.orderComplaint") }}
+          </div>          
+        </template>
+        <div class="botton" v-if="detail.dispute_symbol === 2 && store.getUid === detail.dispute_user" @click="appealCancelClick">
           {{ $t("myOrder.cancelComplaint") }}
         </div>
       </div>
@@ -177,6 +233,44 @@
       </div>
     </div>
   </div>
+  <van-popup v-model:show="showCancelPopup" position="bottom" round @close="changeCancelChecked">
+    <div style="margin: 20px; text-align: center; font-weight: bold;">
+      选择取消原因
+    </div>
+    <div>
+      <van-radio-group v-model="cancelChecked">
+        <van-cell-group inset>
+          <van-cell v-for="item in cancelReasonList">
+            <template #title>
+              <div class="left">
+                <div class="name">
+                  <div>{{ item.name }}</div>
+                </div>
+              </div>
+            </template>
+            <template #right-icon>
+              <van-radio :name="item.name" />
+            </template>
+          </van-cell>
+        </van-cell-group>
+      </van-radio-group>
+    </div>
+    <div style="margin: 20px; text-align: center;">
+      <el-button type="primary" @click="confirmCancel">确认取消</el-button>
+    </div>
+  </van-popup>
+  <van-popup v-model:show="showConfirmOrderPopup" class="confirm-popup">
+    <div class="confirm-title">
+      提示
+    </div>
+    <div class="confirm-content">
+      付款人姓名是否和地址信息一致
+    </div>
+    <div class="confirm-btn">
+      <img src="@/assets/img/order/yes.png" width="100" @click="confirmOrderPopup"/>
+      <img src="@/assets/img/order/no.png" width="100" @click="appealOrderPopup"/>
+    </div>
+  </van-popup>
 </template>
 
 <script setup lang="ts">
@@ -199,10 +293,15 @@ import contactIm from "@/utils/contactIm";
 import router from "@/router";
 import { useAppStore } from "@/store";
 import { t } from "@/plugins/i18n";
+import Loading from "@/components/loading/index.vue";
+
+const paymentMethods = ["支付宝", "微信", "汇旺", "ABA"]
+const otherPaymentMethods = ["银行卡", "VISA"]
 
 const store = useAppStore();
 const route = useRoute();
-const loading = ref(true);
+const loading = ref<boolean>(false);
+const showConfirmOrderPopup= ref<boolean>(false)
 onActivated(() => {
   // flutter交互
   setupWebViewJavascriptBridge(function (bridge: any) {
@@ -241,20 +340,45 @@ onActivated(() => {
     bridge.registerHandler("responseReleaseToken", responseReleaseToken);
   });
   payWay.value = "";
-  loading.value = true;
   getDetail();
 });
+const cancelReasonList = ref<Array<any>>([
+  {
+    id: 1,
+    name: "不想买/不想卖了",
+  },
+  {
+    id: 2,
+    name: "支付限制了",
+  },
+  {
+    id: 3,
+    name: "与买家/卖家协商取消",
+  },
+  {
+    id: 4,
+    name: "选择其他币种",
+  },
+]);
+const showCancelPopup = ref<boolean>(false);
+const cancelChecked = ref<string>("");
 const detail = ref({} as any);
 const payWay = ref("");
 const getDetail = async () => {
-  const { data } = await orderDetail({
-    id: Number(route.query.id),
-  });
-  loading.value = false;
-  detail.value = data;
-  payWay.value = data.transaction_ways.filter(
-    (item: any) => item.symbol === data.order_transaction_way
-  )[0].name;
+  loading.value = true;
+  try {
+    const { data } = await orderDetail({
+      id: Number(route.query.id),
+    });
+    detail.value = data;
+    payWay.value = data.transaction_ways.filter(
+      (item: any) => item.symbol === data.order_transaction_way
+    )[0].name;
+  } catch (e) {
+    console.log("order detail error: ", e)
+  } finally {
+    loading.value = false;
+  }
 };
 
 const handlePayMent = () => {
@@ -299,21 +423,17 @@ const payClick = () => {
 const cancelClick = async () => {
   showConfirmDialog({
     message: t("myOrder.cancelThisOrder"),
-  })
-    .then(async () => {
-      const { code, error } = await cancelOrder({
-        id: detail.value.id,
-      });
-      if (code === 0) {
-        showToast(t("myOrder.cancelSuccess"));
-        getDetail();
-      } else {
-        showToast(error);
-      }
-    })
-    .catch(() => {
-      // on cancel
+  }).then(async () => {
+    const { code, error } = await cancelOrder({
+      id: detail.value.id,
     });
+    if (code === 0) {
+      showToast(t("myOrder.cancelSuccess"));
+      getDetail();
+    } else {
+      showToast(error);
+    }
+  }).catch(() => {});
 };
 // 上传支付截图
 const uploadClick = () => {
@@ -324,13 +444,34 @@ const uploadClick = () => {
     },
   });
 };
-
+const changeCancelChecked = () => {};
+const confirmCancel = async () => {
+  try {
+    showCancelPopup.value = false
+    loading.value = true
+    const { code, error } = await cancelOrder({
+      id: detail.value.id,
+      cancelReason: cancelChecked.value
+    });
+    if (code === 0) {
+      showToast(t("myOrder.cancelSuccess"));
+      getDetail();
+    } else {
+      showToast(error);
+    }
+  } catch (e) {
+    console.log("order cancel error: ", e)
+  } finally {
+    loading.value = false
+  }
+}
 // 申诉订单
 const appealClick = () => {
   router.push({
     path: "/order/appeal",
     query: {
       id: detail.value.id,
+      matched_address: 0
     },
   });
 };
@@ -338,17 +479,30 @@ const appealClick = () => {
 const sceneImg = (images: any, index: number) => {
   imagePreview(images, index);
 };
+// 取消订单
+const handleOrderCancel = async () => {
+  if (detail.value.order_type == 2) {
+    console.log(cancelChecked.value)
+    showCancelPopup.value = true
+  }
+};
 
 const locked = ref<boolean>(false)
+
 const releaseToken = () => {
+  showConfirmOrderPopup.value = true
+}
+
+const confirmOrderPopup = () => {
+  showConfirmOrderPopup.value = false
   if (locked.value) return
   locked.value = true;
   (window as any).WebViewJavascriptBridge.callHandler(
     "releaseTokenDapp",
     {
       order_id: detail.value.order_id_buyer,
-      amount: divide(detail.value.order_num),
-      price: detail.value.pay_amount,
+      amount: divide(detail.value.order_num + detail.value.goods_fee),
+      price: detail.value.pay_amount + detail.value.goods_fee,
       token_id: coinTypes[detail.value.goods_coin],
       symbol: detail.value.goods_coin,
       buyer_wallet_address: detail.value.buyer_wallet_address,
@@ -357,7 +511,20 @@ const releaseToken = () => {
       seller_wallet_name: detail.value.seller_wallet_name
     },
     function (responseData: any) { }
-  );
+  );  
+}
+
+const appealOrderPopup = () => {
+  showConfirmOrderPopup.value = false
+  setTimeout(() => {
+    router.push({
+      path: "/order/appeal",
+      query: {
+        id: detail.value.id,
+        matched_address: 1
+      },
+    });
+  }, 1000)
 }
 
 // 确认订单
@@ -380,7 +547,6 @@ const copyCode = (val: string) => {
 // 联系客服
 const contactService = () => {
   contactIm(store.getUid, store.getServiceId)
-  // router.push("/service");
 };
 // 联系商家 、 买家
 const contactChat = () => {
@@ -402,4 +568,29 @@ const appealCancelClick = async () => {
 
 <style lang="scss" scoped>
 @import "./scss/orderDetail.scss";
+
+.confirm-popup {
+  padding: 16px;
+  border-radius: 12px;
+  width: 90%;
+  text-align: center;
+
+  .confirm-title {
+    font: $font16-400;
+    margin-top: 8px;  
+  }
+
+  .confirm-content {
+    font: $font14-400;
+    color: #666;
+    margin-top: 8px;  
+  }
+
+  .confirm-btn {
+    margin-top: 30px;  
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+}
 </style>

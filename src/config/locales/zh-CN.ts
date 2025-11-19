@@ -105,6 +105,8 @@ export default {
     buyAndSell: "随买随卖",
     amountPurchase: "按金额购买",
     quantityPurchase: "按数量购买",
+    amountSold: "按金额出售",
+    quantitySold: "按数量出售",
     maximum: "最大",
     limit: "限额",
     available: "可得",
@@ -173,6 +175,7 @@ export default {
     anyProblems: "遇到问题?",
     contactHelpCenter: "联系客服",
     cancelThisOrder: "您是否取消该订单?",
+    confirmPaymentAddress: "付款人姓名是否和地址信息一致",
     cancelSuccess: "取消成功",
     confirmSuccess: "确认成功",
     authorize: "授权",
@@ -186,5 +189,8 @@ export default {
     piece: "个",
     noMore: "没有更多了",
     copied: "复制成功！",
+    recipient: "收款人",
+    recipientAccount: "收款账号",
+    openingBank: "开户行"
   },
 };
