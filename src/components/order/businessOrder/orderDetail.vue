@@ -379,6 +379,8 @@ onActivated(() => {
       });
     }
     bridge.init(defaultHandler);
+
+    // responsePayDapp
     async function responsePayDapp(data: any) {
       const { code, error } = await confirmOrder({
         id: detail.value.id,
@@ -392,6 +394,8 @@ onActivated(() => {
       }
     }
     bridge.registerHandler("responsePayDapp", responsePayDapp);
+
+    // responseTransferDapp
     async function responseTransferDapp(data: any) {
       // 关闭支付窗口回调
       locked.value = false;
@@ -399,11 +403,35 @@ onActivated(() => {
       await refreshOrder({ order_id_seller: detail.value.order_id_seller });
     }
     bridge.registerHandler("responseTransferDapp", responseTransferDapp);
+
+    // responseReleaseToken
     async function responseReleaseToken(data: any) {
       locked.value = false
       await sureOrder()
     }
     bridge.registerHandler("responseReleaseToken", responseReleaseToken);
+    
+    // responseCancelOrderDapp
+    async function responseCancelOrderDapp(data: any) {
+      try {
+        loading.value = true
+        const { code, error } = await cancelOrder({
+          id: detail.value.id,
+          cancelReason: cancelChecked.value
+        });
+        if (code === 0) {
+          showToast(t("myOrder.cancelSuccess"));
+          getDetail();
+        } else {
+          showToast(error);
+        }
+      } catch(e) {
+        console.log("order cancel error", e)
+      } finally {
+        loading.value = false
+      }
+    }
+    bridge.registerHandler("responseCancelOrderDapp", responseCancelOrderDapp);
   });
   payWay.value = "";
   loading.value = true;
@@ -513,8 +541,6 @@ const payClick = () => {
 };
 
 const handlePayMent = (order: any) => {
-  // if (locked.value) return
-  locked.value = true;
   (window as any).WebViewJavascriptBridge.callHandler(
     "transferDapp",
     {
@@ -572,30 +598,27 @@ const appealClick = () => {
 // 取消订单
 const handleOrderCancel = async () => {
   if (detail.value.order_type == 2) {
-    console.log(cancelChecked.value)
     showCancelPopup.value = true
   }
 };
 const changeCancelChecked = () => {};
 const confirmCancel = async () => {
-  try {
-    showCancelPopup.value = false
-    loading.value = true
-    const { code, error } = await cancelOrder({
-      id: detail.value.id,
-      cancelReason: cancelChecked.value
-    });
-    if (code === 0) {
-      showToast(t("myOrder.cancelSuccess"));
-      getDetail();
-    } else {
-      showToast(error);
-    }
-  } catch(e) {
-    console.log("order cancel error", e)
-  } finally {
-    loading.value = false
-  }
+  showCancelPopup.value = false;
+  (window as any).WebViewJavascriptBridge.callHandler(
+    "cancelOrderDapp",
+    {
+      order_id: detail.value.order_id_buyer,
+      amount: divide(detail.value.order_num - detail.value.goods_fee),
+      price: detail.value.pay_amount - detail.value.goods_fee,
+      token_id: coinTypes[detail.value.goods_coin],
+      symbol: detail.value.goods_coin,
+      buyer_wallet_address: detail.value.buyer_wallet_address,
+      buyer_wallet_name: detail.value.buyer_wallet_name,
+      seller_wallet_address: detail.value.seller_wallet_address,
+      seller_wallet_name: detail.value.seller_wallet_name
+    },
+    function (responseData: any) { }
+  );
 }
 // 复制订单号
 const copyCode = (val: string) => {
