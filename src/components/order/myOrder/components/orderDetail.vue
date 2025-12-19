@@ -480,7 +480,7 @@ const confirmCancel = () => {
   (window as any).WebViewJavascriptBridge.callHandler(
     "cancelOrderDapp",
     {
-      order_id: detail.value.order_id_buyer,
+      order_id: detail.value.order_id,
       amount: divide(detail.value.order_num - detail.value.goods_fee),
       price: detail.value.pay_amount - detail.value.goods_fee,
       token_id: coinTypes[detail.value.goods_coin],
