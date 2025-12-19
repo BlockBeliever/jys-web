@@ -481,8 +481,8 @@ const confirmCancel = () => {
     "cancelOrderDapp",
     {
       order_id: detail.value.order_id_buyer,
-      amount: divide(detail.value.order_num + detail.value.goods_fee),
-      price: detail.value.pay_amount + detail.value.goods_fee,
+      amount: divide(detail.value.order_num - detail.value.goods_fee),
+      price: detail.value.pay_amount - detail.value.goods_fee,
       token_id: coinTypes[detail.value.goods_coin],
       symbol: detail.value.goods_coin,
       buyer_wallet_address: detail.value.buyer_wallet_address,
