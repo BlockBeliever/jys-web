@@ -173,7 +173,7 @@
         <div class="order-label">{{ $t("myOrder.paymentImage") }}</div>
         <div class="order-value">
           <img class="voucher" v-for="(img, index) in detail.order_picture" :src="img"
-            @click="sceneImg(detail.order_picture, index)" />
+            @click="sceneImg(detail.order_picture, Number(index))" />
         </div>
       </div>
     </div>
@@ -607,6 +607,7 @@ const confirmCancel = async () => {
   (window as any).WebViewJavascriptBridge.callHandler(
     "cancelOrderDapp",
     {
+      user_id: detail.value.order_buyer,
       order_id: detail.value.order_id_buyer,
       amount: divide(detail.value.order_num + detail.value.goods_fee),
       price: detail.value.pay_amount + detail.value.goods_fee,
