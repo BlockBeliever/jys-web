@@ -176,7 +176,7 @@
       <div class="order-item" v-if="detail.order_type === 2 && [2, 5, 6].includes(detail.order_status)">
         <div class="order-label">{{ $t("myOrder.paymentImage") }}</div>
         <div class="order-value">
-          <img class="voucher" v-for="(img, index) in detail.order_picture" :src="img" @click="sceneImg(detail.order_picture, index)" />
+          <img class="voucher" v-for="(img, index) in detail.order_picture" :src="img" @click="sceneImg(detail.order_picture, Number(index))" />
         </div>
       </div>
     </div>
