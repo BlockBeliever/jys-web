@@ -361,6 +361,7 @@ const changeAddressChecked = (name: string) => {
       }
     }
   })
+  showAddressPopup.value = false;
 }
 </script>
 

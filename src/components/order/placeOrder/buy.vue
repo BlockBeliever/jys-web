@@ -243,6 +243,7 @@ const changeAddressChecked = (name: string) => {
       }
     }
   })
+  showAddressPopup.value = false;
 }
 
 // 获取当前广告详情
