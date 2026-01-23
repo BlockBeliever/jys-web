@@ -115,7 +115,7 @@ export default {
     merchantInformation: "商家信息",
     merchant: "商家名称",
     merchantMessage: "商家留言",
-    agreePhoenix: "如果您同意与pndao进行C2C交易，即标识您接受",
+    agreePhoenix: "如果您同意与pndao进行C2C交易，即标识您接受 ",
     legalDisclaimer: "pndaoC2C交易法律免责声明。",
     buy: "买入",
     sell: "出售",
