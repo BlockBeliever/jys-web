@@ -124,7 +124,7 @@
       </div>
       <div class="tip">
         <span>{{ $t("placeOrder.agreePhoenix") }}</span>
-        <span>{{ $t("placeOrder.legalDisclaimer") }}</span>
+        <span @click="router.push('/order/user/agreement')">{{ $t("placeOrder.legalDisclaimer") }}</span>
       </div>
       <van-button class="botton" block type="primary" native-type="submit">
         {{ `${$t("placeOrder.buy")}${detailData.goods_coin}` }}
