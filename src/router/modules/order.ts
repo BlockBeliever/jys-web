@@ -19,6 +19,15 @@ const orderRoutes = [
     },
   },
   {
+    path: "/order/user/agreement",
+    component: () => import("@/components/agreement/index.vue"),
+    meta: {
+      title: "",
+      isTab: false,
+      isNav: false,
+    },
+  },
+  {
     path: "/order/myOrder",
     component: () => import("@/components/order/myOrder/index.vue"),
     meta: {

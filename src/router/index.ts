@@ -86,13 +86,13 @@ router.beforeEach( async (to, from, next) => {
   if (token) {
     next()
   } else {
-    let code: string = localStorage.getItem('code') ?? 'MZIXODQXZWYTY2VMYI0ZOTI4LTLMZWQTY2YYNJRKOTAZNMQX'
-    const { code: mCode, data, message, error } = await codeToToken({ code })
-    if (mCode === 0) {
-      setToken(data.auth.access)
-    } else {
-      showToast(error)
-    }
+    // let code: string = localStorage.getItem('code') ?? 'MZIXODQXZWYTY2VMYI0ZOTI4LTLMZWQTY2YYNJRKOTAZNMQX'
+    // const { code: mCode, data, message, error } = await codeToToken({ code })
+    // if (mCode === 0) {
+    //   setToken(data.auth.access)
+    // } else {
+    //   showToast(error)
+    // }
     next()
   }
 })
