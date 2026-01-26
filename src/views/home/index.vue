@@ -67,7 +67,7 @@
       <van-search v-model="key" shape="round" :placeholder="$t('home.search')" />
     </div>
     <div class="currency-list">
-      <van-radio-group v-model="checked">
+      <van-radio-group v-model="checked" @change="changeRadioChecked()">
         <van-cell-group inset>
           <van-cell v-for="item in coinList">
             <template #title>
@@ -93,7 +93,7 @@
       <van-search v-model="key2" shape="round" :placeholder="$t('home.search')" />
     </div>
     <div class="currency-list">
-      <van-radio-group v-model="checked2">
+      <van-radio-group v-model="checked2" @change="changeRadioChecked()">
         <van-cell-group inset>
           <van-cell v-for="item in coinList2">
             <template #title>
@@ -119,7 +119,7 @@
       <van-search v-model="key3" shape="round" :placeholder="$t('home.search')" />
     </div>
     <div class="currency-list">
-      <van-radio-group v-model="checked3">
+      <van-radio-group v-model="checked3" @change="changeRadioChecked()">
         <van-cell-group inset>
           <van-cell v-for="item in coinList3">
             <template #title>
@@ -310,6 +310,11 @@ const changeChecked3 = () => {
   adList.value = [];
   onRefresh();
 };
+const changeRadioChecked = () => {
+  showPopup.value = false
+  showPopup2.value = false
+  showPopup3.value = false
+}
 const handleSearch = () => {
   adList.value = [];
   onRefresh();
