@@ -309,6 +309,9 @@ const changeAddressChecked = (name: string) => {
       }
     }
   })
+  showPopup.value = false
+  showPopup2.value = false
+  showAddressPopup.value = false
 }
 
 const feeChecked = ref<boolean>(false)
@@ -366,6 +369,9 @@ const changeChecked = () => {
   checkedText.value = coinList.value.filter(
     (item: any) => Number(checked.value) === item.id
   )[0]?.symbol;
+  showPopup.value = false
+  showPopup2.value = false
+  showAddressPopup.value = false
 };
 
 const changeChecked2 = () => {
@@ -375,6 +381,9 @@ const changeChecked2 = () => {
   checkedText2.value = obj?.symbol;
   transactionWays.value = obj?.transaction_way
   tradeType.value = ""
+  showPopup.value = false
+  showPopup2.value = false
+  showAddressPopup.value = false
 };
 
 const checkedResultChange = (value: string[]) => {  
