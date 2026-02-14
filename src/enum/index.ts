@@ -1,5 +1,5 @@
 export enum coinTypes {
-  'CNYT' = 2,
   'FLCT' = 1,
+  'CNYT' = 2,
   'USDK' = 3,
 }
