@@ -44,6 +44,6 @@ const changeTab = () => { }
   background-color: #FFFFFF !important;
 }
 :deep(.van-tabs__wrap) {
-    height: 40px !important;
-  }
+  height: 40px !important;
+}
 </style>
